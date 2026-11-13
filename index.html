@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Mộng Huyễn Giang Hồ - Full Game</title>
+  <link rel="stylesheet" href="game.css?v=1">   <!-- TOÀN BỘ CSS game gộp 1 file (xem banner === trong file) -->
+  <style id="bf-icon-size">
+    /* Icon trạng thái trên đầu tướng trong trận (choáng, độc, chảy máu, buff/debuff...). Muốn to/nhỏ hơn: đổi 2 số --bf-ic và --bf-ic-n */
+    :root { --bf-ic: 26px; --bf-ic-n: 15px; --bf-lift: -22px; }  /* --bf-lift: số âm càng lớn thì icon càng cao hơn đầu tướng */
+    /* Hàng icon: xếp ngang, tự xuống dòng, có khoảng cách -> không chồng/che nhau */
+    *:has(> .bf-st-i) { display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; justify-content: center !important; align-items: center !important; gap: 0 2px !important; overflow: visible !important; white-space: nowrap !important; translate: 0 var(--bf-lift) !important; z-index: 30 !important; pointer-events: none; }
+    /* Nhiều icon thì tự thu nhỏ để vẫn nằm 1 hàng ngang gọn */
+    *:has(> .bf-st-i:nth-child(5)) { --bf-ic: 21px; }
+    *:has(> .bf-st-i:nth-child(7)) { --bf-ic: 17px; }
+    *:has(> .bf-st-i:nth-child(9)) { --bf-ic: 14px; }
+    .bf-st-i { position: relative !important; display: inline-flex !important; align-items: center !important; gap: 2px !important; margin: 0 !important; left: auto !important; right: auto !important; top: auto !important; bottom: auto !important; transform: none !important; flex: 0 0 auto !important; overflow: visible !important; }
+    .bf-st-i img { width: var(--bf-ic) !important; height: var(--bf-ic) !important; max-width: none !important; flex: 0 0 auto !important; }
+    /* Ẩn số hiệp */
+    .bf-st-i b { display: none !important; }
+    .bf-stun { font-size: 30px !important; }
+    .bf-bleed { font-size: 26px !important; }
+    .bf-shield, .bf-moonshield { font-size: 26px !important; }
+    .bf-dbf, .bf-mods, .bf-lb { font-size: 22px !important; }
+  </style>
+</head>
+<body>
+
+  <!-- ===== MÀN HÌNH ĐĂNG NHẬP ===== -->
+  <div id="login-screen">
+    <div class="lg-sky"></div><div class="lg-sun"></div>
+    <div class="lg-cloud c1"></div><div class="lg-cloud c2"></div><div class="lg-cloud c3"></div>
+    <div class="lg-sea"></div><div class="lg-isle">🏝️</div><div class="lg-surf">🏄</div>
+    <div class="lg-sand"></div>
+    <div class="lg-palm l">🌴</div><div class="lg-palm r">🌴</div>
+    <div class="lg-shell s1">🐚</div><div class="lg-shell s2">🐚</div>
+    <div class="lg-18"><span class="badge-18">18+</span><span class="text-18">TRÒ CHƠI DÀNH CHO NGƯỜI CHƠI TỪ 18 TUỔI TRỞ LÊN<br><strong>Chơi quá 180 phút một ngày</strong> sẽ ảnh hưởng xấu đến sức khỏe</span></div>
+    <div class="lg-logo"><div class="l1">Mộng Huyễn</div><div class="l2">Giang Hồ</div></div>
+    <div class="lg-gear" onclick="lgReg(true)"><div class="ic">⚙️</div><div class="tx">Đăng ký</div></div>
+    <div class="lg-row">
+      <button class="lg-go" onclick="lgLogin()"><span>Vào</span><span>Game</span></button>
+      <div class="lg-fields">
+        <input class="lg-in" id="lg-user" placeholder="Tên tài khoản" autocapitalize="none" autocomplete="username" maxlength="20" onkeydown="if(event.key==='Enter'){document.getElementById('lg-pass').focus()}">
+        <input class="lg-in" id="lg-pass" type="password" placeholder="Mật khẩu" autocomplete="current-password" onkeydown="if(event.key==='Enter'){lgLogin()}">
+      </div>
+    </div>
+    <div class="lg-msg" id="lg-msg" style="color:#4ade80">Đang kết nối máy chủ...</div>
+    <button class="lg-off" id="lg-off" onclick="lgShow(false)">Chơi không cần tài khoản (dữ liệu chỉ lưu trên máy này)</button>
+    <div class="lg-reg" id="lg-reg" onclick="if(event.target===this)lgReg(false)"><div class="lg-regbox">
+      <h3>⚙️ Đăng ký tài khoản</h3>
+      <input class="cl-in" id="rg-user" placeholder="Tên tài khoản (a-z, 0-9, _)" autocapitalize="none" autocomplete="off" maxlength="20">
+      <input class="cl-in" id="rg-pass" type="password" placeholder="Mật khẩu (từ 6 ký tự)" autocomplete="new-password">
+      <input class="cl-in" id="rg-pass2" type="password" placeholder="Nhập lại mật khẩu" autocomplete="new-password" onkeydown="if(event.key==='Enter'){lgRegister()}">
+      <div class="set-note"><b>Tài khoản mới sẽ chơi lại từ đầu.</b> Tên tài khoản 3-20 ký tự, chữ thường không dấu, số hoặc dấu _.</div>
+      <div class="set-saved" id="rg-msg" style="height:auto;min-height:16px;text-align:center"></div>
+      <div class="md-acts"><button class="btn-attack" onclick="lgRegister()">Đăng ký</button><button class="btn-close-battle" onclick="lgReg(false)">Quay lại</button></div>
+    </div></div>
+  </div>
+  <script>try{if(localStorage.getItem('cl_was_in')==='1')document.getElementById('login-screen').style.display='none';}catch(e){}</script>
+
+  <div id="app">
+    <!-- MÀN HÌNH 1: TRANG CHỦ -->
+    <div id="app-header" class="top-bar">
+      <div class="user-avatar"></div>
+      <div class="banner-18">
+        <span class="badge-18">18+</span>
+        <div class="text-18"><strong>TRÒ CHƠI DÀNH CHO NGƯỜI CHƠI TỪ 18 TUỔI TRỞ LÊN</strong><br><span>Chơi quá 180 phút một ngày sẽ ảnh hưởng xấu đến sức khỏe</span></div>
+      </div>
+      <div class="user-header">
+        <div class="vip-badge">V1</div><div class="user-level">Cấp<span id="acc-level">1</span></div><div class="user-name" onclick="renamePlayer()" title="Bấm để đổi tên" style="cursor:pointer">Long Hầu ✎</div><div class="server-badge">Văn Lang</div><button class="btn-gear" title="Cài đặt" onclick="openSettings()"><img class="hi" src="giao-dien/icon-home/cai-dat.webp" alt="Cài đặt" draggable="false" width="300" height="195"></button>
+      </div>
+      <div class="exp-bar" title="Vượt Ải để nhận EXP, đủ EXP thì lên cấp"><div class="exp-fill" id="exp-fill"></div><span class="exp-text" id="exp-text">EXP 0 / 3000</span></div>
+      <div class="stamina-power-container">
+        <div class="stamina-box" onclick="openEquip()" style="cursor:pointer" title="Bấm để dùng Viên Thể Lực"><div class="stamina-title" id="sta-title">Thể Lực Đầy</div><div class="stamina-val" id="sta-val">200/200</div></div>
+        <div class="power-total" title="Lực chiến = tổng Công của toàn đội">0</div>
+      </div>
+      <div class="resources-row">
+        <div class="res-group left"><div class="res-item"><span class="res-emo">🥈</span> <span id="silver-val">0</span></div><div class="res-item"><span class="res-emo">🍚</span> <span id="rice-val">0</span></div></div>
+        <div class="res-group right"><div class="res-item"><span class="res-emo">💰</span> <span id="gold-val">2291</span></div><div class="res-item"><img class="res-ico" src="giao-dien/icon-home/bao-li-xi.webp" alt="bao lì xì" width="300" height="163"> Còn 30</div></div>
+      </div>
+    </div>
+
+    <div class="main-content">
+      <!-- MÀN HÌNH HOME -->
+      <div class="screen active" id="screen-home">
+        <div class="hero-cards-row" id="home-team-row"></div>
+        <div class="home-hint">Chạm vào tướng để xem thông số &amp; kỹ năng</div>
+
+        <div class="feat-row">
+          <div class="feat-item" onclick="openQuest()"><div class="feat-icon"><img class="hi" src="giao-dien/icon-home/nhiem-vu.webp" alt="Nhiệm Vụ" draggable="false" width="291" height="300"></div></div>
+          <div class="feat-item" onclick="openMail()"><div class="feat-icon"><img class="hi" src="giao-dien/icon-home/hop-thu.webp" alt="Hộp Thư" draggable="false" width="292" height="300"><span class="badge" id="mail-badge">0</span></div></div>
+          <div class="feat-item" onclick="openEvents()"><div class="feat-icon"><img class="hi" src="giao-dien/icon-home/su-kien.webp" alt="Sự Kiện" draggable="false" width="283" height="300"><span class="badge" id="nb-sukien" style="display:none">0</span></div></div>
+          <div class="feat-col"><div class="feat-item" onclick="openChat()"><div class="feat-icon"><img class="hi" src="giao-dien/icon-home/the-thang.webp" alt="Thẻ Tháng" draggable="false" width="297" height="300"></div></div><div class="feat-item feat-gift" onclick="openLthub()"><div class="feat-icon"><img class="hi" src="giao-dien/icon-home/linh-thu.webp" alt="Linh Thú" draggable="false" width="297" height="300"></div></div></div>
+          <div class="feat-col"><div class="feat-item" onclick="openBag()"><div class="feat-icon"><img class="hi" src="giao-dien/icon-home/tui-do.webp" alt="Túi Đồ" draggable="false" width="300" height="299"></div></div><div class="feat-item feat-gift" onclick="openGiftCode()"><div class="feat-icon"><img class="hi" src="giao-dien/icon-home/gift-code.webp" alt="Gift Code" draggable="false" width="297" height="300"></div></div></div>
+        </div>
+
+        <div class="main-modes-section">
+          <div class="mode-card mode-pve" onclick="switchScreen('giangho')"><div class="mode-icon-box"><img class="hi" src="giao-dien/icon-home/pve.webp" alt="PVE" draggable="false" width="300" height="268"></div></div>
+          <div class="mode-card mode-giangho" onclick="window.pveFrom='home';switchScreen('pve')"><div class="mode-icon-box"><img class="hi" src="giao-dien/icon-home/giang-ho.webp" alt="Giang Hồ" draggable="false" width="300" height="232"></div></div>
+          <div class="mode-card mode-pvp" onclick="openPvp()"><div class="mode-icon-box"><img class="hi" src="giao-dien/icon-home/pvp.webp" alt="PVP" draggable="false" width="300" height="293"></div></div>
+        </div>
+
+        <div class="feat-row feat-row-bottom">
+          <div class="feat-item" onclick="openTeam()"><div class="feat-icon"><img class="hi" src="giao-dien/icon-home/doi-ngu.webp" alt="Đội Ngũ" draggable="false" width="300" height="277"></div></div>
+          <div class="feat-item" onclick="openPicker('boiduong')"><div class="feat-icon"><img class="hi" src="giao-dien/icon-home/tang-cap.webp" alt="Tăng Cấp" draggable="false" width="280" height="279"></div></div>
+          <div class="feat-item" onclick="openEquip()"><div class="feat-icon"><img class="hi" src="giao-dien/icon-home/trang-bi.webp" alt="Trang Bị" draggable="false" width="281" height="290"></div></div>
+          <div class="feat-item" onclick="openBvhub()"><div class="feat-icon"><img class="hi" src="giao-dien/icon-home/bao-vat.webp" alt="Bảo Vật" draggable="false" width="284" height="285"></div></div>
+          <div class="feat-item"><div class="feat-icon"><img class="hi" src="giao-dien/icon-home/luyen-hoa.webp" alt="Luyện Hóa" draggable="false" width="297" height="297"><span class="badge" id="nb-luyenhoa" style="display:none">0</span></div></div>
+        </div>
+      </div>
+
+      <!-- MÀN HÌNH GIANG HỒ -->
+      <div class="screen" id="screen-giangho">
+        <div class="gh-head">
+          <button class="btn-back" onclick="switchScreen('home')">Trở về</button>
+          <div class="gh-logo">⚔️ PVE 🛡️</div>
+        </div>
+        <div class="gh-list">
+          <img class="gh-banner" alt="Thần Đàn" src="giang-ho/than-dan.webp" onclick="ghSoon('Thần Đàn')" loading="lazy" decoding="async" width="886" height="190">
+          <img class="gh-banner" alt="Luận Kiếm" src="giang-ho/luan-kiem.webp" onclick="openLuanKiem()" loading="lazy" decoding="async" width="877" height="178">
+          <img class="gh-banner" alt="Danh Tướng Lầu" src="giang-ho/danh-tuong-lau.webp" onclick="openTower()" loading="lazy" decoding="async" width="880" height="179">
+          <img class="gh-banner" alt="Hang Tụ Linh" src="giang-ho/hang-tu-linh.webp" onclick="openHang()" loading="lazy" decoding="async" width="883" height="181">
+          <img class="gh-banner" alt="Bảo Khố" src="giang-ho/bao-kho.webp" onclick="openBaoKho()" loading="lazy" decoding="async" width="882" height="172">
+          <img class="gh-banner" alt="Đào Tiên" src="giang-ho/dao-tien.webp" onclick="openDaoTien()" loading="lazy" decoding="async" width="883" height="181">
+          <img class="gh-banner" alt="Trốn" src="giang-ho/tron.webp" onclick="openTron()" loading="lazy" decoding="async" width="881" height="175">
+        </div>
+      </div>
+
+      <!-- MÀN HÌNH PVE 1: CHỌN ẢI -->
+      <!-- HANG TỤ LINH -->
+      <div class="screen" id="screen-hang">
+        <div class="pve-header"><button class="btn-back" onclick="switchScreen('giangho')">Trở về</button><h2 class="pve-title" style="flex:1">Hang Tụ Linh</h2></div>
+        <div class="hg-top"><span id="hg-sta"></span><span id="hg-sweep"></span></div>
+        <div class="hg-list" id="hg-list"></div>
+      </div>
+
+      <!-- BẢO KHỐ -->
+      <div class="screen" id="screen-bk">
+        <div class="pve-header"><button class="btn-back" onclick="switchScreen('giangho')">Trở về</button><h2 class="pve-title" style="flex:1">Bảo Khố</h2></div>
+        <div class="hg-top"><span id="bk-sta"></span><span id="bk-sweep"></span></div>
+        <div class="hg-list" id="bk-list"></div>
+      </div>
+
+      <!-- ĐÀO TIÊN -->
+      <div class="screen" id="screen-dt">
+        <div class="pve-header"><button class="btn-back" onclick="switchScreen('giangho')">Trở về</button><h2 class="pve-title" style="flex:1">Đào Tiên</h2></div>
+        <div class="hg-top"><span id="dt-sta"></span><span id="dt-sweep"></span></div>
+        <div class="hg-list" id="dt-list"></div>
+      </div>
+
+      <!-- TRỐN (thưởng Búa) -->
+      <div class="screen" id="screen-tr">
+        <div class="pve-header"><button class="btn-back" onclick="switchScreen('giangho')">Trở về</button><h2 class="pve-title" style="flex:1">Trốn</h2></div>
+        <div class="hg-top"><span id="tr-sta"></span><span id="tr-sweep"></span></div>
+        <div class="hg-list" id="tr-list"></div>
+      </div>
+
+      <!-- DANH TƯỚNG LẦU -->
+      <div class="screen" id="screen-tower">
+        <div class="pve-header"><button class="btn-back" onclick="switchScreen('giangho')">Trở về</button><h2 class="pve-title" style="flex:1">Danh Tướng Lầu</h2><span class="tw-count" id="tw-count"></span></div>
+        <div class="tw-scroll" id="tw-scroll"><div class="tw-img"><div class="tw-floors" id="tw-floors"></div></div></div>
+      </div>
+
+      <div class="screen" id="screen-pve">
+        <div id="pve-stage-screen" style="display:flex; flex-direction:column; width:100%; height:100%;">
+          <div class="pve-header">
+            <button class="btn-back" onclick="switchScreen(window.pveFrom||'home')">Trở về</button>
+            <h2 class="pve-title">Chọn Ải (1 - 100)</h2>
+          </div>
+          <div class="pve-scroll-area" id="stage-list-container"></div>
+        </div>
+
+        <!-- MÀN HÌNH PVE 2: CHỌN BÀN -->
+        <div id="pve-battle-screen" style="display:none; flex-direction:column; width:100%; height:100%;">
+          <div class="pve-header">
+            <button class="btn-back" onclick="backToStages()">Trở về</button>
+            <h2 class="pve-title" id="ui-selected-stage">Ải 1</h2>
+          </div>
+          <div class="pve-scroll-area" id="battle-list-container"></div>
+        </div>
+      </div>
+
+      <!-- MÀN HÌNH QUẢN LÝ VÕ HIỆP -->
+      <div class="screen" id="screen-vohiep">
+        <div class="pve-header">
+          <button class="btn-back" onclick="switchScreen('home')">Trở về</button>
+          <h2 class="pve-title">Quản lý Võ Hiệp</h2>
+        </div>
+        <div class="vm-body" id="vm-body"></div>
+      </div>
+
+      <!-- MÀN DANH SÁCH VÕ HIỆP (chỉ ảnh tướng, bấm vào xem chi tiết) -->
+      <div class="screen" id="screen-vhero">
+        <div class="pve-header"><button class="btn-back" onclick="switchScreen('vhub')">Trở về</button><h2 class="pve-title">Võ Hiệp</h2></div>
+        <div class="vg-grid" id="vg-grid"></div>
+      </div>
+
+      <!-- MÀN CHỌN TƯỚNG -->
+      <div class="screen" id="screen-picker">
+        <div class="pve-header"><button class="btn-back" onclick="switchScreen('home')">Trở về</button><h2 class="pve-title" id="pk-title">Chọn Võ Hiệp thăng cấp</h2></div>
+        <div class="pk-sub">Chạm vào tướng để quản lý</div>
+        <div class="pk-grid" id="pk-grid"></div>
+      </div>
+
+      <!-- ĐỘI NGŨ (màn hình đầy đủ: 5 tướng + dàn Hỗ Trợ) -->
+      <div class="screen" id="screen-team">
+        <div class="pve-header">
+          <button class="btn-back" onclick="tnBack()">Trở về</button>
+          <h2 class="pve-title" style="flex:1">Đội Ngũ</h2>
+          <div class="tn-lead">🚩<span>Đội Trưởng</span></div>
+          <button class="tn-hbtn blue" onclick="tnPet()">Thần Thú</button>
+        </div>
+        <div class="tn-main" id="tn-main"></div>
+      </div>
+
+      <!-- CHỌN VÕ HIỆP ĐỂ ĐỔI (ô đội ngũ / ô hỗ trợ) -->
+      <div class="screen" id="screen-tpick">
+        <div class="pve-header">
+          <button class="btn-back" onclick="tnPickBack()">Trở về</button>
+          <h2 class="pve-title" style="flex:1">Chọn Võ Hiệp</h2>
+          <button class="tn-hbtn" id="tn-sort" onclick="tnToggleSort()">Cấp Sao</button>
+        </div>
+        <div class="tn-pgrid" id="tn-pgrid"></div>
+      </div>
+
+      <!-- HUB LINH THÚ (2 tab: Linh Thú / Mảnh Thú) -->
+      <div class="screen" id="screen-lthub">
+        <div class="pve-header"><button class="btn-back" onclick="switchScreen('home')">Trở về</button><h2 class="pve-title">Quản lý Linh Thú</h2></div>
+        <div class="vh-grid">
+          <div class="vh-btn" onclick="ltGo('list')" title="Linh Thú"><img class="vh-ic" src="giao-dien/linh-thu/linh-thu.webp" alt="Linh Thú" loading="lazy" decoding="async"></div>
+          <div class="vh-btn" onclick="ltGo('merge')" title="Mảnh Thú"><img class="vh-ic" src="giao-dien/linh-thu/manh-thu.webp" alt="Mảnh Thú" loading="lazy" decoding="async"><span class="bd" id="ltmerge-bd" style="display:none">0</span></div>
+        </div>
+      </div>
+
+      <!-- HUB BẢO VẬT (2 tab: Bảo Vật / Mảnh Bảo Vật) -->
+      <div class="screen" id="screen-bvhub">
+        <div class="pve-header"><button class="btn-back" onclick="switchScreen('home')">Trở về</button><h2 class="pve-title">Quản lý Bảo Vật</h2></div>
+        <div class="vh-grid">
+          <div class="vh-btn" onclick="bvGo('list')" title="Bảo Vật"><img class="vh-ic" src="giao-dien/bao-vat/bao-vat.webp" alt="Bảo Vật" loading="lazy" decoding="async"></div>
+          <div class="vh-btn" onclick="bvGo('merge')" title="Mảnh Bảo Vật"><img class="vh-ic" src="giao-dien/bao-vat/manh-bao-vat.webp" alt="Mảnh Bảo Vật" loading="lazy" decoding="async"><span class="bd" id="bvmerge-bd" style="display:none">0</span></div>
+        </div>
+      </div>
+
+      <!-- HUB VÕ HIỆP -->
+      <div class="screen" id="screen-vhub">
+        <div class="pve-header"><button class="btn-back" onclick="switchScreen('home')">Trở về</button><h2 class="pve-title">Quản lý Võ Hiệp</h2></div>
+        <div class="vh-grid">
+          <div class="vh-btn" onclick="vhGo('manh')" title="Võ Hiệp"><img class="vh-ic" src="giao-dien/tuong/manh_vo_hiep.webp" alt="Võ Hiệp" loading="lazy" decoding="async" width="260" height="306"></div>
+          <div class="vh-btn" onclick="vhGo('ghep')" title="Ghép Mảnh"><img class="vh-ic" src="giao-dien/tuong/ghep_manh.webp" alt="Ghép Mảnh" loading="lazy" decoding="async" width="260" height="297"><span class="bd" id="ghep-bd" style="display:none">0</span></div>
+          <div class="vh-btn" onclick="vhGo('sao')" title="Tăng Sao"><img class="vh-ic" src="giao-dien/tuong/tang_sao.webp" alt="Tăng Sao" loading="lazy" decoding="async" width="260" height="303"></div>
+          <div class="vh-btn" onclick="vhGo('boiduong')" title="Bồi Dưỡng"><img class="vh-ic" src="giao-dien/tuong/boi_duong.webp" alt="Bồi Dưỡng" loading="lazy" decoding="async" width="260" height="320"></div>
+          <div class="vh-btn" onclick="vhGo('dotpha')" title="Đột Phá"><img class="vh-ic" src="giao-dien/tuong/dot_pha.webp" alt="Đột Phá" loading="lazy" decoding="async" width="260" height="316"></div>
+          <div class="vh-btn" onclick="vhGo('kynang')" title="Kỹ Năng"><img class="vh-ic" src="giao-dien/tuong/ky_nang.webp" alt="Kỹ Năng" loading="lazy" decoding="async" width="260" height="331"></div>
+          <div class="vh-btn" onclick="vhGo('kinhmach')" title="Kinh Mạch"><img class="vh-ic" src="giao-dien/tuong/kinh_mach.webp" alt="Kinh Mạch" loading="lazy" decoding="async" width="260" height="315"></div>
+          <div class="vh-btn" onclick="vhGo('gianghoky')" title="Giang Hồ Ký"><img class="vh-ic" src="giao-dien/tuong/giang_ho_ky.webp" alt="Giang Hồ Ký" loading="lazy" decoding="async" width="260" height="334"></div>
+        </div>
+      </div>
+
+      <!-- BANG HỘI -->
+      <div class="screen" id="screen-guild">
+        <div class="gd-name" id="gd-name">🏯 Bang Hội</div>
+        <div class="gd-scene">
+          <div class="gd-loc" onclick="openDaiSanh()"><div class="gd-img" style="--a:1.773"><img src="giao-dien/bang-hoi/dai-sanh.webp?v=27" alt="Đại Sảnh" loading="lazy" decoding="async" width="640" height="361"></div><span class="lb">Đại Sảnh</span></div>
+          <div class="gd-loc" onclick="openBangBoss()"><div class="gd-img" style="--a:1.506"><img src="giao-dien/bang-hoi/cam-dia.webp?v=27" alt="Cấm Địa" loading="lazy" decoding="async" width="268" height="178"></div><span class="lb">Cấm Địa</span></div>
+          <div class="gd-loc" onclick="openThanThu()"><div class="gd-img" style="--a:1.514"><img src="giao-dien/bang-hoi/thanthu/tien-loc.webp?v=26" alt="Thần Thú" loading="lazy" decoding="async" width="560" height="370"></div><span class="lb">Thần Thú</span></div>
+          <div class="gd-loc" onclick="openDienVo()"><div class="gd-img" style="--a:0.966"><img src="giao-dien/bang-hoi/lo-luyen-hoa.webp?v=27" alt="Lò Luyện Hỏa" loading="lazy" decoding="async" width="618" height="640"></div><span class="lb">Lò Luyện Hỏa</span></div>
+          <div class="gd-loc" onclick="gdGo('Bang Chiến')"><div class="gd-img" style="--a:1.813"><img src="giao-dien/bang-hoi/bang-chien.webp?v=27" alt="Bang Chiến" loading="lazy" decoding="async" width="640" height="353"></div><span class="lb">Bang Chiến</span></div>
+          <div class="gd-loc" onclick="openBasin()"><div class="gd-img" style="--a:1.475"><img src="giao-dien/bang-hoi/tu-bao-bon.webp?v=28" alt="Tụ Bảo Bồn" loading="lazy" decoding="async" width="640" height="434"></div><span class="lb">Tụ Bảo Các</span></div>
+          <div class="gd-chat" style="grid-column:1/-1" onclick="openChat()">💬</div>
+        </div>
+      </div>
+
+      <!-- MÀN HÌNH CHIÊU MỘ -->
+      <div class="screen" id="screen-chieumo">
+        <div class="pve-header">
+          <button class="btn-back" onclick="switchScreen('home')">Trở về</button>
+          <h2 class="pve-title" style="flex:1">Chiêu Mộ</h2>
+          <div class="rc-gold">💰 <span id="rc-gold">0</span></div>
+        </div>
+        <div class="rc-body" id="rc-body"></div>
+      </div>
+
+      <!-- MÀN HÌNH TỶ VÕ (PVP XẾP HẠNG) -->
+      <div class="screen" id="screen-pvp">
+        <div class="pvp-head">
+          <button class="btn-back" onclick="switchScreen('home')">Trở về</button>
+          <h2 class="pve-title">Tỷ Võ</h2>
+          <button class="pvp-mini" onclick="pvpShowTiers()">Xếp Hạng</button>
+          <button class="pvp-mini" onclick="pvpReroll()" title="Làm mới đối thủ">↻</button>
+          <button class="pvp-mini" onclick="pvpExchange()">Đổi</button>
+        </div>
+        <div id="pvp-body"></div>
+      </div>
+
+      <!-- MÀN HÌNH LUẬN KIẾM (Giang Hồ) -->
+      <div class="screen" id="screen-luankiem">
+        <div class="pvp-head">
+          <button class="btn-back" onclick="switchScreen('giangho')">Trở về</button>
+          <h2 class="pve-title">Luận Kiếm</h2>
+        </div>
+        <div id="luan-body"></div>
+      </div>
+    </div>
+
+    <!-- BOTTOM NAVIGATION -->
+    <div class="bottom-nav" id="app-nav">
+      <div class="nav-btn active" id="nav-btn-home" onclick="switchScreen('home')">
+        <div class="nav-icon-circle"><img class="hi" src="giao-dien/icon-home/trang-chu.webp" alt="Trang Chủ" draggable="false" width="294" height="285"></div>
+      </div>
+      <div class="nav-btn" id="nav-btn-vhub" onclick="openVhub()">
+        <div class="nav-icon-circle"><img class="hi" src="giao-dien/icon-home/vo-hiep.webp" alt="Võ Hiệp" draggable="false" width="255" height="281"><span class="badge-nav" id="nb-vohiep" style="display:none">0</span></div>
+      </div>
+      <div class="nav-btn" id="nav-btn-chieumo" onclick="openRecruit()"><div class="nav-icon-circle"><img class="hi" src="giao-dien/icon-home/chieu-mo.webp" alt="Chiêu Mộ" draggable="false" width="238" height="276"><span class="badge-nav" id="nb-chieumo" style="display:none">0</span></div></div>
+      <div class="nav-btn" onclick="alert('Kỳ Ngộ')"><div class="nav-icon-circle"><img class="hi" src="giao-dien/icon-home/ky-ngo.webp" alt="Kỳ Ngộ" draggable="false" width="236" height="276"><span class="badge-nav" id="nb-kyngo" style="display:none">0</span></div></div>
+      <div class="nav-btn" onclick="alert('Cửa Tiệm')"><div class="nav-icon-circle"><img class="hi" src="giao-dien/icon-home/cua-tiem.webp" alt="Cửa Tiệm" draggable="false" width="249" height="280"></div></div>
+      <div class="nav-btn" id="nav-btn-guild" onclick="openGuild()"><div class="nav-icon-circle"><img class="hi" src="giao-dien/icon-home/bang-hoi.webp" alt="Bang Hội" draggable="false" width="230" height="295"></div></div>
+    </div>
+  </div>
+
+  <!-- GIAO DIỆN TRẬN ĐẤU (OVERLAY) -->
+  <div id="battle-overlay">
+    <div class="battle-header-info">
+      <span id="ui-stage-title">Ải 1 - Bàn 1</span>
+      <span id="ui-wave-title">Trận 1/4</span>
+    </div>
+    <div class="bf-field" id="battle-arena">
+      <button id="pv-skip" onclick="pvpSkip()">Bỏ<br>Qua</button>
+      <div class="bf-mount"></div><div class="bf-mount b"></div><div class="bf-ground"></div>
+      <div class="bf-title" id="ui-enemy-name"></div>
+      <div id="bf-units"></div>
+    </div>
+    <div class="bf-acts">
+        <button id="btn-all" class="btn-attack" onclick="castAll()" disabled>Ulti Tất Cả</button>
+        <button id="btn-end" class="btn-attack" onclick="endTurn()" disabled>Hết Lượt</button>
+        <button id="btn-auto" class="btn-attack" onclick="toggleAuto()">Tự Động: BẬT</button>
+        <button id="btn-slow" class="btn-attack" onclick="toggleSlow()">Chậm: TẮT</button>
+        <button class="btn-close-battle" onclick="closeBattle()">Thoát</button>
+    </div>
+    <div class="bf-panel"><div class="bf-fit">
+      <div class="bf-hint" id="bf-hint"></div>
+      <div id="pv-panel"></div>
+      <div class="bf-row" id="bf-cards"></div>
+      <div class="bf-row" id="bf-orbs"></div>
+    </div></div>
+  </div>
+
+  <!-- ĐỘI NGŨ -->
+  <div id="team-modal"><div class="tm-box">
+    <div class="tm-title">⛩️ ĐỘI NGŨ</div>
+    <div class="tm-sub" id="tm-sub">Chọn 1–5 tướng ra trận</div>
+    <div class="tm-list" id="tm-list"></div>
+    <button class="btn-attack tm-ok" onclick="closeTeam()">Xong</button>
+  </div></div>
+
+  <!-- CHI TIẾT TƯỚNG -->
+  <div id="hero-modal" class="md-wrap" onclick="if(event.target===this)closeHeroDetail()"><div class="md-box">
+    <div class="hd-head"><div class="hd-ico" id="hd-ico"></div><div class="hd-info"><div class="hd-name" id="hd-name"></div><div class="hd-sub" id="hd-sub"></div></div><button class="md-x" onclick="closeHeroDetail()">✕</button></div>
+    <div class="hd-main">
+      <div class="hd-detail"><div class="t">Chi Tiết</div><div id="hd-stats"></div><div class="hd-ts-sec">🔮 Bảo Vật</div><div class="hd-ts-row" id="hd-ts"></div></div>
+      <div class="hd-slots" id="hd-slots"></div>
+    </div>
+    <div class="md-sec">📖 Tuyệt kỹ</div>
+    <div id="hd-skills"></div>
+    <div class="md-acts"><button class="btn-attack" onclick="upgradeFromDetail()">⬆ Nâng cấp</button><button class="btn-attack" onclick="openEquip()">🎒 Kho trang bị</button><button class="btn-close-battle" onclick="closeHeroDetail()">Đóng</button></div>
+  </div></div>
+
+  <!-- HỘP THƯ + TÚI ĐỒ -->
+  <div id="chat-modal" class="md-wrap" onclick="if(event.target===this)closeChat()"><div class="md-box">
+    <div class="hd-head"><div class="hd-info"><div class="hd-name">💬 Chat Thế Giới</div></div><button class="md-x" onclick="closeChat()">✕</button></div>
+    <div class="set-note" id="chat-note"></div>
+    <div id="chat-list"></div>
+    <form class="ch-form" onsubmit="sendChat();return false"><input id="chat-input" maxlength="200" placeholder="Nhập tin nhắn..." autocomplete="off"><button type="submit">Gửi</button></form>
+  </div></div>
+  <div id="mail-modal" class="md-wrap" onclick="if(event.target===this)closeMail()"><div class="md-box">
+    <div class="hd-head"><div class="hd-info"><div class="hd-name">🧧 Hộp Thư</div></div><button class="md-x" onclick="closeMail()">✕</button></div>
+    <div class="set-note" id="mail-note"></div>
+    <div id="mail-list"></div>
+  </div></div>
+  <div id="bag-modal" class="md-wrap" onclick="if(event.target===this)closeBag()"><div class="md-box">
+    <div class="hd-head"><div class="hd-info"><div class="hd-name">🎒 Túi Đồ</div></div><button class="md-x" onclick="closeBag()">✕</button></div>
+    <div id="bag-list"></div>
+  </div></div>
+
+  <!-- KHO TRANG BỊ -->
+  <div id="ts-modal" class="md-wrap" onclick="if(event.target===this)tsClose()"><div class="md-box">
+    <div class="hd-head"><div class="hd-info"><div class="hd-name" id="ts-title">🔮 Bảo Vật</div></div><button class="md-x" onclick="tsClose()">✕</button></div>
+    <div class="set-note" id="ts-note"></div>
+    <div id="ts-list"></div>
+  </div></div>
+  <div id="lt-modal" class="md-wrap" onclick="if(event.target===this)ltClose()"><div class="md-box">
+    <div class="hd-head"><div class="hd-info"><div class="hd-name" id="lt-title">🐾 Linh Thú</div></div><button class="md-x" onclick="ltClose()">✕</button></div>
+    <div class="set-note" id="lt-note"></div>
+    <div id="lt-list"></div>
+  </div></div>
+  <div id="ts-pick" class="md-wrap" style="z-index:9999" onclick="if(event.target===this)tsPickClose()"><div class="md-box">
+    <div class="hd-head"><div class="hd-info"><div class="hd-name" id="ts-pick-title">Chọn khung</div></div><button class="md-x" onclick="tsPickClose()">✕</button></div>
+    <div class="hero-chips" id="ts-pick-list" style="flex-wrap:wrap;overflow:visible"></div>
+  </div></div>
+  <div id="pv-modal" class="md-wrap" onclick="if(event.target===this)pvClose()"><div class="md-box" id="pv-box"></div></div>
+  <div id="equip-modal" class="md-wrap" onclick="if(event.target===this)closeEquip()"><div class="md-box">
+    <div class="hd-head"><div class="hd-info"><div class="hd-name">🎒 Trang Bị</div><div class="hd-sub" id="eq-sub"></div></div><button class="md-x" onclick="closeEquip()">✕</button></div>
+    <div class="eq-tabs" id="eq-tabs"></div>
+    <div id="eq-pills"></div>
+    <div id="eq-body"></div>
+    <div class="md-acts"><button class="btn-attack" onclick="closeEquip()">Xong</button></div>
+  </div></div>
+
+  <!-- CÀI ĐẶT -->
+  <div id="settings-modal" class="md-wrap"><div class="md-box">
+    <div class="hd-head"><div class="hd-info"><div class="hd-name">⚙️ Cài Đặt</div></div><button class="md-x" onclick="closeSettings()">✕</button></div>
+    <div class="md-sec">🔊 Âm thanh</div>
+    <div class="set-row"><label>⚔️ Âm thanh skill<small>Âm tuyệt kỹ của từng tướng, âm đánh thường, hiệu ứng</small></label><button class="snd-sw" id="sw-skill" onclick="toggleAudio('skill')"></button></div>
+    <div class="md-sec">☁️ Lưu đám mây (chơi mọi web, mọi máy)</div>
+    <div id="cl-box"></div>
+    <div class="set-saved" id="cl-msg" style="height:auto;min-height:16px"></div>
+    <div class="md-acts"><button class="btn-attack" onclick="closeSettings()">Xong</button></div>
+  </div></div>
+
+  <!-- ===== SCRIPT: nạp theo đúng thứ tự (các file dùng chung biến toàn cục, KHÔNG đổi thứ tự) ===== -->
+  <script src="heros/hero-data.js?v=1"></script>   <!-- dữ liệu 18 tướng -->
+  <script src="game.js?v=1"></script>   <!-- TOÀN BỘ JS game gộp 1 file (xem banner === trong file) -->
+</body>
+</html>

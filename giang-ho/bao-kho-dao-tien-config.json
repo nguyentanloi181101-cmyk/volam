@@ -1,0 +1,102 @@
+[
+ {
+  "ai": 1,
+  "hp": 5000,
+  "atk": 2500,
+  "def_": 1500,
+  "heal": 500,
+  "baoKho_bac": 20000,
+  "baoKho_gao": 20000,
+  "daoTien": 25
+ },
+ {
+  "ai": 2,
+  "hp": 7500,
+  "atk": 3750,
+  "def_": 2250,
+  "heal": 750,
+  "baoKho_bac": 100000,
+  "baoKho_gao": 100000,
+  "daoTien": 125
+ },
+ {
+  "ai": 3,
+  "hp": 11250,
+  "atk": 5625,
+  "def_": 3375,
+  "heal": 1125,
+  "baoKho_bac": 500000,
+  "baoKho_gao": 500000,
+  "daoTien": 625
+ },
+ {
+  "ai": 4,
+  "hp": 16875,
+  "atk": 8438,
+  "def_": 5062,
+  "heal": 1688,
+  "baoKho_bac": 2500000,
+  "baoKho_gao": 2500000,
+  "daoTien": 3125
+ },
+ {
+  "ai": 5,
+  "hp": 25312,
+  "atk": 12656,
+  "def_": 7594,
+  "heal": 2531,
+  "baoKho_bac": 12500000,
+  "baoKho_gao": 12500000,
+  "daoTien": 15625
+ },
+ {
+  "ai": 6,
+  "hp": 37969,
+  "atk": 18984,
+  "def_": 11391,
+  "heal": 3797,
+  "baoKho_bac": 62500000,
+  "baoKho_gao": 62500000,
+  "daoTien": 78125
+ },
+ {
+  "ai": 7,
+  "hp": 56953,
+  "atk": 28477,
+  "def_": 17086,
+  "heal": 5695,
+  "baoKho_bac": 312500000,
+  "baoKho_gao": 312500000,
+  "daoTien": 390625
+ },
+ {
+  "ai": 8,
+  "hp": 85430,
+  "atk": 42715,
+  "def_": 25629,
+  "heal": 8543,
+  "baoKho_bac": 1562500000,
+  "baoKho_gao": 1562500000,
+  "daoTien": 1953125
+ },
+ {
+  "ai": 9,
+  "hp": 128145,
+  "atk": 64072,
+  "def_": 38443,
+  "heal": 12814,
+  "baoKho_bac": 7812500000,
+  "baoKho_gao": 7812500000,
+  "daoTien": 9765625
+ },
+ {
+  "ai": 10,
+  "hp": 192217,
+  "atk": 96108,
+  "def_": 57665,
+  "heal": 19222,
+  "baoKho_bac": 39062500000,
+  "baoKho_gao": 39062500000,
+  "daoTien": 48828125
+ }
+]
