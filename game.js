@@ -2213,7 +2213,7 @@ function addAccExp(n) {
       else if (id === 12) ult = `Ra trận ĐẦY NỘ. Ulti 18 đạo tàn ảnh dồn dập chạy từ đội ta sang đội địch. TOÀN ĐỘI nhận trong ${LB_TURNS} hiệp: +${pct(LB_DODGE_MULT)}% Né của Đoàn Dự (≈ +${fmtN(st.dodge * LB_DODGE_MULT)}% Né), +${pct(LB_SPD_MULT)}% Tốc của Đoàn Dự (≈ +${fmtN(st.spd * LB_SPD_MULT)} Tốc) và mỗi hiệp hồi ${pct(LB_HEAL_MULT)}% Máu của Đoàn Dự (≈ ${fmtN(st.hp * LB_HEAL_MULT)} máu/hiệp). Cần đầy 100 nộ, mỗi lần ulti xong nộ về 0.`;
       else if (id === 11) ult = `KHÔNG TỐN NỘ – hiệp nào cũng ulti được. Đứng tại chỗ tung chiêu: ${GO_STONES} cây cờ Thái Cực phóng thật nhanh xuống đội địch từng cây một, mỗi cây trúng gây ${pct(GO_STONE_PCT)}% HP hiện tại của địch bị trúng. Sau đó chọn BOSS MẠNH NHẤT (nhiều HP tối đa nhất), SAO CHÉP: đồng đội nhận CÔNG / THỦ / HP của boss, boss GIỮ NGUYÊN chỉ số. Từ lần sao chép thứ 2: so với lần trước, chỉ số nào lần 1 cao hơn thì giữ nguyên, chỉ số nào lần 2 cao hơn thì lấy lần 2 (không cộng dồn).`;
       else if (id === 10) ult = `KHÔNG TỐN NỘ – lượt nào cũng ulti được. Dang tay triệu hồi đầu lâu lửa phun lửa xuống TOÀN BỘ địch: ${SKEL_HITS} lần sát thương, tổng ${pct(SKEL_MULT * sk)}% Công (≈ ${fmtN(st.atk * SKEL_MULT * sk)}, mỗi lần ≈ ${fmtN(st.atk * SKEL_MULT * sk / SKEL_HITS)}) và GIẢM ${pct(SKEL_PCT)}% MÁU HIỆN TẠI của địch trong ${PD_HP_TURNS} hiệp (hết hạn thì máu được cộng lại). Địch né được thì không dính. Địch bị đánh xong mà HP còn ≤ ${pct(EXEC_PCT)}% HP tối đa sẽ bị TẤT SÁT – kết liễu ngay. Bản thân không bị trừ máu.`;
-      else if (id === 2) ult = `KHÔNG TỐN NỘ – lượt nào cũng ulti được. Trăng khuyết hiện lên, ánh sáng chiếu xuống toàn đội cùng vô số hạt sáng lấp lánh: GIẢI TẤT CẢ hiệu ứng bất lợi (chảy máu, choáng) của phe ta và dựng KHIÊN TRĂNG KHUYẾT: PHẢN ${pct(MOON_REFLECT)}% sát thương nhận vào về cho địch, đồng đội chỉ chịu ${pct(MOON_TAKE)}% sát thương. Khiên duy trì ${MOON_TURNS} hiệp.`;
+      else if (id === 2) ult = `KHÔNG TỐN NỘ – lượt nào cũng ulti được. Hằng Nga từ mặt đất bay vút lên trời, ngồi trên vầng trăng sáng; ánh trăng chiếu xuống toàn đội: GIẢI TẤT CẢ hiệu ứng bất lợi (chảy máu, choáng) của phe ta và dựng KHIÊN NGUYỆT QUANG: PHẢN ${pct(MOON_REFLECT)}% sát thương nhận vào về cho địch, đồng đội chỉ chịu ${pct(MOON_TAKE)}% sát thương. Khiên duy trì ${MOON_TURNS} hiệp.`;
       else if (id === 8) ult = `KHÔNG TỐN NỘ — lượt nào cũng ulti được. Biến lớn, triệu hồi ${TL_BUBBLES} bong bóng rơi dồn dập như mưa: tấn công TOÀN địch ${TL_HITS} lần, tổng ${pct(TL_MULT * sk)}% Công, mỗi lần ≈ ${fmtN(st.atk * TL_MULT * sk / TL_HITS)}. Cả đội ta +${TL_RAGE} nộ.`;
       else if (id === 7) ult = `Nhảy qua đầu tướng địch, xoay kiếm 5 vòng rồi giáng ${DRAGON_TIERS} lần sát thương lên TOÀN BỘ địch: tổng ${pct(DRAGON_MULT * sk)}% Công (≈ ${fmtN(st.atk * DRAGON_MULT * sk)}, mỗi lần ≈ ${fmtN(st.atk * DRAGON_MULT * sk / DRAGON_TIERS)}). Đồng thời mỗi địch bị GIẢM ${pct(PD_HP_PCT)}% MÁU HIỆN TẠI trong ${PD_HP_TURNS} hiệp (hết hạn thì máu được cộng lại), bản thân +${pct(PD_ATK_BUFF)}% Công ${PD_BUFF_TURNS} hiệp.`;
       else if (id === 1) ult = `Cần đầy 100 nộ. Mưa cánh hoa sen rơi từ trời xuống chỗ đồng đội đã gục, hoa sen xanh nở ra và HỒI SINH tối đa ${REVIVE_COUNT} tướng với ${pct(REVIVE_HP_PCT)}% HP (nộ về 0, chưa ra đòn ngay lượt đó). Chỉ ulti khi có đồng đội đã gục – nếu chưa có thì giữ nộ và đánh thường.`;
@@ -2247,7 +2247,7 @@ function addAccExp(n) {
         switch (id) {
           case 0: return `Chém TOÀN BỘ địch ${MADAO_SLASHES} nhát.`;
           case 1: return `Hồi sinh tối đa ${REVIVE_COUNT} đồng đội đã gục với ${pct(REVIVE_HP_PCT)}% HP.`;
-          case 2: return `Giải hiệu ứng xấu (chảy máu, choáng) cả đội. Dựng khiên ${MOON_TURNS} hiệp: phản ${pct(MOON_REFLECT)}% sát thương cho địch, đồng đội chỉ chịu ${pct(MOON_TAKE)}% sát thương.`;
+          case 2: return `Hằng Nga bay lên ngồi trăng, giải hiệu ứng xấu (chảy máu, choáng) cả đội. Dựng khiên ${MOON_TURNS} hiệp: phản ${pct(MOON_REFLECT)}% sát thương cho địch, đồng đội chỉ chịu ${pct(MOON_TAKE)}% sát thương.`;
           case 3: return `Mưa ${DUCO_SWORDS} kiếm đánh toàn địch ${DUCO_HIT_COUNT} lần. Địch giảm ${pct(DUCO_SLOW)}% Tốc; cả đội ta tăng ${pct(DUCO_HASTE)}% Tốc, ${DUCO_BUFF_TURNS} hiệp.`;
           case 4: return `Đánh TOÀN BỘ địch. ★5: choáng 1 địch ngẫu nhiên 2 hiệp. ★6: toàn địch chảy máu ${TAICHI_BLEED_TURNS} hiệp (mất ${pct(TAICHI_BLEED_PCT)}% HP hiện tại mỗi hiệp), choáng 2 địch ngẫu nhiên 2 hiệp.`;
           case 5: return `Hồi máu cho TOÀN ĐỘI còn sống.`;
@@ -3249,7 +3249,7 @@ cfgOnApply(applyFormationCfg);   // chạy ngay 1 lần + chạy lại mỗi khi
    (tách từ index.html cũ — script) */
 
     // Chiêu cuối: tướng thường dùng kiểu lao vào đánh 3 đòn, Trương Tam Phong có chiêu riêng
-    // Âm thanh tuyệt kỹ theo tướng (heros/<tên-tướng>/NN-<tên-tướng>.mp3). [ghi chú cũ: id 0 = Ma Đao Thánh Nữ, id 2 = Chu Nguyên Chương, id 5 = Âu Cơ, id 8 = Lạc Long Quân, id 9 = Hỏa Thiên Tướng, id 10 = Tiểu Yêu (Vô Nhai Tử: không có âm lúc bắt đầu chiêu, mỗi viên cờ rơi kêu 1 tiếng – xem playGoStone)
+    // Âm thanh tuyệt kỹ theo tướng (heros/<tên-tướng>/NN-<tên-tướng>.mp3). [ghi chú cũ: id 0 = Ma Đao Thánh Nữ, id 2 = Hằng Nga, id 5 = Âu Cơ, id 8 = Lạc Long Quân, id 9 = Hỏa Thiên Tướng, id 10 = Tiểu Yêu (Vô Nhai Tử: không có âm lúc bắt đầu chiêu, mỗi viên cờ rơi kêu 1 tiếng – xem playGoStone)
     const HERO_SND_SRC = HERO_T.sound;   // mỗi tướng 1 âm tuyệt kỹ riêng (tạo bằng tổng hợp âm), phát lúc bắt đầu tung chiêu
     const heroSnd = {};
     Object.keys(HERO_SND_SRC).forEach(id => { try { const a = new Audio(HERO_SND_SRC[id]); a.preload = 'auto'; heroSnd[id] = a; } catch (e) {} });
@@ -3538,40 +3538,49 @@ cfgOnApply(applyFormationCfg);   // chạy ngay 1 lần + chạy lại mỗi khi
       setHpBar(h); refreshPanel();
     }
 
-/* === chu-nguyen-chuong === */
-/* CHU NGUYÊN CHƯƠNG (id 2): tuyệt kỹ khiên mặt trăng
-   (tách từ index.html cũ — script) */
+/* === hang-nga === */
+/* HẰNG NGA (id 2): tuyệt kỹ khiên Nguyệt Quang
+   Chuỗi khung: SEQ.hnIdle (20 khung đứng yên) • SEQ.hnCast (24 khung: bay từ đất lên trời, ngồi lên mặt trăng). Hai sheet CÙNG cỡ ô + CÙNG điểm neo (đầu)
+   nên khi phủ lên tướng, thân không xê dịch. Tướng bay lên cao dần (animate `bottom`), ánh trăng rọi xuống cả đội:
+   giải hiệu ứng xấu + khiên MOON_TURNS hiệp (phản MOON_REFLECT, đồng đội nhận MOON_TAKE). */
 
-    // Chu Nguyên Chương: trăng khuyết chiếu sáng, hạt sáng rơi xuống; giải hiệu ứng xấu + khiên phản 50% / nhận 30% trong 2 hiệp
-    async function moonUlt(u, tok) {
+    async function hangNgaUlt(u, tok) {
       const f = document.getElementById('battle-arena'), box = document.getElementById('bf-units');
-      const W = f.clientWidth, H = f.clientHeight, base = 'translate(-50%,-50%)', made = [];
+      const W = f.clientWidth, H = f.clientHeight, made = [], timers = [];
       const allies = alliesOf(u).filter(h => h.alive);
-      const cx = allies.reduce((a, h) => a + h.x, 0) / allies.length;
-      const bw = Math.min(W * 0.66, W), bx = Math.max(0, Math.min(W - bw, cx * W / 100 - bw / 2));
+      const S = SEQ.hnCast, N = S.n, FR = 85;                                         // 24 khung × 85ms
+      const castW = Math.round(S.cw * SEQ_IDLE[2].h / SEQ.hnIdle.ch), castH = Math.round(castW * S.ch / S.cw);   // cùng tỉ lệ với dáng đứng
+      const rise = Math.max(0, Math.min(H * 0.3, u.y / 100 * H - castH * 0.6));        // quãng bay lên trời (không vọt khỏi sân)
+      const at = (ms, fn) => timers.push(setTimeout(() => { if (tok === battleToken) fn(); }, seqT(ms)));
+      const cast = seqOverlay(u, S, castW);
       try {
-        u.el.animate([{ transform: base }, { transform: 'translate(-50%,calc(-50% - 16px))' }, { transform: base }], { duration: 600 });
-        const moon = document.createElement('div'); moon.className = 'bf-moon'; moon.textContent = '🌙';
-        moon.style.left = cx + '%'; moon.style.top = '13%'; box.appendChild(moon); made.push(moon);
-        await sleep(350); if (tok !== battleToken) return;
-        const beam = document.createElement('div'); beam.className = 'bf-moonbeam';
-        beam.style.left = bx + 'px'; beam.style.width = bw + 'px'; beam.style.height = (H * 0.92) + 'px';
-        box.appendChild(beam); made.push(beam);
-        for (let i = 0; i < 34; i++) {                      // hạt ánh sáng lấp lánh rơi xuống
-          const sp = document.createElement('div'); sp.className = 'bf-spark'; sp.textContent = rand(['✨', '✦', '✧', '⭐']);
-          sp.style.left = (bx + bw * (0.15 + Math.random() * 0.7)) + 'px'; sp.style.top = (H * (0.1 + Math.random() * 0.12)) + 'px';
-          sp.style.fontSize = (10 + Math.random() * 12) + 'px';
-          sp.style.setProperty('--d', (0.9 + Math.random() * 0.7) + 's'); sp.style.setProperty('--dl', (Math.random() * 1.0) + 's');
-          sp.style.setProperty('--h', (H * (0.4 + Math.random() * 0.4)) + 'px');
-          box.appendChild(sp); made.push(sp);
-        }
-        await sleep(450); if (tok !== battleToken) return;
-        cleanse(allies);                                     // giải hết hiệu ứng bất lợi
-        allies.forEach((a, i) => setTimeout(() => { if (!a.alive) return; applyMoon(a); floatText(a, '🌙 KHIÊN PHẢN 50%'); }, i * 120));
-        await sleep(1300); if (tok !== battleToken) return;
+        for (let i = 0; i < N; i++) at(i * FR, () => cast.show(i));
+        cast.el.animate([{ bottom: '2px' }, { bottom: (2 + rise) + 'px' }], { duration: Math.max(1, seqT(FR * (N - 6))), easing: 'ease-in-out', fill: 'forwards' });
+        // ánh trăng rọi từ vầng trăng xuống cả đội (rộng đủ phủ mọi đồng đội)
+        const ux = u.x / 100 * W, spread = Math.max(...allies.map(a => Math.abs(a.x - u.x))) / 100 * W;
+        const bw = Math.min(W * 1.6, Math.max(W * 0.5, spread * 2 + 160)), top = Math.max(0, u.y / 100 * H - rise - castH * 0.5);
+        at(FR * 12, () => {
+          const beam = document.createElement('div'); beam.className = 'bf-moonbeam';
+          beam.style.left = (ux - bw / 2) + 'px'; beam.style.width = bw + 'px'; beam.style.top = top + 'px'; beam.style.height = Math.max(40, H * 0.96 - top) + 'px';
+          beam.style.clipPath = 'polygon(44% 0,56% 0,100% 100%,0 100%)'; box.appendChild(beam); made.push(beam);
+          for (let i = 0; i < 34; i++) {                                                // hạt ánh sáng lấp lánh rơi xuống
+            const sp = document.createElement('div'); sp.className = 'bf-spark'; sp.textContent = rand(['✨', '✦', '✧', '⭐']);
+            sp.style.left = (ux - bw / 2 + bw * (0.12 + Math.random() * 0.76)) + 'px'; sp.style.top = (top + (H - top) * (0.05 + Math.random() * 0.2)) + 'px';
+            sp.style.fontSize = (10 + Math.random() * 12) + 'px';
+            sp.style.setProperty('--d', (0.9 + Math.random() * 0.7) + 's'); sp.style.setProperty('--dl', (Math.random() * 1.0) + 's');
+            sp.style.setProperty('--h', ((H - top) * (0.4 + Math.random() * 0.4)) + 'px');
+            box.appendChild(sp); made.push(sp);
+          }
+        });
+        await sleep(FR * 17); if (tok !== battleToken) return;
+        cleanse(allies);                                                                 // giải TẤT CẢ hiệu ứng bất lợi
+        allies.forEach((a, i) => setTimeout(() => { if (!a.alive) return; applyMoon(a); floatText(a, '🌙 KHIÊN PHẢN ' + Math.round(MOON_REFLECT * 100) + '%'); }, i * 120));
+        await sleep(FR * (N - 17) + 900); if (tok !== battleToken) return;            // đợi hết chuỗi + giữ dáng ngồi trên trăng
+        cast.el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 250, fill: 'forwards' });
+        await sleep(260);
       } finally {
-        made.forEach(d => d.remove());
-        u.el.getAnimations().forEach(x => x.cancel());
+        timers.forEach(clearTimeout); made.forEach(d => d.remove());
+        cast.end(); u.el.getAnimations().forEach(x => x.cancel());
       }
     }
 
