@@ -1657,3 +1657,12 @@ img.gi-g{height:1.15em;width:auto;vertical-align:-.2em;display:inline-block}.bm-
 /* bong bóng tin nhắn hợp tông khung xanh tím */
 #chat-modal .ch-msg:not(.me){background:rgba(76,56,140,.6) !important;border:1px solid rgba(167,139,250,.5) !important;color:#fff}
 #chat-modal .ch-empty{color:rgba(226,232,255,.6) !important;text-align:center;padding-top:30%}
+
+/* NÂNG PHẨM CHẤT: lưới nguyên liệu 4 cột + nền màn */
+.up-stage.phamchat{background:radial-gradient(ellipse at 50% 80%,#b4530988,#1c1208 70%)}
+.up-cost.ql{display:grid;grid-template-columns:repeat(4,1fr);gap:8px 6px;margin:6px 6px 4px}.up-cost.ql .up-it{min-width:0}
+.up-cost.ql .up-it .e{height:46px;width:46px;font-size:26px}.up-cost.ql .up-it b{font-size:11px}.up-cost.ql .up-it small{font-size:10px;display:block;line-height:1.15}
+.up-it .e img.gi-g{width:auto;max-width:100%;height:100%;object-fit:contain}
+/* icon vật phẩm trong thư / quà / sự kiện */
+.bm-info img.gi,#mail-note img.gi{width:auto;height:1.3em;vertical-align:-.25em}
+.qs-gifts img.gi,.qs-gifts img.gi-g{width:auto;height:30px;vertical-align:middle}

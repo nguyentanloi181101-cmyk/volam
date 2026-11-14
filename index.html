@@ -103,7 +103,7 @@
         <div class="feat-row feat-row-bottom">
           <div class="feat-item" onclick="openTeam()"><div class="feat-icon"><img class="hi" src="giao-dien/icon-home/doi-ngu.webp" alt="Đội Ngũ" draggable="false" width="300" height="277"></div></div>
           <div class="feat-item" onclick="openPicker('boiduong')"><div class="feat-icon"><img class="hi" src="giao-dien/icon-home/tang-cap.webp" alt="Tăng Cấp" draggable="false" width="280" height="279"></div></div>
-          <div class="feat-item" onclick="openEquip()"><div class="feat-icon"><img class="hi" src="giao-dien/icon-home/trang-bi.webp" alt="Trang Bị" draggable="false" width="281" height="290"></div></div>
+          <div class="feat-item" onclick="openEqhub()"><div class="feat-icon"><img class="hi" src="giao-dien/icon-home/trang-bi.webp" alt="Trang Bị" draggable="false" width="281" height="290"></div></div>
           <div class="feat-item" onclick="openBvhub()"><div class="feat-icon"><img class="hi" src="giao-dien/icon-home/bao-vat.webp" alt="Bảo Vật" draggable="false" width="284" height="285"></div></div>
           <div class="feat-item"><div class="feat-icon"><img class="hi" src="giao-dien/icon-home/luyen-hoa.webp" alt="Luyện Hóa" draggable="false" width="297" height="297"><span class="badge" id="nb-luyenhoa" style="display:none">0</span></div></div>
         </div>
@@ -241,6 +241,15 @@
         </div>
       </div>
 
+      <!-- HUB TRANG BỊ (2 nút: Tăng Cấp / Tăng Sao) — thêm ảnh giao-dien/trang-bi/tang-cap.webp và tang-sao.webp, chưa có ảnh thì hiện chữ thay thế -->
+      <div class="screen" id="screen-eqhub">
+        <div class="pve-header"><button class="btn-back" onclick="switchScreen('home')">Trở về</button><h2 class="pve-title">Quản lý Trang Bị</h2></div>
+        <div class="vh-grid">
+          <div class="vh-btn" onclick="eqGo('lv')" title="Tăng Cấp"><img class="vh-ic" src="giao-dien/trang-bi/tang-cap.webp" alt="Tăng Cấp" decoding="async" onerror="eqIcFallback(this,'⬆️','Tăng Cấp')"></div>
+          <div class="vh-btn" onclick="eqGo('star')" title="Tăng Sao"><img class="vh-ic" src="giao-dien/trang-bi/tang-sao.webp" alt="Tăng Sao" decoding="async" onerror="eqIcFallback(this,'⭐','Tăng Sao')"></div>
+        </div>
+      </div>
+
       <!-- HUB VÕ HIỆP -->
       <div class="screen" id="screen-vhub">
         <div class="pve-header"><button class="btn-back" onclick="switchScreen('home')">Trở về</button><h2 class="pve-title">Quản lý Võ Hiệp</h2></div>
@@ -252,6 +261,7 @@
           <div class="vh-btn" onclick="vhGo('dotpha')" title="Đột Phá"><img class="vh-ic" src="giao-dien/tuong/dot_pha.webp" alt="Đột Phá" loading="lazy" decoding="async" width="260" height="316"></div>
           <div class="vh-btn" onclick="vhGo('kynang')" title="Kỹ Năng"><img class="vh-ic" src="giao-dien/tuong/ky_nang.webp" alt="Kỹ Năng" loading="lazy" decoding="async" width="260" height="331"></div>
           <div class="vh-btn" onclick="vhGo('kinhmach')" title="Kinh Mạch"><img class="vh-ic" src="giao-dien/tuong/kinh_mach.webp" alt="Kinh Mạch" loading="lazy" decoding="async" width="260" height="315"></div>
+          <div class="vh-btn" onclick="vhGo('phamchat')" title="Nâng Phẩm Chất"><img class="vh-ic" src="giao-dien/tuong/nang_pham_chat.webp" alt="Nâng Phẩm Chất" loading="lazy" decoding="async" onerror="eqIcFallback(this,'💎','Nâng Phẩm Chất')"></div>
           <div class="vh-btn" onclick="vhGo('gianghoky')" title="Giang Hồ Ký"><img class="vh-ic" src="giao-dien/tuong/giang_ho_ky.webp" alt="Giang Hồ Ký" loading="lazy" decoding="async" width="260" height="334"></div>
         </div>
       </div>
@@ -398,7 +408,7 @@
   </div></div>
   <div id="pv-modal" class="md-wrap" onclick="if(event.target===this)pvClose()"><div class="md-box" id="pv-box"></div></div>
   <div id="equip-modal" class="md-wrap" onclick="if(event.target===this)closeEquip()"><div class="md-box">
-    <div class="hd-head"><div class="hd-info"><div class="hd-name">🎒 Trang Bị</div><div class="hd-sub" id="eq-sub"></div></div><button class="md-x" onclick="closeEquip()">✕</button></div>
+    <div class="hd-head"><div class="hd-info"><div class="hd-name" id="eq-title">🎒 Trang Bị</div><div class="hd-sub" id="eq-sub"></div></div><button class="md-x" onclick="closeEquip()">✕</button></div>
     <div class="eq-tabs" id="eq-tabs"></div>
     <div id="eq-pills"></div>
     <div id="eq-body"></div>

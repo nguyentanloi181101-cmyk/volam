@@ -138,12 +138,16 @@ const RW_DAN_ICO = f => ({ 'than-dan': IC_THAN, 'tien-dan': IC_TIEN, 'vien-the-l
 const IC_GOLD = '💰', IC_SILVER = '🥈', IC_RICE = '🍚';
 const IC_THAN = '🟣', IC_TIEN = '🔴', IC_PILL = '💊', IC_PEACH = '🍑';   // Thần Đan / Tiên Đan / Viên Thể Lực / Đào Tiên
 const RW_GOLD_ICO = IC_GOLD;
+// ICON ẢNH dùng chung (nơi nào có ảnh thì hiện ảnh, ảnh lỗi/chưa có thì tự về emoji). Chỉ dùng trong HTML (innerHTML), KHÔNG dùng trong alert / toast chữ thuần.
+const ICO_SRC = { silver: 'giao-dien/icon-home/thoi-bac.webp', rice: 'giao-dien/icon-home/gao.webp', gold: 'giao-dien/icon-home/thoi-vang.webp', than: 'vat-pham-game/than-dan.webp', tien: 'vat-pham-game/tien-dan.webp', pill: 'vat-pham-game/vien-the-luc.webp', hammer: 'vat-pham-game/trang-bi/icon_hao_thien_chuy_khong_ten.webp' };
+const ICO_EMO = { silver: IC_SILVER, rice: IC_RICE, gold: IC_GOLD, than: IC_THAN, tien: IC_TIEN, pill: IC_PILL, hammer: '🔨' };
+const icoImg = (k, h) => `<img class="gi-g" src="${ICO_SRC[k]}" alt="${ICO_EMO[k]}" style="height:${h || '1.15em'};width:auto" onerror="this.outerHTML='${ICO_EMO[k]}'">`;
 const rwOk = r => !!(r && r.t && Number(r.n) > 0);
 const rwList = v => (Array.isArray(v) ? v : []).filter(rwOk);
 // Trả { ico (HTML), name, n } để hiển thị 1 phần quà
 function rwInfo(r) {
   const n = Math.floor(Number(r.n)) || 0;
-  const simple = { silver: [IC_SILVER, 'Bạc'], rice: [IC_RICE, 'Gạo'], gold: [RW_GOLD_ICO, 'Vàng'], than: [RW_DAN_ICO('than-dan'), 'Thần Đan'], tien: [RW_DAN_ICO('tien-dan'), 'Tiên Đan'], pill: [RW_DAN_ICO('vien-the-luc'), 'Viên Thể Lực'], hammer: ['🔨', 'Búa'], exp: ['✨', 'EXP'] };
+  const simple = { silver: [icoImg('silver'), 'Bạc'], rice: [icoImg('rice'), 'Gạo'], gold: [icoImg('gold'), 'Vàng'], than: [icoImg('than'), 'Thần Đan'], tien: [icoImg('tien'), 'Tiên Đan'], pill: [icoImg('pill'), 'Viên Thể Lực'], hammer: [icoImg('hammer'), 'Búa'], exp: ['✨', 'EXP'] };
   if (simple[r.t]) return { ico: simple[r.t][0], name: simple[r.t][1], n };
   if (r.t === 'shard') { let nm = 'tướng #' + r.id; try { nm = heroById(Number(r.id)).name; } catch (e) {} return { ico: '🧩', name: 'Mảnh ' + nm, n }; }
   if (r.t === 'treasure') { let nm = 'Bảo Vật'; try { nm = TS_DEFS[r.id].name; } catch (e) {} return { ico: '🏺', name: nm, n }; }
@@ -152,7 +156,7 @@ function rwInfo(r) {
   if (r.t === 'ltshard') { let nm = 'Linh Thú'; try { nm = LT_DEFS[r.id].name; } catch (e) {} return { ico: '🧩', name: 'Mảnh ' + nm, n }; }
   if (r.t === 'beast') return { ico: '🦄', name: 'Thần thú ' + (r.name || ''), n: 1 };
   if (r.t === 'tshard') return { ico: '🧩', name: 'Mảnh ' + (r.name || ''), n };
-  if (r.t === 'item') return { ico: r.ico || '🎁', name: r.name || 'Vật phẩm', n };
+  if (r.t === 'item') return { ico: (typeof gdIco === 'function' ? gdIco(r.name || '', r.ico || '🎁') : (r.ico || '🎁')), name: r.name || 'Vật phẩm', n };
   return { ico: '🎁', name: String(r.t), n };
 }
 const rwText = r => { const i = rwInfo(r); return i.ico + ' ' + (typeof fmtN === 'function' ? fmtN(i.n) : i.n) + ' ' + i.name; };
@@ -225,7 +229,7 @@ async function cfgFetch() {
 /* GIANG HỒ: Hang Tụ Linh + Danh Tướng Lầu
    - Hang Tụ Linh: 7 hạng (I–VII), mỗi lần đánh = 3 trận địch là tướng ngẫu nhiên, tốn 10 thể lực.
      Thắng đủ 3 trận: nhận 3–5 viên Đá đúng màu của hạng + 900 EXP. Có QUÉT (đánh nhanh) tối đa 3 lần/ngày cho cả Hang.
-   - Danh Tướng Lầu: 15 tầng, bấm tầng nào đánh tầng đó với 1 tài khoản Tỷ Võ ngẫu nhiên, chỉ 1 trận. Thắng nhận thưởng admin cấu hình.
+   - Danh Tướng Lầu: 15 tầng, bấm tầng nào đánh tầng đó với 1 tài khoản Tỷ Võ ngẫu nhiên, chỉ 1 trận. Thắng nhận VẬT PHẨM KỸ NĂNG (Bí Kíp / Yếu Quyết / Vô Tự Thiên Thư) ngẫu nhiên, số lượt rơi admin chỉnh bằng tower.skillMin / tower.skillMax.
    Admin chỉnh trong game_config (remote-config.js):  hang: {...}   tower: {...}   (xem HANG_CFG / TOWER_CFG bên dưới) */
 
 function ghSoon(t) { alert(t + ': tính năng đang phát triển'); }
@@ -252,7 +256,7 @@ const hangArr = (k, i) => { const v = Number((HANG_CFG[k] || [])[i]); return v >
 // floors: { "1": [quà...], "2": [...] } thưởng riêng từng tầng (admin cập nhật sau) • all: thưởng chung nếu tầng không có riêng
 // quà cùng định dạng Gift Code: { t:'silver'|'rice'|'gold'|'than'|'tien'|'pill'|'exp'|'shard'|'item', n, ... }
 // on / lockMode / levels giống Hang (levels[f-1] = cấp tối thiểu của tầng f)
-const TOWER_DEF = { on: 1, lockMode: 'open', levels: [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29], floors: {}, all: [] };
+const TOWER_DEF = { on: 1, lockMode: 'open', levels: [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29], floors: {}, all: [], skillMin: 3, skillMax: 5 };   // skillMin/skillMax: số lượt rơi vật phẩm kỹ năng mỗi tầng thắng (floors/all cũ không còn dùng)
 const TOWER_CFG = cfgSnap('tower', JSON.parse(JSON.stringify(TOWER_DEF)));
 const towerLv = f => { const v = Number((TOWER_CFG.levels || [])[f - 1]); return v > 0 ? v : TOWER_DEF.levels[f - 1]; };
 cfgOnApply(() => { Object.assign(HANG_CFG, cfgBase.hang, cfgGet('hang', {})); Object.assign(TOWER_CFG, cfgBase.tower, cfgGet('tower', {})); });
@@ -453,7 +457,7 @@ function renderBD(m) {
   let h = '';
   for (let ai = 1; ai <= (M.ais || BD_AI); ai++) {
     const open = bdOpen(m, ai), cleared = !!bdSt[m].clear[ai], s = bdStats(m, ai), r = bdReward(m, ai);
-    const rw = m === 'bk' ? `<span>🥈 <b>${fmtN(r)}</b> bạc</span><span>🍚 <b>${fmtN(bdReward(m, ai, true))}</b> gạo</span>` : m === 'tr' ? `<span>🔨 <b>${fmtN(r)}</b> Búa</span>` : `<span>🍑 <b>${fmtN(r)}</b> Đào Tiên</span>`;
+    const rw = m === 'bk' ? `<span>🥈 <b>${fmtN(r)}</b> bạc</span><span>🍚 <b>${fmtN(bdReward(m, ai, true))}</b> gạo</span>` : m === 'tr' ? `<span>${icoImg('hammer', '1.2em')} <b>${fmtN(r)}</b> Búa</span>` : `<span>🍑 <b>${fmtN(r)}</b> Đào Tiên</span>`;
     h += `<div class="hg-row ${open ? '' : 'locked'}">` +
       `<div class="hg-art"><img class="hg-ban" src="${M.ban}${ai}.${M.ext}" alt="${M.name} ${roman[ai - 1]}" draggable="false">` +
       `<div class="bd-info">${rw}<span>❤️ ${fmtN(s.hp)} ⚔️ ${fmtN(s.atk)}</span></div>` +
@@ -492,7 +496,7 @@ function bdFinish(g, win) {   // ghFinish gọi
 }
 
 // ================= SÁCH KỸ NĂNG (Bí Kíp / Yếu Quyết / Vô Tự Thiên Thư) =================
-// Chỉ rơi ở Luận Kiếm. Cấp kỹ năng 1→2 miễn phí; các cấp sau tốn sách theo bảng. cost[0] = lên cấp 3 … cost[7] = lên cấp 10. Admin chỉnh ở tab "Luận Kiếm & Sách".
+// Chỉ rơi ở Danh Tướng Lầu. Cấp kỹ năng 1→2 miễn phí; các cấp sau tốn sách theo bảng. cost[0] = lên cấp 3 … cost[7] = lên cấp 10. Admin chỉnh ở tab "Luận Kiếm & Sách".
 const SKB_ITEMS = ['Bí Kíp', 'Yếu Quyết', 'Vô Tự Thiên Thư'];
 const SKB_COST_DEF = [{ item: 'Bí Kíp', n: 10 }, { item: 'Bí Kíp', n: 20 }, { item: 'Yếu Quyết', n: 40 }, { item: 'Yếu Quyết', n: 80 }, { item: 'Vô Tự Thiên Thư', n: 100 }, { item: 'Vô Tự Thiên Thư', n: 200 }, { item: 'Vô Tự Thiên Thư', n: 400 }, { item: 'Vô Tự Thiên Thư', n: 1000 }];
 const SKB_CFG = cfgSnap('skillbook', { cost: JSON.parse(JSON.stringify(SKB_COST_DEF)) });
@@ -621,15 +625,21 @@ function renderTower() {
   box.innerHTML = h;
   const c = Object.keys(towerState.clear).length, ct = document.getElementById('tw-count'); if (ct) ct.innerText = `Đã chinh phục ${c}/${TOWER_FLOORS} tầng`;
 }
-const towerGifts = f => { const o = (TOWER_CFG.floors || {})[f]; return rwList(Array.isArray(o) && o.length ? o : TOWER_CFG.all).map(r => r.t === 'treasure' ? { t: 'tsshard', id: r.id, n: r.n } : r); };   // Danh Tướng Lầu chỉ cho MẢNH Bảo Vật (quà cũ 'treasure' n → n mảnh)
+// Danh Tướng Lầu: thưởng = VẬT PHẨM KỸ NĂNG. Mỗi tầng thắng rơi skillMin–skillMax lượt, mỗi lượt 1 loại ngẫu nhiên trong Bí Kíp / Yếu Quyết / Vô Tự Thiên Thư (trùng thì cộng dồn).
+const towerSkillRange = () => { let a = Math.floor(Number(TOWER_CFG.skillMin)), b = Math.floor(Number(TOWER_CFG.skillMax)); if (!(a >= 1)) a = TOWER_DEF.skillMin; if (!(b >= 1)) b = TOWER_DEF.skillMax; if (b < a) [a, b] = [b, a]; return [a, b]; };
+const towerRollGifts = () => {
+  const [a, b] = towerSkillRange(), c = a + Math.floor(Math.random() * (b - a + 1)), got = {};
+  for (let i = 0; i < c; i++) { const nm = SKB_ITEMS[Math.floor(Math.random() * SKB_ITEMS.length)]; (got[nm] = got[nm] || { t: 'item', name: nm, ico: '📘', n: 0 }).n += 1; }
+  return Object.values(got);
+};
 async function towerGo(f) {
   towerInit();
   if (towerState.clear[f]) return scToast(`Tầng ${f} đã chinh phục`);
   if (Number(TOWER_CFG.on) === 0) return scToast('Danh Tướng Lầu đang tạm đóng');
   if (!towerOpenF(f)) return scToast(towerWhy(f));
   if (!team.length) { alert('Hãy chọn Đội ngũ ra trận trước!'); return; }
-  const g = towerGifts(f);
-  if (!confirm(`Tầng ${f}: khiêu chiến 1 người chơi ngẫu nhiên (chỉ 1 trận).\n` + (g.length ? 'Thưởng: ' + rwTextAll(g) : 'Thưởng: sẽ cập nhật sau') + '\nBắt đầu?')) return;
+  const [sa, sb] = towerSkillRange();
+  if (!confirm(`Tầng ${f}: khiêu chiến 1 người chơi ngẫu nhiên (chỉ 1 trận).\nThưởng: ${sa === sb ? sa : sa + '–' + sb} vật phẩm kỹ năng ngẫu nhiên (Bí Kíp / Yếu Quyết / Vô Tự Thiên Thư)\nBắt đầu?`)) return;
   if (!pvpOpps.length) {
     try { await Promise.resolve(pvpGenOpps()); } catch (e) {}
     for (let i = 0; i < 12 && !pvpOpps.length; i++) await sleep(300);
@@ -642,7 +652,7 @@ function ghTowerFinish(m, win, timeout) {   // pvp-battle.js gọi khi trận T�
   if (win) {
     towerState.clear[f] = 1; towerSave();
     try { if (typeof qsAdd === 'function') qsAdd('dtl'); } catch (e) {}   // Nhiệm Vụ "Vượt ải Danh Tướng Lầu"
-    const g = towerGifts(f); let got = '';
+    const g = towerRollGifts(); let got = '';
     try { got = g.length ? rwGrantAll(g) : ''; } catch (e) {}
     pvpToast(`🏆 Chinh phục tầng ${f} Danh Tướng Lầu!` + (timeout ? `\n(hết ${PVP_MAX_ROUNDS} lượt, gây nhiều sát thương hơn)` : '') + (got ? `\n🎁 ${got}` : ''), true, { pvp: true, foe: m.opp && m.opp.name });
   } else pvpToast(`💀 Thua ở tầng ${f}${timeout ? ' (hết lượt)' : ''}!\nBạn có thể khiêu chiến lại tầng này.`, false, { pvp: true, foe: m.opp && m.opp.name });
@@ -662,7 +672,7 @@ function ghTowerFinish(m, win, timeout) {   // pvp-battle.js gọi khi trận T�
       const navBtn = document.getElementById(`nav-btn-${screenId}`);
       if(navBtn) navBtn.classList.add('active');
       
-      if(['home','picker','vhub','bvhub','lthub','guild','thanthu','dienvo','quest','daisanh','upg','team','tpick','ghep'].includes(screenId)) {
+      if(['home','picker','vhub','bvhub','eqhub','lthub','guild','thanthu','dienvo','quest','daisanh','upg','team','tpick','ghep'].includes(screenId)) {
         document.getElementById('app-header').style.display = 'block';
         document.getElementById('app-nav').style.display = 'flex';
       } else {
@@ -1099,7 +1109,7 @@ window.renderStages = function () {
     //  lvGrowthPct / starGrowthPct / skillGrowthPct : % HP/Công/Thủ tăng mỗi cấp / mỗi sao / mỗi cấp kỹ năng
     //  skillMax      : cấp kỹ năng tối đa
     //  costSilver / costRice / costGrowthPct : chi phí lên cấp 2 (bạc, gạo) và % đắt thêm mỗi cấp
-    var PROG_CFG = cfgSnap('progress', { lvPerStar: 10, maxStar: 15, starNeedsLv: 1, accLimitsLv: 1, lvGrowthPct: 3, starGrowthPct: 10, skillGrowthPct: 15, skillMax: 10, costSilver: 100, costRice: 200, costGrowthPct: 10 });
+    var PROG_CFG = cfgSnap('progress', { lvPerStar: 10, maxStar: 15, starNeedsLv: 1, accLimitsLv: 1, lvGrowthPct: 3, starGrowthPct: 10, skillGrowthPct: 15, skillMax: 10, costSilver: 100, costRice: 200, costGrowthPct: 10, skillBaseSkill: 60, skillBaseAtk: 150, skillBaseOther: 100, skillStepBi: 5, skillStepYeu: 10, skillStepVo: 15 });
     Object.assign(PROG_CFG, cfgGet('progress', {}));
     let SKILL_MAX = 10, LV_GROWTH = 0.03, STAR_GROWTH = 0.10, SKILL_GROWTH = 0.15;   // đồng bộ từ PROG_CFG bằng progCfgSync() (gọi cuối hero-progress.js và mỗi lần admin đổi cấu hình)
     const _pn = (v, d, lo, hi) => { v = Number(v); if (!isFinite(v)) v = d; return Math.min(hi, Math.max(lo, v)); };
@@ -1165,8 +1175,8 @@ var fmtN = n => {
     const _numLS = (k, d) => { try { const v = parseFloat(localStorage.getItem(k)); return isNaN(v) ? d : Math.max(0, v); } catch (e) { return d; } };
     let silver = _numLS('silver_val', BLANK_START ? 0 : 21873054), rice = _numLS('rice_val', BLANK_START ? 0 : 2549836);
     // THẦN ĐAN và TIÊN ĐAN: thưởng khi thắng mỗi Bàn PVE (xem trong Túi Đồ). Hiển thị bằng ảnh trong vat-pham-game/ (không dùng emoji)
-const DAN_IMG = { 'Thần Đan': IC_THAN, 'Tiên Đan': IC_TIEN };   // (tên cũ DAN_IMG: giờ là emoji)
-const danIcoHTML = (name, h) => DAN_IMG[name] || '';
+const DAN_IMG = { 'Thần Đan': icoImg('than'), 'Tiên Đan': icoImg('tien') };   // ảnh (lỗi ảnh thì tự về emoji)
+const danIcoHTML = (name, h) => { const k = name === 'Thần Đan' ? 'than' : name === 'Tiên Đan' ? 'tien' : ''; return k ? icoImg(k, h) : (DAN_IMG[name] || ''); };
     let thanDan = _numLS('thandan_val', 0), tienDan = _numLS('tiendan_val', 0);
     const updateRes = () => { [['silver-val', silver], ['rice-val', rice]].forEach(([i, v]) => { const el = document.getElementById(i); if (el) el.innerText = fmtN(v); }); };
     const resSave = () => { try { localStorage.setItem('silver_val', String(Math.floor(silver))); localStorage.setItem('rice_val', String(Math.floor(rice))); localStorage.setItem('thandan_val', String(Math.floor(thanDan))); localStorage.setItem('tiendan_val', String(Math.floor(tienDan))); } catch (e) {} updateRes(); };
@@ -1177,6 +1187,19 @@ const danIcoHTML = (name, h) => DAN_IMG[name] || '';
     cfgOnApply(() => { SHARD_PER_STAR = Math.max(1, Math.floor(cfgNum('recruit.shardPerStar', 10))); });
     const shardsOf = id => Math.max(0, heroShards[id] | 0);
     const starCost = star => star * SHARD_PER_STAR;   // chi phí để đạt ★star
+    // ---- PHÁCH: từ ★6 trở lên, ngoài mảnh tướng còn tốn Linh Phách + Tiên Phách + Thần Phách (vật phẩm trong Kho) ----
+    // Mặc định lên ★6: 10 Linh Phách + 5 Tiên Phách + 2 Thần Phách. Mỗi sao tiếp theo đắt thêm 50% SỐ GỐC (★7 = ×1.5, ★8 = ×2, ★9 = ×2.5…; làm tròn lên).
+    // Admin (tab Cấp / Sao tướng): progress.phachFrom (sao đầu tiên tốn phách, mặc định 6) • phachLinh / phachTien / phachThan (số phách ở sao đó) • phachGrowthPct (% đắt thêm mỗi sao, mặc định 50)
+    const PHACH_NAMES = ['Linh Phách', 'Tiên Phách', 'Thần Phách'];
+    function starPhach(star) {   // [{name, n}] phách cần để đạt ★star ([] nếu chưa tới mốc)
+      const from = Math.max(2, Math.floor(cfgNum('progress.phachFrom', 6)));
+      if (star < from) return [];
+      const m = 1 + Math.max(0, cfgNum('progress.phachGrowthPct', 50)) / 100 * (star - from);
+      const base = [cfgNum('progress.phachLinh', 10), cfgNum('progress.phachTien', 5), cfgNum('progress.phachThan', 2)];
+      return PHACH_NAMES.map((name, i) => ({ name, n: Math.ceil(Math.round(Math.max(0, base[i]) * m * 1000) / 1000) })).filter(x => x.n > 0);
+    }
+    const phachMiss = star => starPhach(star).filter(x => skbQty(x.name) < x.n);
+    const phachText = star => starPhach(star).map(x => `${x.n} ${x.name} (có ${skbQty(x.name)})`).join(' + ');
     let heroProg = loadJSON('hero_prog');
 
     // ===== SỞ HỮU TƯỚNG: chỉ có tướng khi đủ 10 MẢNH rồi GHÉP MẢNH (Võ Hiệp → Ghép Mảnh). Mảnh lấy từ Chiêu Mộ / Gift Code =====
@@ -1217,8 +1240,8 @@ const danIcoHTML = (name, h) => DAN_IMG[name] || '';
     const ROLE_ICON  = { skill:'✨', atk:'⚔️', sup:'🌟', heal:'💚', tank:'🛡️' };
     const ROLE_COLOR = { tank:'#ef4444', sup:'#facc15', heal:'#22c55e', skill:'#3b82f6', atk:'#f97316' };
     const ROLE_DESC  = {
-      skill:'Kỹ năng: ULTI LIÊN TỤC – lượt nào cũng ulti, không cần đủ nộ.',
-      atk:  'Công kích: vào trận với 50 nộ.',
+      get skill() { return 'Kỹ năng: ULTI LIÊN TỤC – lượt nào cũng ulti, không cần đủ nộ. Hiệu lực tuyệt kỹ cấp 1 chỉ ' + Math.round(_pn(PROG_CFG.skillBaseSkill, 60, 0, 1e5)) + '%.'; },
+      get atk() { return 'Công kích: vào trận với 50 nộ. Hiệu lực tuyệt kỹ cấp 1 đạt ' + Math.round(_pn(PROG_CFG.skillBaseAtk, 150, 0, 1e5)) + '%.'; },
       sup:  'Hỗ trợ: vào trận 100 nộ. Địch ưu tiên đánh THỨ 2 – khi tướng thủ đã chết thì đánh hỗ trợ trước.',
       heal: 'Trị liệu: vào trận 50 nộ. Địch ưu tiên đánh THỨ 2 – khi tướng thủ đã chết thì đánh trị liệu trước.',
       tank: 'Thủ: vào trận 100 nộ. Địch ưu tiên đánh ĐẦU TIÊN.'
@@ -1354,7 +1377,22 @@ function seqAvatarHTML(id, w, extraStyle) {
     const tsName = id => TS_DEFS[id] ? TS_DEFS[id].name : TS_NAME;
     const tsIcon = id => TS_IMG[id] ? `<img class="eq-img" src="${TS_IMG[id]}">` : (TS_EMO[id] ? `<span style="font-size:30px;line-height:1">${TS_EMO[id]}</span>` : '📜');
     let tsRefund = 0;   // búa hoàn lại cho Bảo Vật đang quá 10★ (dữ liệu cũ)
-    const tsVal = (st, t) => st[1] * (1 + TS_STAR_ADD * (t.star | 0)) * (1 + st[2] * (t.lv | 0));
+    // ---- PHẨM CHẤT BẢO VẬT (A, A+, S, S+, SS, SS+, SSS) → màu viền khung + % tăng theo sao / cấp ----
+    //   Xanh lá = A (sao +10%, cấp +5%) • Xanh dương = A+ (20 / 10) • Tím = S (30 / 15) • Cam = S+ và SS (60 / 30) • Đỏ = SS+ và SSS (80 / 40)
+    //   CÔNG THỨC: chỉ số cuối = chỉ số gốc × (1 + số★ × %sao + cấp × %cấp)   (cộng thẳng, không nhân chồng)
+    //   Admin chỉnh: treasure.grades.<id> (phẩm chất từng Bảo Vật) • treasure.tier.<0-4>.star / .lv (% theo màu) • (Bảo Vật chỉ rơi ở Luận Kiếm: luan.gradeWeights)
+    const TS_GRADES = ['A', 'A+', 'S', 'S+', 'SS', 'SS+', 'SSS'];
+    const TS_GRADE_TIER = { 'A': 0, 'A+': 1, 'S': 2, 'S+': 3, 'SS': 3, 'SS+': 4, 'SSS': 4 };
+    const TS_TIER_NAME = ['Xanh lá', 'Xanh dương', 'Tím', 'Cam', 'Đỏ'], TS_TIER_COLOR = ['#22c55e', '#3b82f6', '#a855f7', '#f97316', '#ef4444'];
+    const TS_TIER_PCT_DEF = [[10, 5], [20, 10], [30, 15], [60, 30], [80, 40]];   // [% mỗi sao, % mỗi cấp]
+    const TS_GRADE_DEF = { 1: 'A', 6: 'S', 7: 'S+', 8: 'S+', 9: 'SS', 10: 'A+', 11: 'A+', 12: 'A', 13: 'A', 14: 'A', 15: 'S', 16: 'SS+', 17: 'S+', 18: 'S', 19: 'A+', 20: 'S+', 21: 'SS' };   // mặc định tạm — chỉnh trong admin
+        function tsGradeOf(kind) { let g; try { g = (cfgGet('treasure.grades', {}) || {})[kind]; } catch (e) {} return TS_GRADES.includes(g) ? g : (TS_GRADE_DEF[kind] || 'A'); }
+    const tsTierOf = kind => TS_GRADE_TIER[tsGradeOf(kind)] || 0;
+    function tsPct(kind) { const i = tsTierOf(kind), d = TS_TIER_PCT_DEF[i]; return { star: Math.max(0, cfgNum('treasure.tier.' + i + '.star', d[0])) / 100, lv: Math.max(0, cfgNum('treasure.tier.' + i + '.lv', d[1])) / 100 }; }
+    const tsColor = kind => TS_TIER_COLOR[tsTierOf(kind)];
+    const tsFrameStyle = kind => { const c = tsColor(kind); return `border-color:${c};box-shadow:0 0 7px ${c}aa,inset 0 0 5px ${c}55`; };   // viền khung theo phẩm chất
+    const tsGradeTag = kind => `<span style="color:${tsColor(kind)};font-weight:900">${tsGradeOf(kind)}</span>`;
+    const tsVal = (st, t) => { const p = tsPct(tsKindOf(t.id)); return st[1] * (1 + p.star * (t.star | 0) + p.lv * (t.lv | 0)); };
     function tsStatOf(t) {
       const o = { dodge:0, atk:0, hp:0, acc:0, crit:0, critDmg:0, tough:0, atkFlat:0, hpFlat:0, pierce:0, spd:0, heal:0 }, d = TS_DEFS[tsKindOf(t.id)];
       if (d) d.stats.forEach(st => { o[st[0]] += tsVal(st, t); });
@@ -1363,7 +1401,8 @@ function seqAvatarHTML(id, w, extraStyle) {
     const tsNum = v => Math.round(v) >= 1000 ? fmtN(v) : String(Math.round(v * 10) / 10);
     function tsLines(t) {
       const d = TS_DEFS[tsKindOf(t.id)]; if (!d) return '';
-      return d.stats.map(st => `<div>${TS_LABEL[st[0]]} +${tsNum(tsVal(st, t))}</div>`).join('');
+      const k = tsKindOf(t.id), p = tsPct(k), head = `<div style="color:${tsColor(k)};font-weight:800;font-size:11px">Phẩm chất ${tsGradeOf(k)} (${TS_TIER_NAME[tsTierOf(k)]}) • ★ +${Math.round(p.star * 100)}% • Cấp +${Math.round(p.lv * 100)}%</div>`;
+      return head + d.stats.map(st => `<div>${TS_LABEL[st[0]]} +${tsNum(tsVal(st, t))}</div>`).join('');
     }
     // Loại của dữ liệu cũ: id 1-5 (5 Tôn Sư Ký) -> loại 1; 6/7/8 giữ nguyên
     const tsKindOf = id => (id >= 1 && id <= 5) ? 1 : id;
@@ -1399,7 +1438,7 @@ function seqAvatarHTML(id, w, extraStyle) {
       tsSave(); return t;
     }
     const tsSave = () => saveJSON('ts_bag', tsBag);
-    // ---- MẢNH BẢO VẬT: đủ TS_MERGE_COST (25) mảnh CÙNG LOẠI thì ghép thành 1 Bảo Vật mới (Lv0 ★0). Tỷ Võ / Danh Tướng Lầu chỉ rơi MẢNH, không rơi nguyên món. ----
+    // ---- MẢNH BẢO VẬT: đủ TS_MERGE_COST (25) mảnh CÙNG LOẠI thì ghép thành 1 Bảo Vật mới (Lv0 ★0). Tỷ Võ / Luận Kiếm chỉ rơi MẢNH, không rơi nguyên món. ----
     let TS_MERGE_COST = 25;   // admin chỉnh: treasure.mergeCost
     cfgOnApply(() => { TS_MERGE_COST = Math.max(1, Math.floor(cfgNum('treasure.mergeCost', 25))); });
     let tsShards = (() => { const o = loadJSON('ts_shards'); return (o && typeof o === 'object' && !Array.isArray(o)) ? o : {}; })();   // { loại: số mảnh }
@@ -1421,8 +1460,8 @@ function seqAvatarHTML(id, w, extraStyle) {
       const ok = k => tsShardOf(k) >= TS_MERGE_COST;
       const kinds = TS_KINDS.filter(k => TS_DEFS[k]).sort((a, b) => (ok(b) - ok(a)) || (tsShardOf(b) - tsShardOf(a)) || (TS_KINDS.indexOf(a) - TS_KINDS.indexOf(b)));
       const card = k => { const n = tsShardOf(k), can = ok(k);
-        return `<div style="background:rgba(0,0,0,.28);border:1px solid ${can ? '#4ade80' : '#475569'};border-radius:10px;padding:6px 4px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:3px"><div class="ts-ico"><div class="ts-em">${tsIcon(k)}</div><div class="ts-nm">${tsName(k)}</div></div><div style="font-weight:800;font-size:12px;color:${can ? '#4ade80' : '#cbd5e1'}">🧩 ${n}/${TS_MERGE_COST}</div><button class="btn-attack" style="padding:3px 12px;font-size:12px" ${can ? '' : 'disabled'} onclick="tsMergeDo(${k})">Ghép</button></div>`; };
-      return `<div style="margin:12px 0 4px;font-weight:900;color:#fde68a;font-size:15px">🧩 Ghép Mảnh Bảo Vật</div><div class="set-note" style="margin-bottom:8px">Đủ ${TS_MERGE_COST} mảnh cùng loại ghép thành 1 Bảo Vật mới (Lv.0 ★0). Mảnh nhận từ Tỷ Võ (đổi 🔥) và Danh Tướng Lầu.</div><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">${kinds.map(card).join('')}</div>`;
+        return `<div style="background:rgba(0,0,0,.28);border:1px solid ${can ? '#4ade80' : '#475569'};border-radius:10px;padding:6px 4px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:3px"><div class="ts-ico"><div class="ts-em" style="${tsFrameStyle(tsKindOf(k))}">${tsIcon(k)}</div><div class="ts-nm">${tsName(k)} ${tsGradeTag(tsKindOf(k))}</div></div><div style="font-weight:800;font-size:12px;color:${can ? '#4ade80' : '#cbd5e1'}">🧩 ${n}/${TS_MERGE_COST}</div><button class="btn-attack" style="padding:3px 12px;font-size:12px" ${can ? '' : 'disabled'} onclick="tsMergeDo(${k})">Ghép</button></div>`; };
+      return `<div style="margin:12px 0 4px;font-weight:900;color:#fde68a;font-size:15px">🧩 Ghép Mảnh Bảo Vật</div><div class="set-note" style="margin-bottom:8px">Đủ ${TS_MERGE_COST} mảnh cùng loại ghép thành 1 Bảo Vật mới (Lv.0 ★0). Mảnh nhận từ Tỷ Võ (đổi 🔥) và Luận Kiếm.</div><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">${kinds.map(card).join('')}</div>`;
     }
     function tsMergeDo(kind) {
       const box = document.getElementById('ts-list'); let sc = null, top = 0;   // giữ nguyên vị trí cuộn sau khi vẽ lại
@@ -1492,10 +1531,10 @@ function seqAvatarHTML(id, w, extraStyle) {
       if (!lock && tsView === 'merge') { document.getElementById('ts-note').innerHTML = ''; document.getElementById('ts-list').innerHTML = tsMergeHTML(); return; }
       document.getElementById('ts-note').innerHTML = lock
         ? `Chọn Bảo Vật gắn vào <b>Khung ${tsCtx + 1}</b> (${tsOfFrame(tsCtx).length}/${TS_PER_HERO}). Bấm ô khung để gắn / tháo.`
-        : `Tăng cấp: dùng Búa 🔨 (1 búa = ${TS_HAM_EXP} EXP, bạn có <b>${fmtN(hammerCount())}</b> 🔨). Tăng sao: tiêu 1 Bảo Vật cùng loại (chưa gắn) để +1★, +50% chỉ số gốc. Bảo Vật giúp tăng sức mạnh Võ Hiệp. Mỗi khung gắn tối đa ${TS_PER_HERO} Bảo Vật và không được trùng loại, gắn vào khung nào thì tướng đứng ở khung đó nhận chỉ số (giống trang bị). Bấm ô khung để gắn / đổi, bấm ✕ để tháo. Ghép mảnh ở tab <b>Mảnh Bảo Vật</b> (${TS_MERGE_COST} mảnh = 1 Bảo Vật).`;
+        : `Tăng cấp: dùng Búa ${icoImg('hammer', '1.2em')} (1 búa = ${TS_HAM_EXP} EXP, bạn có <b>${fmtN(hammerCount())}</b> ${icoImg('hammer', '1.2em')}). Tăng sao: tiêu 1 Bảo Vật cùng loại (chưa gắn) để +1★ (% tăng theo phẩm chất, màu viền = phẩm chất). Bảo Vật giúp tăng sức mạnh Võ Hiệp. Mỗi khung gắn tối đa ${TS_PER_HERO} Bảo Vật và không được trùng loại, gắn vào khung nào thì tướng đứng ở khung đó nhận chỉ số (giống trang bị). Bấm ô khung để gắn / đổi, bấm ✕ để tháo. Ghép mảnh ở tab <b>Mảnh Bảo Vật</b> (${TS_MERGE_COST} mảnh = 1 Bảo Vật).`;
       document.getElementById('ts-list').innerHTML = tsBag.map(t => {
         const act = lock ? `tsToggle(${t.u})` : `frPick('ts',${t.u})`;
-        return `<div class="ts-row"><div class="ts-ico"><div class="ts-em">${tsIcon(t.id)}</div><div class="ts-nm">${tsName(t.id)}</div>${tsExpBar(t)}</div><div class="ts-link">🔗</div>${frSlot(t.f, act, `tsUnequip(${t.u})`)}
+        return `<div class="ts-row"><div class="ts-ico"><div class="ts-em" style="${tsFrameStyle(tsKindOf(t.id))}">${tsIcon(t.id)}</div><div class="ts-nm">${tsName(t.id)} ${tsGradeTag(tsKindOf(t.id))}</div>${tsExpBar(t)}</div><div class="ts-link">🔗</div>${frSlot(t.f, act, `tsUnequip(${t.u})`)}
           <div class="ts-st"><b>Lv.${t.lv} <span style="color:#fbbf24">★${t.star}/${TS_STAR_MAX}</span></b>${tsLines(t)}${t.f >= 0 ? `<div class="ts-cnt">Khung ${t.f + 1} (${tsOfFrame(t.f).length}/${TS_PER_HERO})</div>` : ''}</div>
           <div class="ts-btns"><button class="btn-attack" ${t.lv >= TS_MAX ? 'disabled' : ''} title="Dùng 1 búa" onclick="tsUp(${t.u},1)">Tăng</button><button class="btn-close-battle" ${t.lv >= TS_MAX ? 'disabled' : ''} title="Dùng 10 búa" onclick="tsUp(${t.u},10)">+10</button><button class="btn-attack" style="background:linear-gradient(180deg,#a855f7,#6b21a8)" ${(t.star | 0) >= TS_STAR_MAX ? 'disabled' : ''} onclick="tsStarUp(${t.u})">⭐ Tăng sao</button></div></div>`;
       }).join('');
@@ -1784,7 +1823,8 @@ function ltSlotHTML(f) {
       return {
         lv,
         star: Math.min(starCapOf(lv), Math.max(s.star, p.star || s.star)),
-        sk:   Math.min(SKILL_MAX, Math.max(1,     p.sk   || 1))
+        sk:   Math.min(SKILL_MAX, Math.max(1,     p.sk   || 1)),
+        ql:   Math.min(6, Math.max(0, p.ql | 0))   // phẩm chất: 0=A, 1=A+, 2=S, 3=S+, 4=SS, 5=SS+, 6=SSS (mặc định mọi tướng = A)
       };
     }
     // % cộng thêm vào chỉ số cơ bản từ CẤP và SAO (cộng dồn, KHÔNG nhân chồng): cấp +3%/cấp, sao +10%/sao
@@ -1793,7 +1833,31 @@ function ltSlotHTML(f) {
       return { lv: LV_GROWTH * (p.lv - s.lv), star: STAR_GROWTH * (p.star - s.star) };
     }
     function growth(id) { const g = growthParts(id); return 1 + g.lv + g.star; }   // hệ số hiển thị (chưa tính Đột Phá / Kinh Mạch)
-    const skillMult = id => 1 + SKILL_GROWTH * (getProg(id).sk - 1);
+    // HIỆU LỰC TUYỆT KỸ = hệ số gốc theo CHẤT TƯỚNG (cấp 1) + cộng thêm mỗi cấp kỹ năng theo loại sách dùng để lên cấp đó.
+    //   Gốc cấp 1: Kỹ năng 60% • Công kích 150% • Hỗ trợ / Trị liệu / Thủ 100%   (admin: progress.skillBaseSkill / skillBaseAtk / skillBaseOther, đơn vị %)
+    //   Mỗi cấp: Bí Kíp +5% • Yếu Quyết +10% • Vô Tự Thiên Thư +15%   (progress.skillStepBi / skillStepYeu / skillStepVo). Cấp 2 (miễn phí) tính như Bí Kíp.
+    //   Loại sách của từng cấp lấy từ bảng skbCost() (Luận Kiếm & Sách): cấp 3-4 Bí Kíp, 5-6 Yếu Quyết, 7+ Vô Tự Thiên Thư.
+    const SKILL_BASE_DEF = { skillBaseSkill: 60, skillBaseAtk: 150, skillBaseOther: 100 }, SKILL_STEP_DEF = { skillStepBi: 5, skillStepYeu: 10, skillStepVo: 15 };
+    // PHẨM CHẤT TƯỚNG (A → SSS): quyết định hiệu lực tuyệt kỹ khởi điểm (%) theo chất tướng. Cột: skill = Kỹ năng • atk = Công kích • other = Hỗ trợ / Trị liệu / Thủ (hộ vệ)
+    const QL_NAMES = ['A', 'A+', 'S', 'S+', 'SS', 'SS+', 'SSS'], QL_MAX = 6;
+    const QL_COLOR = ['#9ca3af', '#4ade80', '#38bdf8', '#a78bfa', '#f472b6', '#fb923c', '#facc15'];
+    const QL_TABLE = { skill: [60, 70, 90, 120, 160, 200, 400], atk: [150, 160, 180, 210, 250, 290, 490], other: [100, 110, 130, 160, 200, 240, 440] };
+    const skillBaseOf = (id, qlo) => {
+      let r = 'atk'; try { if (id != null && typeof roleOf === 'function') r = roleOf(id); } catch (e) {}
+      const col = r === 'skill' ? 'skill' : r === 'atk' ? 'atk' : 'other';
+      const k = r === 'skill' ? 'skillBaseSkill' : r === 'atk' ? 'skillBaseAtk' : 'skillBaseOther';
+      let ql = qlo; if (ql == null) { try { ql = id != null ? getProg(id).ql : 0; } catch (e) { ql = 0; } }
+      ql = Math.min(QL_MAX, Math.max(0, ql | 0));
+      return (_pn(PROG_CFG[k], SKILL_BASE_DEF[k], 0, 100000) + (QL_TABLE[col][ql] - QL_TABLE[col][0])) / 100;   // phẩm chất A = số gốc (admin chỉnh được), mỗi bậc cộng thêm phần chênh của bảng
+    };
+    const skillStepOf = lv => {   // phần cộng thêm (dạng thập phân) khi LÊN cấp kỹ năng lv
+      if (lv <= 1) return 0;
+      let item = 'Bí Kíp'; try { const c = typeof skbCost === 'function' ? skbCost(lv) : null; if (c && c.item) item = c.item; } catch (e) {}
+      const k = item === 'Vô Tự Thiên Thư' ? 'skillStepVo' : item === 'Yếu Quyết' ? 'skillStepYeu' : 'skillStepBi';
+      return _pn(PROG_CFG[k], SKILL_STEP_DEF[k], 0, 100000) / 100;
+    };
+    const skillMultOf = (sk, id, qlo) => { let m = skillBaseOf(id, qlo); for (let lv = 2; lv <= sk; lv++) m += skillStepOf(lv); return m; };
+    const skillMult = id => skillMultOf(getProg(id).sk, id);
 
     // ---- CHI PHÍ LÊN CẤP TƯỚNG: cấp 2 = 100 bạc + 200 gạo; mỗi cấp sau đắt hơn cấp trước 10% (cấp 3 = cấp 2 + 10%, cấp 4 = cấp 3 + 10%, ...) ----
     let LV_COST_SILVER = 100, LV_COST_RICE = 200, LV_COST_GROWTH = 1.1;
@@ -1993,6 +2057,7 @@ function addAccExp(n) {
         const a = JSON.parse(localStorage.getItem('eq_bag'));
         if (Array.isArray(a)) return a.filter(i => i && eqType(i.k)).map(i => ({
           id: Math.floor(i.id) || 0, k: i.k, lv: Math.min(EQUIP_MAX, Math.max(1, Math.floor(i.lv) || 1)),
+          star: Math.max(0, Math.min(eqStarMax(), Math.floor(i.star) || 0)),
           f: (Number.isInteger(i.f) && i.f >= 0 && i.f < FRAMES) ? i.f : -1 }));
       } catch (e) {}
       // Chuyển dữ liệu bản trước (mỗi loại 1 món) sang túi đồ
@@ -2005,10 +2070,17 @@ function addAccExp(n) {
     })();
     const frameOf = id => team.indexOf(id);      // khung hiện tại của tướng (-1 = không ra trận)
     const eqAt = (f, k) => f >= 0 ? eqBag.find(i => i.f === f && i.k === k) : undefined;   // món loại k đang gắn ở khung f
+    // ---- SAO TRANG BỊ: chỉ số cuối = chỉ số gốc × (1 + số★ × 25% + cấp × 5%) ----
+    // chỉ số gốc = e.per (admin: "Chỉ số gốc" từng loại trang bị). Admin chỉnh: equip.starAdd (% mỗi sao, mặc định 25), equip.lvAdd (% mỗi cấp, mặc định 5), equip.maxStar (mặc định 10).
+    // Tăng sao: tiêu 1 trang bị CÙNG LOẠI chưa gắn khung (tự chọn món cấp thấp nhất) → +1★ cho món được chọn.
+    function eqStarAdd() { return Math.max(0, cfgNum('equip.starAdd', 25)) / 100; }
+    function eqLvAdd() { return Math.max(0, cfgNum('equip.lvAdd', 5)) / 100; }
+    function eqStarMax() { return Math.max(0, Math.floor(cfgNum('equip.maxStar', 10))); }
+    function eqVal(it) { const e = eqType(it.k); return e ? e.per * (1 + (it.star | 0) * eqStarAdd() + (it.lv | 0) * eqLvAdd()) : 0; }
     function equipBonus(frame) {
       const b = { hp:0, atk:0, def:0, spd:0 };
       if (frame < 0) return b;
-      eqBag.forEach(i => { if (i.f === frame) { const e = eqType(i.k); b[e.stat] += i.lv * e.per; } });
+      eqBag.forEach(i => { if (i.f === frame) { const e = eqType(i.k); b[e.stat] += eqVal(i); } });
       return b;
     }
 
@@ -2231,12 +2303,12 @@ function addAccExp(n) {
       try { document.getElementById('hd-stats').insertAdjacentHTML('beforeend', heroBreakdownHTML(id)); } catch (e) {}
       document.getElementById('hd-slots').innerHTML = EQUIP.map(e => {
         const it = eqAt(f, e.k);
-        return `<div class="hd-slot ${it ? '' : 'empty'}" onclick="openEquip('${e.k}',${f})"><span>${e.icon}</span><small>${it ? 'Lv.' + it.lv : 'Gắn'}</small></div>`;
+        return `<div class="hd-slot ${it ? '' : 'empty'}" onclick="openEquip('${e.k}',${f})"><span>${e.icon}</span><small>${it ? 'Lv.' + it.lv + (it.star ? ' ★' + it.star : '') : 'Gắn'}</small></div>`;
       }).join('') + ltSlotHTML(f);
       const tl = tsOfFrame(f);
       document.getElementById('hd-ts').innerHTML = Array.from({ length: TS_PER_HERO }, (_, i) => {
         const x = tl[i], act = f >= 0 ? `tsOpen(${f})` : '';
-        return x ? `<div class="hd-slot" onclick="${act}"><span>${tsIcon(x.id)}</span><small>Lv.${x.lv}</small>${x.star ? `<div class="hd-ts-stars" style="--n:${x.star}">${'<i>★</i>'.repeat(x.star)}</div>` : ''}</div>` : `<div class="hd-slot empty" onclick="${act}"><span>📜</span><small>Gắn</small></div>`;
+        return x ? `<div class="hd-slot" style="${tsFrameStyle(tsKindOf(x.id))}" onclick="${act}"><span>${tsIcon(x.id)}</span><small>Lv.${x.lv}</small>${x.star ? `<div class="hd-ts-stars" style="--n:${x.star}">${'<i>★</i>'.repeat(x.star)}</div>` : ''}</div>` : `<div class="hd-slot empty" onclick="${act}"><span>📜</span><small>Gắn</small></div>`;
       }).join('');
       document.getElementById('hd-skills').innerHTML = heroSkills(id).filter(k => k.tag === 'Tuyệt kỹ').map(k =>   // chỉ hiện Tuyệt kỹ, mô tả ngắn
         `<div class="sk-card"><div class="sk-name">${k.name}<span class="sk-tag">${k.tag}</span>${k.lv ? `<span class="sk-lv">Lv ${k.lv}</span>` : ''}</div><div class="sk-desc">${heroUltOverride(id) ? k.desc : (heroUltShort(id) || k.desc)}</div></div>`).join('');
@@ -2296,6 +2368,9 @@ function addAccExp(n) {
       if (kind === 'star') {   // tăng sao tốn mảnh tướng
         const need = starCost(p.star + 1);
         if (shardsOf(vmId) < need) { alert(`Cần ${need} mảnh ${heroById(vmId).name} để lên ★${p.star + 1} (có ${shardsOf(vmId)}).\nQuay Chiêu Mộ để nhận mảnh tướng.`); return; }
+        const miss = phachMiss(p.star + 1);
+        if (miss.length) { alert(`Lên ★${p.star + 1} còn cần: ${phachText(p.star + 1)}.\nThiếu: ${miss.map(x => x.name).join(', ')}.`); return; }
+        starPhach(p.star + 1).forEach(x => skbSpend(x.name, x.n));
         heroShards[vmId] = shardsOf(vmId) - need; saveJSON('hero_shards', heroShards); n = 1;
       }
       if (kind === 'lv') {     // tăng cấp tốn bạc + gạo; +10 cấp thì lên tối đa 10 cấp trong khả năng chi trả
@@ -2313,8 +2388,17 @@ function addAccExp(n) {
    (tách từ index.html cũ — script) */
 
     // ---- Túi đồ trang bị: nâng cấp / gắn vào khung / tháo ----
-    let eqTab = 'sword', eqCtx = -1, eqLock = false;
-    function openEquip(k, ctx) {
+    let eqTab = 'sword', eqCtx = -1, eqLock = false, eqMode = 'lv';   // eqMode: 'lv' = tăng cấp (Đá Linh) • 'star' = tăng sao (tiêu trang bị cùng loại)
+    // HUB TRANG BỊ (giống hub Bảo Vật): 2 nút Tăng Cấp / Tăng Sao. Icon: giao-dien/trang-bi/tang-cap.webp & tang-sao.webp (chưa có ảnh thì hiện chữ thay thế)
+    function openEqhub() { switchScreen('eqhub'); }
+    function eqGo(mode) { openEquip(undefined, undefined, mode); }
+    function eqIcFallback(img, emoji, label) {
+      const d = document.createElement('div'); d.className = img.className;
+      d.style.cssText = 'display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-width:130px;min-height:130px;border:3px solid #d4a017;border-radius:16px;background:radial-gradient(circle,#5a3a12,#2a1808);color:#fde68a;font-weight:900;font-size:16px';
+      d.innerHTML = `<span style="font-size:46px;line-height:1">${emoji}</span>${label}`; img.replaceWith(d);
+    }
+    function openEquip(k, ctx, mode) {
+      eqMode = (mode === 'star' && !(k && ctx >= 0)) ? 'star' : 'lv';
       if (k) eqTab = k;
       eqCtx = (ctx === undefined) ? -1 : ctx;
       eqLock = !!k && eqCtx >= 0;           // bấm ô trang bị của khung: chỉ hiện loại đó để chọn gắn
@@ -2368,6 +2452,22 @@ function addAccExp(n) {
       const old = eqAt(f, it.k); if (old && old !== it) old.f = -1;    // khung đã có món cùng loại -> món cũ về túi
       it.f = f; eqRefresh();
     }
+    // TĂNG SAO TRANG BỊ bằng HỎA THẠCH (vật phẩm trong Túi Đồ, rơi từ Ải sau / quà hằng ngày — admin đặt ở Thưởng PVE / Hộp Thư, loại "Vật phẩm" tên "Hỏa Thạch").
+    // Sao 1 = equip.starBase (mặc định 10); mỗi sao sau đắt thêm equip.starGrow % (mặc định 40, cộng dồn); equip.starArr[sao-1] = số riêng từng sao (trống = tự tính).
+    const EQ_STONE = 'Hỏa Thạch';
+    function eqStarCost(n) {
+      const o = (cfgGet('equip.starArr', []) || [])[n - 1], ov = Number(o);
+      if (o !== '' && o != null && isFinite(ov) && ov >= 0) return Math.round(ov);
+      return Math.ceil(Math.max(0, cfgNum('equip.starBase', 10)) * Math.pow(1 + Math.max(0, cfgNum('equip.starGrow', 40)) / 100, Math.max(0, n - 1)) - 1e-9);
+    }
+    function eqStarUp(id) {
+      const it = eqBag.find(i => i.id === id); if (!it) return;
+      if ((it.star | 0) >= eqStarMax()) { try { scToast('Đã đạt ' + eqStarMax() + ' sao tối đa'); } catch (e) {} return; }
+      const need = eqStarCost((it.star | 0) + 1), have = skbQty(EQ_STONE);
+      if (have < need) { try { scToast('Cần ' + fmtN(need) + ' ' + EQ_STONE + ' để lên ★' + ((it.star | 0) + 1) + ' (có ' + fmtN(have) + ')'); } catch (e) {} return; }
+      if (need > 0 && !skbSpend(EQ_STONE, need)) return;
+      it.star = (it.star | 0) + 1; eqRefresh();
+    }
     function eqToggle(id) { const it = eqBag.find(i => i.id === id); if (it) { if (it.f === eqCtx) eqUnmount(id); else eqMountTo(id, eqCtx); } }
     function eqUnmount(id) { const it = eqBag.find(i => i.id === id); if (it) { it.f = -1; eqRefresh(); } }
     // Thưởng qua ải: cộng vào túi đồ, trả về nội dung thông báo ('' nếu không có thưởng)
@@ -2384,8 +2484,11 @@ function addAccExp(n) {
     function renderEquip() {
       const e = eqType(eqTab);
       document.getElementById('eq-pills').innerHTML = '';   // Viên Thể Lực chỉ nằm trong Túi Đồ
+      const ttl = document.getElementById('eq-title'); if (ttl) ttl.textContent = eqLock ? '🎒 Trang Bị' : eqMode === 'star' ? '⭐ Tăng Sao Trang Bị' : '⬆️ Tăng Cấp Trang Bị';
       document.getElementById('eq-sub').innerText = eqLock
         ? `Chọn ${e.name} gắn vào Khung ${eqCtx + 1}. Tướng đứng ở khung nào thì nhận chỉ số của khung đó.`
+        : eqMode === 'star'
+        ? `Tăng sao: tiêu ${EQ_STONE} (rơi từ Ải sau / quà hằng ngày) để +1★ cho món được chọn. Bạn có ${fmtN(skbQty(EQ_STONE))} ${gdIco(EQ_STONE, '🪨')}. Mỗi ★ +${Math.round(eqStarAdd() * 100)}% chỉ số gốc, mỗi cấp +${Math.round(eqLvAdd() * 100)}%. Tối đa ${eqStarMax()}★.`
         : `Cấp acc ${accLevel} → trang bị nâng tối đa tới cấp ${eqLvCap()} (vượt Ải nhận EXP để lên cấp acc). Nâng cấp tốn Đá Linh từ Hang Tụ Linh. Gắn vào khung nào thì tướng đứng ở khung đó được cộng chỉ số.`;
       document.getElementById('eq-tabs').innerHTML = eqLock ? '' : EQUIP.map(x =>
         `<button class="eq-tab ${x.k === eqTab ? 'on' : ''}" onclick="eqSetTab('${x.k}')">${x.icon} ${x.name} <small>${eqBag.filter(i => i.k === x.k).length}</small></button>`).join('');
@@ -2396,14 +2499,15 @@ function addAccExp(n) {
         : all;
       let html = list.map(it => {
         const cap = eqLvCap(), max = it.lv >= cap, fr = it.f;
-        const cst = max ? [] : eqStoneCost(it.lv), canUp = !max && !cst.some(x => eqStoneQty(x.item) < x.n);
-        const costHtml = max ? '' : `<div class="eq-cost" style="display:flex;flex-wrap:wrap;gap:2px 8px;font-size:11px;margin-top:2px">${cst.map(x => { const have = eqStoneQty(x.item); return `<span style="white-space:nowrap;color:${have >= x.n ? '#bbf7d0' : '#f87171'}">${eqStoneImg(x.item)} ${fmtN(have)}/${fmtN(x.n)}</span>`; }).join('')}</div>`;
+        const starMode = !eqLock && eqMode === 'star', sMax = eqStarMax(), stNeed = eqStarCost((it.star | 0) + 1), stHave = skbQty(EQ_STONE), canStar = (it.star | 0) < sMax && stHave >= stNeed;
+        const cst = (max || starMode) ? [] : eqStoneCost(it.lv), canUp = !max && !cst.some(x => eqStoneQty(x.item) < x.n);
+        const costHtml = (max || starMode) ? '' : `<div class="eq-cost" style="display:flex;flex-wrap:wrap;gap:2px 8px;font-size:11px;margin-top:2px">${cst.map(x => { const have = eqStoneQty(x.item); return `<span style="white-space:nowrap;color:${have >= x.n ? '#bbf7d0' : '#f87171'}">${eqStoneImg(x.item)} ${fmtN(have)}/${fmtN(x.n)}</span>`; }).join('')}</div>`;
         const hero = (fr >= 0 && team[fr] !== undefined) ? heroById(team[fr]) : null;
         const act = eqLock ? `eqToggle(${it.id})` : `frPick('eq',${it.id})`;
         return `<div class="ts-row"><div class="ts-ico"><div class="ts-em">${e.icon}</div><div class="ts-nm">${e.name} ${rank(it)}</div></div><div class="ts-link">🔗</div>${frSlot(fr, act, `eqUnmount(${it.id})`)}` +
-          `<div class="ts-st"><b>Cấp ${it.lv}/${cap}${max ? (it.lv >= eqMaxLv() ? ' (tối đa)' : ' 🔒') : ''}</b><div>+${fmtN(e.per)} ${e.label}/cấp</div><div>Hiện +${fmtN(it.lv * e.per)} ${e.label}</div>${costHtml}` +
+          `<div class="ts-st"><b>Cấp ${it.lv}/${cap}${max ? (it.lv >= eqMaxLv() ? ' (tối đa)' : ' 🔒') : ''}</b><div style="color:#fbbf24">★${it.star | 0}/${sMax}</div><div>Gốc ${fmtN(e.per)} ${e.label} • ★ +${Math.round(eqStarAdd() * 100)}% • Cấp +${Math.round(eqLvAdd() * 100)}%</div><div>Hiện +${fmtN(eqVal(it))} ${e.label}</div>${starMode ? ((it.star | 0) >= sMax ? '' : `<div style="font-size:11px;color:${stHave >= stNeed ? '#bbf7d0' : '#f87171'}">${gdIco(EQ_STONE, '🪨')} ${EQ_STONE}: ${fmtN(stHave)}/${fmtN(stNeed)} → ★${(it.star | 0) + 1}</div>`) : ''}${costHtml}` +
           `<div class="ts-cnt">${fr < 0 ? '📦 Trong túi đồ' : `Khung ${fr + 1}${hero ? ' – ' + hero.name : ' (trống)'}`}</div></div>` +
-          `<div class="ts-btns"><button class="btn-attack" ${canUp ? '' : 'disabled'} onclick="eqUpgrade(${it.id},1)">Tăng</button><button class="btn-close-battle" ${canUp ? '' : 'disabled'} onclick="eqUpgrade(${it.id},10)">+10</button><button class="btn-close-battle" ${canUp ? '' : 'disabled'} onclick="eqUpgrade(${it.id},${eqMaxLv()})">Tối đa</button></div></div>`;
+          `<div class="ts-btns">${starMode ? `<button class="btn-attack" style="background:linear-gradient(180deg,#a855f7,#6b21a8)" ${canStar ? '' : 'disabled'} onclick="eqStarUp(${it.id})">⭐ Tăng sao</button>` : `<button class="btn-attack" ${canUp ? '' : 'disabled'} onclick="eqUpgrade(${it.id},1)">Tăng</button><button class="btn-close-battle" ${canUp ? '' : 'disabled'} onclick="eqUpgrade(${it.id},10)">+10</button><button class="btn-close-battle" ${canUp ? '' : 'disabled'} onclick="eqUpgrade(${it.id},${eqMaxLv()})">Tối đa</button>`}</div></div>`;
       }).join('');
       if (!list.length) html = `<div class="eq-empty">${eqBag.length ? `Chưa có ${e.name} nào.` : `🎒 Túi đồ trống.<br>Thắng <b>Ải ${EQ_REWARD.stage} - Bàn ${EQ_REWARD.battle}</b> để nhận ${EQ_REWARD.each} Mũ, ${EQ_REWARD.each} Áo, ${EQ_REWARD.each} Kiếm, ${EQ_REWARD.each} Giày.`}</div>`;
       if (eqLock) html += `<div class="md-acts"><button class="btn-close-battle" onclick="openEquip('${eqTab}')">Xem toàn bộ túi đồ</button></div>`;
@@ -2431,9 +2535,9 @@ function addAccExp(n) {
         <div class="vm-hero"><div class="hd-ico">${heroIcon(h)}</div><div class="hd-info"><div class="hd-name">${h.name}</div><div class="hd-sub">Cấp ${p.lv}/${LV_MAX} • ★${p.star}/${starCapOf(p.lv)} • Kỹ năng ${p.sk}/${SKILL_MAX}</div><div class="hd-sub">HP ${fmtN(st.hp)} • Công ${fmtN(st.atk)} • Thủ ${fmtN(st.def)} • Tốc ${st.spd}</div></div></div>
         ${up('⬆ Tăng Cấp', 'Cấp ' + p.lv + '/' + lvCap, lvMax ? '' : 'Cấp ' + (p.lv + 1), `+${LV_GROWTH * 100}% HP / Công / Thủ mỗi cấp` + (lvMax ? '' : ` • Lên cấp ${p.lv + 1} tốn 🥈 ${fmtN(lvCost(p.lv + 1).silver)} + 🍚 ${fmtN(lvCost(p.lv + 1).rice)} (có 🥈 ${fmtN(silver)} • 🍚 ${fmtN(rice)}). +10 cấp: nâng tối đa 10 cấp trong khả năng`) + (lvMax ? (lvFull ? ' • Đã đạt cấp tối đa' : ' • 🔒 Đã chạm cấp acc — vượt Ải nhận EXP để lên cấp acc, mở thêm cấp tướng') : ''),
              `<button ${lvMax || lvAffordable(p.lv, 1) < 1 ? 'disabled' : ''} onclick="upgradeHero('lv',1)">+1 cấp</button><button ${lvMax || lvAffordable(p.lv, 1) < 1 ? 'disabled' : ''} onclick="upgradeHero('lv',10)">+10 cấp</button>`)}
-        ${up('⭐ Tăng Sao', '★' + p.star, starMax ? '' : '★' + (p.star + 1), `+${STAR_GROWTH * 100}% HP / Công / Thủ mỗi sao` + (starMax ? (p.star >= STAR_ABS_MAX ? ' • Đã đạt sao tối đa' : ` • 🔒 Cần tướng cấp ${PROG_CFG.lvPerStar * (p.star + 1)} để lên ★${p.star + 1}`) : ` • 🧩 Cần ${starCost(p.star + 1)} mảnh (có ${shardsOf(vmId)})`),
-             `<button ${starMax || shardsOf(vmId) < starCost(p.star + 1) ? 'disabled' : ''} onclick="upgradeHero('star',1)">Tăng sao</button>`)}
-        ${up('📖 Tăng Cấp Kỹ Năng', 'Kỹ năng ' + p.sk, skMax ? '' : 'Kỹ năng ' + (p.sk + 1), `+${SKILL_GROWTH * 100}% hiệu lực tuyệt kỹ mỗi cấp`,
+        ${up('⭐ Tăng Sao', '★' + p.star, starMax ? '' : '★' + (p.star + 1), `+${STAR_GROWTH * 100}% HP / Công / Thủ mỗi sao` + (starMax ? (p.star >= STAR_ABS_MAX ? ' • Đã đạt sao tối đa' : ` • 🔒 Cần tướng cấp ${PROG_CFG.lvPerStar * (p.star + 1)} để lên ★${p.star + 1}`) : ` • 🧩 Cần ${starCost(p.star + 1)} mảnh (có ${shardsOf(vmId)})` + (starPhach(p.star + 1).length ? ' • 🔮 ' + phachText(p.star + 1) : '')),
+             `<button ${starMax || shardsOf(vmId) < starCost(p.star + 1) || phachMiss(p.star + 1).length ? 'disabled' : ''} onclick="upgradeHero('star',1)">Tăng sao</button>`)}
+        ${up('📖 Tăng Cấp Kỹ Năng', 'Kỹ năng ' + p.sk, skMax ? '' : 'Kỹ năng ' + (p.sk + 1), (skMax ? 'Đã đạt cấp kỹ năng tối đa' : `+${Math.round(skillStepOf(p.sk + 1) * 100)}% hiệu lực tuyệt kỹ khi lên cấp này`),
              `<button ${skMax ? 'disabled' : ''} onclick="upgradeHero('sk',1)">Nâng cấp</button>`)}
         <div class="vm-links"><button onclick="openEquip()">🎒 Trang bị</button><button onclick="openHeroDetail(${vmId})">📊 Xem thông số &amp; kỹ năng</button><button onclick="resetHeroProgress()">↺ Đặt lại tất cả (Test)</button></div>`;
     }
@@ -2446,7 +2550,7 @@ function addAccExp(n) {
     let upgId = 0;
     // icon bạc / gạo giống thanh tài nguyên trên cùng (giao-dien/icon-home/thoi-bac.webp, gao.webp)
     const UPG_RES_ICO = f => (f === 'gao' ? IC_RICE : IC_SILVER);
-    const UPG_TITLE = { sao: 'Tăng Sao', boiduong: 'Thăng Cấp', kynang: 'Nâng Kỹ Năng' };
+    const UPG_TITLE = { sao: 'Tăng Sao', boiduong: 'Thăng Cấp', kynang: 'Nâng Kỹ Năng', phamchat: 'Nâng Phẩm Chất' };
     (function () {
       const sc = document.createElement('div'); sc.className = 'screen'; sc.id = 'screen-upg';
       sc.innerHTML = '<div class="pve-header"><button class="btn-back" onclick="openPicker(pkMode)">Trở về</button><h2 class="pve-title" id="upg-title"></h2></div><div class="upg-body" id="upg-body"></div>';
@@ -2469,13 +2573,17 @@ function addAccExp(n) {
       let patch = null, maxed = false;
       if (mode === 'sao') { maxed = p.star >= capStar; patch = { star: p.star + 1 }; }
       else if (mode === 'boiduong') { maxed = p.lv >= capLv; patch = { lv: p.lv + 1 }; }
+      else if (mode === 'phamchat') { maxed = p.ql >= QL_MAX; patch = { ql: p.ql + 1 }; }
       else { maxed = p.sk >= SKILL_MAX; patch = { sk: p.sk + 1 }; }
       const ns = maxed ? cs : statsAt(upgId, patch), np = maxed ? p : Object.assign({}, p, patch);
       const row = (l, a, b) => `<div class="up-r"><span>${l}</span><b>${a}</b><b class="${b !== a ? 'up' : ''}">${b}</b></div>`;
       let rows;
       if (mode === 'kynang') {
-        const eff = s => Math.round(100 * skillMultOf(s)) + '%';
+        const eff = s => Math.round(100 * skillMultOf(s, upgId)) + '%';
         rows = row('Kỹ năng', 'Lv ' + p.sk, 'Lv ' + np.sk) + row('Hiệu lực tuyệt kỹ', eff(p.sk), eff(np.sk)) + row('Tuyệt kỹ', HERO_ULT_NAME[upgId] || 'Tuyệt Kỹ', HERO_ULT_NAME[upgId] || 'Tuyệt Kỹ');
+      } else if (mode === 'phamchat') {
+        const eff = (s, q) => Math.round(100 * skillMultOf(s, upgId, q)) + '%', qn = q => `<span style="color:${QL_COLOR[q]};font-weight:900">${QL_NAMES[q]}</span>`;
+        rows = `<div class="up-r"><span>Phẩm chất</span><b>${qn(p.ql)}</b><b class="${maxed ? '' : 'up'}">${qn(np.ql)}</b></div>` + row('Kỹ năng', 'Lv ' + p.sk, 'Lv ' + p.sk) + row('Hiệu lực tuyệt kỹ', eff(p.sk, p.ql), eff(np.sk, np.ql)) + row('Tuyệt kỹ', HERO_ULT_NAME[upgId] || 'Tuyệt Kỹ', HERO_ULT_NAME[upgId] || 'Tuyệt Kỹ');
       } else {
         const f = (k, fn) => row(k[0], (fn || fmtN)(cs[k[1]]), (fn || fmtN)(ns[k[1]]));
         rows = row('Cấp', p.lv, np.lv) + [['HP', 'hp'], ['Công', 'atk'], ['Thủ', 'def'], ['Tốc', 'spd'], ['Bạo', 'crit'], ['Bạo Sát', 'critDmg'], ['Bền', 'tough'], ['Chuẩn', 'acc'], ['Né', 'dodge'], ['Phá giáp', 'pierce'], ['Đỡ đòn', 'block']].map(k => f(k, k[1] === 'block' ? (v => tsFmt(v) + '%') : (v => (k[1] === 'hp' || k[1] === 'atk' || k[1] === 'def' || k[1] === 'pierce') ? fmtN(v) : tsFmt(v)))).join('');
@@ -2483,13 +2591,17 @@ function addAccExp(n) {
       const art = (star, cls) => `<div class="up-hero ${cls}"><div class="up-fig">${h.body ? `<img src="${h.body}" alt="${h.name}">` : heroIcon(h)}</div><div class="up-plat"></div><div class="up-stars">${heroStarsHTML(star, { off: true, bigPx: 15 })}</div></div>`;
       let cost = '', btns = '';
       if (mode === 'sao') {
-        const need = starCost(p.star + 1), have = shardsOf(upgId), ok = have >= need;
-        cost = maxed ? (p.star >= STAR_ABS_MAX ? '<div class="up-max">Đã đạt sao tối đa</div>' : '<div class="up-max">🔒 Cần tướng cấp ' + PROG_CFG.lvPerStar * (p.star + 1) + ' để lên ★' + (p.star + 1) + ' — hãy Thăng Cấp trước</div>') : `<div class="up-cost"><div class="up-it"><div class="e">${heroIcon(h)}</div><b class="${ok ? '' : 'bad'}">${have}/${need}</b><small>Mảnh ${h.name}</small></div></div>`;
+        const need = starCost(p.star + 1), have = shardsOf(upgId), phs = maxed ? [] : starPhach(p.star + 1), ok = have >= need && phs.every(x => skbQty(x.name) >= x.n);
+        cost = maxed ? (p.star >= STAR_ABS_MAX ? '<div class="up-max">Đã đạt sao tối đa</div>' : '<div class="up-max">🔒 Cần tướng cấp ' + PROG_CFG.lvPerStar * (p.star + 1) + ' để lên ★' + (p.star + 1) + ' — hãy Thăng Cấp trước</div>') : `<div class="up-cost"><div class="up-it"><div class="e">${heroIcon(h)}</div><b class="${ok ? '' : 'bad'}">${have}/${need}</b><small>Mảnh ${h.name}</small></div>${phs.map(x => `<div class="up-it"><div class="e">${gdIco(x.name, '🔮')}</div><b class="${skbQty(x.name) >= x.n ? '' : 'bad'}">${fmtN(skbQty(x.name))}/${fmtN(x.n)}</b><small>${x.name}</small></div>`).join('')}</div>`;
         btns = `<button class="up-go" ${maxed || !ok ? 'disabled' : ''} onclick="upgradeHero('star',1)">Tăng Sao</button>`;
       } else if (mode === 'boiduong') {
         const c = lvCost(p.lv + 1), exN = heroExpNeed(p.lv), exHave = heroExpAvail(upgId), k = lvAffordable(p.lv, 1) >= 1 && exHave >= exN;
         cost = maxed ? '<div class="up-max">Đã chạm cấp acc (vượt Ải nhận EXP để lên cấp acc)</div>' : (() => { const own = heroExpOf(upgId), pct = Math.min(100, Math.round(exHave / exN * 100)), miss = Math.max(0, exN - exHave); return `<div style="margin:10px 18px 0"><div style="display:flex;justify-content:space-between;font-size:11px;color:#fde68a;margin-bottom:3px"><span>EXP lên cấp ${p.lv + 1}</span><b>${fmtN(exHave)}/${fmtN(exN)}${miss > 0 ? ' · còn thiếu ' + fmtN(miss) : ' · đủ'}</b></div><div style="height:10px;border-radius:6px;background:#0008;border:1px solid #fde047;overflow:hidden"><div style="width:${pct}%;height:100%;background:linear-gradient(90deg,#f59e0b,#fde047)"></div></div><div style="font-size:10px;color:#a0aec0;margin-top:2px">EXP tướng ${fmtN(own)} + ${fmtN(taoQty())} đào × ${TAO_EXP}</div></div>`; })() + `<div class="up-cost"><div class="up-it"><div class="e">${UPG_RES_ICO('thoi-bac')}</div><b class="${silver >= c.silver ? '' : 'bad'}">${fmtN(silver)}/${fmtN(c.silver)}</b><small>Bạc</small></div><div class="up-it"><div class="e">${UPG_RES_ICO('gao')}</div><b class="${rice >= c.rice ? '' : 'bad'}">${fmtN(rice)}/${fmtN(c.rice)}</b><small>Gạo</small></div><div class="up-it"><div class="e">${gdIco('Đào Tiên', '🍑')}</div><b class="${exHave >= exN ? '' : 'bad'}">${fmtN(exHave)}/${fmtN(exN)}</b><small>EXP (có ${fmtN(taoQty())} đào)</small></div></div>`;
         btns = `<button class="up-go" ${maxed || !k ? 'disabled' : ''} onclick="upgradeHero('lv',1)">+1 Cấp</button><button class="up-go alt" ${maxed || !k ? 'disabled' : ''} onclick="upgradeHero('lv',10)">+10 Cấp</button>`;
+      } else if (mode === 'phamchat') {
+        const need = maxed ? [] : qlCost(p.ql + 1), starLock = !maxed && p.star < qlMinStar(), ok = !starLock && need.every(x => qlHave(x.k, upgId) >= x.n);
+        cost = maxed ? '<div class="up-max">Phẩm chất đã đạt tối đa (SSS)</div>' : `${starLock ? `<div class="up-max" style="color:#f87171">🔒 Cần tướng đạt ★${qlMinStar()} mới được nâng phẩm chất (hiện ★${p.star})</div>` : ''}<div class="up-max" style="color:#fde68a;margin-bottom:0">Nâng lên <b style="color:${QL_COLOR[p.ql + 1]}">${QL_NAMES[p.ql + 1]}</b> cần:</div><div class="up-cost ql">${need.map(x => `<div class="up-it"><div class="e">${qlIco(x.k, upgId)}</div><b class="${qlHave(x.k, upgId) >= x.n ? '' : 'bad'}">${fmtN(qlHave(x.k, upgId))}/${fmtN(x.n)}</b><small>${qlName(x.k, upgId)}</small></div>`).join('')}</div>`;
+        btns = `<button class="up-go" ${maxed || !ok ? 'disabled' : ''} onclick="qlUpgrade()">Nâng Phẩm Chất</button>`;
       } else {
         const sc = maxed || typeof skbCost !== 'function' ? null : skbCost(p.sk + 1), have = sc ? skbQty(sc.item) : 0, okSk = !sc || sc.n <= 0 || have >= sc.n;   // sc = null: miễn phí (Lv1 → Lv2)
         cost = maxed ? '<div class="up-max">Kỹ năng đã tối đa</div>' : (sc && sc.n > 0 ? `<div class="up-cost"><div class="up-it"><div class="e">${gdIco(sc.item, '📘')}</div><b class="${okSk ? '' : 'bad'}">${fmtN(have)}/${fmtN(sc.n)}</b><small>${sc.item}</small></div></div>` : '<div class="up-max" style="color:#86efac">Nâng kỹ năng miễn phí</div>');
@@ -2498,10 +2610,44 @@ function addAccExp(n) {
       document.getElementById('upg-body').innerHTML = `
         <div class="up-name"><button onclick="upgNav(-1)">◀</button><b>${h.name}</b><button onclick="upgNav(1)">▶</button></div>
         <div class="up-stage ${mode}">${art(p.star, 'l')}<div class="up-tbl"><div class="up-r hd"><span></span><b>Hiện tại</b><b>Sau</b></div>${rows}</div>${art(np.star, 'r')}</div>
-        ${mode === 'kynang' ? `<div class="up-desc">${heroSkills(upgId)[1].desc}</div>` : ''}${cost}<div class="up-btns">${btns}</div>
-        <div class="up-note">${mode === 'sao' ? 'Tăng sao chỉ cần mảnh tướng. Cấp tướng được giữ nguyên, chỉ số tăng mạnh.' : mode === 'boiduong' ? 'Tăng cấp tốn bạc + gạo + EXP tướng. 1 Đào Tiên = ' + TAO_EXP + ' EXP, tự dùng khi thiếu (nhận ở Giang Hồ → Đào Tiên).' : 'Mỗi cấp kỹ năng tăng hiệu lực tuyệt kỹ. Sách kỹ năng chỉ rơi ở Giang Hồ → Luận Kiếm.'}</div>`;
+        ${(mode === 'kynang' || mode === 'phamchat') ? `<div class="up-desc">${heroSkills(upgId)[1].desc}</div>` : ''}${cost}<div class="up-btns">${btns}</div>
+        <div class="up-note">${mode === 'sao' ? 'Tăng sao chỉ cần mảnh tướng. Cấp tướng được giữ nguyên, chỉ số tăng mạnh.' : mode === 'phamchat' ? 'Mỗi bậc phẩm chất (A → A+ → S → S+ → SS → SS+ → SSS) tăng hiệu lực tuyệt kỹ khởi điểm. Mỗi bậc sau tốn thêm ' + Math.round(cfgNum('quality.grow', QL_GROW * 100)) + '% nguyên liệu so với bậc trước.' : mode === 'boiduong' ? 'Tăng cấp tốn bạc + gạo + EXP tướng. 1 Đào Tiên = ' + TAO_EXP + ' EXP, tự dùng khi thiếu (nhận ở Giang Hồ → Đào Tiên).' : 'Mỗi cấp kỹ năng tăng hiệu lực tuyệt kỹ. Sách kỹ năng chỉ rơi ở Giang Hồ → Danh Tướng Lầu.'}</div>`;
     }
-    const skillMultOf = sk => 1 + SKILL_GROWTH * (sk - 1);
+    // ===== NÂNG PHẨM CHẤT TƯỚNG: A → A+ → S → S+ → SS → SS+ → SSS (6 bậc). Chi phí bậc 1 = bảng gốc; mỗi bậc sau đắt hơn bậc trước QL_GROW (30%, cộng dồn: ×1.3 mỗi bậc) =====
+    const QL_GROW = 0.3;
+    const qlMinStar = () => Math.max(1, Math.floor(cfgNum('quality.minStar', 6)));   // tướng phải đạt ngần này sao mới được nâng phẩm chất (admin chỉnh: quality.minStar, mặc định 6)
+    const QL_COST_BASE = [['Linh Phách', 1000], ['Thần Phách', 100], ['Tiên Phách', 10], ['@shard', 250], ['Thần Đan', 500], ['Tiên Đan', 1000], ['Yếu Quyết', 200], ['Bí Kíp', 100], ['Vô Tự Thiên Thư', 50], ['@silver', 2000000], ['@rice', 2000000], ['@gold', 5000]];
+    // Admin chỉnh (admin.html → "Phẩm chất tướng"): quality.base[i] = số lượng bậc 1 của nguyên liệu i • quality.grow = % đắt thêm mỗi bậc • quality.arr[bậc-1][i] = số riêng cho từng bậc (trống = tự tính)
+    const qlCost = step => {
+      const grow = cfgNum('quality.grow', QL_GROW * 100) / 100, base = cfgGet('quality.base', []) || [], arr = ((cfgGet('quality.arr', []) || [])[step - 1]) || [], f = Math.pow(1 + Math.max(0, grow), Math.max(0, step - 1));
+      return QL_COST_BASE.map(([k, n0], i) => {
+        const o = arr[i], ov = Number(o), b = Number(base[i]);
+        if (o !== '' && o != null && isFinite(ov) && ov >= 0) return { k, n: Math.round(ov) };
+        const n = (base[i] !== '' && base[i] != null && isFinite(b) && b >= 0) ? b : n0;
+        return { k, n: Math.ceil(n * f - 1e-9) };
+      });   // step = bậc mới (1…6)
+    };
+    const qlHave = (k, id) => k === '@shard' ? shardsOf(id) : k === '@silver' ? silver : k === '@rice' ? rice : k === '@gold' ? gold : skbQty(k);
+    const qlName = (k, id) => k === '@shard' ? 'Mảnh ' + heroById(id).name : k === '@silver' ? 'Bạc' : k === '@rice' ? 'Gạo' : k === '@gold' ? 'Vàng' : k;
+    const qlIco = (k, id) => k === '@shard' ? heroIcon(heroById(id)) : k === '@silver' ? icoImg('silver', '100%') : k === '@rice' ? icoImg('rice', '100%') : k === '@gold' ? icoImg('gold', '100%') : (k === 'Thần Đan' ? icoImg('than', '100%') : k === 'Tiên Đan' ? icoImg('tien', '100%') : gdIco(k, '📦'));
+    function qlUpgrade() {
+      const id = upgId, p = getProg(id); if (p.ql >= QL_MAX) return;
+      if (p.star < qlMinStar()) { alert('Tướng cần đạt ★' + qlMinStar() + ' mới được nâng phẩm chất (hiện ★' + p.star + ').'); return; }
+      const need = qlCost(p.ql + 1), miss = need.filter(x => qlHave(x.k, id) < x.n);
+      if (miss.length) { alert('Chưa đủ nguyên liệu để nâng lên phẩm chất ' + QL_NAMES[p.ql + 1] + ':\n' + miss.map(x => '• ' + qlName(x.k, id) + ': ' + fmtN(qlHave(x.k, id)) + '/' + fmtN(x.n)).join('\n')); return; }
+      need.forEach(x => {
+        if (x.k === '@shard') { heroShards[id] = shardsOf(id) - x.n; }
+        else if (x.k === '@silver') silver -= x.n; else if (x.k === '@rice') rice -= x.n; else if (x.k === '@gold') gold -= x.n;
+        else skbSpend(x.k, x.n);
+      });
+      saveJSON('hero_shards', heroShards); resSave(); goldSave(); try { updateGold(); } catch (e) {}
+      heroProg[id] = Object.assign({}, getProg(id), { ql: p.ql + 1 });
+      saveJSON('hero_prog', heroProg);
+      try { renderHomeTeam(); updatePower(); } catch (e) {}
+      renderUpg();
+      try { scToast('Phẩm chất ' + heroById(id).name + ' → ' + QL_NAMES[p.ql + 1] + ' ✔'); } catch (e) {}
+    }
+    // skillMultOf(sk, id) khai báo cùng skillMult (phần cấp / sao / kỹ năng)
 
 ;
 /* === js/heroes/recruit.js === */
@@ -5470,7 +5616,7 @@ cfgOnApply(() => {
       }
       t.style.background = win ? 'linear-gradient(#14532d,#052e16)' : 'linear-gradient(#7f1d1d,#450a0a)';
       t.style.border = '2px solid ' + (win ? '#fde047' : '#f87171');
-      t.innerHTML = String(msg).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/🔮/g, danIcoHTML('Thần Đan', '1.1em')).replace(/🔴/g, danIcoHTML('Tiên Đan', '1.1em')); t.style.opacity = '1';
+      t.innerHTML = String(msg).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/🔮/g, danIcoHTML('Thần Đan', '1.1em')).replace(/🔴/g, danIcoHTML('Tiên Đan', '1.1em')).replace(/🔨/g, icoImg('hammer', '1.2em')); t.style.opacity = '1';
       clearTimeout(t._h); t._h = setTimeout(() => { t.style.opacity = '0'; }, 3500);
     }
 
@@ -5478,19 +5624,14 @@ cfgOnApply(() => {
 /* === giang-ho/luan-kiem.js === */
 /* GIANG HỒ — LUẬN KIẾM
    Đánh Boss máy KHÔNG giới hạn trận. Mỗi lần khiêu chiến = 1 trận với 3–5 Boss (ngẫu nhiên trong khoảng admin đặt).
-   Thắng 1 trận: nhận 3–5 vật phẩm (kiểu Bí Kíp / Vô Tự Thiên Thư / Yêu Quyết), trận sau TẤT CẢ thông số Boss tăng thêm 15% (cộng dồn).
+   Thắng 1 trận: nhận 3 MẢNH BẢO VẬT ngẫu nhiên (mỗi mảnh 1 loại Bảo Vật bất kỳ, trùng thì cộng dồn), trận sau TẤT CẢ thông số Boss tăng thêm 15% (cộng dồn).
    Độ khó (số trận đã qua) tự làm mới lúc 5:00 sáng hằng ngày.
    Dùng lại bộ máy trận của Tỷ Võ: pvpBegin() trong pvp/pvp-battle.js, kết thúc ở luanFinish() (gọi từ pvpFinish khi pvp.luan > 0).
    Admin chỉnh ở admin.html → tab Luận Kiếm (cấu hình `luan.*`):
      on (1/0) • resetHour (giờ làm mới) • bossMin / bossMax • growth (% tăng mỗi trận) • hp / atk / def (Boss trận 1)
-     rewardMin / rewardMax (số vật phẩm mỗi trận) • items: [ { name, ico (đường dẫn ảnh hoặc emoji), n (số lượng mỗi lần rơi) } ]
-   Ảnh nền: giang-ho/luan-kiem-bg.webp • ảnh vật phẩm: vat-pham-game/ky-nang/*.webp */
+     shardCount (số mảnh Bảo Vật ngẫu nhiên mỗi trận thắng, mặc định 3) • gradeWeights: { bậc A…SSS: trọng số } (trống = mặc định, 0 = không rơi)
+   Ảnh nền: giang-ho/luan-kiem-bg.webp • ảnh Bảo Vật: TS_IMG */
 
-    const LUAN_DEF_ITEMS = [
-      { name: 'Bí Kíp', ico: 'vat-pham-game/ky-nang/bi-kip.webp', n: 1 },
-      { name: 'Vô Tự Thiên Thư', ico: 'vat-pham-game/ky-nang/vo-tu-thien-thu.webp', n: 1 },
-      { name: 'Yêu Quyết', ico: 'vat-pham-game/ky-nang/yeu-quyet.webp', n: 1 }
-    ];
     const luanInt = (v, lo, hi) => Math.max(lo, Math.min(hi, Math.floor(Number(v)) || lo));
     const luanRand = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
     const luanOn = () => cfgNum('luan.on', 1) !== 0;
@@ -5498,12 +5639,7 @@ cfgOnApply(() => {
     const luanGrowth = () => Math.max(0, cfgNum('luan.growth', 15)) / 100;           // 0.15 = +15% mỗi trận thắng
     const luanMult = lv => Math.pow(1 + luanGrowth(), Math.max(0, lv - 1));
     function luanBossRange() { let a = luanInt(cfgNum('luan.bossMin', 3), 1, 5), b = luanInt(cfgNum('luan.bossMax', 5), 1, 5); if (b < a) [a, b] = [b, a]; return [a, b]; }
-    function luanRewardRange() { let a = luanInt(cfgNum('luan.rewardMin', 3), 1, 30), b = luanInt(cfgNum('luan.rewardMax', 5), 1, 30); if (b < a) [a, b] = [b, a]; return [a, b]; }
-    function luanItems() {
-      const raw = cfgGet('luan.items', null);
-      const L = Array.isArray(raw) ? raw.filter(x => x && String(x.name || '').trim()).map(x => ({ name: String(x.name).trim(), ico: String(x.ico || '').trim(), n: luanInt(x.n, 1, 1e6) })) : [];
-      return L.length ? L : LUAN_DEF_ITEMS;
-    }
+    const luanShardCount = () => luanInt(cfgNum('luan.shardCount', 3), 1, 30);   // số mảnh Bảo Vật rơi mỗi trận thắng
     const luanEsc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
     const luanIsImg = s => /\.(webp|png|jpe?g|svg|gif)(\?.*)?$/i.test(s || '');
     const luanIco = (s, px) => luanIsImg(s) ? `<img src="${luanEsc(s)}" alt="" style="height:${px || 28}px;width:auto;vertical-align:middle">` : luanEsc(s || '🎁');
@@ -5545,10 +5681,22 @@ cfgOnApply(() => {
       return { name: 'Boss Luận Kiếm', lvl: lv, rank: 1, uid: null, real: false, heroes: stats.map(x => x.h), stats, power: stats.reduce((a, x) => a + unitPower(x), 0), beast: null };
     }
 
-    // ---- Phần thưởng mỗi trận thắng: 3–5 lượt rơi ngẫu nhiên trong kho vật phẩm (trùng tên thì cộng dồn số lượng) ----
+    const LUAN_GRADE_W_DEF = { 'A': 30, 'A+': 25, 'S': 20, 'S+': 12, 'SS': 8, 'SS+': 4, 'SSS': 1 };   // trọng số mặc định từng bậc (bậc cao hiếm hơn)
+    // ---- Phần thưởng mỗi trận thắng: luanShardCount() (mặc định 3) MẢNH Bảo Vật, mỗi mảnh rơi ngẫu nhiên 1 loại trong toàn bộ Bảo Vật (trùng loại thì cộng dồn) ----
     function luanRollRewards() {
-      const pool = luanItems(), [a, b] = luanRewardRange(), c = luanRand(a, b), got = {};
-      for (let i = 0; i < c; i++) { const it = pool[Math.floor(Math.random() * pool.length)]; (got[it.name] = got[it.name] || { name: it.name, ico: it.ico, n: 0 }).n += it.n; }
+      const kinds = TS_KINDS.filter(k => TS_DEFS[k]), c = luanShardCount(), got = {};
+      if (!kinds.length) return [];
+      // Rơi theo BẬC (phẩm chất A…SSS): bốc bậc theo trọng số admin (luan.gradeWeights.<bậc>, trống = mặc định, 0 = không rơi), rồi bốc đều 1 Bảo Vật trong bậc đó. Bậc chưa có Bảo Vật nào thì bỏ qua.
+      const W = cfgGet('luan.gradeWeights', {}) || {}, wt = gr => { const v = W[gr] === '' || W[gr] == null ? LUAN_GRADE_W_DEF[gr] : Number(W[gr]); return isFinite(v) && v >= 0 ? v : LUAN_GRADE_W_DEF[gr]; };
+      const byGr = {}; kinds.forEach(k => (byGr[tsGradeOf(k)] = byGr[tsGradeOf(k)] || []).push(k));
+      let grs = TS_GRADES.filter(gr => byGr[gr] && wt(gr) > 0); if (!grs.length) grs = TS_GRADES.filter(gr => byGr[gr]);   // tất cả = 0 → rơi đều theo bậc
+      const total = grs.reduce((s, gr) => s + (wt(gr) > 0 ? wt(gr) : 1), 0);
+      for (let i = 0; i < c; i++) {
+        let r = Math.random() * total, gr = grs[grs.length - 1];
+        for (const x of grs) { r -= (wt(x) > 0 ? wt(x) : 1); if (r < 0) { gr = x; break; } }
+        const k = byGr[gr][Math.floor(Math.random() * byGr[gr].length)];
+        (got[k] = got[k] || { id: k, name: 'Mảnh ' + TS_DEFS[k].name, ico: (typeof TS_IMG !== 'undefined' && TS_IMG[k]) || '🧩', n: 0 }).n += 1;
+      }
       return Object.values(got);
     }
 
@@ -5560,9 +5708,9 @@ cfgOnApply(() => {
     function luanRender() {
       const el = document.getElementById('luan-body'); if (!el) return;
       luanSync(); luanEnsureBoss();
-      const st = luanState, lv = st.lv, pct = Math.round((luanMult(lv) - 1) * 1000) / 10, stats = luanStats(lv), [r1, r2] = luanRewardRange(), [b1, b2] = luanBossRange();
+      const st = luanState, lv = st.lv, pct = Math.round((luanMult(lv) - 1) * 1000) / 10, stats = luanStats(lv), [b1, b2] = luanBossRange();
       const cards = stats.map(x => `<div class="luan-bc"><div class="luan-bp">${heroIcon(x.h)}</div><div class="luan-bn">${luanEsc(x.h.name)}</div><div class="luan-bs">HP ${fmtN(x.hp)}<br>Công ${fmtN(x.atk)}</div></div>`).join('');
-      const pool = luanItems().map(it => `<span class="luan-it" title="${luanEsc(it.name)}">${luanIco(it.ico, 30)}<small>${luanEsc(it.name)}${it.n > 1 ? ' ×' + it.n : ''}</small></span>`).join('');
+      const pool = `<span class="luan-it" title="Mảnh Bảo Vật">🧩<small>Mảnh Bảo Vật (ngẫu nhiên)</small></span>`;
       let last = '';
       if (st.last) {
         last = st.last.win
@@ -5572,7 +5720,7 @@ cfgOnApply(() => {
       el.innerHTML =
         `<div class="luan-top"><div class="luan-lv">Trận <b>${lv}</b></div><div class="luan-sub">${stats.length} Boss • Chỉ số Boss <b>+${pct}%</b>${lv > 1 ? ' (đã thắng ' + (lv - 1) + ' trận)' : ''}</div></div>` +
         `<div class="luan-bosses">${cards}</div>` +
-        `<div class="luan-bot">${last}<div class="luan-rwt">🎁 Thắng mỗi trận nhận ${r1 === r2 ? r1 : r1 + '–' + r2} vật phẩm</div><div class="luan-pool">${pool}</div>` +
+        `<div class="luan-bot">${last}<div class="luan-rwt">🧩 Thắng mỗi trận nhận ${luanShardCount()} Mảnh Bảo Vật ngẫu nhiên</div><div class="luan-pool">${pool}</div>` +
         `<button class="luan-go" onclick="luanStart()">⚔️ Khiêu Chiến</button>` +
         `<div class="luan-reset" id="luan-reset"></div><div class="luan-hint">Thắng → Boss mạnh thêm ${Math.round(luanGrowth() * 1000) / 10}% (số Boss ${b1 === b2 ? b1 : b1 + '–' + b2}). Độ khó làm mới lúc ${luanResetHour()}:00 hằng ngày.</div></div>`;
       luanTick();
@@ -5597,10 +5745,10 @@ cfgOnApply(() => {
       if (!sameDay) msg = 'Đã qua giờ làm mới (' + luanResetHour() + ':00) — độ khó đã về trận 1.';
       else if (win) {
         const rw = luanRollRewards();
-        try { rwGrantAll(rw.map(r => ({ t: 'item', name: r.name, ico: luanIcoGift(r.ico), n: r.n }))); } catch (e) { console.warn('luan reward', e); }
+        try { rwGrantAll(rw.map(r => ({ t: 'tsshard', id: r.id, n: r.n }))); } catch (e) { console.warn('luan reward', e); }
         luanState.wins++; luanState.best = Math.max(luanState.best, wasLv); luanState.lv = wasLv + 1; luanState.boss = [];
         luanState.last = { win: true, lv: wasLv, items: rw }; luanSave(); luanEnsureBoss();
-        msg = `🏆 THẮNG Trận ${wasLv}${timeout ? ' (hết ' + PVP_MAX_ROUNDS + ' lượt, gây nhiều sát thương hơn)' : ''}!\n` + rw.map(r => '🎁 ' + r.n + ' ' + r.name).join(' • ') + `\nTrận ${wasLv + 1}: Boss mạnh thêm ${Math.round((luanMult(wasLv + 1) - 1) * 1000) / 10}% so với gốc`;
+        msg = `🏆 THẮNG Trận ${wasLv}${timeout ? ' (hết ' + PVP_MAX_ROUNDS + ' lượt, gây nhiều sát thương hơn)' : ''}!\n` + rw.map(r => '🧩 ' + r.n + ' ' + r.name).join(' • ') + `\nTrận ${wasLv + 1}: Boss mạnh thêm ${Math.round((luanMult(wasLv + 1) - 1) * 1000) / 10}% so với gốc`;
       } else {
         luanState.last = { win: false, lv: wasLv }; luanSave();
         msg = `💀 THUA Trận ${wasLv}${timeout ? ' (hết ' + PVP_MAX_ROUNDS + ' lượt, gây ít sát thương hơn)' : ''}!\nKhông mất gì, cứ khiêu chiến lại (không giới hạn lượt).`;
@@ -5940,6 +6088,8 @@ function grantBanReward(stage, battle) {
 }
 
 
+// ===== Bảo Vật KHÔNG còn rơi ở Ải (PVE / Quét). Mảnh Bảo Vật chỉ rơi ở Luận Kiếm (và đổi ở Tỷ Võ). =====
+
 // ===== THƯỞNG THÊM MỖI TRẬN (admin thêm ở admin-config.html → tab "Thưởng PVE" → "Thưởng thêm mỗi trận") =====
 // PVE_CFG.extra = [{ t, n, id?, name?, ico? }] — cùng định dạng loại quà với Gift Code (silver, rice, gold, than, tien, pill, hammer, exp, shard, treasure, item, ...).
 // Nhận mỗi lần thắng 1 Bàn; quét ×N thì nhận ×N.
@@ -6079,8 +6229,8 @@ setTimeout(mailInboxFetch, 4000); setTimeout(mailInboxFetch, 12000);   // sau kh
    Tiền tệ hiện ở thanh trên; mảnh tướng, trang bị, bảo vật không nằm ở đây. */
 
     const BAG_SELL_PASS = '0000';
-    const BAG_PILL_ICO = IC_PILL;
-    const BAG_SILVER_ICO = IC_SILVER;
+    const BAG_PILL_ICO = icoImg('pill', '1.1em');
+    const BAG_SILVER_ICO = icoImg('silver', '1.1em');
     const BAG_PRICE = { 'Viên Thể Lực': 10, 'Thú Noãn': 50, 'Thú Hồn': 100, 'Thú Linh': 500, 'Đá Nữ Oa': 100, 'Dị Linh': 300, 'Đào Tiên': 200, 'Đào Tiên Vương': 1000, 'Tử Linh Thạch': 400, 'Lá Linh': 50, 'Hộp Linh': 200, 'Hộp Tinh': 400, 'Ngọc Tím': 300 };
     const BAG_PRICE_DEF = Object.assign({}, BAG_PRICE);
     cfgOnApply(() => { Object.assign(BAG_PRICE, BAG_PRICE_DEF); const o = cfgGet('misc.bagPrice', {}) || {}; Object.keys(o).forEach(k => { const v = Number(o[k]); if (isFinite(v) && v >= 0) BAG_PRICE[k] = v; }); });   // giá bán Túi Đồ — admin chỉnh: misc.bagPrice
@@ -6091,7 +6241,7 @@ setTimeout(mailInboxFetch, 4000); setTimeout(mailInboxFetch, 12000);   // sau kh
 
     function bagItems() {   // [{k, name, ico, qty, price, desc, use}]
       const it = [{ k: 'pill', name: 'Viên Thể Lực', ico: BAG_PILL_ICO, qty: staState.pills, price: BAG_PRICE['Viên Thể Lực'], desc: `Mỗi viên +${PILL_STA} thể lực (hiện ${staState.v}/${STA_MAX}).`, use: 'pill' },
-        { k: 'hammer', name: 'Búa', ico: '🔨', qty: hammerCount(), price: 0, desc: 'Dùng để tăng cấp Bảo Vật (1 búa = 300 EXP). Nhận từ Ải PVE và chế độ Trốn.', use: 'hammer' }];
+        { k: 'hammer', name: 'Búa', ico: icoImg('hammer', '1.25em'), qty: hammerCount(), price: 0, desc: 'Dùng để tăng cấp Bảo Vật (1 búa = 300 EXP). Nhận từ Ải PVE và chế độ Trốn.', use: 'hammer' }];
       if (typeof gdSt === 'function') { const kho = gdSt().kho; Object.keys(kho).forEach(n => { if (kho[n].qty > 0) it.push({ k: 'g:' + n, name: n, ico: danIcoHTML(n) || gdIco(n, kho[n].ico), qty: kho[n].qty, price: BAG_PRICE[n] || 100, desc: BAG_DESC[n] || 'Vật phẩm Bang Hội.', use: 'gd' }); }); }
       return it.filter(x => x.qty > 0);
     }
@@ -6728,21 +6878,21 @@ async function sendChat() {
 function openVhub() { switchScreen('vhub'); }
 function vhGo(k) {
   if (k === 'manh') return openVhero();
-  if (k === 'sao' || k === 'boiduong' || k === 'kynang') return openPicker(k);
+  if (k === 'sao' || k === 'boiduong' || k === 'kynang' || k === 'phamchat') return openPicker(k);
   scToast('Tính năng sắp ra mắt');
 }
 let pkMode = 'boiduong';
 function openPicker(mode) {
   pkMode = mode || 'boiduong';
-  const t = { boiduong: 'Chọn Võ Hiệp thăng cấp', sao: 'Chọn Võ Hiệp tăng sao', kynang: 'Chọn Võ Hiệp nâng kỹ năng' }[pkMode];
+  const t = { boiduong: 'Chọn Võ Hiệp thăng cấp', sao: 'Chọn Võ Hiệp tăng sao', kynang: 'Chọn Võ Hiệp nâng kỹ năng', phamchat: 'Chọn Võ Hiệp nâng phẩm chất' }[pkMode];
   document.getElementById('pk-title').textContent = t;
   const order = ownedHeroes().sort((a, b) => (team.includes(b.id) - team.includes(a.id)) || (getProg(b.id).lv - getProg(a.id).lv));
   if (!order.length) { scToast('Chưa có tướng nào — hãy Chiêu Mộ trước'); return; }
   document.getElementById('pk-grid').innerHTML = order.map(h => {
     const p = getProg(h.id), inTeam = team.includes(h.id);
-    return `<div class="pk-card ${(HERO_BORDER[h.id] || 'orange') === 'purple' ? 'purple' : ''}" onclick="openUpg(${h.id})">${inTeam ? '<div class="pk-tag">Đội</div>' : ''}<div class="e">${heroIcon(h)}</div><div class="n">${h.name}</div><div class="st">${'★'.repeat(Math.min(p.star, 5)) || '☆'}${p.star > 5 ? '×' + p.star : ''}</div>${pkMode === 'sao' ? `<div class="lv">${shardsOf(h.id)} mảnh</div>` : pkMode === 'kynang' ? `<div class="lv">Kỹ năng ${p.sk}</div>` : `<div class="lv">Lv${p.lv}</div>`}</div>`;
+    return `<div class="pk-card ${(HERO_BORDER[h.id] || 'orange') === 'purple' ? 'purple' : ''}" onclick="openUpg(${h.id})">${inTeam ? '<div class="pk-tag">Đội</div>' : ''}<div class="e">${heroIcon(h)}</div><div class="n">${h.name}</div><div class="st">${'★'.repeat(Math.min(p.star, 5)) || '☆'}${p.star > 5 ? '×' + p.star : ''}</div>${pkMode === 'sao' ? `<div class="lv">${shardsOf(h.id)} mảnh</div>` : pkMode === 'kynang' ? `<div class="lv">Kỹ năng ${p.sk}</div>` : pkMode === 'phamchat' ? `<div class="lv" style="color:${QL_COLOR[p.ql]};font-weight:900">Phẩm chất ${QL_NAMES[p.ql]}</div>` : `<div class="lv">Lv${p.lv}</div>`}</div>`;
   }).join('');
-  document.querySelector('#screen-picker .pk-sub').textContent = { boiduong: 'Chọn tướng để thăng cấp', sao: 'Chọn tướng để tăng sao (cần mảnh tướng)', kynang: 'Chọn tướng để nâng kỹ năng' }[pkMode];
+  document.querySelector('#screen-picker .pk-sub').textContent = { boiduong: 'Chọn tướng để thăng cấp', sao: 'Chọn tướng để tăng sao (cần mảnh tướng)', kynang: 'Chọn tướng để nâng kỹ năng', phamchat: 'Chọn tướng để nâng phẩm chất' }[pkMode];
   switchScreen('picker');
 }
 
@@ -6917,7 +7067,7 @@ let GD_DROPS_LOW = GD_DROPS_LOW_DEF, GD_DROPS_HIGH = GD_DROPS_HIGH_DEF;
 const GD_SKILL_UNLOCK = GD_UNLOCK_DEF.slice(), GD_SKILL_MAX = [Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity];   // Lò Luyện Hỏa: nâng cấp không giới hạn
 const GD_ICO = { 'Thú Noãn': 'thu-noan', 'Thú Hồn': 'thu-hon', 'Thú Linh': 'thu-linh', 'Đá Nữ Oa': 'da-nu-oa', 'Dị Linh': 'di-linh', 'Đào Tiên': 'dao-tien', 'Đào Tiên Vương': 'dao-tien', 'Tử Linh Thạch': 'tu-linh-thach' };
 const GD_ICO2 = { 'Đá Xanh Lá': 'vat-pham-game/da-linh/da-xanh-la', 'Đá Tím': 'vat-pham-game/da-linh/da-tim', 'Đá Đen': 'vat-pham-game/da-linh/da-den', 'Đá Vàng': 'vat-pham-game/da-linh/da-vang', 'Đá Cam': 'vat-pham-game/da-linh/da-cam', 'Đá Đỏ': 'vat-pham-game/da-linh/da-do', 'Đá Trắng': 'vat-pham-game/da-linh/da-trang',
-  'Bí Kíp': 'vat-pham-game/ky-nang/bi-kip', 'Yếu Quyết': 'vat-pham-game/ky-nang/yeu-quyet', 'Vô Tự Thiên Thư': 'vat-pham-game/ky-nang/vo-tu-thien-thu' };   // ảnh ngoài thư mục bang-hoi (Hang Tụ Linh, kỹ năng)
+  'Hỏa Thạch': 'vat-pham-game/trang-bi/hoa-thach', 'Linh Phách': 'vat-pham-game/phach/linh_phach', 'Tiên Phách': 'vat-pham-game/phach/tien_phach', 'Thần Phách': 'vat-pham-game/phach/than_phach', 'Bí Kíp': 'vat-pham-game/ky-nang/bi-kip', 'Yếu Quyết': 'vat-pham-game/ky-nang/yeu-quyet', 'Vô Tự Thiên Thư': 'vat-pham-game/ky-nang/vo-tu-thien-thu' };   // ảnh ngoài thư mục bang-hoi (Hang Tụ Linh, kỹ năng)
 function gdIco(name, ico) { if (typeof DAN_IMG !== 'undefined' && DAN_IMG[name]) return DAN_IMG[name]; if (String(name).indexOf('Đào Tiên') === 0) return IC_PEACH; if (GD_ICO2[name]) return `<img class="gi" src="${GD_ICO2[name]}.webp" alt="${name}">`; const f = GD_ICO[name] || (String(name).indexOf('Châu ') === 0 ? 'chau' : ''); return f ? `<img class="gi" src="${f === 'dao-tien' ? 'vat-pham-game/dao-tien' : 'vat-pham-game/bang/' + f}.webp" alt="${name}">` : ico; }
 function gdSt() {
   const s = loadJSON('guild_state');
@@ -7891,7 +8041,7 @@ function qsClaim(th) {
   if (typeof clPush === 'function') { try { clPush(); } catch (e) {} }
 }
 /* ---- Sự Kiện (đã bỏ toàn bộ mục nạp / tiêu phí) ---- */
-const QS_EVENTS_DEF = [{ id: 'free', name: 'Quà Free', ico: '🎁', kind: 'daily', gifts: [{ t: 'silver', n: 20000 }, { t: 'rice', n: 10000 }] }, { id: 'e2', name: 'Đổi', ico: '🔁', kind: 'soon' }, { id: 'e3', name: 'Đập Rượu', ico: '🏺', kind: 'soon' },
+const QS_EVENTS_DEF = [{ id: 'free', name: 'Quà Free', ico: '🎁', kind: 'login', rows: [{ gifts: [] }, { gifts: [] }, { gifts: [] }, { gifts: [] }, { gifts: [] }, { gifts: [] }, { gifts: [] }] }, { id: 'e2', name: 'Đổi', ico: '🔁', kind: 'soon' }, { id: 'e3', name: 'Đập Rượu', ico: '🏺', kind: 'soon' },
   { id: 'e4', name: 'Rút Thẻ', ico: '🎴', kind: 'soon' }, { id: 'e5', name: 'Quà Online', ico: '🎀', kind: 'soon' }, { id: 'e6', name: 'Dã Tẩu', ico: '📜', kind: 'soon' }, { id: 'e7', name: 'Tụ Linh Đàn', ico: '🏅', kind: 'soon' },
   { id: 'e8', name: 'Kỳ Cuộc', ico: '🪷', kind: 'soon' }, { id: 'e9', name: 'Thiên Cơ', ico: '🔮', kind: 'soon' }];
 function evList() {
@@ -7900,7 +8050,41 @@ function evList() {
 }
 const evClaimed = (s, e) => e.kind === 'once' ? !!s.evOnce[e.id] : !!(s.ev[e.id] || (e.id === 'free' && s.free));
 function evWindow(e) { const n = Date.now(); return e.from && n < e.from ? 'wait' : (e.to && n > e.to ? 'end' : 'ok'); }
-const evReady = (s, e) => (e.kind === 'daily' || e.kind === 'once') && rwList(e.gifts).length && evWindow(e) === 'ok' && !evClaimed(s, e);
+/* Loại 'login' (Quà Free): bảng TÍCH LŨY NGÀY ĐĂNG NHẬP, mỗi mốc có 5 ô quà (admin bỏ quà vào ô nào thì hiện ô đó, không bỏ thì ô trống).
+   Cấu hình: e.rows = [ { gifts: [quà...] }, ... ] — mốc thứ i cần i ngày đăng nhập, mỗi mốc nhận 1 lần; chỉ 5 quà đầu hiện vào 5 ô. Đổi 'Bắt đầu' (from) của sự kiện = chạy lại từ đầu.
+   Quà Free (id 'free') luôn dùng loại này (trừ khi admin để 'sắp ra mắt'). */
+const EV_SLOTS = 5;
+const evKind = e => (e.id === 'free' && e.kind !== 'soon') ? 'login' : e.kind;
+const evRows = e => { const R = Array.isArray(e.rows) && e.rows.length ? e.rows : [{}, {}, {}, {}, {}, {}, {}]; return R.map(r => rwList((r || {}).gifts).slice(0, EV_SLOTS)); };
+function evLoginSt(e) {   // đếm số ngày đăng nhập (mỗi ngày +1 khi trong thời gian sự kiện)
+  const all = loadJSON('ev_login') || {}, sk = String(e.from || 0);
+  let o = all[e.id]; if (!o || o.sk !== sk) o = { sk, days: 0, last: '', claimed: {} };
+  const today = new Date().toDateString();
+  if (o.last !== today && evWindow(e) === 'ok') { o.last = today; o.days++; }
+  o.claimed = o.claimed || {}; all[e.id] = o; saveJSON('ev_login', all); return o;
+}
+const evLoginReady = e => { const o = evLoginSt(e); return evRows(e).some((g, i) => g.length && o.days >= i + 1 && !o.claimed[i]); };
+const evReady = (s, e) => { if (evWindow(e) !== 'ok') return false; const k = evKind(e); if (k === 'login') return evLoginReady(e); return (k === 'daily' || k === 'once') && rwList(e.gifts).length && !evClaimed(s, e); };
+const evRange = e => { const f = t => { const d = new Date(t); return String(d.getDate()).padStart(2, '0') + '/' + String(d.getMonth() + 1).padStart(2, '0'); }; return e.from && e.to ? f(e.from) + ' - ' + f(e.to) : e.from ? 'Từ ' + f(e.from) : e.to ? 'Đến ' + f(e.to) : ''; };
+function openEvLogin(e) {
+  const o = evLoginSt(e), rows = evRows(e), m = document.getElementById('qs-modal'), esc = x => String(x).replace(/[<>&"]/g, '');
+  if (!document.getElementById('ev-login-css')) { const st = document.createElement('style'); st.id = 'ev-login-css'; st.textContent = '.evl-box{max-width:460px;width:94%}.evl-list{max-height:70vh;overflow-y:auto;padding:2px 2px 6px}.evl-row{background:rgba(0,0,0,.35);border:2px solid #8b6b2e;border-radius:10px;padding:6px 8px;margin:8px 0}.evl-t{font-weight:900;color:#fde68a;font-size:13px;margin-bottom:5px}.evl-t b.ok{color:#4ade80}.evl-t b.no{color:#f87171}.evl-line{display:flex;gap:5px;align-items:stretch}.evl-slot{flex:1 1 0;min-width:0;aspect-ratio:1/1;background:rgba(0,0,0,.45);border:1px solid #6b5a3a;border-radius:7px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11px;color:#fff;font-weight:800;overflow:hidden}.evl-slot.empty{opacity:.55}.evl-slot .ic{font-size:22px;line-height:1.1}.evl-slot .ic img{height:26px;width:auto}.evl-slot small{font-size:8px;font-weight:600;opacity:.85;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.evl-btn{flex:0 0 74px;border:2px solid #14532d;border-radius:9px;background:linear-gradient(#16a34a,#14532d);color:#fff;font-weight:900;font-size:13px;cursor:pointer}.evl-btn:disabled{background:#1f2937;border-color:#374151;color:#9ca3af;cursor:default}'; document.head.appendChild(st); }
+  const slot = r => { if (!r) return '<div class="evl-slot empty"></div>'; const i = rwInfo(r); return `<div class="evl-slot" title="${esc(i.name)}"><span>x${fmtN(i.n)}</span><span class="ic">${i.ico}</span><small>${esc(i.name)}</small></div>`; };
+  const list = rows.map((g, i) => {
+    const need = i + 1, can = o.days >= need, done = !!o.claimed[i];
+    const btn = done ? '<button class="evl-btn" disabled>Đã nhận</button>' : (!g.length ? '<button class="evl-btn" disabled>Chưa có quà</button>' : (can ? `<button class="evl-btn" onclick="evLoginClaim('${esc(e.id)}',${i})">Nhận</button>` : '<button class="evl-btn" disabled>Nhận</button>'));
+    return `<div class="evl-row"><div class="evl-t">Tích lũy ${need} ngày nhận : <b class="${can ? 'ok' : 'no'}">${Math.min(o.days, need)}</b> / ${need}</div><div class="evl-line">${Array.from({ length: EV_SLOTS }, (_, k) => slot(g[k])).join('')}${btn}</div></div>`;
+  }).join('');
+  m.innerHTML = `<div class="md-box evl-box"><button class="md-x" onclick="document.getElementById('qs-modal').style.display='none'">✕</button><div class="hd-name" style="text-align:center;color:#fde047">${esc(e.name)}</div><div style="text-align:center;color:#a7f3d0;font-weight:800;margin:2px 0 4px">Đăng nhập nhận quà${evRange(e) ? ' • ' + evRange(e) : ''} • Đã đăng nhập ${o.days} ngày</div><div class="evl-list">${list}</div></div>`;
+  m.style.display = 'flex';
+}
+function evLoginClaim(id, i) {
+  const e = evList().find(x => String(x.id).replace(/'/g, '') === id); if (!e || evWindow(e) !== 'ok') return;
+  const o = evLoginSt(e), g = evRows(e)[i]; if (!g || !g.length || o.days < i + 1 || o.claimed[i]) return;
+  o.claimed[i] = 1; const all = loadJSON('ev_login') || {}; all[e.id] = o; saveJSON('ev_login', all);
+  const got = rwGrantAll(g); openEvLogin(e); evBadgeUpdate(); scToast('Nhận: ' + got);
+  if (typeof clPush === 'function') { try { clPush(); } catch (er) {} }
+}
 function openEvents() {
   const s = qsSt(), m = document.getElementById('qs-modal'), L = evList().filter(e => evWindow(e) !== 'end' || e.kind === 'soon');
   m.innerHTML = `<div class="md-box"><button class="md-x" onclick="document.getElementById('qs-modal').style.display='none'">✕</button><div class="hd-name" style="text-align:center;color:#fde047">Sự kiện</div><div class="qs-ev">${L.map(e => `<div onclick="evGo('${String(e.id).replace(/'/g, '')}')"><i>${e.ico || '🎁'}${evReady(s, e) ? '<b>1</b>' : ''}</i>${String(e.name).replace(/[<>&]/g, '')}</div>`).join('')}</div></div>`; m.style.display = 'flex';
@@ -7911,8 +8095,10 @@ function evBadgeUpdate() {
 }
 function evGo(id) {
   const e = evList().find(x => String(x.id).replace(/'/g, '') === id); if (!e) return;
-  if (e.kind !== 'daily' && e.kind !== 'once') return scToast(e.name + ' — sắp ra mắt');
+  const ek = evKind(e);
+  if (ek !== 'daily' && ek !== 'once' && ek !== 'login') return scToast(e.name + ' — sắp ra mắt');
   const w = evWindow(e); if (w === 'wait') return scToast(e.name + ' — chưa mở (bắt đầu ' + new Date(e.from).toLocaleString('vi-VN') + ')'); if (w === 'end') return scToast(e.name + ' — đã kết thúc');
+  if (ek === 'login') return openEvLogin(e);
   const s = qsSt(); if (evClaimed(s, e)) return scToast(e.kind === 'once' ? 'Bạn đã nhận ' + e.name + ' rồi' : 'Hôm nay đã nhận ' + e.name);
   if (!rwList(e.gifts).length) return scToast(e.name + ' — chưa có quà');
   if (e.kind === 'once') s.evOnce[e.id] = 1; else { s.ev[e.id] = 1; if (e.id === 'free') s.free = 1; }
