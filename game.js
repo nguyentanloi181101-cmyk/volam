@@ -2209,7 +2209,7 @@ function addAccExp(n) {
       let ult;
       if (id === 4) ult = `KHÔNG TỐN NỘ – lượt nào cũng ulti được. Tụ khối cầu Thái Cực trắng đen, nhảy lên trời rồi ném xuống: gây ${TAICHI_HITS} lần sát thương, tổng ${pct(TAICHI_MULT * sk)}% Công (≈ ${fmtN(st.atk * TAICHI_MULT * sk)}) lên TOÀN BỘ địch. ${p.star >= STAR_MAX ? '(Đang ★6) ' : '(Đang ★' + p.star + ') '}★5: ngay sau khi ulti xong, choáng 1 địch ngẫu nhiên 2 hiệp (không chảy máu). ★6: TRƯỚC khi ném xuống, toàn bộ địch bị CHẢY MÁU ${TAICHI_BLEED_TURNS} hiệp, mỗi hiệp mất ${pct(TAICHI_BLEED_PCT)}% HP hiện tại; ngay sau khi ulti xong, choáng 2 địch ngẫu nhiên 2 hiệp.`;
       else if (id === 3) ult = `Cần đầy 100 nộ. Nhảy vọt lên, triệu hồi cơn mưa ${DUCO_SWORDS} thanh kiếm tím từ trên trời cắm xuống ào ạt. Tấn công TOÀN địch ${DUCO_HIT_COUNT} lần, tổng ${pct(DUCO_MULT * sk)}% Công, mỗi lần ≈ ${fmtN(st.atk * DUCO_MULT * sk / DUCO_HIT_COUNT)}. Toàn địch giảm ${pct(DUCO_SLOW)}% Tốc, toàn đội ta tăng ${pct(DUCO_HASTE)}% Tốc trong ${DUCO_BUFF_TURNS} hiệp.`;
-      else if (id === 0) ult = `Cần đầy 100 nộ. Nhảy qua đội hình địch rồi ulti ${MADAO_SLASHES} nhát chém màu TÍM chồng lên nhau với tốc độ rất nhanh; mỗi nhát trúng TOÀN BỘ địch còn sống: tổng ${pct(MADAO_MULT * sk)}% Công (≈ ${fmtN(st.atk * MADAO_MULT * sk)}, mỗi nhát ≈ ${fmtN(st.atk * MADAO_MULT * sk / MADAO_SLASHES)}). Sau đó nhảy về chỗ cũ, nộ về 0.`;
+      else if (id === 0) ult = `Cần đầy 100 nộ. Tan thành sương tím, DỊCH CHUYỂN sang sau đội hình địch rồi ulti ${TADE_HITS} nhát chém tím từ nhiều hướng; mỗi nhát trúng TOÀN BỘ địch còn sống: tổng ${pct(TADE_MULT * sk)}% Công (≈ ${fmtN(st.atk * TADE_MULT * sk)}, mỗi nhát ≈ ${fmtN(st.atk * TADE_MULT * sk / TADE_HITS)}). Mỗi nhát GIẢM ${pct(TADE_SLOW)}% Tốc toàn địch trong ${TADE_SLOW_TURNS} hiệp (không cộng dồn) và BỎ QUA BẤT TỬ – giết được cả tướng đang bất tử. Khi vào chiêu, TOÀN ĐỘI ta +${TADE_PIERCE} Phá giáp trong ${TADE_PIERCE_TURNS} hiệp. Xong dịch chuyển về chỗ cũ, nộ về 0.`;
       else if (id === 12) ult = `Ra trận ĐẦY NỘ. Ulti 18 đạo tàn ảnh dồn dập chạy từ đội ta sang đội địch. TOÀN ĐỘI nhận trong ${LB_TURNS} hiệp: +${pct(LB_DODGE_MULT)}% Né của Đoàn Dự (≈ +${fmtN(st.dodge * LB_DODGE_MULT)}% Né), +${pct(LB_SPD_MULT)}% Tốc của Đoàn Dự (≈ +${fmtN(st.spd * LB_SPD_MULT)} Tốc) và mỗi hiệp hồi ${pct(LB_HEAL_MULT)}% Máu của Đoàn Dự (≈ ${fmtN(st.hp * LB_HEAL_MULT)} máu/hiệp). Cần đầy 100 nộ, mỗi lần ulti xong nộ về 0.`;
       else if (id === 11) ult = `KHÔNG TỐN NỘ – hiệp nào cũng ulti được. Đứng tại chỗ tung chiêu: ${GO_STONES} cây cờ Thái Cực phóng thật nhanh xuống đội địch từng cây một, mỗi cây trúng gây ${pct(GO_STONE_PCT)}% HP hiện tại của địch bị trúng. Sau đó chọn BOSS MẠNH NHẤT (nhiều HP tối đa nhất), SAO CHÉP: đồng đội nhận CÔNG / THỦ / HP của boss, boss GIỮ NGUYÊN chỉ số. Từ lần sao chép thứ 2: so với lần trước, chỉ số nào lần 1 cao hơn thì giữ nguyên, chỉ số nào lần 2 cao hơn thì lấy lần 2 (không cộng dồn).`;
       else if (id === 10) ult = `KHÔNG TỐN NỘ – lượt nào cũng ulti được. Dang tay triệu hồi đầu lâu lửa phun lửa xuống TOÀN BỘ địch: ${SKEL_HITS} lần sát thương, tổng ${pct(SKEL_MULT * sk)}% Công (≈ ${fmtN(st.atk * SKEL_MULT * sk)}, mỗi lần ≈ ${fmtN(st.atk * SKEL_MULT * sk / SKEL_HITS)}) và GIẢM ${pct(SKEL_PCT)}% MÁU HIỆN TẠI của địch trong ${PD_HP_TURNS} hiệp (hết hạn thì máu được cộng lại). Địch né được thì không dính. Địch bị đánh xong mà HP còn ≤ ${pct(EXEC_PCT)}% HP tối đa sẽ bị TẤT SÁT – kết liễu ngay. Bản thân không bị trừ máu.`;
@@ -2245,7 +2245,7 @@ function addAccExp(n) {
       try {
         const st = heroStats(id), sk = skillMult(id), pct = x => Math.round(x * 100);
         switch (id) {
-          case 0: return `Chém TOÀN BỘ địch ${MADAO_SLASHES} nhát.`;
+          case 0: return `Dịch chuyển, chém TOÀN BỘ địch ${TADE_HITS} nhát (xuyên bất tử, giảm ${pct(TADE_SLOW)}% Tốc địch); đội ta +${TADE_PIERCE} Phá giáp ${TADE_PIERCE_TURNS} hiệp.`;
           case 1: return `Hồi sinh tối đa ${REVIVE_COUNT} đồng đội đã gục với ${pct(REVIVE_HP_PCT)}% HP.`;
           case 2: return `Hằng Nga bay lên ngồi trăng, giải hiệu ứng xấu (chảy máu, choáng) cả đội. Dựng khiên ${MOON_TURNS} hiệp: phản ${pct(MOON_REFLECT)}% sát thương cho địch, đồng đội chỉ chịu ${pct(MOON_TAKE)}% sát thương.`;
           case 3: return `Mưa ${DUCO_SWORDS} kiếm đánh toàn địch ${DUCO_HIT_COUNT} lần. Địch giảm ${pct(DUCO_SLOW)}% Tốc; cả đội ta tăng ${pct(DUCO_HASTE)}% Tốc, ${DUCO_BUFF_TURNS} hiệp.`;
@@ -2844,7 +2844,10 @@ function addAccExp(n) {
         refl = Math.round(dmg * MOON_REFLECT); dmg = Math.max(1, Math.round(dmg * MOON_TAKE));
         const ic = u.el.querySelector('.bf-moonshield'); if (ic) ic.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.3)' }, { transform: 'scale(1)' }], { duration: 260 });
       }
-      if (u.dn && u.dn.immortal > 0 && dmg >= u.hp) { dmg = Math.max(0, u.hp - 1); floatText(u, '✨ BẤT TỬ'); }   // Thanh Y: không thể chết
+      if (u.dn && u.dn.immortal > 0 && dmg >= u.hp) {   // Thanh Y: không thể chết — TRỪ khi người đánh có cờ ignoreImmortal (Tà Đế đang ulti)
+        if (src && src.ignoreImmortal) floatText(u, '💀 XUYÊN BẤT TỬ');
+        else { dmg = Math.max(0, u.hp - 1); floatText(u, '✨ BẤT TỬ'); }
+      }
       const hpBefore = u.hp;
       u.hp = Math.max(0, u.hp - dmg);
       if (pvp) pvpDmg[u.side === 'hero' ? 'enemy' : 'hero'] += hpBefore - u.hp;   // Tỷ Võ: cộng sát thương cho bên gây ra
@@ -3249,7 +3252,7 @@ cfgOnApply(applyFormationCfg);   // chạy ngay 1 lần + chạy lại mỗi khi
    (tách từ index.html cũ — script) */
 
     // Chiêu cuối: tướng thường dùng kiểu lao vào đánh 3 đòn, Trương Tam Phong có chiêu riêng
-    // Âm thanh tuyệt kỹ theo tướng (heros/<tên-tướng>/NN-<tên-tướng>.mp3). [ghi chú cũ: id 0 = Ma Đao Thánh Nữ, id 2 = Hằng Nga, id 5 = Âu Cơ, id 8 = Lạc Long Quân, id 9 = Hỏa Thiên Tướng, id 10 = Tiểu Yêu (Vô Nhai Tử: không có âm lúc bắt đầu chiêu, mỗi viên cờ rơi kêu 1 tiếng – xem playGoStone)
+    // Âm thanh tuyệt kỹ theo tướng (heros/<tên-tướng>/NN-<tên-tướng>.mp3). [ghi chú cũ: id 0 = Tà Đế, id 2 = Hằng Nga, id 5 = Âu Cơ, id 8 = Lạc Long Quân, id 9 = Hỏa Thiên Tướng, id 10 = Tiểu Yêu (Vô Nhai Tử: không có âm lúc bắt đầu chiêu, mỗi viên cờ rơi kêu 1 tiếng – xem playGoStone)
     const HERO_SND_SRC = HERO_T.sound;   // mỗi tướng 1 âm tuyệt kỹ riêng (tạo bằng tổng hợp âm), phát lúc bắt đầu tung chiêu
     const heroSnd = {};
     Object.keys(HERO_SND_SRC).forEach(id => { try { const a = new Audio(HERO_SND_SRC[id]); a.preload = 'auto'; heroSnd[id] = a; } catch (e) {} });
@@ -3309,7 +3312,7 @@ cfgOnApply(applyFormationCfg);   // chạy ngay 1 lần + chạy lại mỗi khi
       if (u.star) return u.star;   // đối thủ người thật: số sao thật của họ
       return pvp ? ((START_PROG[u.id] || {}).star || 5) : 1;   // địch trong ải thường không có sao
     }
-    const QUICK_CHAIN = new Set([4, 7, 0]);   // Trương Tam Phong, Phạm Dao, Mã Đạo
+    const QUICK_CHAIN = new Set([4, 7]);   // Trương Tam Phong, Phạm Dao
     async function ultimate(u, tok) {
       const plan = ultPlan(ultStarOf(u));
       const sk0 = u.sk, z0 = u.el.style.zIndex;
@@ -3329,7 +3332,7 @@ cfgOnApply(applyFormationCfg);   // chạy ngay 1 lần + chạy lại mỗi khi
     }
     function ultimateOnce(u, tok) {
       if (u.isSoldier) return lcUlt(u, tok);   // Lính phụ (cờ/kiếm/cung/đao/chuỳ/thương): heros/linh-cam.js
-      if (!(u.qRepeat && u.id === 0)) playHeroSound(u.id);   // Mã Đạo: tiếng dài, lần lặp không phát lại để khỏi cắt tiếng
+      playHeroSound(u.id);
       { const uf = heroUltFn(u.id); if (uf) return uf(u, tok); }   // tên hàm tuyệt kỹ khai báo trong heros/hero-data.js (ultFn)
       return attack(u, foesOf(u), ULT_HITS, u.atk * ULT_MULT * (u.sk || 1), tok, true);
     }
@@ -3375,102 +3378,96 @@ cfgOnApply(applyFormationCfg);   // chạy ngay 1 lần + chạy lại mỗi khi
    Mỗi khối bắt đầu bằng banner "=== <slug> ===". Thứ tự giữ đúng như cũ (theo id tướng). Tên hàm chạy tuyệt kỹ khai báo trong heros/hero-data.js (ultFn).
    Ngũ Tuyệt (bac-cai, dong-ta, tay-doc, nam-de, vuong-trung-duong) có khối riêng từng tướng trong game.js (banner === bac-cai ===, === dong-ta === ...). Lính phụ nằm ở heros/linh-cam.js. */
 
-/* === ma-dao-thanh-nu === */
-/* MA ĐAO THÁNH NỮ (id 0): tuyệt kỹ chém
-   (tách từ index.html cũ — script) */
-
-    // Hiệu ứng NỨT MÀN HÌNH: mỗi nhát chém bung ra 1 mạng vết nứt (tia chính + nhánh gấp khúc) tại điểm chém, các nhát sau chồng thêm lên
-    function crackFx(f, W, H, px, py, strong, state) {
-      const NS = 'http://www.w3.org/2000/svg';
-      if (!state.svg) { const sv = document.createElementNS(NS, 'svg'); sv.setAttribute('class', 'bf-crack'); sv.setAttribute('viewBox', `0 0 ${W} ${H}`); sv.setAttribute('preserveAspectRatio', 'none'); f.appendChild(sv); state.svg = sv; }
-      const sv = state.svg, R = Math.max(W, H), rnd = (a, b) => a + Math.random() * (b - a);
-      const jag = (x, y, ang, len, wid, depth) => {                 // 1 vết nứt gấp khúc + nhánh con
-        let d = `M${x.toFixed(1)} ${y.toFixed(1)}`, cx = x, cy = y, a = ang, run = 0; const pts = [];
-        while (run < len) {
-          const st = rnd(14, 30); a += rnd(-0.38, 0.38); cx += Math.cos(a) * st; cy += Math.sin(a) * st; run += st;
-          d += ` L${cx.toFixed(1)} ${cy.toFixed(1)}`; pts.push([cx, cy, a, run]);
+/* === ta-de === */
+/* TÀ ĐẾ (id 0): tuyệt kỹ Tà Đế Ngũ Trảm
+   Chuỗi khung: SEQ.tdeIdle (đứng yên) • SEQ.tdeTele (18 khung dịch chuyển: 0-6 tan biến, 7-17 hiện ra) • SEQ.tdeSlash1..6 (6 kiểu chém tím, mỗi kiểu 7 khung)
+   Trình tự (ms tính từ lúc bắt đầu tiếng, khớp heros/ta-de/00-ta-de.mp3): tan thành sương tím → hiện ra sau đội hình địch → đội ta +TADE_PIERCE Phá giáp
+   → TADE_HITS nhát chém từ nhiều hướng (mỗi nhát: toàn địch -TADE_SLOW Tốc, BỎ QUA bất tử) → dịch chuyển về chỗ cũ.
+   Tham số chỉnh ở admin.html → tab "Chiêu thức & chiến đấu" → Tà Đế. */
+const TADE_T = [1300, 1550, 1800, 2050, 2350];   // mốc từng nhát chém (ms từ lúc bắt đầu tiếng)
+async function taDeUlt(u, tok) {
+  const f = document.getElementById('battle-arena'), box = document.getElementById('bf-units');
+  const W = f.clientWidth, H = f.clientHeight, base = 'translate(-50%,-50%)';
+  const alive = () => foesOf(u).filter(e => e.alive);
+  const es0 = alive(); if (!es0.length) return;
+  const xs = es0.map(e => e.x), ys = es0.map(e => e.y);
+  const cx = (Math.min(...xs) + Math.max(...xs)) / 2, cy = (Math.min(...ys) + Math.max(...ys)) / 2;
+  const landX = u.side === 'hero' ? Math.min(94, Math.max(...xs) + 9) : Math.max(6, Math.min(...xs) - 9), landY = cy;
+  const dx = (landX - u.x) * W / 100, dy = (landY - u.y) * H / 100;
+  const land = `translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px))`;
+  const oldZ = u.el.style.zIndex, made = [], timers = [];
+  const hits = Math.max(1, Math.floor(TADE_HITS)), per = u.atk * TADE_MULT * (u.sk || 1) / hits;
+  const rs = ms => (battleFast || ms <= 0) ? Promise.resolve() : new Promise(r => setTimeout(r, ms));
+  const t0 = performance.now(), at = ms => rs(t0 + ms - performance.now());
+  const idleH = (SEQ_IDLE[0] && SEQ_IDLE[0].h) || 120, tw = Math.round(idleH * 1.0913);   // cùng cỡ người với dáng đứng (khung dịch chuyển vuông 296×296)
+  const flipped = seqFlip(SEQ.tdeTele, u.side);
+  const ov = seqOverlay(u, SEQ.tdeTele, tw);
+  const face = fl => { ov.el.style.transform = 'translateX(-50%)' + (fl ? ' scaleX(-1)' : ''); };
+  const play = async (a, b, ms) => { for (let i = a; i <= b; i++) { if (tok !== battleToken) return false; ov.show(i); await rs(ms); } return tok === battleToken; };
+  // vòng sóng tím
+  const ring = (x, y) => { const w = document.createElement('div'); w.className = 'bf-wave'; w.style.left = x + '%'; w.style.top = y + '%'; w.style.borderColor = '#a855f7'; w.style.boxShadow = '0 0 24px #7e22ce, inset 0 0 24px #a855f7'; box.appendChild(w); made.push(w); setTimeout(() => w.remove(), 650); };
+  // 1 hiệu ứng chém: row = 1..6 (kiểu chém), tâm (xPct,yPct), rộng w px
+  const slashFx = (row, xPct, yPct, w, flip) => {
+    const s = SEQ['tdeSlash' + row], d = document.createElement('div'); d.className = 'bf-tde-fx';
+    const anchored = (row === 2 || row === 6);   // cột tia / bung nổ: đáy đặt ở chân mục tiêu
+    d.style.left = xPct + '%'; d.style.top = (anchored ? yPct + 5 : yPct) + '%';
+    d.style.transform = (anchored ? 'translate(-50%,-88%)' : 'translate(-50%,-50%)') + (flip ? ' scaleX(-1)' : '');
+    const el = seqEl(s, w); d.appendChild(el); box.appendChild(d); made.push(d);
+    for (let i = 0; i < s.n; i++) timers.push(setTimeout(() => { if (tok === battleToken) el.show(i); }, battleFast ? 0 : i * 42));
+    timers.push(setTimeout(() => d.remove(), battleFast ? 50 : s.n * 42 + 80));
+  };
+  const ORDER = [1, 4, 3, 2, 5];   // kiểu chém trung tâm của từng nhát (nhát cuối: vòng xoáy lớn + bung nổ dưới chân)
+  u.el.style.zIndex = 99;
+  try {
+    // 1. Tan thành sương tím tại chỗ, rồi hiện ra sau đội hình địch (quay mặt về phía địch)
+    await at(60); if (tok !== battleToken) return;
+    if (!(await play(0, 6, 55))) return;
+    ov.el.style.visibility = 'hidden';
+    u.el.getAnimations().forEach(a => a.cancel()); u.el.animate([{ transform: land }], { duration: 1, fill: 'forwards' });
+    face(!flipped); ov.el.style.visibility = '';
+    ring(landX, landY);
+    if (!(await play(7, 17, 45))) return;
+    // 2. Dồn lực: hào quang tím + đội ta +Phá giáp
+    u.el.animate([{ filter: 'brightness(1) drop-shadow(0 0 0 #a855f7)' }, { filter: 'brightness(1.5) drop-shadow(0 0 22px #c084fc)' }], { duration: 300, fill: 'forwards' });
+    alliesOf(u).filter(a => a.alive).forEach(a => { if (!noBuff(a)) { addMod(a, 'pierce', TADE_PIERCE, TADE_PIERCE_TURNS, 'buff', 'tade'); floatText(a, '🗡️ +' + TADE_PIERCE + ' Phá giáp'); } });
+    refreshPanel();
+    // 3. Các nhát chém (mỗi nhát: toàn địch trúng, -Tốc, xuyên bất tử)
+    u.ignoreImmortal = true;
+    for (let k = 0; k < hits; k++) {
+      await at(TADE_T[k] !== undefined ? TADE_T[k] : TADE_T[TADE_T.length - 1] + (k - TADE_T.length + 1) * 250); if (tok !== battleToken) return;
+      const es = alive(); if (!es.length) break;
+      const last = k === hits - 1, cRow = ORDER[k % ORDER.length], spanX = (Math.max(...es.map(e => e.x)) - Math.min(...es.map(e => e.x))) * W / 100;
+      slashFx(cRow, cx + (Math.random() - 0.5) * 4, cy + (Math.random() - 0.5) * 6, Math.round(Math.max(210, Math.min(W * 0.9, spanX + 200)) * (last ? 1.15 : 1)), Math.random() < 0.5);
+      es.forEach((e, j) => {
+        let r = 1 + Math.floor(Math.random() * 6); if (r === cRow) r = r % 6 + 1; if (last) r = 6;
+        slashFx(r, e.x + (Math.random() - 0.5) * 3, e.y + (Math.random() - 0.5) * 4, 150 + Math.round(Math.random() * 40), Math.random() < 0.5);
+      });
+      es.forEach(e => {
+        skillHit(e, per, u);
+        if (e.alive) {   // giảm Tốc tính trên Tốc GỐC (bỏ lớp 'tade' cũ trước) -> nhát nào cũng đúng -30%, không cộng dồn, không trôi số
+          const old = (e.mods || []).find(m => m.k === 'spd' && m.tag === 'tade'), d = -Math.round((e.spd - (old ? old.d : 0)) * TADE_SLOW);
+          if (d) { addMod(e, 'spd', d, TADE_SLOW_TURNS, 'debuff', 'tade'); if (k === 0) floatText(e, '🐌 -' + Math.round(TADE_SLOW * 100) + '% Tốc'); }
         }
-        const path = document.createElementNS(NS, 'path'); path.setAttribute('d', d); path.style.strokeWidth = wid;
-        sv.appendChild(path);
-        const L = path.getTotalLength ? path.getTotalLength() : len; path.style.strokeDasharray = L;
-        path.animate([{ strokeDashoffset: L }, { strokeDashoffset: 0 }], { duration: 110, easing: 'ease-out', fill: 'forwards' });
-        if (depth < 2) pts.forEach(([bx, by, ba, r]) => { if (Math.random() < 0.28) jag(bx, by, ba + (Math.random() < 0.5 ? -1 : 1) * rnd(0.5, 1.1), len * rnd(0.25, 0.45) * (1 - r / len * 0.5), Math.max(0.6, wid * 0.55), depth + 1); });
-      };
-      const rays = strong ? 11 : 6, base = rnd(0, Math.PI * 2);
-      for (let i = 0; i < rays; i++) jag(px, py, base + i * (Math.PI * 2 / rays) + rnd(-0.3, 0.3), R * (strong ? rnd(0.3, 0.6) : rnd(0.18, 0.4)), strong ? rnd(1.6, 2.6) : rnd(1.1, 1.9), 0);
-      // điểm va chạm: vòng vỡ nhỏ
-      const hub = document.createElementNS(NS, 'circle'); hub.setAttribute('cx', px); hub.setAttribute('cy', py); hub.setAttribute('r', strong ? 7 : 4);
-      hub.setAttribute('fill', 'rgba(250,235,255,.85)'); sv.appendChild(hub);
-      const fl = document.createElement('div'); fl.className = 'bf-crackflash'; fl.style.setProperty('--fx', px + 'px'); fl.style.setProperty('--fy', py + 'px'); f.appendChild(fl);
-      fl.animate([{ opacity: strong ? 1 : .65 }, { opacity: 0 }], { duration: strong ? 380 : 220, easing: 'ease-out', fill: 'forwards' }); setTimeout(() => fl.remove(), 420);
+      });
+      f.classList.add('screen-shake'); setTimeout(() => f.classList.remove('screen-shake'), last ? 260 : 120);
+      if (last) ring(cx, cy);
     }
-
-    // Ma Đao Thánh Nữ: nhảy qua đội hình địch (tiếng gió rít) -> dồn lực lơ lửng (đoạn lặng) -> 7 nhát chém tím KHỚP 7 nhịp đập trong tiếng -> nhảy về
-    async function madaoUlt(u, tok) {
-      const f = document.getElementById('battle-arena'), box = document.getElementById('bf-units');
-      const W = f.clientWidth, H = f.clientHeight, base = 'translate(-50%,-50%)';
-      const alive = () => foesOf(u).filter(e => e.alive);
-      const es0 = alive(); if (!es0.length) return;
-      const xs = es0.map(e => e.x), ys = es0.map(e => e.y);
-      const cx = (Math.min(...xs) + Math.max(...xs)) / 2, cy = (Math.min(...ys) + Math.max(...ys)) / 2;
-      const landX = u.side === 'hero' ? Math.min(94, Math.max(...xs) + 9) : Math.max(6, Math.min(...xs) - 9), landY = cy;
-      const dx = (landX - u.x) * W / 100, dy = (landY - u.y) * H / 100;
-      const mid = `translate(calc(-50% + ${dx / 2}px),calc(-50% + ${dy / 2 - 140}px))`, land = `translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px))`;
-      const made = [], oldZ = u.el.style.zIndex, crack = { svg: null }, quick = !!u.qRepeat, keep = !!u.qKeep;   // quick: đã đứng sẵn giữa đội địch -> chém tiếp ngay
-      const per = u.atk * MADAO_MULT * (u.sk || 1) / MADAO_SLASHES;
-      const ANG = [-32, 38, -62, 18, -80, 58, -8];                    // mỗi nhát một góc khác nhau -> đan chéo
-      const spanX = (Math.max(...xs) - Math.min(...xs)) * W / 100 + 140, spanY = (Math.max(...ys) - Math.min(...ys)) * H / 100 + 140;
-      const len = Math.max(190, Math.min(W * 0.85, Math.max(spanX, spanY) * 1.25));
-      const t0 = performance.now(), at = ms => sleep(Math.max(0, t0 + ms - performance.now()));   // t0 = lúc tiếng bắt đầu phát
-      try {
-        // 1. 0.1s–0.9s: nhảy qua đầu đội hình địch, chạm đất đúng lúc tiếng gió rít cao nhất
-        u.el.style.zIndex = 99;
-        if (!quick) {
-          await at(100); if (tok !== battleToken) return;
-          u.el.animate([{ transform: base }, { transform: mid, offset: .5 }, { transform: land }], { duration: 800, easing: 'ease-in-out', fill: 'forwards' });
-          await at(900); if (tok !== battleToken) return;
-        }
-        // 2. 0.9s–2.8s: dồn lực – hào quang tím rực dần, vòng sóng tím nổ đúng nhịp 1.55s
-        if (!quick) u.el.animate([{ filter: 'brightness(1) drop-shadow(0 0 0 #a855f7)' }, { filter: 'brightness(1.5) drop-shadow(0 0 18px #a855f7)' }, { filter: 'brightness(1.9) drop-shadow(0 0 34px #c084fc)' }], { duration: 1850, fill: 'forwards' });
-        const ring = (x, y) => { const w = document.createElement('div'); w.className = 'bf-wave'; w.style.left = x + '%'; w.style.top = y + '%'; w.style.borderColor = '#a855f7'; w.style.boxShadow = '0 0 24px #7e22ce, inset 0 0 24px #a855f7'; box.appendChild(w); setTimeout(() => w.remove(), 650); };
-        ring(landX, landY);
-        if (!quick) {
-          await at(1550); if (tok !== battleToken) return;
-          ring(landX, landY);
-          await at(2860); if (tok !== battleToken) return;
-        }
-        const tS = quick ? performance.now() : 0, gapQ = k => tS + (k + 1) * 150;   // lần lặp: 7 nhát chém dồn dập, cách nhau 150ms
-        // 3. 7 nhát chém tím, mỗi nhát rơi đúng 1 nhịp đập trong tiếng (2.9s … 4.1s)
-        for (let k = 0; k < MADAO_SLASHES; k++) {
-          const sl = document.createElement('div'); sl.className = 'bf-mdslash';
-          sl.style.left = (cx + (Math.random() - 0.5) * 6) + '%'; sl.style.top = (cy + (Math.random() - 0.5) * 8) + '%';
-          sl.style.width = len + 'px'; sl.style.setProperty('--r', (ANG[k % ANG.length] + (Math.random() - 0.5) * 8) + 'deg');
-          box.appendChild(sl); made.push(sl); setTimeout(() => sl.remove(), 420);
-          alive().forEach(e => skillHit(e, per, u));
-          f.classList.add('screen-shake'); setTimeout(() => f.classList.remove('screen-shake'), 120);
-          crackFx(f, W, H, (cx + (Math.random() - 0.5) * 16) / 100 * W, (cy + (Math.random() - 0.5) * 20) / 100 * H, k === MADAO_SLASHES - 1, crack);   // nứt màn hình
-          if (!alive().length) break;
-          if (k < MADAO_SLASHES - 1) {
-            if (quick) await sleep(Math.max(0, (gapQ(k) - performance.now()) / (ultTimeScale || 1)));
-            else await at((MADAO_T[k + 1] || (MADAO_T[k] + MADAO_GAP)) - 30);
-            if (tok !== battleToken) return;
-          }
-        }
-        if (quick) await sleep(250); else await at(4450);
-        if (tok !== battleToken) return;
-        // 4. Nhảy về chỗ cũ khi tiếng tắt dần; vết nứt mờ dần rồi biến mất
-        if (crack.svg) crack.svg.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 520, fill: 'forwards' });
-        if (!keep) {
-          u.el.getAnimations().forEach(a => a.cancel());
-          u.el.animate([{ transform: land }, { transform: mid, offset: .5 }, { transform: base }], { duration: 450, easing: 'ease-in-out', fill: 'forwards' });
-          await sleep(480);
-        }
-      } finally {
-        if (crack.svg) crack.svg.remove();
-        made.forEach(d => d.remove());
-        if (!keep) { u.el.getAnimations().forEach(a => a.cancel()); u.el.style.zIndex = oldZ; }
-      }
-    }
+    u.ignoreImmortal = false;
+    // 4. Dịch chuyển về chỗ cũ: tan biến tại chỗ địch → hiện ra ở chỗ đứng cũ
+    await at(2980); if (tok !== battleToken) return;
+    if (!(await play(0, 6, 55))) return;
+    ov.el.style.visibility = 'hidden';
+    u.el.getAnimations().forEach(a => a.cancel());
+    face(flipped); ov.el.style.visibility = '';
+    await play(7, 17, 45);
+  } finally {
+    u.ignoreImmortal = false;
+    timers.forEach(clearTimeout); made.forEach(d => d.remove());
+    ov.end();
+    try { u.el.getAnimations().forEach(a => a.cancel()); } catch (e) {}
+    u.el.style.zIndex = oldZ;
+  }
+}
 
 /* === thanh-y === */
 /* THANH Y TIÊN TỬ (id 1): tuyệt kỹ Thanh Liên Hoàn Sinh
@@ -4968,8 +4965,6 @@ async function lccAct(e, tok) {
    File này chỉ còn: hằng số dùng chung + gộp tất cả thành biến toàn cục (MOON_TURNS, DUCO_MULT, ...) + áp cấu hình admin. */
 
     let busy = false;
-    // Ma Đao Thánh Nữ: mốc thời gian (ms tính từ lúc bắt đầu tiếng) của 7 nhát chém – khớp 7 nhịp đập trong file âm thanh
-    const MADAO_T = [2900, 3150, 3300, 3450, 3650, 3800, 4100];
     // css = màu chớp sáng/sóng khi bướm chạm đất; ảnh bướm từng màu: SEQ.hmlRed…hmlPurple (hero-seq.js)
     const BFLY_COLORS = [
       { k: 'red',    css: '#ef4444' },   // Đỏ: chảy máu

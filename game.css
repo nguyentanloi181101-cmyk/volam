@@ -762,15 +762,10 @@
 /* HERO-BASE.CSS — CSS riêng của các tướng, gộp vào 1 file (trước đây mỗi tướng 1 file heros/<slug>/<slug>.css).
    Mỗi khối bắt đầu bằng banner "=== <slug> ===". Thứ tự giữ đúng như cũ (theo id tướng). Đường dẫn url() tính từ thư mục heros/. */
 
-/* === ma-dao-thanh-nu === */
-/* HIỆU ỨNG TUYỆT KỸ: ma-dao-thanh-nu
-   (tách từ index.html cũ — style) */
-
-  .bf-crack{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:130;overflow:hidden;filter:drop-shadow(0 0 2px #fff) drop-shadow(0 0 7px #a855f7)}
-  .bf-crack path{fill:none;stroke:#f5e8ff;stroke-linecap:round;stroke-linejoin:round}
-  .bf-crackflash{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:129;background:radial-gradient(circle at var(--fx) var(--fy),rgba(250,235,255,.55),rgba(168,85,247,.18) 45%,transparent 75%);opacity:0}
-  .bf-mdslash{position:absolute;height:15px;border-radius:50%;background:linear-gradient(90deg,transparent,#a855f7 22%,#f5e8ff 50%,#a855f7 78%,transparent);box-shadow:0 0 12px #a855f7,0 0 30px #7c3aed;pointer-events:none;z-index:97;animation:mdSlash .34s ease-out forwards}
-    @keyframes mdSlash{0%{opacity:0;transform:translate(-50%,-50%) rotate(var(--r)) scaleX(.15)}25%{opacity:1;transform:translate(-50%,-50%) rotate(var(--r)) scaleX(1)}100%{opacity:0;transform:translate(-50%,-50%) rotate(var(--r)) scaleX(1.25)}}
+/* === ta-de === */
+/* HIỆU ỨNG TUYỆT KỸ: Tà Đế Ngũ Trảm (chuỗi khung SEQ.tdeTele / tdeSlash1..6; hàm taDeUlt trong game.js) */
+  .bf-tde-fx{position:absolute;pointer-events:none;z-index:98;filter:drop-shadow(0 0 6px #a855f7) drop-shadow(0 0 14px #7c3aed)}
+  .bf-tde-fx .hero-seq{position:relative}
 
 /* === thanh-y === */
 /* THANH Y TIÊN TỬ (id 1) — hiệu ứng Thanh Liên Hoàn Sinh.
