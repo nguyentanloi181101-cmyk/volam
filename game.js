@@ -2769,12 +2769,15 @@ function addAccExp(n) {
     // 2.5D: bệ đấu là vòng elip nền (chân tướng ≈ y 58–87%, tâm ≈ y 72.5%, trải gần hết chiều ngang). Chân tướng = y + ~4.5%.
     // Mọi tướng đứng TRONG vòng elip: 3 hàng chân ở 65 / 73 / 81 → tâm tướng y = 60.5 / 68.5 / 76.5, đối xứng qua y=68.5 (trên/dưới cân nhau).
     // Đội địch lấy đối xứng 100-x nên 2 bên cân nhau. Hàng sau (x nhỏ) ở xa, hàng trước (x lớn) gần địch; đứng thấp tự to hơn nhờ --dep trong makeUnit.
+    // BỐ TRÍ MỚI (2.5D, tản so le): khung sân = 75% chiều cao màn hình, phần sân đấu thật nằm ở 2/3 dưới (trời chiếm 1/3 trên) → tướng đứng y 54–85.
+    //   Hàng sau sát mép tường (x ≈ 9–10), hàng giữa x ≈ 21–24, hàng trước x ≈ 32–34. Đội địch lấy đối xứng 100-x.
+    //   Thứ tự: [0] giữa • [1] trước-trên • [2] trước-dưới • [3] sau-trên • [4] sau-dưới. Cách nhau ≥ ~12% chiều ngang + ~15% chiều dọc nên không chồng nhau.
     const HERO_POS = {
-      1: [[27, 68.5]],
-      2: [[30, 60.5], [30, 76.5]],
-      3: [[33, 68.5], [22, 60.5], [22, 76.5]],
-      4: [[35, 68.5], [27, 60.5], [27, 76.5], [19, 68.5]],
-      5: [[27, 68.5], [36, 60.5], [36, 76.5], [19, 60.5], [19, 76.5]]
+      1: [[24, 69]],
+      2: [[30, 56], [17, 82]],
+      3: [[32, 69], [16, 54], [16, 85]],
+      4: [[33, 69], [21, 54], [21, 85], [9, 69]],
+      5: [[22, 69], [34, 54], [34, 85], [10, 57], [9, 84]]
     };
     const HERO_DY = 0;   // đã tính sẵn vào HERO_POS (đội hình đối xứng quanh y=68.5); giữ biến vì nhiều nơi còn cộng HERO_DY
     // Co nội dung bảng đội hình để luôn vừa đúng 2.5/10 chiều cao màn hình (điện thoại hay máy tính đều không lệch)
@@ -2825,11 +2828,12 @@ function addAccExp(n) {
       return (Math.floor(v) + 0).toLocaleString('en-US', { useGrouping: false, maximumFractionDigits: 0 });
     }
 
+    const DEP_BASE = 0.58, DEP_PER_Y = 0.0042;   // cỡ tướng theo độ sâu (y=54 → ×0.81, y=85 → ×0.94). Cũ: 0.7 + y*0.0055 (to quá, dễ chồng). Muốn to lại: tăng DEP_BASE.
     function makeUnit(side, emoji, x, y, hp, atk, big, name) {
       const el = document.createElement('div');
       el.className = `bf-unit ${side}${big ? ' big' : ''}`;
       el.style.left = x + '%'; el.style.top = y + '%'; el.style.zIndex = Math.round(y);
-      el.style.setProperty('--dep', (0.7 + y * 0.0055).toFixed(3));   // 2.5D: đứng càng thấp (gần camera) càng to
+      el.style.setProperty('--dep', (DEP_BASE + y * DEP_PER_Y).toFixed(3));   // 2.5D: đứng càng thấp (gần camera) càng to
       el.innerHTML = `<div class="bf-name">${name || ''}</div><div class="bf-hp"><i></i><b class="bf-hpn">${formatNumber(hp)}</b></div><div class="bf-sprite">${emoji}</div><div class="bf-shadow"></div>`;
       document.getElementById('bf-units').appendChild(el);
       return { el, side, hp, max: hp, atk, x, y, alive: true, def: 0, dodge: 0, acc: 300, crit: 0, critDmg: 0, tough: 0, pierce: 0, tia: 1, block: 0 };
