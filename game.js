@@ -2760,14 +2760,17 @@ function addAccExp(n) {
     const HERO_HP = 100000;
     // Vị trí [x%, y%] trong sân đấu (đội ta ở nửa TRÁI x<42%, đội địch lấy đối xứng 100-x ở nửa phải). Phần giữa (42–58%) để trống.
     // Giãn rộng để các tướng không đè nhau: 5 tướng xếp kiểu mặt "5" xúc xắc — 1 ở giữa (tướng đầu danh sách), 2 phía trên, 2 phía dưới.
+    // 2.5D: bệ đấu là vòng elip nền (chân tướng ≈ y 58–87%, tâm ≈ y 72.5%, trải gần hết chiều ngang). Chân tướng = y + ~4.5%.
+    // Mọi tướng đứng TRONG vòng elip: 3 hàng chân ở 65 / 73 / 81 → tâm tướng y = 60.5 / 68.5 / 76.5, đối xứng qua y=68.5 (trên/dưới cân nhau).
+    // Đội địch lấy đối xứng 100-x nên 2 bên cân nhau. Hàng sau (x nhỏ) ở xa, hàng trước (x lớn) gần địch; đứng thấp tự to hơn nhờ --dep trong makeUnit.
     const HERO_POS = {
-      1: [[27, 62]],
-      2: [[30, 49], [24, 75]],
-      3: [[33, 62], [21, 46], [21, 78]],
-      4: [[35, 62], [26, 45], [26, 79], [17, 62]],
-      5: [[26.5, 62], [36, 44], [36, 80], [17, 44], [17, 80]]
+      1: [[27, 68.5]],
+      2: [[30, 60.5], [30, 76.5]],
+      3: [[33, 68.5], [22, 60.5], [22, 76.5]],
+      4: [[35, 68.5], [27, 60.5], [27, 76.5], [19, 68.5]],
+      5: [[27, 68.5], [36, 60.5], [36, 76.5], [19, 60.5], [19, 76.5]]
     };
-    const HERO_DY = -1;   // tâm đội hình nằm giữa vùng sân đấu (phần 2.5→7.5 trên 10 phần); địch dịch giống đội ta để 2 bên ngang nhau
+    const HERO_DY = 0;   // đã tính sẵn vào HERO_POS (đội hình đối xứng quanh y=68.5); giữ biến vì nhiều nơi còn cộng HERO_DY
     // Co nội dung bảng đội hình để luôn vừa đúng 2.5/10 chiều cao màn hình (điện thoại hay máy tính đều không lệch)
     function fitBattlePanel() {
       const p = document.querySelector('#battle-overlay .bf-panel'), c = p && p.querySelector('.bf-fit'); if (!c) return;
@@ -5044,6 +5047,10 @@ const SKILL_DEF = Object.assign({}, SKILL_SHARED, HERO_T.skill);   // chung + sk
 Object.assign(window, SKILL_DEF);                                     // tạo biến toàn cục cùng tên để code tuyệt kỹ dùng trực tiếp
 cfgOnApply(() => {
   Object.keys(SKILL_DEF).forEach(k => { window[k] = cfgNum('skill.' + k, SKILL_DEF[k]); });
+  // Khiên Nguyệt Quang (Hằng Nga): nhập nhầm theo % (70, 15…) thì đổi về tỉ lệ; phản tối đa 70%, đồng đội nhận tối đa 30% sát thương địch gây ra
+  const _mn = v => { v = Number(v); if (!isFinite(v) || v < 0) return 0; return v > 1 ? v / 100 : v; };
+  window.MOON_REFLECT = Math.min(0.7, _mn(window.MOON_REFLECT));
+  window.MOON_TAKE = Math.min(0.3, _mn(window.MOON_TAKE));
 });
 
 ;
@@ -6600,7 +6607,7 @@ async function clInit() {
     await Promise.all([clLoadScript(CL_SDK + 'firebase-auth-compat.js'), clLoadScript(CL_SDK + 'firebase-firestore-compat.js')]);
     firebase.initializeApp(FIREBASE_CONFIG);
     clAuth = firebase.auth(); clDb = firebase.firestore();
-    clAuth.onAuthStateChanged(u => { clUser = u; clRender(); lgUpdate(u); try { if (typeof updateMailBadge === 'function') updateMailBadge(); } catch (e) {} if (u) clSync(); });
+    clAuth.onAuthStateChanged(u => { clUser = u; if (!u) clSessStop(); clRender(); lgUpdate(u); try { if (typeof updateMailBadge === 'function') updateMailBadge(); } catch (e) {} if (u) clSync(); });
   } catch (e) { clMsg('Không tải được Firebase (mất mạng hoặc bị chặn). Game vẫn chơi bình thường.', false); lgOfflineShow(); }
 }
 
@@ -6656,8 +6663,9 @@ async function clLogout() {
   let ok = true;
   try { ok = await clPush(); } catch (e) { ok = false; }
   if (!ok && !confirm('Không lưu được tiến trình lên đám mây (mất mạng?).\nĐăng xuất bây giờ sẽ MẤT phần chưa lưu của tài khoản này.\n\nVẫn đăng xuất?')) return;
-  clWiping = true; clearTimeout(clTimer); clTimer = null; clDirty = false;
+  clWiping = true; clearTimeout(clTimer); clTimer = null; clDirty = false; clSessStop();
   try { await clAuth.signOut(); } catch (e) { clWiping = false; clMsg(clErr(e), false); return; }
+  clSidSet('');
   // dữ liệu thuộc về tài khoản đã nằm trên đám mây -> xóa khỏi máy để tài khoản khác không dùng chung
   try { SV_KEYS.forEach(k => _lsDel.call(localStorage, k)); _lsDel.call(localStorage, 'cloud_owner'); _lsDel.call(localStorage, 'cloud_local_t'); } catch (e) {}
   location.reload();
@@ -6710,6 +6718,50 @@ function clLockOut(reason) {
     location.reload();
   };
   try { clAuth.signOut().then(done, done); } catch (e) { done(); }
+}
+/* ===== 1 TÀI KHOẢN CHỈ ĐĂNG NHẬP ĐƯỢC 1 MÁY =====
+   sessions/{uid} = { sid, t, ua }  (Firestore). Mỗi lần ĐĂNG NHẬP / ĐĂNG KÝ chủ động, máy đó ghi 1 mã phiên (sid) mới -> máy cũ nghe thay đổi (onSnapshot) và bị đăng xuất ngay.
+   Máy tự khôi phục phiên cũ khi mở lại trang: sid trên máy phải khớp sid trên mây, không khớp (hoặc máy chưa có sid) thì bị đăng xuất.
+   Nếu Firestore chưa cho phép ghi sessions (luật) hoặc mất mạng: bỏ qua, game vẫn chơi bình thường (không chặn người chơi). */
+let clSessUnsub = null;
+const clSidGet = () => { try { return _lsGet.call(localStorage, 'cloud_sid') || ''; } catch (e) { return ''; } };
+const clSidSet = v => { try { if (v) _lsSet.call(localStorage, 'cloud_sid', v); else _lsDel.call(localStorage, 'cloud_sid'); } catch (e) {} };
+function clSessStop() { try { if (clSessUnsub) clSessUnsub(); } catch (e) {} clSessUnsub = null; }
+function clKick() {
+  if (clLocked) return; clLocked = true;
+  clWiping = true; clearTimeout(clTimer); clTimer = null; clDirty = false; clearInterval(clCtlTimer); clCtlTimer = null; clSessStop();
+  const done = () => {
+    try { SV_KEYS.forEach(k => _lsDel.call(localStorage, k)); _lsDel.call(localStorage, 'cloud_owner'); _lsDel.call(localStorage, 'cloud_local_t'); _lsDel.call(localStorage, 'cloud_ep'); clSidSet(''); } catch (e) {}
+    alert('⚠️ Tài khoản này vừa được đăng nhập ở thiết bị khác.\nMáy này đã bị đăng xuất.');
+    location.reload();
+  };
+  try { clAuth.signOut().then(done, done); } catch (e) { done(); }
+}
+function clWatchSession(ref, sid) {
+  clSessStop();
+  try {
+    clSessUnsub = ref.onSnapshot(snap => {
+      if (snap.metadata && snap.metadata.fromCache) return;
+      const cur = snap.exists ? ((snap.data() || {}).sid || '') : '';
+      if (cur && cur !== sid) clKick();
+    }, () => {});
+  } catch (e) {}
+}
+// explicit = vừa bấm Đăng nhập / Đăng ký trên máy này (chiếm phiên). Trả về false nếu máy này bị đăng xuất vì máy khác đang giữ phiên.
+async function clSession(explicit, uid) {
+  if (!clDb || !uid) return true;
+  try {
+    const ref = clDb.collection('sessions').doc(uid), mine = clSidGet();
+    if (!explicit) {
+      const d = await ref.get(), cur = d.exists ? ((d.data() || {}).sid || '') : '';
+      if (cur && cur !== mine) { clKick(); return false; }   // máy khác đang giữ phiên (hoặc máy này chưa có mã phiên)
+      if (cur && cur === mine) { clWatchSession(ref, mine); return true; }
+    }
+    const sid = Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
+    await ref.set({ sid, t: Date.now(), ua: String(navigator.userAgent || '').slice(0, 140) });
+    clSidSet(sid); clWatchSession(ref, sid);
+  } catch (e) { /* luật Firestore chưa mở sessions / mất mạng: bỏ qua */ }
+  return true;
 }
 // Kiểm tra khóa / epoch. Trả về true nếu tài khoản dùng tiếp được ở trạng thái hiện tại.
 async function clCheckCtl() {
@@ -6781,6 +6833,7 @@ async function clSync() {
     if (c.locked) { clBusy = false; clLockOut(c.reason || ''); return; }
     clEp = Number(c.epoch) || 0;
   } catch (e) { clEp = clLocalEp(); }
+  if (!(await clSession(ask || fresh, uid))) { clBusy = false; return; }   // 1 tài khoản chỉ 1 máy: đăng nhập máy mới thì máy cũ bị out
   if (fresh) { clStartFresh(uid); clBusy = false; return; }
   try {
     const snap = await clDb.collection('saves').doc(uid).get();
@@ -7455,13 +7508,14 @@ const TT_SLUG = { 'Kỳ Lân': 'ky-lan', 'Xích Vũ': 'xich-vu', 'Tiên Lộc': 
 // Thần thú có chuỗi 16 khung (giao-dien/bang-hoi/thanthu/seq/<slug>-00..15.webp, ảnh gốc đều quay mặt sang PHẢI). Muốn thêm: bỏ đủ 16 khung vào thư mục seq rồi thêm slug vào TT_SEQ.
 const TT_SEQ = ['ky-lan', 'hac-dieu', 'long-quy', 'bao-tuyet', 'tien-loc', 'xich-vu', 'thien-lan', 'cuu-vi-ho'], TT_SEQ_N = 16, TT_SEQ_MS = 110;
 // Khung bị thiếu trong thư mục seq (thiếu file ảnh): lấy khung liền trước. Lân Sư chưa có khung nào → không nằm trong TT_SEQ, hiện ảnh tĩnh lan-su.webp.
-const TT_GAP = { 'thien-lan': [5] };
-const ttFrame = (sl, i) => { const g = TT_GAP[sl]; while (g && i > 0 && g.includes(i)) i--; return `giao-dien/bang-hoi/thanthu/seq/${sl}-${String(i).padStart(2, '0')}.webp?v=24`; };
-const ttWarm = sl => { if (ttWarm.d[sl]) return; ttWarm.d[sl] = 1; const a = []; for (let i = 0; i < TT_SEQ_N; i++) a.push(ttFrame(sl, i)); GP.add(a, 0); };   // nạp 16 khung của loài đang hiển thị
+const TT_GAP = {};
+const TT_SEQ_NS = { 'thien-lan': 25, 'xich-vu': 25 }, ttN = sl => TT_SEQ_NS[sl] || TT_SEQ_N;   // số khung riêng từng loài (mặc định 16); Thiên Lân & Xích Vũ 25 khung
+const ttFrame = (sl, i) => { i %= ttN(sl); const g = TT_GAP[sl]; while (g && i > 0 && g.includes(i)) i--; return `giao-dien/bang-hoi/thanthu/seq/${sl}-${String(i).padStart(2, '0')}.webp?v=27`; };
+const ttWarm = sl => { if (ttWarm.d[sl]) return; ttWarm.d[sl] = 1; const a = []; for (let i = 0; i < ttN(sl); i++) a.push(ttFrame(sl, i)); GP.add(a, 0); };   // nạp 16 khung của loài đang hiển thị
 ttWarm.d = {};
-TT_SEQ.forEach(sl => GP.add((() => { const a = []; for (let i = 0; i < TT_SEQ_N; i++) a.push(ttFrame(sl, i)); return a; })(), 2));   // nạp ngầm; loài đang xem được nâng lên prio 0 qua ttWarm
+TT_SEQ.forEach(sl => GP.add((() => { const a = []; for (let i = 0; i < ttN(sl); i++) a.push(ttFrame(sl, i)); return a; })(), 2));   // nạp ngầm; loài đang xem được nâng lên prio 0 qua ttWarm
 let ttSeqI = 0;
-setInterval(() => { const l = document.querySelectorAll('img[data-seq]'); if (!l.length) return; ttSeqI = (ttSeqI + 1) % TT_SEQ_N; l.forEach(im => { im.src = ttFrame(im.dataset.seq, ttSeqI); }); }, TT_SEQ_MS);
+setInterval(() => { const l = document.querySelectorAll('img[data-seq]'); if (!l.length) return; ttSeqI = (ttSeqI + 1) % 400; l.forEach(im => { im.src = ttFrame(im.dataset.seq, ttSeqI); }); }, TT_SEQ_MS);
 function ttImgFail(el) { el.onerror = null; const b = TT_BEASTS.find(x => x[0] === el.alt), sp = document.createElement('span'); sp.className = 'tt-emo'; sp.textContent = b ? b[3] : '❔'; (el.parentNode.classList.contains('ct-wrap') ? el.parentNode.replaceChild(sp, el) : el.replaceWith(sp)); }   // thiếu ảnh thần thú → hiện icon thay vì ảnh vỡ
 function ttImg(n, ct) { const sl = TT_SLUG[n], b = TT_BEASTS.find(x => x[0] === n); if (sl && TT_SEQ.includes(sl)) ttWarm(sl); const sq = sl && TT_SEQ.includes(sl) ? ` data-seq="${sl}" data-f="0"` : ''; const src0 = sq ? ttFrame(sl, ttSeqI) : `giao-dien/bang-hoi/thanthu/${sl}.webp`; return sl ? (ct ? `<span class="ct-wrap"><img class="tt-img ct"${sq} alt="${n}" src="${src0}" onerror="ttImgFail(this)"><i class="ct-crown">👑</i></span>` : `<img class="tt-img"${sq} alt="${n}" src="${src0}" onerror="ttImgFail(this)">`) : `<span class="tt-emo">${b ? b[3] : '❔'}</span>`; }
 const ttBeast = n => TT_BEASTS.find(b => b[0] === n);
