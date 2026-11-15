@@ -336,8 +336,8 @@ function ghBegin(g) {
   battleToken++; playBattleOpen(); battleFast = false;
   pvp = null; bossB = null; ghB = g; pvpRound = 0; currentWave = 1; busy = false;
   document.getElementById('bf-units').innerHTML = '';
-  const sel = HEROES.filter(h => team.includes(h.id));
-  const pos = HERO_POS[sel.length].map(p => [p[0], p[1] + HERO_DY]);
+  const sel = teamSel();
+  const pos = HERO_POS[Math.min(5, Math.max(1, sel.length))].map(p => [p[0], p[1] + HERO_DY]);
   const _tm = ttMine(); ttSetupUI(_tm, ttFake(g.kind + (g.tier || g.ai)));
   waveUnits = {
     heroes: sel.map((h, k) => {
@@ -1075,9 +1075,15 @@ window.renderStages = function () {
     const heroIcon = h => h.img ? `<img class="hero-img" src="${h.img}">` : h.emoji;
     let team = [];
     try { team = JSON.parse(localStorage.getItem('team_ids')) || []; } catch (e) {}
-    team = team.filter(id => HEROES.some(h => h.id === id));
+    team = team.filter((id, i) => HEROES.some(h => h.id === id) && team.indexOf(id) === i).slice(0, 5);   // bỏ ID lạ, bỏ trùng, tối đa 5 tướng
     if (!team.length) team = [0,1,2,3,4];
     team.sort((a, b) => a - b);
+    // Danh sách tướng ra trận THEO ĐÚNG THỨ TỰ đội (không phụ thuộc thứ tự trong hero-data.js), bỏ trùng, tối đa 5
+    function teamSel() {
+      const seen = new Set(), out = [];
+      team.forEach(id => { const h = HEROES.find(x => x.id === id); if (h && !seen.has(id)) { seen.add(id); out.push(h); } });
+      return out.slice(0, 5);
+    }
 
     function renderTeam() {
       document.getElementById('tm-list').innerHTML = ownedHeroes().map(h => {
@@ -5145,8 +5151,8 @@ cfgOnApply(() => {
       currentStage = stage; currentBattle = battle; currentWave = 1;
       busy = false;
       document.getElementById('bf-units').innerHTML = '';
-      const sel = HEROES.filter(h => team.includes(h.id));
-      const pos = HERO_POS[sel.length].map(p => [p[0], p[1] + HERO_DY]);
+      const sel = teamSel();
+      const pos = HERO_POS[Math.min(5, Math.max(1, sel.length))].map(p => [p[0], p[1] + HERO_DY]);
       const _tm = ttMine(); ttSetupUI(_tm, ttFake('pve' + stage));
       waveUnits = {
         heroes: sel.map((h, i) => {
@@ -5541,8 +5547,8 @@ cfgOnApply(() => {
       battleToken++; playBattleOpen(); battleFast = false;
       pvp = Object.assign({ opp: o, tower: 0 }, extra || {}); pvpRound = 0; pvpDmg = { hero: 0, enemy: 0 }; currentWave = 1; busy = false;
       document.getElementById('bf-units').innerHTML = '';
-      const sel = HEROES.filter(h => team.includes(h.id));
-      const pos = HERO_POS[sel.length].map(p => [p[0], p[1] + HERO_DY]);
+      const sel = teamSel();
+      const pos = HERO_POS[Math.min(5, Math.max(1, sel.length))].map(p => [p[0], p[1] + HERO_DY]);
       const _tm = ttMine(); ttSetupUI(_tm, o.beast ? { beast: o.beast, pt: o.pt || [] } : ttFake(o.name));
       waveUnits = {
         heroes: sel.map((h, k) => {
@@ -7356,7 +7362,7 @@ function bbFight() {
   battleToken++; playBattleOpen(); battleFast = false; busy = false; currentWave = 1; currentStage = 1; currentBattle = 1;
   bossB = { k, ct, key, mx, cur, gb: gdBonus(), unit: null, tt: (typeof ttSt === 'function') ? ttSt().tt.cur : null, ttRage: 0, fin: false };
   document.getElementById('bf-units').innerHTML = '';
-  const sel = HEROES.filter(h => team.includes(h.id)), pos = HERO_POS[sel.length].map(p => [p[0], p[1] + HERO_DY]);
+  const sel = teamSel(), pos = HERO_POS[Math.min(5, Math.max(1, sel.length))].map(p => [p[0], p[1] + HERO_DY]);
   const _tm = ttMine(); ttSetupUI(_tm, null);   // chỉ thần thú của mình (bệ trái); không dựng bệ thần thú địch
   bbtBeastBar();
   waveUnits = {
