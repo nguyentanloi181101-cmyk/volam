@@ -1675,3 +1675,18 @@ img.gi-g{height:1.15em;width:auto;vertical-align:-.2em;display:inline-block}.bm-
 .rcg-hint{margin-top:10px;color:#e9d5ff;font-size:14px;opacity:0;transition:opacity .4s}
 .rcg-hint.on{opacity:1;animation:rcgBlink 1.2s infinite}
 @keyframes rcgBlink{50%{opacity:.4}}
+
+/* === 2.5D BATTLE VIEW (thêm mới) ===
+   Camera nghiêng: tướng đứng thấp (gần camera) to hơn, có bóng elip dưới chân, sắp z-index theo chiều sâu.
+   Dùng thuộc tính `scale` riêng nên KHÔNG xung đột với transform/animation/hiệu ứng ulti hiện có. */
+#battle-overlay .bf-unit .bf-sprite{scale:var(--dep,1);transform-origin:50% 100%}
+#battle-overlay .bf-unit .bf-shadow{display:block !important;position:absolute;left:50%;bottom:2px;width:74%;height:16px;
+  transform:translateX(-50%);scale:var(--dep,1);border-radius:50%;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse at center,rgba(0,0,0,.62) 0,rgba(0,0,0,.35) 45%,transparent 72%);filter:blur(1.5px)}
+#battle-overlay .bf-unit.big .bf-shadow{width:92%;height:22px}
+#battle-overlay .bf-unit.hero .bf-shadow{background:radial-gradient(ellipse at center,rgba(0,0,0,.6) 0,rgba(30,58,138,.28) 50%,transparent 72%)}
+#battle-overlay .bf-unit.enemy .bf-shadow{background:radial-gradient(ellipse at center,rgba(0,0,0,.65) 0,rgba(127,29,29,.3) 50%,transparent 72%)}
+#battle-overlay .bf-unit.dead .bf-shadow{opacity:0}
+/* viền tối nhẹ ở rìa sân để tạo cảm giác chiều sâu / ống kính */
+#battle-overlay .bf-field::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:2;
+  background:radial-gradient(ellipse 120% 85% at 50% 55%,transparent 55%,rgba(0,0,0,.35) 100%)}

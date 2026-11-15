@@ -2761,11 +2761,11 @@ function addAccExp(n) {
     // Vị trí [x%, y%] trong sân đấu (đội ta ở nửa TRÁI x<42%, đội địch lấy đối xứng 100-x ở nửa phải). Phần giữa (42–58%) để trống.
     // Giãn rộng để các tướng không đè nhau: 5 tướng xếp kiểu mặt "5" xúc xắc — 1 ở giữa (tướng đầu danh sách), 2 phía trên, 2 phía dưới.
     const HERO_POS = {
-      1: [[24, 62]],
-      2: [[24, 44], [24, 78]],
-      3: [[32, 61], [15, 44], [15, 78]],
-      4: [[32, 44], [32, 78], [13, 44], [13, 78]],
-      5: [[23, 61], [34, 43], [34, 79], [12, 43], [12, 79]]
+      1: [[27, 62]],
+      2: [[30, 49], [24, 75]],
+      3: [[33, 62], [21, 46], [21, 78]],
+      4: [[35, 62], [26, 45], [26, 79], [17, 62]],
+      5: [[26.5, 62], [36, 44], [36, 80], [17, 44], [17, 80]]
     };
     const HERO_DY = -1;   // tâm đội hình nằm giữa vùng sân đấu (phần 2.5→7.5 trên 10 phần); địch dịch giống đội ta để 2 bên ngang nhau
     // Co nội dung bảng đội hình để luôn vừa đúng 2.5/10 chiều cao màn hình (điện thoại hay máy tính đều không lệch)
@@ -2820,6 +2820,7 @@ function addAccExp(n) {
       const el = document.createElement('div');
       el.className = `bf-unit ${side}${big ? ' big' : ''}`;
       el.style.left = x + '%'; el.style.top = y + '%'; el.style.zIndex = Math.round(y);
+      el.style.setProperty('--dep', (0.7 + y * 0.0055).toFixed(3));   // 2.5D: đứng càng thấp (gần camera) càng to
       el.innerHTML = `<div class="bf-name">${name || ''}</div><div class="bf-hp"><i></i><b class="bf-hpn">${formatNumber(hp)}</b></div><div class="bf-sprite">${emoji}</div><div class="bf-shadow"></div>`;
       document.getElementById('bf-units').appendChild(el);
       return { el, side, hp, max: hp, atk, x, y, alive: true, def: 0, dodge: 0, acc: 300, crit: 0, critDmg: 0, tough: 0, pierce: 0, tia: 1, block: 0 };
@@ -3265,7 +3266,7 @@ function addAccExp(n) {
    Ghi đè HERO_POS theo cấu hình `formation`; không có cấu hình thì dùng mặc định gốc. */
 const FORMATION_DEF = JSON.parse(JSON.stringify(HERO_POS));
 function applyFormationCfg() {
-  const f = cfgGet('formation', null);
+  const f = null;   // vị trí tướng cố định theo HERO_POS trong code (admin không còn chỉnh)
   for (let n = 1; n <= 5; n++) {
     const a = f && f[n];
     const ok = Array.isArray(a) && a.length === n && a.every(p => Array.isArray(p) && isFinite(p[0]) && isFinite(p[1]));
@@ -7627,7 +7628,20 @@ const TT_FACE_LEFT = ['Kim Sư', 'Cửu Vỹ Hồ'];   // thần thú có ảnh 
 const TT_CLOUD_DEF = {
   'l.Kỳ Lân': { x: 29, y: -12 },
   'r.Lân Sư': { x: -22, y: -6 },
+  'l.Hắc Điêu': { x: 27, y: -4 },
+  'l.Tiên Lộc': { x: 34, y: 0 },
+  'r.Tiên Lộc': { x: -30, y: 4 },
 };
+// Vị trí/cỡ THẦN THÚ mặc định: khóa 'l.<tên>' / 'r.<tên>', x/y = px lệch, s = tỉ lệ cỡ (1 = gốc). Chỉnh bằng chế độ kéo rồi bấm "Sao chép" như đám mây.
+const TT_BEAST_DEF = {
+  'r.Tiên Lộc': { x: 24, y: 2, s: 1 },
+  'l.Tiên Lộc': { x: -13, y: -1, s: 1 },
+};
+function ttBeastAll() {
+  const all = {}; Object.keys(TT_BEAST_DEF).forEach(k => all[k] = { x: +TT_BEAST_DEF[k].x || 0, y: +TT_BEAST_DEF[k].y || 0, s: +TT_BEAST_DEF[k].s || 1 });
+  try { for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (k && k.indexOf('ttbeast.') === 0) { const v = JSON.parse(localStorage.getItem(k)); if (v && isFinite(v.x) && isFinite(v.y)) all[k.slice(8)] = { x: +v.x, y: +v.y, s: +v.s || 1 }; } } } catch (e) {}
+  return all;
+}
 function ttCloudAll() {   // mặc định + phần đã chỉnh trên máy này (phần chỉnh đè mặc định)
   const all = {}; Object.keys(TT_CLOUD_DEF).forEach(k => all[k] = { x: TT_CLOUD_DEF[k].x, y: TT_CLOUD_DEF[k].y });
   try { for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (k && k.indexOf('ttcloud.') === 0) { const v = JSON.parse(localStorage.getItem(k)); if (v && isFinite(v.x) && isFinite(v.y)) all[k.slice(8)] = { x: +v.x, y: +v.y }; } } } catch (e) {}
@@ -7635,19 +7649,39 @@ function ttCloudAll() {   // mặc định + phần đã chỉnh trên máy này
 }
 function ttCloudCopy() {
   const all = ttCloudAll(), ks = Object.keys(all).filter(k => all[k].x || all[k].y);
-  const txt = 'const TT_CLOUD_DEF = {\n' + ks.map(k => "  '" + k.replace(/'/g, "\\'") + "': { x: " + all[k].x + ', y: ' + all[k].y + ' },').join('\n') + '\n};';
+  const ba = ttBeastAll(), bk = Object.keys(ba).filter(k => ba[k].x || ba[k].y || ba[k].s !== 1);
+  const txt = 'const TT_CLOUD_DEF = {\n' + ks.map(k => "  '" + k.replace(/'/g, "\\'") + "': { x: " + all[k].x + ', y: ' + all[k].y + ' },').join('\n') + '\n};\n'
+    + 'const TT_BEAST_DEF = {\n' + bk.map(k => "  '" + k.replace(/'/g, "\\'") + "': { x: " + ba[k].x + ', y: ' + ba[k].y + ', s: ' + (+ba[k].s.toFixed(3)) + ' },').join('\n') + '\n};';
   const done = () => { const b = document.getElementById('tt-edit-copy'); if (b) { b.textContent = '✔ Đã sao chép'; setTimeout(() => { b.textContent = '📋 Sao chép'; }, 1500); } };
   try { navigator.clipboard.writeText(txt).then(done, () => prompt('Sao chép đoạn này (Ctrl+C):', txt)); } catch (e) { prompt('Sao chép đoạn này (Ctrl+C):', txt); }
 }
 // Chỉ máy của admin mới chỉnh được: gõ 1 lần trong Console của trình duyệt  localStorage.setItem('tt_edit','1')  (tắt: localStorage.removeItem('tt_edit')). Người chơi thường: đám mây cố định theo TT_CLOUD_DEF.
-const ttCanEdit = () => { try { return localStorage.getItem('tt_edit') === '1'; } catch (e) { return false; } };
+const ttCanEdit = () => { try { if (/[?&]tt_edit(=1)?(&|$)/.test(location.search)) return true; return localStorage.getItem('tt_edit') === '1'; } catch (e) { return false; } };   // mở game bằng đuôi ?tt_edit=1 cũng bật quyền chỉnh (không cần F12)
+function ttEditToggle() {   // dùng chung cho phím F2 và nút trên màn hình
+  const clouds = document.querySelectorAll('.bf-bst-cloud');
+  if (!clouds.length && !ttEditOn) return;
+  ttEditOn = !ttEditOn;
+  document.querySelectorAll('.bf-bst-cloud, .bf-bst-sp').forEach(c => c._ttEdit && c._ttEdit(ttEditOn));
+  ttEditTip(ttEditOn);
+  const b = document.getElementById('tt-edit-btn'); if (b) b.textContent = ttEditOn ? '✔ Xong' : '✏️ Chỉnh mây';
+}
+setInterval(() => {   // nút nổi "Chỉnh mây": chỉ hiện khi có quyền chỉnh và đang trong trận có thần thú
+  let b = document.getElementById('tt-edit-btn');
+  const show = ttCanEdit() && (document.querySelector('.bf-bst-cloud') || ttEditOn);
+  if (!show) { if (b) b.remove(); return; }
+  if (!b) {
+    b = document.createElement('button'); b.id = 'tt-edit-btn'; b.textContent = ttEditOn ? '✔ Xong' : '✏️ Chỉnh mây';
+    b.style.cssText = 'position:fixed;left:8px;top:50px;z-index:100001;padding:6px 10px;border-radius:10px;border:1px solid #fde047;background:#422006;color:#fde047;font:800 12px sans-serif;cursor:pointer';
+    b.onclick = ttEditToggle; document.body.appendChild(b);
+  }
+}, 700);
 let ttEditOn = false;
 function ttEditTip(on) {
   let t = document.getElementById('tt-edit-tip');
   if (!on) { if (t) t.remove(); return; }
   if (!t) { t = document.createElement('div'); t.id = 'tt-edit-tip'; document.body.appendChild(t); }
   t.style.cssText = 'position:fixed;left:50%;top:8px;transform:translateX(-50%);z-index:100000;padding:6px 12px;border-radius:10px;background:#000c;border:1px solid #fde047;color:#fde047;font:800 12px/1.3 sans-serif;text-align:center;white-space:nowrap';
-  t.innerHTML = '✏️ CHỈNH ĐÁM MÂY: kéo để di chuyển • nhấp đúp = đặt lại • F2 = xong <button id="tt-edit-copy" style="margin-left:8px;padding:3px 8px;border-radius:6px;border:1px solid #fde047;background:#422006;color:#fde047;font:800 12px sans-serif;cursor:pointer">📋 Sao chép</button>';
+  t.innerHTML = '✏️ CHỈNH: kéo thần thú / kéo mây • lăn chuột trên thần thú = đổi cỡ • nhấp đúp = đặt lại • F2 = xong <button id="tt-edit-copy" style="margin-left:8px;padding:3px 8px;border-radius:6px;border:1px solid #fde047;background:#422006;color:#fde047;font:800 12px sans-serif;cursor:pointer">📋 Sao chép</button>';
   document.getElementById('tt-edit-copy').onclick = ttCloudCopy;
 }
 if (typeof window !== 'undefined' && !window.__ttF2) {
@@ -7656,12 +7690,9 @@ if (typeof window !== 'undefined' && !window.__ttF2) {
     if (e.key !== 'F2' || !ttCanEdit()) return;
     const tg = e.target, tag = tg && tg.tagName;
     if (tag === 'INPUT' || tag === 'TEXTAREA' || (tg && tg.isContentEditable)) return;
-    const clouds = document.querySelectorAll('.bf-bst-cloud');
-    if (!clouds.length && !ttEditOn) return;      // không ở trong trận thần thú thì không chặn phím F2
+    if (!document.querySelectorAll('.bf-bst-cloud').length && !ttEditOn) return;      // không ở trong trận thần thú thì không chặn phím F2
     e.preventDefault();
-    ttEditOn = !ttEditOn;
-    clouds.forEach(c => c._ttEdit && c._ttEdit(ttEditOn));
-    ttEditTip(ttEditOn);
+    ttEditToggle();
   });
   setInterval(() => { if (ttEditOn && !document.querySelector('.bf-bst-cloud')) { ttEditOn = false; ttEditTip(false); } }, 1000);   // thoát trận thì tự tắt chế độ chỉnh
 }
@@ -7674,7 +7705,9 @@ function ttCloudDrag(st, side, beast) {
   const def = TT_CLOUD_DEF[side + '.' + beast] || { x: 0, y: 0 };   // mặc định chung cho mọi máy
   let o = { x: +def.x || 0, y: +def.y || 0 };
   if (ttCanEdit()) try { const s = JSON.parse(localStorage.getItem(key) || 'null'); if (s && isFinite(s.x) && isFinite(s.y)) o = { x: +s.x, y: +s.y }; } catch (e) {}   // chỉnh riêng trên máy này đè mặc định
-  const apply = () => { cl.style.transform = 'translate(calc(-50% + ' + o.x + 'px), ' + o.y + 'px)'; };
+  let ad = { x: 0, y: 0, s: 1 };   // admin → Vị trí Thần Thú & Đám Mây: cdx/cdy = lệch ngang/dọc (% khung thần thú), cs = cỡ %
+  try { const P = null; if (P && typeof P === 'object') ad = { x: (Number(P.cdx) || 0) * st.offsetWidth / 100, y: (Number(P.cdy) || 0) * st.offsetHeight / 100, s: (Number(P.cs) || 100) / 100 }; } catch (e) {}
+  const apply = () => { cl.style.transform = 'translate(calc(-50% + ' + (o.x + ad.x) + 'px), ' + (o.y + ad.y) + 'px)' + (ad.s !== 1 ? ' scale(' + ad.s + ')' : ''); };
   const save = () => { try { if (o.x === (+def.x || 0) && o.y === (+def.y || 0)) localStorage.removeItem(key); else localStorage.setItem(key, JSON.stringify(o)); } catch (e) {} };
   const clamp = v => Math.max(-LIM, Math.min(LIM, Math.round(v)));
   apply();
@@ -7710,6 +7743,55 @@ function ttCloudDrag(st, side, beast) {
   cl.addEventListener('contextmenu', e => { if (ttEditOn) e.preventDefault(); });
   cl._ttEdit(ttEditOn);   // trận mới (sang đợt khác) mà đang ở chế độ chỉnh thì giữ nguyên
 }
+// Kéo thả + đổi cỡ THẦN THÚ (không đụng đám mây). Dùng thuộc tính CSS translate/scale riêng nên không xung đột với lật hình (scaleX(-1)) hay chỉnh admin.
+// Kéo vào thân thần thú = dời thần thú; kéo phần mây lòi ra bên dưới = dời mây. Lăn chuột trên thần thú = to/nhỏ. Nhấp đúp = đặt lại.
+function ttBeastDrag(st, side, beast) {
+  const sp = st.querySelector('.bf-bst-sp'); if (!sp) return;
+  const key = 'ttbeast.' + side + '.' + beast, LIM = 600;
+  const d0 = TT_BEAST_DEF[side + '.' + beast] || {}, def = { x: +d0.x || 0, y: +d0.y || 0, s: +d0.s || 1 };
+  let o = { x: def.x, y: def.y, s: def.s };
+  if (ttCanEdit()) try { const v = JSON.parse(localStorage.getItem(key) || 'null'); if (v && isFinite(v.x) && isFinite(v.y)) o = { x: +v.x, y: +v.y, s: +v.s || 1 }; } catch (e) {}
+  const apply = () => { sp.style.transformOrigin = '50% 100%'; sp.style.translate = o.x + 'px ' + o.y + 'px'; sp.style.scale = String(o.s); };
+  const same = () => o.x === def.x && o.y === def.y && Math.abs(o.s - def.s) < 0.001;
+  const save = () => { try { if (same()) localStorage.removeItem(key); else localStorage.setItem(key, JSON.stringify(o)); } catch (e) {} };
+  const clamp = v => Math.max(-LIM, Math.min(LIM, Math.round(v)));
+  apply();
+  let drag = null, lastTap = 0;
+  sp.style.touchAction = 'none';
+  sp._ttEdit = on => {
+    sp.style.pointerEvents = on ? 'auto' : ''; sp.style.cursor = on ? 'grab' : '';
+    sp.style.outline = on ? '2px dashed #38bdf8' : ''; sp.style.outlineOffset = on ? '-2px' : '';
+    if (!on && drag) { drag = null; save(); }
+  };
+  sp.addEventListener('pointerdown', e => {
+    if (!ttEditOn || !ttCanEdit()) return;
+    e.preventDefault(); e.stopPropagation();
+    const r = st.getBoundingClientRect(), k = st.offsetWidth ? r.width / st.offsetWidth : 1;
+    drag = { id: e.pointerId, sx: e.clientX, sy: e.clientY, ox: o.x, oy: o.y, k: k || 1, moved: false };
+    try { sp.setPointerCapture(e.pointerId); } catch (_) {}
+    sp.style.cursor = 'grabbing';
+  });
+  sp.addEventListener('pointermove', e => {
+    if (!drag || e.pointerId !== drag.id) return;
+    const dx = e.clientX - drag.sx, dy = e.clientY - drag.sy;
+    if (Math.abs(dx) + Math.abs(dy) > 3) drag.moved = true;
+    o.x = clamp(drag.ox + dx / drag.k); o.y = clamp(drag.oy + dy / drag.k); apply();
+  });
+  const end = e => {
+    if (!drag || e.pointerId !== drag.id) return;
+    const moved = drag.moved; drag = null; sp.style.cursor = 'grab';
+    if (!moved) { const t = Date.now(); if (t - lastTap < 350) { o = { x: def.x, y: def.y, s: def.s }; apply(); lastTap = 0; } else lastTap = t; }
+    save();
+  };
+  sp.addEventListener('pointerup', end); sp.addEventListener('pointercancel', end);
+  sp.addEventListener('wheel', e => {   // lăn chuột = đổi cỡ thần thú
+    if (!ttEditOn || !ttCanEdit()) return;
+    e.preventDefault();
+    o.s = Math.max(0.3, Math.min(3, +(o.s * (e.deltaY < 0 ? 1.05 : 1 / 1.05)).toFixed(3))); apply(); save();
+  }, { passive: false });
+  sp.addEventListener('contextmenu', e => { if (ttEditOn) e.preventDefault(); });
+  sp._ttEdit(ttEditOn);
+}
 function ttSetupUI(my, foe) {
   const ar = document.getElementById('battle-arena'); if (!ar) return;
   ar.querySelectorAll('.bf-bst, .bf-ptrow').forEach(e => e.remove());
@@ -7719,7 +7801,7 @@ function ttSetupUI(my, foe) {
     const st = document.createElement('div'); st.className = 'bf-bst ' + side + (flip ? ' flip' : '');
     st.innerHTML = `<div class="bf-bst-sp">${ttImg(x.beast)}</div><img class="bf-bst-cloud" src="giao-dien/buc-may.webp" alt="">`;
     try {   // vị trí thần thú do admin chỉnh (admin → Vị trí thần thú): dx = ra/vào (% bề ngang sân, + = vào giữa), dy = lên/xuống (% chiều cao sân, + = xuống), s = cỡ %
-      const P = typeof cfgGet === 'function' ? cfgGet('ttpos.' + side, null) : null;
+      const P = null;   // vị trí thần thú cố định theo TT_BEAST_DEF / TT_CLOUD_DEF trong code (admin không còn chỉnh)
       if (P && typeof P === 'object') {
         const dx = Number(P.dx) || 0, dy = Number(P.dy) || 0, sc = Number(P.s) || 100;
         if (dx) st.style[side === 'l' ? 'left' : 'right'] = dx + '%';
@@ -7727,7 +7809,7 @@ function ttSetupUI(my, foe) {
         if (sc !== 100) { st.style.transformOrigin = '50% 100%'; st.style.transform = 'scale(' + (sc / 100) + ')'; }
       }
     } catch (e) {}
-    ar.appendChild(st); ttCloudDrag(st, side, x.beast);   // kéo thả đám mây dưới chân
+    ar.appendChild(st); ttCloudDrag(st, side, x.beast); ttBeastDrag(st, side, x.beast);   // kéo thả đám mây dưới chân
     if (x.pt && x.pt.length) { const r = document.createElement('div'); r.className = 'bf-ptrow ' + side;
       r.innerHTML = x.pt.filter(p => !p.inn).map(p => `<span title="${p.n} +${p.v}${p.pts ? '' : '%'}">${ttPtIco(p.n, p.q, p.v)}</span>`).join(''); ar.appendChild(r); }
   });
