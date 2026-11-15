@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Mộng Huyễn Giang Hồ - Full Game</title>
-  <link rel="stylesheet" href="game.css?v=3">   <!-- TOÀN BỘ CSS game gộp 1 file (xem banner === trong file) -->
+  <link rel="stylesheet" href="game.css?v=4">   <!-- TOÀN BỘ CSS game gộp 1 file (xem banner === trong file) -->
   <style id="bf-icon-size">
     /* Icon trạng thái trên đầu tướng trong trận (choáng, độc, chảy máu, buff/debuff...). Muốn to/nhỏ hơn: đổi 2 số --bf-ic và --bf-ic-n */
     :root { --bf-ic: 26px; --bf-ic-n: 15px; --bf-lift: -22px; }  /* --bf-lift: số âm càng lớn thì icon càng cao hơn đầu tướng */
@@ -89,7 +89,7 @@
         <div class="feat-row">
           <div class="feat-item" onclick="openQuest()"><div class="feat-icon"><img class="hi" src="giao-dien/icon-home/nhiem-vu.webp" alt="Nhiệm Vụ" draggable="false" width="291" height="300"></div></div>
           <div class="feat-item" onclick="openMail()"><div class="feat-icon"><img class="hi" src="giao-dien/icon-home/hop-thu.webp" alt="Hộp Thư" draggable="false" width="292" height="300"><span class="badge" id="mail-badge">0</span></div></div>
-          <div class="feat-item" onclick="openEvents()"><div class="feat-icon"><img class="hi" src="giao-dien/icon-home/su-kien.webp" alt="Sự Kiện" draggable="false" width="283" height="300"><span class="badge" id="nb-sukien" style="display:none">0</span></div></div>
+          <div class="feat-col"><div class="feat-item" onclick="openEvents()"><div class="feat-icon"><img class="hi" src="giao-dien/icon-home/su-kien.webp" alt="Sự Kiện" draggable="false" width="283" height="300"><span class="badge" id="nb-sukien" style="display:none">0</span></div></div><div class="feat-item feat-gift" onclick="openDemo()"><div class="feat-icon"><img class="hi" src="giao-dien/icon-home/de-mo.webp" alt="Demo" draggable="false"></div></div></div>
           <div class="feat-col"><div class="feat-item" onclick="openChat()"><div class="feat-icon"><img class="hi" src="giao-dien/icon-home/the-thang.webp" alt="Thẻ Tháng" draggable="false" width="297" height="300"></div></div><div class="feat-item feat-gift" onclick="openLthub()"><div class="feat-icon"><img class="hi" src="giao-dien/icon-home/linh-thu.webp" alt="Linh Thú" draggable="false" width="297" height="300"></div></div></div>
           <div class="feat-col"><div class="feat-item" onclick="openBag()"><div class="feat-icon"><img class="hi" src="giao-dien/icon-home/tui-do.webp" alt="Túi Đồ" draggable="false" width="300" height="299"></div></div><div class="feat-item feat-gift" onclick="openGiftCode()"><div class="feat-icon"><img class="hi" src="giao-dien/icon-home/gift-code.webp" alt="Gift Code" draggable="false" width="297" height="300"></div></div></div>
         </div>
@@ -427,7 +427,8 @@
   </div></div>
 
   <!-- ===== SCRIPT: nạp theo đúng thứ tự (các file dùng chung biến toàn cục, KHÔNG đổi thứ tự) ===== -->
-  <script src="heros/hero-data.js?v=3"></script>   <!-- dữ liệu 18 tướng -->
-  <script src="game.js?v=3"></script>   <!-- TOÀN BỘ JS game gộp 1 file (xem banner === trong file) -->
+  <script src="heros/hero-data.js?v=4"></script>   <!-- dữ liệu 18 tướng -->
+  <script src="game.js?v=4"></script>
+  <script src="demo.js?v=2"></script>   <!-- DEMO tướng: idle / đánh thường / ulti -->   <!-- TOÀN BỘ JS game gộp 1 file (xem banner === trong file) -->
 </body>
 </html>
