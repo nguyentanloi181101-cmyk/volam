@@ -1550,7 +1550,7 @@ img.gi-g{height:1.15em;width:auto;vertical-align:-.2em;display:inline-block}.bm-
    Nạp SAU cascade-fixes.css. !important để đè cả nền riêng từng Ải (has-bg / style inline). Muốn đổi nền: thay file battle-bg.webp. */
 #battle-overlay .bf-field,
 #battle-overlay .bf-field.has-bg{
-  background:#0b1030 url('giao-dien/battle-bg.webp') center 85%/cover no-repeat !important;
+  background:#0b1030 url('giao-dien/battle-bg.webp?v=2') center 85%/cover no-repeat !important;
 }
 #battle-overlay .bf-field .bf-mount,
 #battle-overlay .bf-field .bf-ground{display:none !important}
