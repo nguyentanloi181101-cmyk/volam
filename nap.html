@@ -26,6 +26,7 @@
   .qr img{width:min(280px,90%);height:auto}
   .code{color:#b91c1c;font-weight:900;user-select:all}
   .hide{display:none}
+  a.back{display:block;text-align:center;margin-top:10px;padding:10px;border-radius:10px;border:2px solid #fde047;background:linear-gradient(#ea580c,#9a3412);color:#fff;font-weight:900;font-size:14px;text-decoration:none}
   .row{display:flex;justify-content:space-between;align-items:center;gap:8px}
   .note{font-size:12px;color:var(--mut);margin-top:8px;line-height:1.4}
 </style>
@@ -51,15 +52,17 @@
       <div class="note" id="rate"></div>
       <div class="packs" id="packs"></div>
       <div class="msg" id="msg"></div>
+      <a class="back hide" id="done" href="index.html">🎮 Quay về game</a>
     </div>
     <div class="card hide" id="qrbox">
       <div class="qr">
         <img id="qrimg" alt="QR">
         <div style="font-weight:900;margin-top:4px"><span id="qramt"></span> • Nội dung CK: <span class="code" id="qrcode"></span></div>
-        <div style="font-size:12px;margin-top:4px">Quét bằng app ngân hàng, <b>giữ nguyên nội dung chuyển khoản</b>. Chuyển xong điểm tự cộng sau khoảng 1 phút.</div>
+        <div style="font-size:12px;margin-top:4px">Quét bằng app ngân hàng, <b>giữ nguyên nội dung chuyển khoản</b>. Chuyển xong, quà + vàng tự gửi vào Hộp Thư trong game sau khoảng 1 phút.</div>
       </div>
     </div>
-    <div class="note">Sau khi nạp: mở game, <b>vàng nạp tự vào tài khoản</b>. Bấm <b>💳 Nạp</b> trong game để tự nhận quà mốc tích điểm.</div>
+    <div class="note">Sau khi nạp: mở game, vào <b>📬 Hộp Thư</b> bấm <b>Nhận</b> để lấy vàng và quà mốc tích điểm.</div>
+    <a class="back" href="index.html" style="background:#1f2937;border-color:#374151">← Quay về game</a>
   </div>
 </div>
 
@@ -111,7 +114,7 @@ function drawPacks() {
   const per = Number(cfg && cfg.per1000) || 3, gp = Number(cfg && cfg.goldPt) || 10;
   const packs = (cfg && Array.isArray(cfg.packs) ? cfg.packs : []).map(Number).filter(x => x >= 1000);
   const on = cfg && cfg.bank && cfg.acc && packs.length;
-  $('rate').textContent = on ? `1.000đ = ${per} điểm • 1 điểm = ${gp} vàng (tự vào tài khoản khi bạn mở game)` : '';
+  $('rate').textContent = on ? `1.000đ = ${per} điểm • 1 điểm = ${gp} vàng (gửi vào Hộp Thư trong game)` : '';
   $('packs').innerHTML = on ? packs.map(v => `<button onclick="buy(${v})">${fmt(v)}đ<small>${fmt(Math.floor(v * per / 1000))} điểm</small></button>`).join('') : '';
   if (!on) say('msg', 'Chưa mở nạp tiền.', false);
 }
@@ -120,13 +123,13 @@ async function buy(amount) {
   const code = 'NAP' + Array.from(crypto.getRandomValues(new Uint8Array(4))).map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
   try { await db.collection('orders').doc(code).set({ uid: auth.currentUser.uid, amount, status: 'pending', createdAt: Date.now() }); }
   catch (e) { busy = false; return say('msg', 'Không tạo được đơn (mất mạng / chưa mở nạp).', false); }
-  busy = false; say('msg', '');
+  busy = false; say('msg', ''); $('done').classList.add('hide');
   $('qrimg').src = `https://img.vietqr.io/image/${encodeURIComponent(cfg.bank)}-${encodeURIComponent(cfg.acc)}-compact2.png?amount=${amount}&addInfo=${code}&accountName=${encodeURIComponent(cfg.name || '')}`;
   $('qramt').textContent = fmt(amount) + 'đ'; $('qrcode').textContent = code; $('qrbox').classList.remove('hide');
   const before = points; let n = 0; if (poll) clearInterval(poll);
   poll = setInterval(async () => {   // hỏi điểm mỗi 5s, tối đa 10 phút
     if (++n > 120 || !auth.currentUser) { clearInterval(poll); return; }
-    if (await loadAll() && points > before) { clearInterval(poll); $('qrbox').classList.add('hide'); say('msg', '✅ Nạp thành công! Điểm đã cộng. Mở game là vàng tự vào tài khoản.'); }
+    if (await loadAll() && points > before) { clearInterval(poll); $('qrbox').classList.add('hide'); say('msg', '✅ Nạp thành công! Quà + vàng đã gửi vào Hộp Thư trong game.'); $('done').classList.remove('hide'); }
   }, 5000);
 }
 </script>
