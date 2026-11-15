@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nạp Mộng Huyền Giang Hồ</title>
+<style>
+  :root{--bg:#1a0f08;--card:#3a2412;--gold:#fde047;--mut:#d6c7a8;--ok:#4ade80;--bad:#f87171}
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% 0,#4a2c14,#140a05);color:#fff;font-family:system-ui,Segoe UI,Roboto,sans-serif;display:flex;justify-content:center;padding:14px}
+  .box{width:100%;max-width:440px}
+  .card{background:var(--card);border:2px solid #8b6b2e;border-radius:14px;padding:14px;margin-bottom:12px}
+  h1{margin:0 0 4px;text-align:center;color:var(--gold);font-size:22px}
+  .sub{text-align:center;color:var(--mut);font-size:13px;margin-bottom:12px}
+  label{display:block;font-size:12px;color:var(--mut);margin:8px 0 3px}
+  input{width:100%;padding:10px;border-radius:8px;border:1px solid #6b5a3a;background:#1c1208;color:#fff;font-size:15px}
+  button{cursor:pointer;font-weight:900;border-radius:10px;border:2px solid #14532d;background:linear-gradient(#16a34a,#14532d);color:#fff;padding:10px;font-size:14px}
+  button.full{width:100%;margin-top:12px}
+  button.out{background:#1f2937;border-color:#374151;font-size:12px;padding:6px 10px}
+  .msg{min-height:18px;text-align:center;font-size:13px;margin-top:8px}
+  .pts{text-align:center;font-size:15px;color:#a7f3d0;font-weight:800}
+  .pts b{font-size:26px;color:var(--gold)}
+  .packs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+  .packs button small{display:block;font-weight:600;opacity:.9;font-size:11px}
+  .qr{background:#fff;color:#111;border-radius:12px;padding:10px;text-align:center}
+  .qr img{width:min(280px,90%);height:auto}
+  .code{color:#b91c1c;font-weight:900;user-select:all}
+  .hide{display:none}
+  .row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .note{font-size:12px;color:var(--mut);margin-top:8px;line-height:1.4}
+</style>
+</head>
+<body>
+<div class="box">
+  <h1>💳 Nạp Mộng Huyền Giang Hồ</h1>
+  <div class="sub">Đăng nhập đúng tài khoản trong game. Điểm và vàng sẽ vào tài khoản đó.</div>
+
+  <!-- ĐĂNG NHẬP -->
+  <div class="card" id="v-login">
+    <label>Tên tài khoản (giống trong game)</label><input id="u" autocomplete="username" autocapitalize="none">
+    <label>Mật khẩu</label><input id="p" type="password" autocomplete="current-password">
+    <button class="full" onclick="login()">Đăng nhập</button>
+    <div class="msg" id="lg-msg"></div>
+  </div>
+
+  <!-- NẠP -->
+  <div class="hide" id="v-main">
+    <div class="card">
+      <div class="row"><div>Tài khoản: <b id="who"></b></div><button class="out" onclick="logout()">Đăng xuất</button></div>
+      <div class="pts" style="margin-top:10px">Điểm nạp: <b id="pts">0</b></div>
+      <div class="note" id="rate"></div>
+      <div class="packs" id="packs"></div>
+      <div class="msg" id="msg"></div>
+    </div>
+    <div class="card hide" id="qrbox">
+      <div class="qr">
+        <img id="qrimg" alt="QR">
+        <div style="font-weight:900;margin-top:4px"><span id="qramt"></span> • Nội dung CK: <span class="code" id="qrcode"></span></div>
+        <div style="font-size:12px;margin-top:4px">Quét bằng app ngân hàng, <b>giữ nguyên nội dung chuyển khoản</b>. Chuyển xong điểm tự cộng sau khoảng 1 phút.</div>
+      </div>
+    </div>
+    <div class="note">Sau khi nạp: mở game, <b>vàng nạp tự vào tài khoản</b>. Bấm <b>💳 Nạp</b> trong game để tự nhận quà mốc tích điểm.</div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyDOWlrfsWTx0HNWQAYvPHw7fWHlFP3UNu4", authDomain: "game-118e8.firebaseapp.com", projectId: "game-118e8",
+  storageBucket: "game-118e8.firebasestorage.app", messagingSenderId: "612432319937", appId: "1:612432319937:web:0e2ba2a7ecc032d8150b40"
+};
+const CL_DOMAIN = '@mhgh-game.app';   // giống game.js
+firebase.initializeApp(FIREBASE_CONFIG);
+const auth = firebase.auth(), db = firebase.firestore();
+const $ = id => document.getElementById(id);
+const fmt = n => Number(n || 0).toLocaleString('vi-VN');
+const say = (id, t, ok) => { const e = $(id); e.style.color = ok === false ? 'var(--bad)' : 'var(--ok)'; e.textContent = t || ''; };
+let cfg = null, points = 0, poll = null, busy = false;
+
+async function login() {
+  const u = $('u').value.trim().toLowerCase(), p = $('p').value;
+  if (!/^[a-z0-9_]{3,20}$/.test(u)) return say('lg-msg', 'Tên tài khoản: 3-20 ký tự, chữ thường không dấu, số, _', false);
+  if (p.length < 6) return say('lg-msg', 'Mật khẩu tối thiểu 6 ký tự.', false);
+  say('lg-msg', 'Đang đăng nhập…');
+  try { await auth.signInWithEmailAndPassword(u + CL_DOMAIN, p); say('lg-msg', ''); }
+  catch (e) { say('lg-msg', 'Sai tên tài khoản hoặc mật khẩu.', false); }
+}
+function logout() { if (poll) clearInterval(poll); auth.signOut(); }
+
+auth.onAuthStateChanged(async user => {
+  $('v-login').classList.toggle('hide', !!user);
+  $('v-main').classList.toggle('hide', !user);
+  if (!user) return;
+  $('who').textContent = (user.email || '').replace(CL_DOMAIN, '');
+  await loadAll(); drawPacks();
+});
+
+async function loadAll() {
+  const uid = auth.currentUser.uid;
+  try {
+    const [c, p] = await Promise.all([db.collection('topup_cfg').doc('main').get(), db.collection('topup').doc(uid).get()]);
+    cfg = c.exists ? c.data() : {};
+    points = p.exists ? Number((p.data() || {}).points) || 0 : 0;
+    $('pts').textContent = fmt(points);
+    return true;
+  } catch (e) { say('msg', 'Không tải được dữ liệu (mất mạng?).', false); return false; }
+}
+function drawPacks() {
+  const per = Number(cfg && cfg.per1000) || 3, gp = Number(cfg && cfg.goldPt) || 10;
+  const packs = (cfg && Array.isArray(cfg.packs) ? cfg.packs : []).map(Number).filter(x => x >= 1000);
+  const on = cfg && cfg.bank && cfg.acc && packs.length;
+  $('rate').textContent = on ? `1.000đ = ${per} điểm • 1 điểm = ${gp} vàng (tự vào tài khoản khi bạn mở game)` : '';
+  $('packs').innerHTML = on ? packs.map(v => `<button onclick="buy(${v})">${fmt(v)}đ<small>${fmt(Math.floor(v * per / 1000))} điểm</small></button>`).join('') : '';
+  if (!on) say('msg', 'Chưa mở nạp tiền.', false);
+}
+async function buy(amount) {
+  if (busy || !auth.currentUser) return; busy = true;
+  const code = 'NAP' + Array.from(crypto.getRandomValues(new Uint8Array(4))).map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
+  try { await db.collection('orders').doc(code).set({ uid: auth.currentUser.uid, amount, status: 'pending', createdAt: Date.now() }); }
+  catch (e) { busy = false; return say('msg', 'Không tạo được đơn (mất mạng / chưa mở nạp).', false); }
+  busy = false; say('msg', '');
+  $('qrimg').src = `https://img.vietqr.io/image/${encodeURIComponent(cfg.bank)}-${encodeURIComponent(cfg.acc)}-compact2.png?amount=${amount}&addInfo=${code}&accountName=${encodeURIComponent(cfg.name || '')}`;
+  $('qramt').textContent = fmt(amount) + 'đ'; $('qrcode').textContent = code; $('qrbox').classList.remove('hide');
+  const before = points; let n = 0; if (poll) clearInterval(poll);
+  poll = setInterval(async () => {   // hỏi điểm mỗi 5s, tối đa 10 phút
+    if (++n > 120 || !auth.currentUser) { clearInterval(poll); return; }
+    if (await loadAll() && points > before) { clearInterval(poll); $('qrbox').classList.add('hide'); say('msg', '✅ Nạp thành công! Điểm đã cộng. Mở game là vàng tự vào tài khoản.'); }
+  }, 5000);
+}
+</script>
+</body>
+</html>
