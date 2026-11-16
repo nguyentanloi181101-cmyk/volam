@@ -2629,7 +2629,7 @@ function addAccExp(n) {
         const f = (k, fn) => row(k[0], (fn || fmtN)(cs[k[1]]), (fn || fmtN)(ns[k[1]]));
         rows = row('Cấp', p.lv, np.lv) + [['HP', 'hp'], ['Công', 'atk'], ['Thủ', 'def'], ['Tốc', 'spd'], ['Bạo', 'crit'], ['Bạo Sát', 'critDmg'], ['Bền', 'tough'], ['Chuẩn', 'acc'], ['Né', 'dodge'], ['Phá giáp', 'pierce'], ['Đỡ đòn', 'block']].map(k => f(k, k[1] === 'block' ? (v => tsFmt(v) + '%') : (v => (k[1] === 'hp' || k[1] === 'atk' || k[1] === 'def' || k[1] === 'pierce') ? fmtN(v) : tsFmt(v)))).join('');
       }
-      const art = (star, cls) => `<div class="up-hero ${cls}"><div class="up-fig">${h.body ? `<img src="${h.body}" alt="${h.name}">` : heroIcon(h)}</div><div class="up-plat"></div><div class="up-stars">${heroStarsHTML(star, { off: true, bigPx: 15 })}</div></div>`;
+      const art = (star, cls) => `<div class="up-hero ${cls}"><div class="up-fig">${(typeof seqAvatarHTML === 'function' && seqAvatarHTML(h.id, '78px')) || (h.body ? `<img src="${h.body}" alt="${h.name}">` : heroIcon(h))}</div><div class="up-plat"></div><div class="up-stars">${heroStarsHTML(star, { off: true, bigPx: 15 })}</div></div>`;
       let cost = '', btns = '';
       if (mode === 'sao') {
         const need = starCost(p.star + 1), have = shardsOf(upgId), phs = maxed ? [] : starPhach(p.star + 1), ok = have >= need && phs.every(x => skbQty(x.name) >= x.n);
@@ -5682,7 +5682,7 @@ const SKILL_SHARED = {
   RAGE_HIT: 25,   // PvE: mỗi lần chiêu (tuyệt kỹ) gây sát thương trúng +25 nộ (VD Trương Tam Phong 4 lần = +100 nộ)
   TL_BUBBLES: 36,        // Thủy Long: số bong bóng trong cơn mưa (hiệu ứng hình ảnh)
   TL_HITS: 5,            // số lần sát thương lên MỖI địch
-  TL_MULT: 3.5,          // tổng hệ số Công lên mỗi địch (chia đều cho các lần)
+  TL_MULT: 1,          // tổng hệ số Công lên mỗi địch (chia đều cho các lần)
   TL_RAGE: 50,           // nộ cộng cho cả đội ta
   DUCO_SWORDS: 32,       // Độc Cô Cầu Bại: số kiếm trong cơn mưa (hiệu ứng hình ảnh)
   DUCO_HIT_COUNT: 3,     // số lần sát thương lên MỖI địch
@@ -5693,7 +5693,7 @@ const SKILL_SHARED = {
 };
 
 /* ===== Admin chỉnh được: skill.<TÊN> (admin.html → tab "Chiêu thức"). Mỗi tên là 1 hằng số; để trống = giữ số mặc định. ===== */
-const SKILL_DEF = Object.assign({}, SKILL_SHARED, HERO_T.skill);   // chung + skillConfig của mọi tướng
+const SKILL_DEF = Object.assign({}, SKILL_SHARED, HERO_T.skill, { HTT_HP_PCT: 0.2, SKEL_PCT: 0.2, TD_HP_DOWN: 0.4, TD_DEF_DOWN: 0.5 });   // chung + skillConfig của mọi tướng • ghi đè: Đông Phương rút 20% HP • Tiểu Yêu giảm 20% HP • Tây Độc giảm 40% HP + 50% Thủ
 Object.assign(window, SKILL_DEF);                                     // tạo biến toàn cục cùng tên để code tuyệt kỹ dùng trực tiếp
 cfgOnApply(() => {
   Object.keys(SKILL_DEF).forEach(k => { window[k] = cfgNum('skill.' + k, SKILL_DEF[k]); });
