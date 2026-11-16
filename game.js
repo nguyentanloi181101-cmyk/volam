@@ -78,15 +78,15 @@ window.GP = (function () {
       tpUlt:     { src: 'thiet-phien-ult.webp?v=2',     cw: 350,   ch: 341, n: 19 },   // 6650×341 = 19 khung 350×341: nhảy lên + xoay trong lốc
       tpTornado: { src: 'thiet-phien-tornado.webp?v=1', cw: 307,   ch: 300, n: 20 }    // 6140×300 = 20 khung lốc xoáy lớn
     },
-    skillConfig: { TP_MULT: 2.4, TP_HITS: 4, TP_SLOW: 0.15, TP_SLOW_TURNS: 3, TP_SILENCE_TARGETS: 3, TP_SILENCE_TURNS: 1 }
+    skillConfig: { TP_MULT: 1.5, TP_HITS: 4, TP_SLOW: 0.15, TP_SLOW_TURNS: 3, TP_SILENCE_TARGETS: 3, TP_SILENCE_TURNS: 1 }
   });
-  // === DƯƠNG TIỄN (id 24, tướng công kích): ảnh + âm thanh ở heros/duong-tien/ ===
+  // === DƯƠNG TIỄN (id 24, tướng kỹ năng): ảnh + âm thanh ở heros/duong-tien/ ===
   if (!window.HERO_DATA.heroes.some(h => h.id === 24)) window.HERO_DATA.heroes.push({
     id: 24, slug: 'duong-tien', name: 'Dương Tiễn', emoji: '🔱',
     img: 'duong-tien.webp?v=1', body: 'duong-tien-body.webp?v=1', bodyH: 96,
     stats: { hp: 6000, atk: 800, spd: 125 },
     combat: { def: 300, dodge: 60, acc: 300, crit: 0, critDmg: 0, tough: 0, pierce: 0, block: 0 },
-    tia: 1, role: 'atk',
+    tia: 1, role: 'skill',
     constants: { lv: 1, star: 1, border: 'orange', ultName: 'Thiên Thương Xuyên Trận' },
     idle: { sheet: 'dtIdle', h: 120, ms: 1600 },
     ultFn: 'duongTienUlt', audio: 'duong-tien-ult.mp3?v=1',
@@ -94,7 +94,7 @@ window.GP = (function () {
       dtIdle: { src: 'duong-tien-idle.webp?v=1', cw: 307, ch: 256, n: 20, face: 'R' },   // 6140×256 = 20 khung đứng yên (quay mặt sang PHẢI)
       dtUlt:  { src: 'duong-tien-ult.webp?v=1',  cw: 307, ch: 205, n: 25, face: 'R' }    // 7675×205 = 25 khung: 0-4 lao tới • 5-19 xoay thương (19 = nổ) • 20-24 thu thế
     },
-    skillConfig: { DY_MULT: 3, DY_HITS: 7, DY_PIERCE: 15000, DY_PIERCE_TURNS: 2, DY_BLOCK_DOWN: 0.2, DY_TURNS: 2 }
+    skillConfig: { DY_MULT: 1.5, DY_HITS: 7, DY_PIERCE: 15000, DY_PIERCE_TURNS: 2, DY_BLOCK_DOWN: 0.2, DY_TURNS: 2 }
   });
   const META = window.HERO_DATA.heroes;
   const T = { combat: {}, tia: {}, startProg: {}, border: {}, ultName: {}, role: {}, sound: {}, seq: {}, seqIdle: {}, skill: {}, ultFn: {} };
@@ -2275,8 +2275,8 @@ function addAccExp(n) {
       else if (id === 21) ult = `Cần đầy 100 nộ. TRƯỚC khi bắn: bản thân tăng ${pct(HR_CRIT_UP)}% Bạo, ${pct(HR_CDMG_UP)}% Bạo Sát và ${pct(HR_ACC_UP)}% Chuẩn trong ${HR_TURNS} hiệp. Rồi bắn lên trời: MƯA ${HR_ARROWS} mũi tên lớn từ trời bên ta ập xuống bên địch, gây ${HR_HITS} lần sát thương lên ${HR_TARGETS} tướng địch ngẫu nhiên; tổng ${pct(HR_MULT * sk)}% Công (≈ ${fmtN(st.atk * HR_MULT * sk)}, mỗi lần ≈ ${fmtN(st.atk * HR_MULT * sk / HR_HITS)} lên mỗi tướng bị trúng).`;
       else if (id === 22) ult = `KHÔNG TỐN NỘ – lượt nào cũng ulti được. TRƯỚC khi ra đòn: bản thân tăng ${pct(BQ_CRIT_UP)}% Bạo trong ${BQ_TURNS} hiệp. Rồi phân thân làm ${BQ_CLONES} người chạy sang đập đàn vào đầu ${BQ_CLONES} địch ngẫu nhiên, mỗi địch bị đánh ${BQ_HITS} lần; tổng ${pct(BQ_MULT * sk)}% Công (≈ ${fmtN(st.atk * BQ_MULT * sk)}, mỗi lần ≈ ${fmtN(st.atk * BQ_MULT * sk / BQ_HITS)} lên mỗi địch). SAU khi đánh: ${BQ_CLONES} địch bị đánh bị choáng ${BQ_STUN} hiệp và bị CẤM HỒI MÁU ${BQ_TURNS} hiệp.`;
       else if (id === 23) ult = `KHÔNG TỐN NỘ – lượt nào cũng ulti được. Nhảy lên tung quạt, xoay tròn tạo LỐC XOÁY LỚN giữa đội địch: gây ${TP_HITS} lần sát thương lên TOÀN địch, tổng ${pct(TP_MULT * sk)}% Công (≈ ${fmtN(st.atk * TP_MULT * sk)}, mỗi lần ≈ ${fmtN(st.atk * TP_MULT * sk / TP_HITS)}). Toàn địch giảm ${pct(TP_SLOW)}% Tốc trong ${TP_SLOW_TURNS} hiệp; sau khi đánh, ${TP_SILENCE_TARGETS} địch ngẫu nhiên bị CÂM LẶNG ${TP_SILENCE_TURNS} hiệp (không thể dùng tuyệt kỹ).`;
-      else if (id === 24) ult = `Cần đầy 100 nộ. TRƯỚC khi ra đòn: bản thân +${fmtN(DY_PIERCE)} Phá giáp trong ${DY_PIERCE_TURNS} hiệp, toàn địch giảm ${pct(DY_BLOCK_DOWN)}% Đỡ đòn trong ${DY_TURNS} hiệp. Rồi lao xuyên đội địch, đánh địch có CÔNG CAO NHẤT ${DY_HITS} lần trong 1 lần ulti; tổng ${pct(DY_MULT * sk)}% Công (≈ ${fmtN(st.atk * DY_MULT * sk)}, mỗi lần ≈ ${fmtN(st.atk * DY_MULT * sk / DY_HITS)}).`;
-      else ult = `Lao vào địch, đánh ${ULT_HITS} đòn liên tiếp, mỗi đòn ${pct(ULT_MULT * sk)}% Công (≈ ${fmtN(st.atk * ULT_MULT * sk)} mỗi đòn). Cần đầy 100 nộ.`;
+      else if (id === 24) ult = `Cần đầy 100 nộ. TRƯỚC khi ra đòn: bản thân +${fmtN(DY_PIERCE)} Phá giáp trong ${DY_PIERCE_TURNS} hiệp, toàn địch giảm ${pct(DY_BLOCK_DOWN)}% Đỡ đòn trong ${DY_TURNS} hiệp. Rồi lao xuyên đội địch, đánh địch có CÔNG CAO NHẤT ${DY_HITS} lần trong 1 lần ulti; tổng ${pct(DY_MULT * sk)}% Công (≈ ${fmtN(st.atk * DY_MULT * sk)}, mỗi lần ≈ ${fmtN(st.atk * DY_MULT * sk / DY_HITS)}). Phá giáp tính theo TỪNG lần đánh: ${DY_HITS} lần ≈ ${fmtN(DY_PIERCE * DY_HITS)} Phá giáp trong 1 lần ulti.`;
+      else ult = `Lao vào địch, đánh ${ULT_HITS} đòn liên tiếp, tổng ${pct(ULT_MULT * sk)}% Công (≈ ${fmtN(st.atk * ULT_MULT * sk)}, mỗi đòn ≈ ${fmtN(st.atk * ULT_MULT * sk / ULT_HITS)}). Cần đầy 100 nộ.`;
       { const hh = heroById(id), free = /^KHÔNG TỐN NỘ – (lượt|hiệp) nào cũng ulti được\.\s*/;
         if (hh.alwaysUlt) { if (!free.test(ult)) ult = 'KHÔNG TỐN NỘ – lượt nào cũng ulti được. ' + ult.replace(/Cần đầy 100 nộ[,.]?\s*/g, ''); }
         else if (free.test(ult)) ult = ult.replace(free, 'Cần đầy 100 nộ mới ulti được. '); }
@@ -3603,7 +3603,7 @@ cfgOnApply(applyFormationCfg);   // chạy ngay 1 lần + chạy lại mỗi khi
       if (u.isSoldier) return lcUlt(u, tok);   // Lính phụ (cờ/kiếm/cung/đao/chuỳ/thương): heros/linh-cam.js
       playHeroSound(u.id);
       { const uf = heroUltFn(u.id); if (uf) return uf(u, tok); }   // tên hàm tuyệt kỹ khai báo trong heros/hero-data.js (ultFn)
-      return attack(u, foesOf(u), ULT_HITS, u.atk * ULT_MULT * (u.sk || 1), tok, true);
+      return attack(u, foesOf(u), ULT_HITS, u.atk * ULT_MULT * (u.sk || 1) / Math.max(1, Math.floor(ULT_HITS)), tok, true);   // tổng ULT_MULT × Công chia đều cho các lần
     }
 
     function heal(u, amt) {
@@ -5562,7 +5562,7 @@ GP.add(TM_SWORD_IMG, 2);
       } finally { timers.forEach(clearTimeout); cast.end(); made.forEach(d => d.remove()); tor.remove(); u.el.getAnimations().forEach(a => a.cancel()); u.el.style.zIndex = oldZ; }
     }
 /* === duong-tien (tuyệt kỹ Dương Tiễn) === */
-/* DƯƠNG TIỄN (id 24, tướng công kích): TRƯỚC khi ra đòn bản thân +DY_PIERCE Phá giáp (DY_PIERCE_TURNS hiệp), toàn địch giảm DY_BLOCK_DOWN Đỡ đòn (DY_TURNS hiệp)
+/* DƯƠNG TIỄN (id 24, tướng kỹ năng): TRƯỚC khi ra đòn bản thân +DY_PIERCE Phá giáp (DY_PIERCE_TURNS hiệp), toàn địch giảm DY_BLOCK_DOWN Đỡ đòn (DY_TURNS hiệp)
    → LAO XUYÊN đội địch (SEQ.dtUlt khung 0-4) tới địch có CÔNG CAO NHẤT → xoay thương, đánh DY_HITS lần (khung 5-19, nhát cuối ở khung 18, khung 19 nổ)
    → thu thế chạy về (khung 20-24). Tổng DY_MULT × Công chia đều cho DY_HITS lần. Nếu mục tiêu chết giữa chừng thì chuyển sang địch Công cao nhất còn lại.
    Tham số: heros/hero-data.js → skillConfig (DY_*), hoặc admin → tab Chiêu thức. Âm thanh: heros/duong-tien/duong-tien-ult.mp3 */
@@ -5665,7 +5665,7 @@ function lcMakeType(d) {
         ov.show(i);
         if (i >= d.hit && i < d.hit + hits) {
           const t = pickTarget(foesOf(u));
-          if (t) skillHit(t, u.atk * (typeof ULT_MULT === 'number' ? ULT_MULT : 1) * (u.sk || 1), u);
+          if (t) skillHit(t, u.atk * (typeof ULT_MULT === 'number' ? ULT_MULT : 1) * (u.sk || 1) / hits, u);   // tổng chia đều cho các lần
         }
         await sleep(FR);
       }
@@ -5744,7 +5744,8 @@ const SKILL_SHARED = {
   B4_HERO_DEF: 30,
   B4_HERO_DODGE: 0,
   ULT_HITS: 3,
-  ULT_MULT: 1.2,
+  ULT_BASE_CAP: 1.5,     // TRẦN tổng sát thương 1 lần ulti = 150% Công gốc (chưa nhân cấp kỹ năng); mọi *_MULT tự bị chặn ở mức này, chia đều cho số lần đánh
+  ULT_MULT: 1.5,          // ulti chung: TỔNG hệ số Công (chia đều cho ULT_HITS lần)
   HEAL_MULT: 1.5,
   RAGE_ATK: 25,   // PvE: mỗi lần đánh thường +25 nộ
   RAGE_HIT: 25,   // PvE: mỗi lần chiêu (tuyệt kỹ) gây sát thương trúng +25 nộ (VD Trương Tam Phong 4 lần = +100 nộ)
@@ -5763,8 +5764,13 @@ const SKILL_SHARED = {
 /* ===== Admin chỉnh được: skill.<TÊN> (admin.html → tab "Chiêu thức"). Mỗi tên là 1 hằng số; để trống = giữ số mặc định. ===== */
 const SKILL_DEF = Object.assign({}, SKILL_SHARED, HERO_T.skill, { HTT_HP_PCT: 0.2, SKEL_PCT: 0.2, TD_HP_DOWN: 0.4, TD_DEF_DOWN: 0.5 });   // chung + skillConfig của mọi tướng • ghi đè: Đông Phương rút 20% HP • Tiểu Yêu giảm 20% HP • Tây Độc giảm 40% HP + 50% Thủ
 Object.assign(window, SKILL_DEF);                                     // tạo biến toàn cục cùng tên để code tuyệt kỹ dùng trực tiếp
+// Trần sát thương ulti: tổng hệ số Công của MỌI tướng (đã chia đều cho các lần) không vượt ULT_BASE_CAP (chưa tính cấp kỹ năng). Bạo + Phá giáp vẫn cộng THEO TỪNG lần đánh (strike → calcDmg).
+const ULT_MULT_KEYS = ['TADE_MULT','DUCO_MULT','TAICHI_MULT','BFLY_MULT','DRAGON_MULT','TL_MULT','HTT_MULT','SKEL_MULT','BC_MULT','DT_MULT','MT_MULT','TM_MULT','QA_MULT','HR_MULT','BQ_MULT','TP_MULT','DY_MULT','ULT_MULT'];
+const clampUltMult = () => { const cap = Number(window.ULT_BASE_CAP) > 0 ? Number(window.ULT_BASE_CAP) : 1.5; ULT_MULT_KEYS.forEach(k => { if (typeof window[k] === 'number' && window[k] > cap) window[k] = cap; }); };
+clampUltMult();
 cfgOnApply(() => {
   Object.keys(SKILL_DEF).forEach(k => { window[k] = cfgNum('skill.' + k, SKILL_DEF[k]); });
+  clampUltMult();
   // Khiên Nguyệt Quang (Hằng Nga): nhập nhầm theo % (70, 15…) thì đổi về tỉ lệ; phản tối đa 70%, đồng đội nhận tối đa 30% sát thương địch gây ra
   const _mn = v => { v = Number(v); if (!isFinite(v) || v < 0) return 0; return v > 1 ? v / 100 : v; };
   window.MOON_REFLECT = Math.min(0.7, _mn(window.MOON_REFLECT));
