@@ -2237,6 +2237,10 @@ function addAccExp(n) {
       else if (id === 16) ult = `Triệu hồi Phật Như Lai, chưởng ấn chữ Vạn rơi từ trời xuống: toàn địch giảm ${pct(ND_ALL_DOWN)}% TẤT CẢ thuộc tính (Công, Thủ, Tốc, Né, Chuẩn, Bạo, Bạo Sát, Bền, Phá giáp, Đỡ đòn) trong ${ND_TURNS} hiệp.`;
       else if (id === 17) ult = `Tăng TẤT CẢ thuộc tính của toàn đội thêm ${pct(VTD_ALL_UP)}% trong ${VTD_TURNS} hiệp, tính theo thuộc tính hiện có của từng đồng đội (Đỡ đòn tối đa 100%).`;
       else if (id === 18) ult = `Cần đầy 100 nộ. Mở cánh cổng triệu hồi che đội ta, ${MT_HANDS} bàn tay ma (hiệu ứng) bay dồn dập từ cổng sang đội địch rồi cổng biến mất; gây ${MT_HITS} lần sát thương lên TOÀN địch, tổng ${pct(MT_MULT * sk)}% Công (≈ ${fmtN(st.atk * MT_MULT * sk)}, mỗi lần ≈ ${fmtN(st.atk * MT_MULT * sk / MT_HITS)}). TRƯỚC khi tay giáng xuống: toàn đội ta tăng ${pct(MT_ACC_UP)}% Chuẩn, toàn địch giảm ${pct(MT_ACC_DOWN)}% Chuẩn trong ${MT_TURNS} hiệp.`;
+      else if (id === 19) ult = `Cần đầy 100 nộ. Tung kiếm khí rồi LAO QUA đội hình địch, kéo theo ${TM_SWORDS} thanh kiếm từ phía sau đội ta ào ạt bay thành từng hàng ngang sang đội địch; gây ${TM_HITS} lần sát thương lên TOÀN địch, tổng ${pct(TM_MULT * sk)}% Công (≈ ${fmtN(st.atk * TM_MULT * sk)}, mỗi lần ≈ ${fmtN(st.atk * TM_MULT * sk / TM_HITS)}). TRƯỚC khi kiếm giáng xuống: toàn địch giảm ${pct(TM_BLOCK_DOWN)}% Đỡ đòn, toàn đội ta tăng ${pct(TM_BLOCK_UP)}% Đỡ đòn trong ${TM_TURNS} hiệp.`;
+      else if (id === 20) ult = `Cần đầy 100 nộ. TRƯỚC khi ra đòn: toàn đội ta tăng ${pct(QA_DODGE_UP)}% Né, toàn địch giảm ${pct(QA_DODGE_DOWN)}% Né trong ${QA_TURNS} hiệp. Rồi chạy XUYÊN qua đội địch: đưa thương từ dưới lên ${QA_HITS_UP} lần, rồi bổ từ trên xuống ${QA_HITS_DOWN} lần — tổng ${QA_HITS_UP + QA_HITS_DOWN} lần sát thương lên TOÀN địch, tổng ${pct(QA_MULT * sk)}% Công (≈ ${fmtN(st.atk * QA_MULT * sk)}, mỗi lần ≈ ${fmtN(st.atk * QA_MULT * sk / (QA_HITS_UP + QA_HITS_DOWN))}).`;
+      else if (id === 21) ult = `Cần đầy 100 nộ. TRƯỚC khi bắn: bản thân tăng ${pct(HR_CRIT_UP)}% Bạo, ${pct(HR_CDMG_UP)}% Bạo Sát và ${pct(HR_ACC_UP)}% Chuẩn trong ${HR_TURNS} hiệp. Rồi bắn lên trời: MƯA ${HR_ARROWS} mũi tên lớn từ trời bên ta ập xuống bên địch, gây ${HR_HITS} lần sát thương lên ${HR_TARGETS} tướng địch ngẫu nhiên; tổng ${pct(HR_MULT * sk)}% Công (≈ ${fmtN(st.atk * HR_MULT * sk)}, mỗi lần ≈ ${fmtN(st.atk * HR_MULT * sk / HR_HITS)} lên mỗi tướng bị trúng).`;
+      else if (id === 22) ult = `KHÔNG TỐN NỘ – lượt nào cũng ulti được. TRƯỚC khi ra đòn: bản thân tăng ${pct(BQ_CRIT_UP)}% Bạo trong ${BQ_TURNS} hiệp. Rồi phân thân làm ${BQ_CLONES} người chạy sang đập đàn vào đầu ${BQ_CLONES} địch ngẫu nhiên, mỗi địch bị đánh ${BQ_HITS} lần; tổng ${pct(BQ_MULT * sk)}% Công (≈ ${fmtN(st.atk * BQ_MULT * sk)}, mỗi lần ≈ ${fmtN(st.atk * BQ_MULT * sk / BQ_HITS)} lên mỗi địch). SAU khi đánh: ${BQ_CLONES} địch bị đánh bị choáng ${BQ_STUN} hiệp và bị CẤM HỒI MÁU ${BQ_TURNS} hiệp.`;
       else ult = `Lao vào địch, đánh ${ULT_HITS} đòn liên tiếp, mỗi đòn ${pct(ULT_MULT * sk)}% Công (≈ ${fmtN(st.atk * ULT_MULT * sk)} mỗi đòn). Cần đầy 100 nộ.`;
       { const hh = heroById(id), free = /^KHÔNG TỐN NỘ – (lượt|hiệp) nào cũng ulti được\.\s*/;
         if (hh.alwaysUlt) { if (!free.test(ult)) ult = 'KHÔNG TỐN NỘ – lượt nào cũng ulti được. ' + ult.replace(/Cần đầy 100 nộ[,.]?\s*/g, ''); }
@@ -2276,6 +2280,10 @@ function addAccExp(n) {
           case 16: return `TOÀN BỘ địch giảm ${pct(ND_ALL_DOWN)}% mọi thuộc tính trong ${ND_TURNS} hiệp.`;
           case 17: return `Cả đội tăng ${pct(VTD_ALL_UP)}% mọi thuộc tính trong ${VTD_TURNS} hiệp.`;
           case 18: return `Cổng triệu hồi thả bàn tay ma đánh TOÀN địch ${MT_HITS} lần. Cả đội ta +${pct(MT_ACC_UP)}% Chuẩn, toàn địch -${pct(MT_ACC_DOWN)}% Chuẩn, ${MT_TURNS} hiệp.`;
+          case 19: return `Lao qua địch kéo theo ${TM_SWORDS} kiếm bay hàng ngang, đánh TOÀN địch ${TM_HITS} lần. Địch -${pct(TM_BLOCK_DOWN)}% Đỡ đòn, cả đội ta +${pct(TM_BLOCK_UP)}% Đỡ đòn, ${TM_TURNS} hiệp.`;
+          case 20: return `Chạy qua địch: hất thương ${QA_HITS_UP} lần rồi bổ xuống ${QA_HITS_DOWN} lần lên TOÀN địch. Cả đội ta +${pct(QA_DODGE_UP)}% Né, toàn địch -${pct(QA_DODGE_DOWN)}% Né, ${QA_TURNS} hiệp.`;
+          case 21: return `Bản thân +${pct(HR_CRIT_UP)}% Bạo, +${pct(HR_CDMG_UP)}% Bạo Sát, +${pct(HR_ACC_UP)}% Chuẩn ${HR_TURNS} hiệp, rồi mưa ${HR_ARROWS} mũi tên từ trời đánh ${HR_TARGETS} tướng địch ngẫu nhiên ${HR_HITS} lần.`;
+          case 22: return `Phân thân ${BQ_CLONES} người đập đàn vào đầu ${BQ_CLONES} địch ngẫu nhiên, mỗi địch ${BQ_HITS} lần. Bản thân +${pct(BQ_CRIT_UP)}% Bạo ${BQ_TURNS} hiệp; địch bị đánh choáng ${BQ_STUN} hiệp và cấm hồi máu ${BQ_TURNS} hiệp.`;
           default: return `Lao vào địch đánh ${ULT_HITS} đòn liên tiếp.`;
         }
       } catch (e) { return ''; }
@@ -2337,9 +2345,9 @@ function addAccExp(n) {
     nay do ADMIN chỉnh ở trang riêng admin-config.html, game tự tải về — xem js/core/remote-config.js.) */
 
     // ---- Cài đặt âm thanh: bật/tắt âm skill (lưu trong trình duyệt) ----
-    let audioSet = Object.assign({ skill: true }, loadJSON('audio_set'));
+    let audioSet = Object.assign({ skill: true, music: true }, loadJSON('audio_set'));
     function renderAudioSwitches() {
-      ['skill'].forEach(k => {
+      ['skill', 'music'].forEach(k => {
         const b = document.getElementById('sw-' + k); if (!b) return;
         b.className = 'snd-sw ' + (audioSet[k] ? 'on' : 'off');
         b.innerText = audioSet[k] ? 'BẬT' : 'TẮT';
@@ -2348,6 +2356,7 @@ function addAccExp(n) {
     function toggleAudio(k) {
       audioSet[k] = !audioSet[k]; saveJSON('audio_set', audioSet);
       if (k === 'skill' && !audioSet.skill) { stopHeroSounds(); try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (e) {} }
+      if (k === 'music') { if (audioSet.music) bgmStart(); else bgmStop(); }
       renderAudioSwitches();
     }
     function updateRoster() {
@@ -2871,7 +2880,7 @@ function addAccExp(n) {
       units.filter(a => a.alive).forEach(a => {
         let had = false;
         if (a.bleed > 0) { a.bleed = 0; a.bleedPct = 0; const ic = a.el.querySelector('.bf-bleed'); if (ic) ic.remove(); had = true; }
-        if ((a.mods && a.mods.some(m => m.kind === 'debuff')) || (a.dn && ['atk', 'def', 'heal', 'rage', 'silence', 'poison'].some(k => a.dn[k] > 0))) { clearDebuffs(a); had = true; }
+        if ((a.mods && a.mods.some(m => m.kind === 'debuff')) || (a.dn && ['atk', 'def', 'heal', 'rage', 'silence', 'poison', 'noheal'].some(k => a.dn[k] > 0))) { clearDebuffs(a); had = true; }
         if (a.pdDot > 0 || a.pdRet) { a.pdDot = 0; a.pdRet = 0; const pm = a.el.querySelector('.pd-mark'); if (pm) pm.remove(); had = true; }
         if (a.stun > 0) { a.stun = 0; a.el.classList.remove('stunned'); const ic = a.el.querySelector('.bf-stun'); if (ic) ic.remove(); had = true; }
         if (had) floatText(a, '✨ GIẢI HIỆU ỨNG');
@@ -3027,7 +3036,7 @@ function addAccExp(n) {
       return bled;
     }
     // ---- Hiệu ứng bất lợi của bướm Hoa Mãn Lâu (lưu trong u.dn: số hiệp còn lại theo từng loại) ----
-    const BF_DN_ICON = { atk: '⚔️↓', def: '🛡️↓', heal: '💔', rage: '⚡↓', silence: '🤐', poison: '☠️', immortal: '✨', nobuff: '🚫✨', hpcut: '🔥↓' };   // hpcut: Đông Phương đánh dấu "sẽ bị trừ 50% HP"
+    const BF_DN_ICON = { atk: '⚔️↓', def: '🛡️↓', heal: '💔', noheal: '🚫💚', rage: '⚡↓', silence: '🤐', poison: '☠️', immortal: '✨', nobuff: '🚫✨', hpcut: '🔥↓' };   // hpcut: Đông Phương đánh dấu "sẽ bị trừ 50% HP"
     function refreshDbf(u) {
       let ic = u.el.querySelector('.bf-dbf');
       const s = u.dn ? Object.keys(BF_DN_ICON).filter(k => u.dn[k] > 0).map(k => BF_DN_ICON[k]).join('') : '';
@@ -3118,14 +3127,14 @@ function addAccExp(n) {
       units.forEach(u => {
         tickMods(u);
         const d = u.dn; if (!d) return;
-        ['atk', 'def', 'heal', 'rage', 'silence', 'nobuff'].forEach(k => { if (d[k] > 0 && --d[k] <= 0) endDebuff(u, k); });
+        ['atk', 'def', 'heal', 'rage', 'silence', 'nobuff', 'noheal'].forEach(k => { if (d[k] > 0 && --d[k] <= 0) endDebuff(u, k); });
         refreshDbf(u);
       });
     }
     function clearDebuffs(u) {
       clearMods(u, 'debuff');
       if (!u.dn) return;
-      ['atk', 'def', 'heal', 'rage', 'silence', 'poison', 'nobuff'].forEach(k => endDebuff(u, k));
+      ['atk', 'def', 'heal', 'rage', 'silence', 'poison', 'nobuff', 'noheal'].forEach(k => endDebuff(u, k));
       refreshDbf(u);
     }
     // ---- Tăng/giảm CHỈ SỐ theo hiệp (Ngũ Tuyệt): u.mods = [{k, d, t, kind}] — hết hạn thì trả lại đúng số đã cộng/trừ ----
@@ -3232,7 +3241,7 @@ function addAccExp(n) {
     tough: ['khang', 'khang'], block: ['do_don', 'do_don']     // Kháng / Đỡ đòn: chỉ có 1 icon cho cả tăng lẫn giảm
   };
   // Hiệu ứng bất lợi của bướm/tướng (u.dn[k] = số hiệp còn lại)
-  var SI_DN = { atk: 'giam_cong', def: 'giam_thu', heal: 'giam_hoi', silence: 'cam_lang', poison: 'trung_doc', hpcut: 'giam_hp',
+  var SI_DN = { atk: 'giam_cong', def: 'giam_thu', heal: 'giam_hoi', noheal: 'giam_hoi', silence: 'cam_lang', poison: 'trung_doc', hpcut: 'giam_hp',
                rage: 'giam_no', immortal: 'bat_tu', nobuff: 'khoa_tang_phuc' };
 
   function collect(u) {
@@ -3305,6 +3314,7 @@ cfgOnApply(applyFormationCfg);   // chạy ngay 1 lần + chạy lại mỗi khi
     function playHeroSound(id) {
       try {
         if (!audioSet.skill) return;
+        if (!HERO_SND_SRC[id] && SYNTH_ULT[id]) { SYNTH_ULT[id](); return; }   // Hằng Nga, Ma Tôn: âm tổng hợp (không cần file)
         const src = HERO_SND_SRC[id]; if (!src) return;
         const a = heroSnd[id] || (heroSnd[id] = new Audio(src));
         a.pause(); a.currentTime = 0;
@@ -3344,6 +3354,176 @@ cfgOnApply(applyFormationCfg);   // chạy ngay 1 lần + chạy lại mỗi khi
     // (Đã bỏ nhạc nền.) stopBgm giờ chỉ dừng âm mở màn.
     function stopBgm() { try { if (openSnd) { openSnd.pause(); openSnd.currentTime = 0; } } catch (e) {} }
     function stopHeroSounds() { try { Object.values(heroSnd).forEach(a => { a.pause(); a.currentTime = 0; }); } catch (e) {} }
+
+    /* ================= ÂM TUYỆT KỸ TỔNG HỢP: Hằng Nga (id 2), Ma Tôn (id 18), Triệu Mẫn (id 19) — không cần file mp3 ================= */
+    function synTone(ctx, dest, type, f, t, att, dur, peak, det) {
+      const o = ctx.createOscillator(); o.type = type; o.frequency.value = f; if (det) o.detune.value = det;
+      const g = ctx.createGain(); g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(peak, t + att); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      o.connect(g); g.connect(dest); o.start(t); o.stop(t + dur + 0.05);
+    }
+    // Hằng Nga: ánh trăng — thảm âm huyền ảo dâng lên, đàn hạc lướt ngũ cung đi lên, lấp lánh, chuông trăng ngân cuối
+    function synthHangNga() {
+      const ctx = sfxGet(); if (!ctx) return;
+      try {
+        const t = ctx.currentTime, out = ctx.createGain(); out.gain.value = 0.5; out.connect(ctx.destination);
+        const dl = ctx.createDelay(1); dl.delayTime.value = 0.23; const fb = ctx.createGain(); fb.gain.value = 0.35;
+        const dlp = ctx.createBiquadFilter(); dlp.type = 'lowpass'; dlp.frequency.value = 3500;
+        dl.connect(dlp); dlp.connect(fb); fb.connect(dl); dlp.connect(out);
+        const wet = ctx.createGain(); wet.gain.value = 0.5; wet.connect(dl);
+        const bus = ctx.createGain(); bus.connect(out); bus.connect(wet);
+        // thảm âm (Cmaj9 mơ màng)
+        [261.63, 329.63, 392, 493.88, 587.33].forEach((f, i) => {
+          synTone(ctx, bus, 'sine', f, t + i * 0.04, 0.6, 2.4, 0.09, -7);
+          synTone(ctx, bus, 'sine', f, t + i * 0.04, 0.6, 2.4, 0.09, 7);
+        });
+        // đàn hạc: lướt ngũ cung đi lên
+        [392, 440, 523.25, 587.33, 659.25, 783.99, 880, 1046.5, 1174.66, 1318.5, 1568].forEach((f, i) => {
+          const tt = t + 0.1 + i * 0.075;
+          synTone(ctx, bus, 'triangle', f, tt, 0.01, 1.0, 0.16);
+          synTone(ctx, bus, 'sine', f * 2, tt, 0.01, 0.6, 0.05);
+        });
+        // lấp lánh
+        for (let i = 0; i < 12; i++) synTone(ctx, bus, 'sine', 2200 + Math.random() * 2400, t + 0.5 + Math.random() * 1.2, 0.005, 0.35, 0.04);
+        // chuông trăng ngân cuối
+        [[1, 1, 2.2], [2.0, 0.5, 1.6], [3.01, 0.3, 1.2], [4.2, 0.15, 0.8]].forEach(([r, a, d]) => synTone(ctx, bus, 'sine', 880 * r, t + 0.95, 0.008, d, 0.12 * a));
+      } catch (e) {}
+    }
+    // Ma Tôn: Cửu U Ma Thủ — tiếng gầm trầm từ địa ngục, hợp âm nghịch (tritone), ba nhịp thình thịch rồi nổ vang
+    function synthMaTon() {
+      const ctx = sfxGet(); if (!ctx) return;
+      try {
+        const t = ctx.currentTime, out = ctx.createGain(); out.gain.value = 0.6; out.connect(ctx.destination);
+        // sub-bass rơi xuống
+        const o = ctx.createOscillator(); o.type = 'sawtooth'; o.frequency.setValueAtTime(140, t); o.frequency.exponentialRampToValueAtTime(42, t + 1.9);
+        const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 420;
+        const g = ctx.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.5, t + 0.35); g.gain.exponentialRampToValueAtTime(0.0001, t + 2.4);
+        o.connect(lp); lp.connect(g); g.connect(out); o.start(t); o.stop(t + 2.5);
+        // hợp âm nghịch rung rung
+        [[146.83, 0], [207.65, 0], [155.56, 12]].forEach(([f, d]) => {
+          const oo = ctx.createOscillator(); oo.type = 'sawtooth'; oo.frequency.value = f; oo.detune.value = d;
+          const lfo = ctx.createOscillator(); lfo.frequency.value = 5.5; const lg = ctx.createGain(); lg.gain.value = 9; lfo.connect(lg); lg.connect(oo.detune);
+          const f2 = ctx.createBiquadFilter(); f2.type = 'lowpass'; f2.frequency.value = 700;
+          const gg = ctx.createGain(); gg.gain.setValueAtTime(0.0001, t); gg.gain.exponentialRampToValueAtTime(0.11, t + 0.9); gg.gain.exponentialRampToValueAtTime(0.0001, t + 2.2);
+          oo.connect(f2); f2.connect(gg); gg.connect(out); oo.start(t); lfo.start(t); oo.stop(t + 2.3); lfo.stop(t + 2.3);
+        });
+        // gió rít / thì thầm quỷ
+        const nz = sfxNoise(ctx, 2.4), bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.Q.value = 2.5;
+        bp.frequency.setValueAtTime(2200, t); bp.frequency.exponentialRampToValueAtTime(350, t + 2.0);
+        const ng = ctx.createGain(); ng.gain.setValueAtTime(0.0001, t); ng.gain.exponentialRampToValueAtTime(0.3, t + 0.8); ng.gain.exponentialRampToValueAtTime(0.0001, t + 2.3);
+        nz.connect(bp); bp.connect(ng); ng.connect(out); nz.start(t); nz.stop(t + 2.4);
+        // 3 nhịp thình thịch + 1 tiếng nổ lớn
+        [0.55, 0.95, 1.3, 1.7].forEach((dt, i) => {
+          const big = i === 3, tt = t + dt;
+          const k = ctx.createOscillator(); k.type = 'sine'; k.frequency.setValueAtTime(big ? 150 : 110, tt); k.frequency.exponentialRampToValueAtTime(34, tt + (big ? 0.6 : 0.28));
+          const kg = ctx.createGain(); kg.gain.setValueAtTime(big ? 1.0 : 0.65, tt); kg.gain.exponentialRampToValueAtTime(0.0001, tt + (big ? 0.8 : 0.35));
+          k.connect(kg); kg.connect(out); k.start(tt); k.stop(tt + 0.9);
+          const n2 = sfxNoise(ctx, 0.5), l2 = ctx.createBiquadFilter(); l2.type = 'lowpass'; l2.frequency.value = big ? 1400 : 700;
+          const g2 = ctx.createGain(); g2.gain.setValueAtTime(big ? 0.6 : 0.3, tt); g2.gain.exponentialRampToValueAtTime(0.0001, tt + (big ? 0.5 : 0.18));
+          n2.connect(l2); l2.connect(g2); g2.connect(out); n2.start(tt); n2.stop(tt + 0.55);
+        });
+      } catch (e) {}
+    }
+    // Triệu Mẫn: kiếm khí ngân vang, rồi 32 kiếm vút qua từng đợt, cuối cùng tiếng "keng" kim loại
+    function synthTrieuMan() {
+      const ctx = sfxGet(); if (!ctx) return;
+      try {
+        const t = ctx.currentTime, out = ctx.createGain(); out.gain.value = 0.55; out.connect(ctx.destination);
+        const r = ctx.createOscillator(); r.type = 'sine'; r.frequency.setValueAtTime(500, t); r.frequency.exponentialRampToValueAtTime(2200, t + 0.6);   // kiếm khí dâng lên
+        const rg = ctx.createGain(); rg.gain.setValueAtTime(0.0001, t); rg.gain.exponentialRampToValueAtTime(0.1, t + 0.4); rg.gain.exponentialRampToValueAtTime(0.0001, t + 0.7);
+        r.connect(rg); rg.connect(out); r.start(t); r.stop(t + 0.75);
+        for (let k = 0; k < 8; k++) {   // 8 đợt kiếm vút qua
+          const tt = t + 0.62 + k * 0.1, nz = sfxNoise(ctx, 0.6), bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.Q.value = 4;
+          bp.frequency.setValueAtTime(900, tt); bp.frequency.exponentialRampToValueAtTime(3200, tt + 0.35);
+          const ng = ctx.createGain(); ng.gain.setValueAtTime(0.0001, tt); ng.gain.exponentialRampToValueAtTime(0.22, tt + 0.06); ng.gain.exponentialRampToValueAtTime(0.0001, tt + 0.45);
+          nz.connect(bp); bp.connect(ng); ng.connect(out); nz.start(tt); nz.stop(tt + 0.55);
+        }
+        [1.35, 1.5, 1.7].forEach((dt, i) => [1, 2.76, 5.4].forEach((m, j) => synTone(ctx, out, 'sine', 1100 * m, t + dt, 0.004, 0.5 - i * 0.1, 0.12 / (j + 1))));   // keng keng
+      } catch (e) {}
+    }
+    const SYNTH_ULT = { 2: synthHangNga, 18: synthMaTon, 19: synthTrieuMan };
+
+    /* ================= NHẠC NỀN CHILL (lo-fi, tạo bằng tổng hợp âm — không cần file) =================
+       Hợp âm Fmaj7 → Em7 → Dm7 → Cmaj7, 72 BPM: piano điện mềm + bass + trống nhẹ + vài nốt giai điệu ngũ cung có vang.
+       Bật/tắt ở Cài đặt (audioSet.music). Trình duyệt chỉ cho phát sau lần chạm đầu tiên nên nhạc tự vào ở lần chạm đầu. */
+    let bgm = null;
+    const BGM_CHORDS = [[53, 57, 60, 64], [52, 55, 59, 62], [50, 53, 57, 60], [48, 52, 55, 59]];
+    const BGM_BASS = [41, 40, 38, 36];
+    const BGM_MEL = [72, 74, 76, 79, 81, 79, 76];
+    const mFreq = m => 440 * Math.pow(2, (m - 69) / 12);
+    function bgmInit() {
+      if (bgm) return bgm;
+      const C = window.AudioContext || window.webkitAudioContext; if (!C) return null;
+      const ctx = new C(), master = ctx.createGain(); master.gain.value = 0;
+      const tone = ctx.createBiquadFilter(); tone.type = 'lowpass'; tone.frequency.value = 2600;   // lo-fi: cắt bớt âm cao
+      const dl = ctx.createDelay(1); dl.delayTime.value = 0.42; const fb = ctx.createGain(); fb.gain.value = 0.38;
+      const dlp = ctx.createBiquadFilter(); dlp.type = 'lowpass'; dlp.frequency.value = 2200;
+      dl.connect(dlp); dlp.connect(fb); fb.connect(dl);
+      const send = ctx.createGain(); send.gain.value = 0.45; send.connect(dl); dlp.connect(tone);
+      const comp = ctx.createDynamicsCompressor(); comp.threshold.value = -18; comp.knee.value = 24; comp.ratio.value = 6; comp.attack.value = 0.01; comp.release.value = 0.25;   // chống méo/rè khi nhiều nốt chồng nhau
+      tone.connect(comp); comp.connect(master); master.connect(ctx.destination);
+      const nb = ctx.createBuffer(1, ctx.sampleRate, ctx.sampleRate), nd = nb.getChannelData(0);   // 1 bộ đệm nhiễu dùng chung cho hi-hat/snare
+      for (let i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
+      bgm = { ctx, master, tone, send, nbuf: nb, step: 0, next: 0, timer: null, on: false };
+      return bgm;
+    }
+    function bgmNote(b, type, f, t, att, dur, peak, wet) {
+      const o = b.ctx.createOscillator(); o.type = type; o.frequency.value = f;
+      const g = b.ctx.createGain(); g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(peak, t + att); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      o.connect(g); g.connect(b.tone); if (wet) g.connect(b.send); o.start(t); o.stop(t + dur + 0.05);
+    }
+    function bgmNoise(b, t, dur, hp, peak) {
+      const s = b.ctx.createBufferSource(); s.buffer = b.nbuf; const f = b.ctx.createBiquadFilter(); f.type = 'highpass'; f.frequency.value = hp;
+      const g = b.ctx.createGain(); g.gain.setValueAtTime(peak, t); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      s.connect(f); f.connect(g); g.connect(b.tone); s.start(t, Math.random() * 0.5, dur + 0.02);
+    }
+    function bgmStep(b, t) {          // 1 bước = nốt móc đơn (1/8); 8 bước = 1 ô nhịp
+      const bar = Math.floor(b.step / 8) % 4, s = b.step % 8, spb = 60 / 72 / 2;
+      if (s === 0) BGM_CHORDS[bar].forEach((m, i) => {      // piano điện: 2 dao động lệch nhẹ, rải nhẹ từng nốt
+        bgmNote(b, 'triangle', mFreq(m), t + i * 0.025, 0.02, spb * 7, 0.05, true);
+        bgmNote(b, 'sine', mFreq(m + 12), t + i * 0.025, 0.02, spb * 5, 0.018, true);
+      });
+      if (s === 0 || s === 5) bgmNote(b, 'triangle', mFreq(BGM_BASS[bar] + 12), t, 0.02, spb * 3.2, 0.16, false);   // bass
+      if (s === 0 || s === 4) { const k = b.ctx.createOscillator(); k.type = 'sine'; k.frequency.setValueAtTime(120, t); k.frequency.exponentialRampToValueAtTime(42, t + 0.18);
+        const kg = b.ctx.createGain(); kg.gain.setValueAtTime(0.32, t); kg.gain.exponentialRampToValueAtTime(0.0001, t + 0.28); k.connect(kg); kg.connect(b.tone); k.start(t); k.stop(t + 0.3); }   // kick
+      if (s === 2 || s === 6) bgmNoise(b, t, 0.12, 1800, 0.035);   // snare nhẹ
+      if (s % 2 === 1) bgmNoise(b, t, 0.04, 6000, 0.012);         // hi-hat
+      if (s % 2 === 0 && Math.random() < 0.3) bgmNote(b, 'sine', mFreq(BGM_MEL[Math.floor(Math.random() * BGM_MEL.length)]), t, 0.015, spb * 3, 0.07, true);   // giai điệu thưa
+      b.step++;
+    }
+    function bgmTick() {
+      const b = bgm; if (!b || !b.on) return;
+      const spb = 60 / 72 / 2; if (b.next < b.ctx.currentTime) b.next = b.ctx.currentTime + 0.05;
+      while (b.next < b.ctx.currentTime + 0.4) { bgmStep(b, b.next); b.next += spb * (b.step % 2 ? 1.06 : 0.94); }   // swing nhẹ kiểu lo-fi
+    }
+    function bgmStart() {
+      try {
+        if (!audioSet.music || document.hidden) return;
+        const b = bgmInit(); if (!b) return;
+        if (b.ctx.state === 'suspended') b.ctx.resume();
+        if (b.on) return;
+        b.on = true; b.next = b.ctx.currentTime + 0.1;
+        b.master.gain.cancelScheduledValues(b.ctx.currentTime); b.master.gain.setValueAtTime(b.master.gain.value, b.ctx.currentTime); b.master.gain.linearRampToValueAtTime(0.35, b.ctx.currentTime + 2.5);
+        bgmTick(); b.timer = setInterval(bgmTick, 120);
+      } catch (e) {}
+    }
+    function bgmStop() {
+      try {
+        if (!bgm || !bgm.on) return;
+        const b = bgm; b.on = false; clearInterval(b.timer); b.timer = null;
+        b.master.gain.cancelScheduledValues(b.ctx.currentTime); b.master.gain.setValueAtTime(b.master.gain.value, b.ctx.currentTime); b.master.gain.linearRampToValueAtTime(0, b.ctx.currentTime + 0.4);
+      } catch (e) {}
+    }
+    // Trình duyệt chặn tự phát: nhạc vào ở lần chạm / bấm phím đầu tiên
+    (function () {
+      const go = () => { if (audioSet.music) bgmStart(); };
+      ['pointerdown', 'touchstart', 'click', 'keydown'].forEach(ev => document.addEventListener(ev, go, { passive: true }));
+      document.addEventListener('visibilitychange', () => {   // ẩn tab / tắt màn hình thì tạm dừng nhạc
+        if (document.hidden) { bgmStop(); } else if (audioSet.music) { bgmStart(); }
+      });
+    })();
+
 
 ;
 /* === js/battle/ultimate.js === */
@@ -3385,6 +3565,7 @@ cfgOnApply(applyFormationCfg);   // chạy ngay 1 lần + chạy lại mỗi khi
 
     function heal(u, amt) {
       if (!u.alive) return;
+      if (u.dn && u.dn.noheal > 0) { floatText(u, '🚫 CẤM HỒI MÁU'); return; }   // Bạch Cầm: bị cấm hồi máu
       if (u.dn && u.dn.heal > 0) amt = Math.round(amt * (1 - BF_PCT));   // bướm Lục: giảm hồi máu 25%
       const before = u.hp;
       u.hp = Math.min(u.max, u.hp + amt);
@@ -4955,7 +5136,8 @@ GP.add('heros/vuong-trung-duong/vuong-trung-duong-taiji-vortex.webp', 2);
         u.el.animate([{ filter: 'drop-shadow(0 0 0 #a855f7)' }, { filter: 'drop-shadow(0 0 20px #a855f7)' }, { filter: 'drop-shadow(0 0 0 #a855f7)' }], { duration: 900 });
         // 1. Cổng triệu hồi hiện ra che đội ta (chạy 24 khung: mở → ổn định → tan biến)
         const px = Math.max(PS / 2 / W * 100, Math.min(100 - PS / 2 / W * 100, bs.cx)), py = Math.max(PS / 2 / H * 100, Math.min(100 - PS / 2 / H * 100, bs.cy - 2));
-        const gate = g.mk('bf-seq-fx', '', px, py); gate.style.width = PS + 'px'; gate.style.height = PS + 'px'; gate.style.zIndex = 105;
+        const wallX = (u.side === 'hero' ? -1 : 1) * PS * 0.05 / W * 100;   // dịch cổng sát tường phía mình (muốn sát hơn/xa hơn: đổi 0.05)
+        const gate = g.mk('bf-seq-fx', '', px + wallX, py); gate.style.width = PS + 'px'; gate.style.height = PS + 'px'; gate.style.zIndex = 105;
         const gs = seqEl(P, PS); gate.appendChild(gs);
         for (let i = 0; i < P.n; i++) at(i * (PORTAL_MS / P.n), () => gs.show(i));
         at(PORTAL_MS + 40, () => gate.remove());
@@ -4988,6 +5170,298 @@ GP.add('heros/vuong-trung-duong/vuong-trung-duong-taiji-vortex.webp', 2);
         dropDeadEffects(es0);
         await sleep(300); if (tok !== battleToken) return;
       } finally { timers.forEach(clearTimeout); u.el.style.zIndex = oldZ; made.forEach(d => d.remove()); }
+    }
+
+/* === moc-que-anh (tuyệt kỹ Mộc Quế Anh) === */
+/* MỘC QUẾ ANH (id 20, tướng hỗ trợ): tăng Né đội ta / giảm Né địch → CHẠY XUYÊN qua đội địch (SEQ.qaCast 20 khung):
+   khung 1-4 đưa thương từ DƯỚI LÊN (QA_HITS_UP lần sát thương) → khung 6-9 bổ từ TRÊN XUỐNG (QA_HITS_DOWN lần) → thu thế sau lưng địch → chạy về.
+   Mỗi lần đều trúng TOÀN địch; tổng QA_MULT × Công chia đều cho cả QA_HITS_UP + QA_HITS_DOWN lần. Phá giáp 7500 là chỉ số gốc của tướng (cộng thêm mỗi lần trúng).
+   Tham số: heros/hero-data.js → skillConfig của Mộc Quế Anh (hoặc admin → tab Chiêu thức). */
+    async function mocQueAnhUlt(u, tok) {
+      const g = nt(u), { W, H, base, made } = g, es0 = g.es(), as0 = g.as(); if (!es0.length) return;
+      const S = SEQ.qaCast, I = SEQ.qaIdle, timers = [], oldZ = u.el.style.zIndex, dir = u.side === 'hero' ? 1 : -1;
+      const at = (ms, fn) => timers.push(setTimeout(() => { if (tok === battleToken) fn(); }, seqT(ms)));
+      const nUp = Math.max(1, Math.floor(QA_HITS_UP)), nDn = Math.max(1, Math.floor(QA_HITS_DOWN));
+      const per = u.atk * QA_MULT * (u.sk || 1) / (nUp + nDn);                // tổng QA_MULT × Công chia đều
+      const be = g.box0(es0);
+      const idleH = (SEQ_IDLE[u.id] && SEQ_IDLE[u.id].h) || 120;
+      const castW = Math.round(idleH / I.ch * S.cw);
+      const cast = seqOverlay(u, S, castW);
+      const setFace = back => { cast.el.style.transform = 'translateX(-50%)' + ((seqFlip(S, u.side) !== back) ? ' scaleX(-1)' : ''); };
+      const frontX = dir > 0 ? Math.max(u.x, be.minX - 7) : Math.min(u.x, be.maxX + 7), landX = dir > 0 ? Math.min(95, be.maxX + 8) : Math.max(5, be.minX - 8);
+      const px = x => (x - u.x) * W / 100, py = (be.cy - u.y) * H / 100;
+      const front = `translate(calc(-50% + ${px(frontX)}px),calc(-50% + ${py}px))`, land = `translate(calc(-50% + ${px(landX)}px),calc(-50% + ${py}px))`;
+      const APP = 350, FR = 80, SWING = 11 * FR;                              // ms: chạy tới đầu đội địch • mỗi khung • khung 1-11 = vung thương lúc đang chạy xuyên địch
+      // khung nào thì đợt sát thương nào: hất lên ở khung 1-4, bổ xuống ở khung 6-9 (rải đều nếu đổi số lần)
+      const spread = (n, a, b) => Array.from({ length: n }, (_, k) => n === 1 ? a : a + (b - a) * k / (n - 1));
+      const hits = spread(nUp, 1, 4).map(f => ({ f, up: true })).concat(spread(nDn, 6, 9).map(f => ({ f, up: false })));
+      const damage = up => {
+        if (!up) g.shake(); const es = g.es();
+        es.forEach(e => { skillHit(e, per, u); const fl = document.createElement('div'); fl.className = 'bf-bflash'; fl.style.left = e.x + '%'; fl.style.top = e.y + '%'; fl.style.setProperty('--fc', '#ef4444'); g.box.appendChild(fl); made.push(fl); setTimeout(() => fl.remove(), 450); });
+        g.ring(be.cx, be.cy, '#ef4444'); refreshPanel();
+      };
+      try {
+        u.el.style.zIndex = 99;
+        u.el.animate([{ filter: 'drop-shadow(0 0 0 #ef4444)' }, { filter: 'drop-shadow(0 0 20px #ef4444)' }, { filter: 'drop-shadow(0 0 0 #ef4444)' }], { duration: 900 });
+        setFace(false); cast.show(0);
+        // 1. Trước khi ra đòn: đội ta +Né, địch -Né
+        at(150, () => {
+          as0.forEach(a => {
+            if (noBuff(a)) { floatText(a, '🚫 KHÓA TĂNG PHÚC'); return; }
+            pctMod(a, 'dodge', QA_DODGE_UP, QA_TURNS, 'buff', 'qa:dg'); floatText(a, '💨 NÉ +' + Math.round(QA_DODGE_UP * 100) + '%');
+          });
+          es0.forEach(e => { pctMod(e, 'dodge', -QA_DODGE_DOWN, QA_TURNS, 'debuff', 'qa:dgd'); sayLater(e, '💨 NÉ -' + Math.round(QA_DODGE_DOWN * 100) + '%', 250); });
+          refreshPanel();
+        });
+        // 2. Chạy tới đầu đội địch rồi xuyên qua suốt lúc vung thương
+        const total = APP + SWING;
+        u.el.animate([{ transform: base }, { transform: front, offset: APP / total }, { transform: land }], { duration: seqT(total) || 1, easing: 'linear', fill: 'forwards' });
+        for (let f = 1; f <= 11; f++) at(APP + (f - 1) * FR, () => cast.show(f));
+        hits.forEach(h => at(APP + (h.f - 1) * FR + 40, () => damage(h.up)));
+        for (let i = 0; i < 8; i++) at(total + i * 70, () => cast.show(12 + i));   // 3. Thu thế sau lưng địch (khung 12-19)
+        await sleep(total + 8 * 70 + 120); if (tok !== battleToken) return;
+        dropDeadEffects(es0);
+        // 4. Chạy về chỗ cũ (quay đầu)
+        u.el.getAnimations().forEach(a => a.cancel());
+        u.el.animate([{ transform: land }, { transform: base }], { duration: seqT(420) || 1, easing: 'ease-in-out', fill: 'forwards' });
+        setFace(true); cast.show(0);
+        await sleep(460); if (tok !== battleToken) return;
+      } finally { timers.forEach(clearTimeout); cast.end(); made.forEach(d => d.remove()); u.el.getAnimations().forEach(a => a.cancel()); u.el.style.zIndex = oldZ; }
+    }
+
+/* === than-ho-rung (tuyệt kỹ Thần Hộ Rừng) === */
+/* THẦN HỘ RỪNG (id 21, tướng công kích): TRƯỚC khi bắn, bản thân +HR_CRIT_UP Bạo, +HR_CDMG_UP Bạo Sát, +HR_ACC_UP Chuẩn (HR_TURNS hiệp)
+   → giương cung bắn lên trời → MƯA TÊN: HR_ARROWS mũi tên lớn (ảnh than-ho-rung-arrow.webp) từ trên trời phía ta ập xuống bên địch, bay rất nhanh, chia thành HR_HITS đợt.
+   Mỗi đợt tên rơi xuống thì gây 1 lần sát thương lên HR_TARGETS tướng địch (chọn ngẫu nhiên lúc bắn, đủ HR_HITS lần); tổng HR_MULT × Công chia đều cho HR_HITS lần.
+   Mỗi đợt kéo cung lại khung 4→7 rồi nhả; sau đợt cuối thu thế khung 8-19. Tham số: heros/hero-data.js → skillConfig (HR_*), hoặc admin → tab Chiêu thức. */
+    const HR_ARROW_IMG = 'heros/than-ho-rung/than-ho-rung-arrow.webp?v=1';
+    async function thanHoRungUlt(u, tok) {
+      const g = nt(u), { W, H, made } = g, es0 = g.es(); if (!es0.length) return;
+      const S = SEQ.hrCast, I = SEQ.hrIdle, timers = [], oldZ = u.el.style.zIndex, dir = u.side === 'hero' ? 1 : -1;
+      const at = (ms, fn) => timers.push(setTimeout(() => { if (tok === battleToken) fn(); }, seqT(ms)));
+      const nArr = Math.max(1, Math.floor(HR_ARROWS)), nHit = Math.max(1, Math.floor(HR_HITS)), nTgt = Math.max(1, Math.floor(HR_TARGETS));
+      const per = u.atk * HR_MULT * (u.sk || 1) / nHit;                          // tổng HR_MULT × Công chia đều cho các lần
+      const idleH = (SEQ_IDLE[u.id] && SEQ_IDLE[u.id].h) || 124;
+      const cast = seqOverlay(u, S, Math.round(idleH / I.ch * S.cw));
+      const AW = Math.round(Math.max(120, Math.min(W * 0.24, 210))), AH = Math.round(AW * 71 / 480);   // mũi tên to (muốn to/nhỏ hơn: đổi 0.24 / 210)
+      const DRAW = 100, WAVE = 380, FLY = 380, SINK = 130, STAG = 24, REC = 70;              // ms: mỗi khung kéo cung • giữa 2 đợt • tên bay (nhanh) • chui xuống đất • lệch giữa các mũi cùng đợt • mỗi khung thu thế
+      const REL = 7 * DRAW;                                                       // nhả đợt 1 ở khung 7
+      const plan = []; for (let f = 0; f <= 7; f++) plan.push([f * DRAW, f]);
+      for (let w = 1; w < nHit; w++) [4, 5, 6, 7].forEach((f, j) => plan.push([REL + (w - 1) * WAVE + (j + 1) * WAVE / 4, f]));   // kéo cung lại giữa các đợt
+      let t = REL + (nHit - 1) * WAVE + FLY + SINK + 150; for (let f = 8; f < S.n; f++) { plan.push([t, f]); t += REC; }
+      const END = t;
+      // chọn trước tối đa nTgt tướng địch ngẫu nhiên (không trùng) làm nơi mưa tên đổ xuống
+      const pool = es0.slice(); for (let i = pool.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [pool[i], pool[j]] = [pool[j], pool[i]]; }
+      const tgts = pool.slice(0, nTgt);
+      try {
+        u.el.style.zIndex = 99;
+        u.el.animate([{ filter: 'drop-shadow(0 0 0 #22c55e)' }, { filter: 'drop-shadow(0 0 20px #22c55e)' }, { filter: 'drop-shadow(0 0 0 #22c55e)' }], { duration: 900 });
+        cast.show(0);
+        // 1. TRƯỚC khi bắn: bản thân +Bạo, +Bạo Sát, +Chuẩn
+        at(150, () => {
+          if (noBuff(u)) { floatText(u, '🚫 KHÓA TĂNG PHÚC'); return; }
+          pctMod(u, 'crit', HR_CRIT_UP, HR_TURNS, 'buff', 'hr:crit'); floatText(u, '💥 BẠO +' + Math.round(HR_CRIT_UP * 100) + '%');
+          pctMod(u, 'critDmg', HR_CDMG_UP, HR_TURNS, 'buff', 'hr:cdmg'); sayLater(u, '🔥 BẠO SÁT +' + Math.round(HR_CDMG_UP * 100) + '%', 300);
+          pctMod(u, 'acc', HR_ACC_UP, HR_TURNS, 'buff', 'hr:acc'); sayLater(u, '🎯 CHUẨN +' + Math.round(HR_ACC_UP * 100) + '%', 600);
+          refreshPanel();
+        });
+        // 2. Khung hình: kéo cung → nhả (mỗi đợt) → thu thế
+        plan.forEach(p => at(p[0], () => cast.show(p[1])));
+        // 3. Các mũi tên: đợt w gồm các mũi k có floor(k·nHit/nArr) = w; bay từ trời phía ta xuống chỗ các tướng địch bị chọn
+        const startX = () => { const x = u.x * W / 100 + dir * Math.random() * W * 0.22; return Math.max(0.04 * W, Math.min(0.96 * W, x)); };
+        const waves = Array.from({ length: nHit }, () => []);
+        for (let k = 0; k < nArr; k++) waves[Math.min(nHit - 1, Math.floor(k * nHit / nArr))].push(k);
+        waves.forEach((ks, w) => {
+          const t0 = REL + w * WAVE;
+          ks.forEach((k, i) => at(t0 + i * STAG, () => {
+            const live = tgts.filter(e => e.alive), src = live.length ? live : g.es(); if (!src.length) return;
+            const tg = src[i % src.length];
+            const sx = startX(), sy = -AH * 1.5;                                           // xuất phát phía trên mép màn hình, bên đội ta
+            const tx = tg.x * W / 100 + (Math.random() - .5) * 70, ty = tg.y * H / 100 - 10 + (Math.random() - .5) * 60;
+            const vx = tx - sx, vy = ty - sy, len = Math.hypot(vx, vy) || 1, ang = Math.atan2(vy, vx) * 180 / Math.PI;
+            const reach = Math.max(0, len - (AW / 2 - 8)), ex = vx / len * reach, ey = vy / len * reach;   // mũi tên cắm vào chỗ rơi
+            // Mặt đất = đường ngang qua chỗ rơi: lớp bọc cắt mọi thứ phía dưới đường này → tên bay xuyên xuống đất là biến mất dần, tới khi chìm hẳn thì xóa
+            const wrap = g.mk('bf-seq-fx', '', 0, 0); wrap.style.transform = 'none'; wrap.style.width = W + 'px'; wrap.style.height = Math.max(40, ty) + 'px'; wrap.style.overflow = 'hidden'; wrap.style.zIndex = 106;
+            const d = document.createElement('div'); d.style.cssText = 'position:absolute;left:' + sx + 'px;top:' + sy + 'px;width:' + AW + 'px;height:' + AH + 'px;filter:drop-shadow(0 0 7px #4ade80);background:url(' + HR_ARROW_IMG + ') center / 100% 100% no-repeat'; wrap.appendChild(d);
+            const sink = AW * 1.15 + AH, fx = ex + vx / len * sink, fy = ey + vy / len * sink;   // đoạn chui tiếp xuống đất sau khi chạm
+            const R = a => `translate(-50%,-50%) translate(${a[0]}px,${a[1]}px) rotate(${ang}deg)`;
+            d.animate([{ transform: R([0, 0]), easing: 'cubic-bezier(.35,0,.9,.7)' }, { transform: R([ex, ey]), offset: FLY / (FLY + SINK), easing: 'linear' }, { transform: R([fx, fy]) }],
+                      { duration: seqT(FLY + SINK) || 1, fill: 'forwards' });
+            at(t0 + i * STAG + FLY + SINK + 60, () => wrap.remove());
+          }));
+          // 4. Sát thương: khi đợt tên rơi xuống → 1 lần sát thương lên từng tướng địch bị chọn (còn sống)
+          at(t0 + FLY + Math.min(ks.length - 1, 8) * STAG / 2, () => {
+            const hitL = tgts.filter(e => e.alive); if (!hitL.length) return;
+            g.shake();
+            hitL.forEach(e => {
+              skillHit(e, per, u);
+              const fl = document.createElement('div'); fl.className = 'bf-bflash'; fl.style.left = e.x + '%'; fl.style.top = e.y + '%'; fl.style.setProperty('--fc', '#22c55e'); g.box.appendChild(fl); made.push(fl); setTimeout(() => fl.remove(), 450);
+              g.ring(e.x, e.y, '#22c55e');
+            });
+            refreshPanel();
+          });
+        });
+        await sleep(seqT(END) + 150); if (tok !== battleToken) return;
+        dropDeadEffects(es0);
+        await sleep(seqT(250) + 50); if (tok !== battleToken) return;
+      } finally { timers.forEach(clearTimeout); cast.end(); made.forEach(d => d.remove()); u.el.style.zIndex = oldZ; }
+    }
+
+/* === bach-cam (tuyệt kỹ Bạch Cầm) === */
+/* BẠCH CẦM (id 22, tướng kỹ năng – lượt nào cũng ulti): TRƯỚC khi ra đòn, bản thân +BQ_CRIT_UP Bạo (BQ_TURNS hiệp) → kéo đàn (SEQ.bqCast khung 0-3) → PHÂN THÂN thành BQ_CLONES người
+   (khung 4-8 vừa chạy vừa nhảy lên) chạy sang đứng cạnh BQ_CLONES địch ngẫu nhiên (không trùng) → đập cây đàn vào đầu (khung 9-14, nổ đỏ ở khung 10-13) → thu thế (khung 15-19) → phân thân tan, bản thể hiện lại.
+   Mỗi địch bị đánh BQ_HITS lần (ở các khung đập 10…14); tổng BQ_MULT × Công chia đều cho BQ_HITS lần. SAU khi đánh xong: các địch bị đánh bị choáng BQ_STUN hiệp + CẤM HỒI MÁU BQ_TURNS hiệp (u.dn.noheal).
+   Tham số: heros/hero-data.js → skillConfig của Bạch Cầm (BQ_*), hoặc admin → tab Chiêu thức. */
+    async function bachCamUlt(u, tok) {
+      const g = nt(u), { W, H, made } = g, es0 = g.es(); if (!es0.length) return;
+      const S = SEQ.bqCast, I = SEQ.bqIdle, timers = [], oldZ = u.el.style.zIndex, dir = u.side === 'hero' ? 1 : -1;
+      const at = (ms, fn) => timers.push(setTimeout(() => { if (tok === battleToken) fn(); }, seqT(ms)));
+      const nCl = Math.max(1, Math.floor(BQ_CLONES)), nHit = Math.max(1, Math.floor(BQ_HITS));
+      const per = u.atk * BQ_MULT * (u.sk || 1) / nHit;                           // tổng BQ_MULT × Công chia đều cho các lần
+      const idleH = (SEQ_IDLE[u.id] && SEQ_IDLE[u.id].h) || 124, castW = Math.round(idleH / I.ch * S.cw), castH = Math.round(castW * S.ch / S.cw);
+      const cast = seqOverlay(u, S, castW);
+      const flip = seqFlip(S, u.side) ? ' scaleX(-1)' : '';
+      const SPLIT = 360, RUN = 520, ARR = SPLIT + RUN, STEP = 80;                 // ms: kéo đàn xong thì phân thân • thời gian chạy sang • tới nơi → bắt đầu đập (khung 9)
+      const hitF = Array.from({ length: nHit }, (_, k) => nHit === 1 ? 10 : Math.round(10 + 4 * k / (nHit - 1)));   // khung đập: 10…14
+      const pool = es0.slice(); for (let i = pool.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [pool[i], pool[j]] = [pool[j], pool[i]]; }
+      const tgts = pool.slice(0, nCl), clones = [];
+      try {
+        u.el.style.zIndex = 99;
+        u.el.animate([{ filter: 'drop-shadow(0 0 0 #93c5fd)' }, { filter: 'drop-shadow(0 0 20px #93c5fd)' }, { filter: 'drop-shadow(0 0 0 #93c5fd)' }], { duration: 900 });
+        cast.show(0);
+        // 1. TRƯỚC khi ra đòn: bản thân +Bạo
+        at(150, () => {
+          if (noBuff(u)) { floatText(u, '🚫 KHÓA TĂNG PHÚC'); return; }
+          pctMod(u, 'crit', BQ_CRIT_UP, BQ_TURNS, 'buff', 'bq:crit'); floatText(u, '💥 BẠO +' + Math.round(BQ_CRIT_UP * 100) + '%'); refreshPanel();
+        });
+        // 2. Kéo đàn (khung 0-3) rồi PHÂN THÂN: bản thể ẩn đi, mỗi phân thân chạy sang 1 địch
+        for (let f = 0; f <= 3; f++) at(f * 90, () => cast.show(f));
+        tgts.forEach((tg, c) => {
+          at(SPLIT, () => {
+            const wrap = g.mk('bf-seq-fx', '', u.x, u.y); wrap.style.width = castW + 'px'; wrap.style.height = castH + 'px'; wrap.style.zIndex = 107;
+            const el = seqEl(S, castW); wrap.appendChild(el); el.show(4); clones.push(wrap);
+            const dx = tg.x * W / 100 - dir * castW * 0.32 - u.x * W / 100, dy = tg.y * H / 100 - u.y * H / 100 + 2 + (c % 2 ? 6 : -6);   // đứng cạnh địch phía đội ta
+            wrap.animate([{ transform: `translate(-50%,-50%) translate(0px,0px)${flip}` }, { transform: `translate(-50%,-50%) translate(${dx}px,${dy}px)${flip}` }], { duration: seqT(RUN) || 1, easing: 'ease-in-out', fill: 'forwards' });
+            wrap._el = el;
+            const puff = g.mk('bf-wave', '', u.x, u.y); puff.style.borderColor = '#bfdbfe'; setTimeout(() => puff.remove(), 650);
+          });
+        });
+        at(SPLIT, () => { cast.el.style.visibility = 'hidden'; });                // bản thể ẩn trong lúc phân thân đi đánh
+        // 3. Khung hình của phân thân: 4-8 lúc chạy → 9 vung đàn → 10-14 đập (nổ đỏ) → 15-19 thu thế
+        for (let k = 0; k < 5; k++) at(SPLIT + 10 + k * (RUN / 5), () => clones.forEach(w => w._el.show(4 + k)));
+        for (let f = 9; f < S.n; f++) at(ARR + (f - 9) * STEP, () => clones.forEach(w => w._el.show(f)));
+        // 4. Sát thương: mỗi khung đập → 1 lần sát thương lên từng địch bị chọn (còn sống)
+        hitF.forEach(f => at(ARR + (f - 9) * STEP + 20, () => {
+          const hitL = tgts.filter(e => e.alive); if (!hitL.length) return;
+          g.shake();
+          hitL.forEach(e => {
+            skillHit(e, per, u);
+            const fl = document.createElement('div'); fl.className = 'bf-bflash'; fl.style.left = e.x + '%'; fl.style.top = e.y + '%'; fl.style.setProperty('--fc', '#ef4444'); g.box.appendChild(fl); made.push(fl); setTimeout(() => fl.remove(), 450);
+            g.ring(e.x, e.y, '#ef4444');
+          });
+          refreshPanel();
+        }));
+        // 5. NGAY SAU lần đập cuối: choáng + cấm hồi máu các địch bị đánh
+        at(ARR + (hitF[hitF.length - 1] - 9) * STEP + 90, () => {
+          tgts.filter(e => e.alive).forEach(e => {
+            stunEnemy(e, Math.max(BQ_STUN, e.stun || 0)); floatText(e, '💫 CHOÁNG ' + BQ_STUN + ' HIỆP');
+            (e.dn || (e.dn = {})).noheal = BQ_TURNS; refreshDbf(e); sayLater(e, '🚫 CẤM HỒI MÁU ' + BQ_TURNS + ' HIỆP', 350);
+          });
+          refreshPanel();
+        });
+        // 6. Phân thân tan, bản thể hiện lại
+        const tEnd = ARR + (S.n - 9) * STEP;
+        at(tEnd + 60, () => clones.forEach(w => w.animate([{ opacity: 1 }, { opacity: 0 }], { duration: seqT(240) || 1, fill: 'forwards' })));
+        await sleep(seqT(tEnd + 360)); if (tok !== battleToken) return;
+        dropDeadEffects(es0);
+        await sleep(seqT(250) + 50); if (tok !== battleToken) return;
+      } finally { timers.forEach(clearTimeout); cast.end(); made.forEach(d => d.remove()); u.el.style.zIndex = oldZ; }
+    }
+
+/* === trieu-man (tuyệt kỹ Triệu Mẫn) === */
+/* TRIỆU MẪN (id 19, tướng công kích): tung kiếm khí (SEQ.tmCast khung 0-6) → LAO QUA đội địch (khung 7-14) kéo theo TM_SWORDS thanh kiếm
+   từ phía sau đội ta ào ạt bay thành TM_ROWS hàng ngang sang đội địch → đứng sau lưng địch thu thế (khung 15-24) → chạy về chỗ cũ.
+   Sát thương: TM_HITS lần lên TOÀN địch (tổng TM_MULT × Công). TRƯỚC khi kiếm giáng: địch -TM_BLOCK_DOWN Đỡ đòn, đội ta +TM_BLOCK_UP Đỡ đòn (TM_TURNS hiệp).
+   Tham số: heros/hero-data.js → skillConfig của Triệu Mẫn (hoặc admin → tab Chiêu thức). */
+    const TM_SWORD_IMG = 'heros/trieu-man/trieu-man-sword.webp?v=1';
+GP.add(TM_SWORD_IMG, 2);
+    async function trieuManUlt(u, tok) {
+      const g = nt(u), { W, H, base, made } = g, es0 = g.es(), as0 = g.as(); if (!es0.length) return;
+      const S = SEQ.tmCast, I = SEQ.tmIdle, timers = [], oldZ = u.el.style.zIndex, dir = u.side === 'hero' ? 1 : -1;
+      const at = (ms, fn) => timers.push(setTimeout(() => { if (tok === battleToken) fn(); }, seqT(ms)));
+      const nSw = Math.max(1, Math.floor(TM_SWORDS)), nRow = Math.max(1, Math.floor(TM_ROWS)), nHit = Math.max(1, Math.floor(TM_HITS));
+      const per = u.atk * TM_MULT * (u.sk || 1) / nHit;                       // tổng TM_MULT × Công chia đều cho các lần
+      const bs = g.box0(as0.length ? as0 : [u]), be = g.box0(es0);
+      const idleH = (SEQ_IDLE[u.id] && SEQ_IDLE[u.id].h) || 120;
+      const castW = Math.round(idleH / I.ch * S.cw);                          // cùng tỉ lệ người với dáng đứng
+      const cast = seqOverlay(u, S, castW);
+      const setFace = back => { cast.el.style.transform = 'translateX(-50%)' + ((seqFlip(S, u.side) !== back) ? ' scaleX(-1)' : ''); };   // back = đang chạy ngược về
+      const landX = dir > 0 ? Math.min(95, be.maxX + 8) : Math.max(5, be.minX - 8), landY = be.cy;
+      const dx = (landX - u.x) * W / 100, dy = (landY - u.y) * H / 100;
+      const land = `translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px))`;
+      const WIND = 600, DASH = 520, FLY = 900, STAG = 48;                     // ms: lấy đà • lao qua địch • kiếm bay • cách nhau mỗi cột kiếm
+      const SW = Math.round(Math.max(120, Math.min(200, W * 0.36))), SH = Math.round(SW * 490 / 560);   // độ lớn kiếm: muốn to/nhỏ hơn đổi 0.36 (≈ 36% bề rộng sân)
+      const startX = dir > 0 ? Math.max(-6, bs.minX - 14) : Math.min(106, bs.maxX + 14);   // phía SAU đội ta
+      const endX = dir > 0 ? Math.min(104, landX + 6) : Math.max(-4, landX - 6);
+      const ySpan = [Math.max(14, be.minY - 4), Math.min(88, be.maxY + 4)];
+      const rowY = r => nRow === 1 ? be.cy : ySpan[0] + (ySpan[1] - ySpan[0]) * r / (nRow - 1);
+      const hitSw = new Set(Array.from({ length: nHit }, (_, k) => Math.round((k + 1) * nSw / nHit) - 1));   // kiếm thứ i chạm địch thì xảy ra đợt sát thương
+      const damage = () => {
+        g.shake(); const es = g.es();
+        es.forEach(e => { skillHit(e, per, u); const fl = document.createElement('div'); fl.className = 'bf-bflash'; fl.style.left = e.x + '%'; fl.style.top = e.y + '%'; fl.style.setProperty('--fc', '#c084fc'); g.box.appendChild(fl); made.push(fl); setTimeout(() => fl.remove(), 450); });
+        g.ring(be.cx, be.cy, '#c084fc'); refreshPanel();
+      };
+      try {
+        u.el.style.zIndex = 99;
+        u.el.animate([{ filter: 'drop-shadow(0 0 0 #c084fc)' }, { filter: 'drop-shadow(0 0 20px #c084fc)' }, { filter: 'drop-shadow(0 0 0 #c084fc)' }], { duration: 900 });
+        setFace(false);
+        // 1. Lấy đà tại chỗ (khung 0-6)
+        for (let i = 0; i < 7; i++) at(i * (WIND / 7), () => cast.show(i));
+        // 2. Trước khi kiếm giáng: địch -Đỡ đòn, đội ta +Đỡ đòn
+        at(300, () => {
+          as0.forEach(a => {
+            if (noBuff(a)) { floatText(a, '🚫 KHÓA TĂNG PHÚC'); return; }
+            pctMod(a, 'block', TM_BLOCK_UP, TM_TURNS, 'buff', 'tm:blk'); floatText(a, '🛡️ ĐỠ ĐÒN +' + Math.round(TM_BLOCK_UP * 100) + '%');
+          });
+          es0.forEach(e => { pctMod(e, 'block', -TM_BLOCK_DOWN, TM_TURNS, 'debuff', 'tm:blkd'); sayLater(e, '🛡️ ĐỠ ĐÒN -' + Math.round(TM_BLOCK_DOWN * 100) + '%', 250); });
+          refreshPanel();
+        });
+        // 3. Lao qua đội địch (khung 7-14)
+        at(WIND, () => {
+          u.el.animate([{ transform: base }, { transform: land }], { duration: seqT(DASH) || 1, easing: 'cubic-bezier(.45,0,.85,.55)', fill: 'forwards' });
+          for (let i = 0; i < 8; i++) at(i * (DASH / 8), () => cast.show(7 + i));
+        });
+        at(WIND + DASH, () => { for (let i = 0; i < 10; i++) at(i * 70, () => cast.show(15 + i)); });   // 4. Đứng sau lưng địch thu thế (khung 15-24)
+        // 5. 32 kiếm từ SAU đội ta bay thành các HÀNG NGANG sang đội địch, từng cột 'nRow' thanh một, ào ạt
+        for (let i = 0; i < nSw; i++) {
+          const col = Math.floor(i / nRow), row = i % nRow, t0 = WIND + 40 + col * STAG + row * 10;
+          at(t0, () => {
+            const y = rowY(row) + (Math.random() - 0.5) * 2.4;
+            const d = g.mk('bf-seq-fx', '', startX, y); d.style.width = SW + 'px'; d.style.height = SH + 'px'; d.style.zIndex = 104;
+            const im = document.createElement('img'); im.src = TM_SWORD_IMG; im.alt = ''; im.draggable = false;
+            im.style.cssText = 'width:100%;height:100%;display:block;pointer-events:none;filter:drop-shadow(0 0 8px #c084fc)' + (dir < 0 ? ';transform:scaleX(-1)' : '');
+            d.appendChild(im);
+            const mv = (endX - startX) * W / 100;
+            d.animate([{ transform: 'translate(-50%,-50%)', opacity: 0 }, { opacity: 1, offset: .1 },
+                       { transform: `translate(calc(-50% + ${mv * 0.82}px),-50%)`, opacity: 1, offset: .82 },
+                       { transform: `translate(calc(-50% + ${mv}px),-50%)`, opacity: 0 }], { duration: seqT(FLY) || 1, easing: 'cubic-bezier(.35,0,.7,1)', fill: 'forwards' });
+            setTimeout(() => d.remove(), seqT(FLY) + 80);
+            at(FLY * 0.78, () => {        // kiếm chạm hàng địch: chớp sáng nhỏ (+ đợt sát thương nếu là kiếm được chọn)
+              const fl = document.createElement('div'); fl.className = 'bf-bflash'; fl.style.left = (be.cx + (Math.random() - 0.5) * (be.maxX - be.minX + 8)) + '%'; fl.style.top = y + '%'; fl.style.setProperty('--fc', '#e9d5ff');
+              g.box.appendChild(fl); made.push(fl); setTimeout(() => fl.remove(), 400);
+              if (hitSw.has(i)) damage();
+            });
+          });
+        }
+        const lastEnd = WIND + 40 + (Math.ceil(nSw / nRow) - 1) * STAG + nRow * 10 + FLY;
+        await sleep(lastEnd + 150); if (tok !== battleToken) return;
+        dropDeadEffects(es0);
+        // 6. Chạy về chỗ cũ (quay đầu)
+        u.el.getAnimations().forEach(a => a.cancel());
+        u.el.animate([{ transform: land }, { transform: base }], { duration: seqT(420) || 1, easing: 'ease-in-out', fill: 'forwards' });
+        setFace(true); [16, 17, 16, 17].forEach((fr, i) => at(i * 105, () => cast.show(fr)));
+        await sleep(460); if (tok !== battleToken) return;
+      } finally { timers.forEach(clearTimeout); cast.end(); made.forEach(d => d.remove()); u.el.getAnimations().forEach(a => a.cancel()); u.el.style.zIndex = oldZ; }
     }
 ;
 
@@ -5676,13 +6150,16 @@ cfgOnApply(() => {
       pvpBegin(o, { tower: tower || 0 });
     }
     // Vào trận với 1 đối thủ cho sẵn (Tỷ Võ, Danh Tướng Lầu, Luận Kiếm...). extra: { tower } hoặc { luan: số trận }
+    // Tỷ Võ: kéo vị trí tướng về gần tâm đội hình (cx = tâm ngang phe ta, cy = 69.5) cho nhỏ gọn; PVP_COMPACT = 1 là như cũ, nhỏ hơn = sát hơn
+    const PVP_COMPACT = 0.78;
+    const pvpCompact = (x, y, cx) => [cx + (x - cx) * PVP_COMPACT, 69.5 + (y - 69.5) * PVP_COMPACT];
     function pvpBegin(o, extra) {
       if (!team.length) { alert('Hãy chọn Đội ngũ ra trận trước!'); return; }
       battleToken++; playBattleOpen(); battleFast = false;
       pvp = Object.assign({ opp: o, tower: 0 }, extra || {}); pvpRound = 0; pvpDmg = { hero: 0, enemy: 0 }; currentWave = 1; busy = false;
       document.getElementById('bf-units').innerHTML = '';
       const sel = teamSel();
-      const pos = HERO_POS[Math.min(5, Math.max(1, sel.length))].map(p => [p[0], p[1] + HERO_DY]);
+      const pos = HERO_POS[Math.min(5, Math.max(1, sel.length))].map(p => pvpCompact(p[0], p[1] + HERO_DY, 22));
       const _tm = ttMine(); ttSetupUI(_tm, o.beast ? { beast: o.beast, pt: o.pt || [] } : ttFake(o.name));
       waveUnits = {
         heroes: sel.map((h, k) => {
@@ -5703,7 +6180,7 @@ cfgOnApply(() => {
       document.getElementById('ui-wave-title').innerText = 'Hiệp 0/' + PVP_MAX_ROUNDS;
       document.getElementById('ui-enemy-name').innerText = o.heroes.map(h => h.name.toUpperCase()).join(' • ');
       waveUnits.enemies.forEach(e => e.el.remove());
-      const S = HERO_POS[pvp.luan ? Math.min(5, Math.max(1, o.stats.length)) : 5].map(p => [100 - p[0], p[1] + HERO_DY]);   // Luận Kiếm: 3–5 Boss đứng theo đội hình đúng số lượng
+      const S = HERO_POS[pvp.luan ? Math.min(5, Math.max(1, o.stats.length)) : 5].map(p => { const q = pvpCompact(p[0], p[1] + HERO_DY, 22); return [100 - q[0], q[1]]; });   // Luận Kiếm: 3–5 Boss đứng theo đội hình đúng số lượng
       waveUnits.enemies = o.stats.map((x, i) => {
         const h = x.h, u = makeUnit('enemy', heroIcon(h), S[i][0], S[i][1], x.hp, x.atk, false, h.name);
         u.id = h.id; u.isHero = true; u.def = x.def; u.spd = x.spd !== undefined ? x.spd : h.spd; u.dodge = x.dodge !== undefined ? x.dodge : h.dodge; u.acc = x.acc !== undefined ? x.acc : (h.acc || 0); u.crit = x.crit || 0; u.critDmg = x.critDmg || 0; u.tough = x.tough || 0; u.pierce = x.pierce || 0; u.tia = Math.max(1, Math.floor(x.tia || h.tia || 1)); u.block = x.block || 0; u.regen = x.heal || 0; u.sk = x.sk || 1; if (x.star) u.star = x.star;
@@ -5744,7 +6221,12 @@ cfgOnApply(() => {
         if (tok !== battleToken) return;
         if (bl) { await sleep(500); if (tok !== battleToken) return; }
         if (ended()) return;
-        for (const u of pvpOrder()) {
+        // Thứ tự ra đòn được TÍNH LẠI sau mỗi lượt: ai chưa ra đòn trong hiệp này mà vừa được cộng/trừ Tốc (vd Đoàn Dự cộng Tốc cả đội) sẽ được xếp lại ngay theo Tốc mới.
+        // roster = những tướng sống lúc bắt đầu hiệp (tướng hồi sinh giữa hiệp không có thêm lượt trong hiệp đó)
+        const roster = new Set(pvpOrder()), acted = new Set();
+        for (;;) {
+          const u = pvpOrder().find(x => roster.has(x) && !acted.has(x)); if (!u) break;
+          acted.add(u);
           if (tok !== battleToken) return;
           if (!u.alive) continue;
           const mine = H.includes(u), foes = mine ? E : H;
@@ -7987,6 +8469,41 @@ function ttBeastDrag(st, side, beast) {
   sp.addEventListener('contextmenu', e => { if (ttEditOn) e.preventDefault(); });
   sp._ttEdit(ttEditOn);
 }
+// ĐƯỜNG NỀN THẦN THÚ (mọi giao diện: sân trận, Tỷ Võ, boss bang, màn Thần Thú...): mỗi ảnh có viền trong suốt dày mỏng khác nhau nên chân thần thú lệch cao thấp.
+// Đọc phần có màu thật sự của ảnh (kênh alpha) để biết chân nằm ở đâu, rồi dịch ảnh XUỐNG đúng bằng phần viền trống dưới chân => chân luôn chạm đáy khung chứa ảnh.
+// Chỉ dịch DỌC, không đổi cỡ, không đụng vị trí ngang / vị trí đám mây.
+const TT_BB = {};   // khóa (tên + loại ảnh) -> { y1 } = mép chân của phần có màu (px ảnh gốc); null = không đọc được
+function ttBBox(img) {
+  try {
+    const iw = img.naturalWidth, ih = img.naturalHeight; if (!iw || !ih) return null;
+    const sc = Math.min(1, 256 / Math.max(iw, ih)), cw = Math.max(1, Math.round(iw * sc)), ch = Math.max(1, Math.round(ih * sc));
+    const c = document.createElement('canvas'); c.width = cw; c.height = ch;
+    const g = c.getContext('2d', { willReadFrequently: true }); g.drawImage(img, 0, 0, cw, ch);
+    const d = g.getImageData(0, 0, cw, ch).data; let y1 = -1;
+    for (let y = 0; y < ch; y++) { let n = 0; for (let x = 0; x < cw; x++) if (d[(y * cw + x) * 4 + 3] > 60) n++; if (n >= 3) y1 = y; }   // bỏ qua vài điểm lẻ (bóng, hạt sáng)
+    return y1 < 0 ? null : { y1: (y1 + 1) / sc };
+  } catch (e) { return null; }
+}
+function ttFeet(img) {
+  try {
+    const iw = img.naturalWidth, ih = img.naturalHeight, w = img.clientWidth, h = img.clientHeight; if (!iw || !ih || !w || !h) return;
+    const key = (img.alt || '') + (img.dataset.seq ? '#s' : '');   // ảnh tĩnh và chuỗi khung có thể khác viền => nhớ riêng; chuỗi khung chỉ lấy khung đầu để chân nhún nhảy vẫn tự nhiên
+    if (!(key in TT_BB)) TT_BB[key] = ttBBox(img);
+    const bb = TT_BB[key]; if (!bb) return;
+    const cs = getComputedStyle(img), pt = parseFloat(cs.paddingTop) || 0, pb = parseFloat(cs.paddingBottom) || 0, pl = parseFloat(cs.paddingLeft) || 0, pr = parseFloat(cs.paddingRight) || 0;
+    const cw = w - pl - pr, chh = h - pt - pb; if (cw <= 0 || chh <= 0) return;
+    const k = Math.min(cw / iw, chh / ih), dh = ih * k, py = (parseFloat((cs.objectPosition || '50% 50%').split(' ')[1]) || 50) / 100;   // contain: ảnh nằm trong khung nội dung theo object-position
+    const feet = pt + (chh - dh) * py + bb.y1 * k;
+    img.style.translate = '0px ' + ((h - pb) - feet).toFixed(1) + 'px';
+  } catch (e) {}
+}
+(function () {
+  const seen = new WeakSet(), ro = window.ResizeObserver ? new ResizeObserver(es => es.forEach(e => ttFeet(e.target))) : null;
+  document.addEventListener('load', e => {   // 'load' không nổi bọt nên bắt ở pha capture: mọi ảnh thần thú vừa tải xong đều được căn
+    const t = e.target; if (!t || t.tagName !== 'IMG' || !t.classList.contains('tt-img')) return;
+    ttFeet(t); if (ro && !seen.has(t)) { seen.add(t); ro.observe(t); }   // sân đang ẩn lúc dựng: tính lại khi có kích thước thật
+  }, true);
+})();
 function ttSetupUI(my, foe) {
   const ar = document.getElementById('battle-arena'); if (!ar) return;
   ar.querySelectorAll('.bf-bst, .bf-ptrow').forEach(e => e.remove());

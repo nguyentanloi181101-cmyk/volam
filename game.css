@@ -1690,3 +1690,14 @@ img.gi-g{height:1.15em;width:auto;vertical-align:-.2em;display:inline-block}.bm-
 /* viền tối nhẹ ở rìa sân để tạo cảm giác chiều sâu / ống kính */
 #battle-overlay .bf-field::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:2;
   background:radial-gradient(ellipse 120% 85% at 50% 55%,transparent 55%,rgba(0,0,0,.35) 100%)}
+
+/* Tỷ Võ: tướng nhỏ gọn hơn; 2 đám mây thần thú dạt ra 2 bên sát mép, thần thú đứng giữa mây */
+#battle-overlay.pvp-mode .bf-unit{width:50px;height:64px}
+#battle-overlay.pvp-mode .bf-sprite .hero-body{height:58px}
+#battle-overlay.pvp-mode .bf-sprite .hero-img{width:44px;height:44px}
+#battle-overlay.pvp-mode .bf-bst{width:44%}
+#battle-overlay.pvp-mode .bf-bst-cloud{width:96%}
+
+/* Đám mây thần thú: đặt theo ĐƯỜNG CHÂN (đáy khung thần thú), nằm TRÊN thần thú để che chân. Không còn neo theo đáy sân nên đổi ảnh mây cao thấp khác nhau vẫn che đúng chân.
+   Muốn che nhiều/ít chân: đổi -45% (số âm lớn hơn = mây nhô lên cao hơn). */
+.bf-bst-cloud{bottom:auto;top:calc(100% - 12px);translate:0 -80%;z-index:2}
