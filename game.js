@@ -1,3 +1,28 @@
+/* ╔══════════════════════════════════════════════════════════════════════════════════════════════════════╗
+   ║  ⚠️⚠️⚠️  BẮT BUỘC ĐỌC HẾT KHỐI NÀY TRƯỚC KHI SỬA BẤT KỲ DÒNG NÀO LIÊN QUAN TƯỚNG / TUYỆT KỸ / SÁT THƯƠNG  ⚠️⚠️⚠️  ║
+   ╚══════════════════════════════════════════════════════════════════════════════════════════════════════╝
+   Đây là LUẬT CỐ ĐỊNH của game. Không tự ý đổi, không "tối ưu" lại. Muốn đổi luật phải hỏi chủ game.
+
+   ① MỨC SÁT THƯƠNG TUYỆT KỸ BẬC ĐẦU THEO CHẤT TƯỚNG (vai trò) — CỐ ĐỊNH, admin KHÔNG chỉnh được
+        Công kích 150% • Kỹ năng 65% • Hỗ trợ 100% • Trị liệu 100% • Thủ 200%        (bảng ROLE_ULT_BASE, hàm skillBaseOf)
+      - Đây là TỔNG % Công của 1 lần ulti (chia đều cho số lần đánh), áp cho MỌI tướng, kể cả tướng thêm sau này.
+      - Tướng mới / đổi vai trò (role trong hero-data.js hoặc admin) → mức gốc tự đi theo vai trò mới. KHÔNG đặt mức riêng cho từng tướng.
+      - Mọi hằng số *_MULT của từng tướng (TL_MULT, DY_MULT, TP_MULT, ULT_MULT…) LUÔN = 1 (trung tính, bị ép về 1 bởi clampUltMult).
+        TUYỆT ĐỐI không nhét hệ số khác 1 vào *_MULT để tăng/giảm sát thương một tướng.
+   ② TĂNG CẤP KỸ NĂNG và NÂNG PHẨM CHẤT đều CỘNG THÊM vào mức gốc, KHÔNG NHÂN:
+        tổng % = mức gốc theo chất tướng + Σ bậc cộng của từng cấp kỹ năng + phần chênh của phẩm chất (QL_TABLE)   → skillMultOf / skillMult
+      Sát thương 1 lần ulti = Công × skillMult(id); mỗi nhát = tổng ÷ số lần đánh (per = u.atk * MULT * u.sk / số_lần).
+   ③ CHIA SÁT THƯƠNG: số lần gây sát thương chỉ là CÁCH CHIA tổng % ở ① ② ra nhiều nhát bằng nhau (VD 150% đánh 5 lần → mỗi lần 30%).
+        Đổi số lần đánh KHÔNG làm tổng sát thương tăng lên.
+   ④ BẠO và PHÁ GIÁP tính THEO TỪNG LẦN đánh (mỗi nhát qua strike → calcDmg, cố định, không chia theo hệ số Công):
+        VD Phá giáp 5000 mà đánh 7 lần → 1 lần ulti cộng 35.000 sát thương Phá giáp; Bạo cũng vậy. Mọi chiêu đều phải đi qua skillHit/strike.
+   ⑤ MÔ TẢ CHIÊU — KHUNG 5 MỤC CỐ ĐỊNH (ULT_SPEC trong khối hero-detail), admin KHÔNG sửa được (cfg.skillText bị vô hiệu):
+        🎯 Đánh mấy người (TOÀN địch / 1 / 2 địch ngẫu nhiên…) • 💥 Gây sát thương mấy lần • ⬆️ Tăng gì • ⬇️ Giảm gì • ✨ Hiệu ứng
+      - Mục trống hiện "Không". KHÔNG ghi chuyện nộ / đủ nộ trong mô tả (cơ chế tích nộ có sẵn theo chất tướng).
+      - Thêm tướng mới: thêm ĐÚNG 1 dòng  <id>: c => ({ targets, hits, buffs, debuffs, effects })  vào ULT_SPEC; số liệu lấy từ hằng số của chiêu,
+        dùng c.dmg(MULT, SỐ_LẦN) cho dòng "số lần". Không viết mô tả tự do kiểu cũ.
+   CHECKLIST THÊM TƯỚNG MỚI: (a) 1 dòng trong heros/hero-data.js với role đúng  (b) hàm ultFn chia sát thương theo ③ và đánh qua skillHit  (c) 1 dòng ULT_SPEC theo ⑤.
+   ══════════════════════════════════════════════════════════════════════════════════════════════════════ */
 /* GAME.JS — toàn bộ JS của game gộp thành 1 file (trước đây ~100 file). Mỗi khối bắt đầu bằng banner "=== đường-dẫn-cũ ===".
    Thứ tự = thứ tự cũ trong index.html. Dữ liệu tướng nằm ở heros/hero-data.js (nạp ngay trước file này).
    Sửa xong nhớ tăng ?v= của game.js trong index.html để trình duyệt tải bản mới. */
@@ -1888,6 +1913,7 @@ function ltSlotHTML(f) {
     const QL_TABLE = { skill: [60, 70, 90, 120, 160, 200, 400], atk: [150, 160, 180, 210, 250, 290, 490], other: [100, 110, 130, 160, 200, 240, 440] };
     // MỨC SÁT THƯƠNG TUYỆT KỸ BẬC ĐẦU THEO CHẤT TƯỚNG — CỐ ĐỊNH, admin không chỉnh được (tổng % Công của 1 lần ulti, chia đều cho số lần đánh).
     // Tăng cấp kỹ năng và nâng phẩm chất đều CỘNG THÊM vào số này (không nhân): tổng = mức gốc + Σ bậc kỹ năng + phần chênh phẩm chất.
+    // ⚠️ LUẬT CỐ ĐỊNH — xem khối "BẮT BUỘC ĐỌC" ở ĐẦU file này (mục ① ②) trước khi sửa bất cứ gì ở đây.
     const ROLE_ULT_BASE = Object.freeze({ atk: 150, skill: 65, sup: 100, heal: 100, tank: 200 });
     const skillBaseOf = (id, qlo) => {
       let r = 'atk'; try { if (id != null && typeof roleOf === 'function') r = roleOf(id); } catch (e) {}
@@ -2263,6 +2289,7 @@ function addAccExp(n) {
     // THÊM TƯỚNG MỚI: thêm đúng 1 dòng  <id>: c => ({ targets, hits, buffs, debuffs, effects })  vào ULT_SPEC bên dưới.
     // Tướng chưa khai báo sẽ dùng mẫu ulti chung (ULT_SPEC_DEFAULT).
     // ======================================================================================================
+    // ⚠️ LUẬT CỐ ĐỊNH — xem khối "BẮT BUỘC ĐỌC" ở ĐẦU file này (mục ⑤) trước khi sửa/thêm mô tả chiêu.
     const ULT_SPEC_LABEL = Object.freeze([['targets', '🎯 Đánh'], ['hits', '💥 Số lần'], ['buffs', '⬆️ Tăng'], ['debuffs', '⬇️ Giảm'], ['effects', '✨ Hiệu ứng']]);
     const ULT_SPEC = Object.freeze({
       0:  c => ({ targets: 'TOÀN địch (dịch chuyển, chém từ nhiều hướng)', hits: c.dmg(TADE_MULT, TADE_HITS),
@@ -5805,6 +5832,7 @@ const SKILL_DEF = Object.assign({}, SKILL_SHARED, HERO_T.skill, { HTT_HP_PCT: 0.
 Object.assign(window, SKILL_DEF);                                     // tạo biến toàn cục cùng tên để code tuyệt kỹ dùng trực tiếp
 // Hệ số *_MULT của từng tướng LUÔN = 1 (trung tính): tổng % Công 1 lần ulti = skillMult = mức gốc theo chất tướng (ROLE_ULT_BASE) + cấp kỹ năng + phẩm chất, CỘNG chứ không nhân.
 // Tổng đó chia đều cho số lần đánh. Bạo + Phá giáp vẫn cộng THEO TỪNG lần đánh (strike → calcDmg).
+// ⚠️ LUẬT CỐ ĐỊNH — xem khối "BẮT BUỘC ĐỌC" ở ĐẦU file này (mục ① ② ③ ④): *_MULT phải luôn = 1.
 const ULT_MULT_KEYS = ['TADE_MULT','DUCO_MULT','TAICHI_MULT','BFLY_MULT','DRAGON_MULT','TL_MULT','HTT_MULT','SKEL_MULT','BC_MULT','DT_MULT','MT_MULT','TM_MULT','QA_MULT','HR_MULT','BQ_MULT','TP_MULT','DY_MULT','ULT_MULT'];
 const clampUltMult = () => { ULT_MULT_KEYS.forEach(k => { window[k] = 1; }); };
 clampUltMult();
