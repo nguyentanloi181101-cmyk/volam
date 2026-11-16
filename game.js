@@ -5326,10 +5326,54 @@ cfgOnApply(() => {
                name: pvCleanName(x.name) || 'Người chơi', lvl: Math.max(1, Math.floor(num(x.lvl)) || 1), power: stats.reduce((a, s) => a + unitPower(s), 0) };
     }
     const pvpKeyOf = d => { const v = d.data().rank; return (typeof v === 'number' && isFinite(v)) ? v : 1e9; };
+
+    // ================= ĐỘI HÌNH ẢO (BOT) =================
+    // PVP_BOT_N đội hình ảo nằm xen trong bảng xếp hạng cùng người thật. Khóa xếp hạng của bot cố định = i + 1.5 (không trùng khóa số nguyên của người thật).
+    // Tài khoản mới vào xếp DƯỚI toàn bộ bot (xem pvpNewKey) rồi leo dần lên. Bot không lưu Firestore: sinh lại theo seed nên tên / tướng luôn giống nhau.
+    // Sức mạnh bot tỉ lệ theo lực chiến của bạn: hệ số = PVP_BOT_CENTER + PVP_BOT_SLOPE × (hạng bạn - hạng bot), kẹp trong [PVP_BOT_MIN, PVP_BOT_MAX]. Muốn dễ/khó chỉnh 4 số này.
+    const PVP_BOT_N = 300, PVP_BOT_CENTER = 0.9, PVP_BOT_SLOPE = 0.01, PVP_BOT_MIN = 0.35, PVP_BOT_MAX = 2.5;
+    const PVP_BOT_HO = ['Nguyễn', 'Trần', 'Lê', 'Phạm', 'Hoàng', 'Phan', 'Vũ', 'Đặng', 'Bùi', 'Đỗ', 'Hồ', 'Ngô', 'Dương', 'Lý', 'Võ', 'Đinh', 'Trịnh', 'Lâm', 'Mai', 'Tạ'];
+    const PVP_BOT_DEM = ['Văn', 'Minh', 'Quốc', 'Thanh', 'Hữu', 'Đức', 'Gia', 'Tuấn', 'Anh', 'Thiên', 'Bảo', 'Nhật', 'Khánh', 'Ngọc', 'Xuân', 'Thu'];
+    const PVP_BOT_TEN = ['Long', 'Hùng', 'Dũng', 'Phong', 'Nam', 'Khang', 'Huy', 'Thịnh', 'Quân', 'Sơn', 'Tài', 'Vinh', 'Kiệt', 'Bình', 'Cường', 'Đạt', 'Hải', 'Lâm', 'Nghĩa', 'Phúc', 'Trung', 'Tú', 'Việt', 'An', 'Hiếu', 'Linh', 'Lan', 'Hoa', 'Mai', 'Trang', 'Thảo', 'Ngân', 'Vy', 'Nhi', 'Hân', 'Yến', 'Chi', 'Dương'];
+    const PVP_BOT_NICK = ['Kiếm Khách', 'Phong Vân', 'Thiên Long', 'Hắc Y', 'Bạch Hổ', 'Vô Danh', 'Đại Hiệp', 'Tiểu Long', 'Độc Cô', 'Sát Thủ', 'Nhất Kiếm', 'Cuồng Đao', 'Hỏa Phụng', 'Băng Tâm'];
+    function pvpRng(seed) { let a = (seed * 2654435761) >>> 0; return () => { a = (a + 0x6D2B79F5) >>> 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+    let pvpBotCache = null;
+    function pvpBotEntries() {
+      if (!pvpBotCache) { pvpBotCache = []; for (let i = 0; i < PVP_BOT_N; i++) pvpBotCache.push({ id: 'bot_' + i, key: i + 1.5, doc: null, bot: i }); }
+      return pvpBotCache;
+    }
+    function pvpBotName(i) {
+      const r = pvpRng(i * 31 + 7), pick = a => a[Math.floor(r() * a.length)];
+      const x = r();
+      let n;
+      if (x < 0.3) n = pick(PVP_BOT_NICK) + ' ' + (10 + Math.floor(r() * 90));
+      else if (x < 0.65) n = pick(PVP_BOT_HO) + ' ' + pick(PVP_BOT_DEM) + ' ' + pick(PVP_BOT_TEN);
+      else n = pick(PVP_BOT_HO) + ' ' + pick(PVP_BOT_TEN);
+      if (n.length > 16) n = n.split(' ')[0] + ' ' + n.split(' ').pop();
+      return pvCleanName(n) || 'Võ Sĩ';
+    }
+    // Dựng đầy đủ 1 đối thủ ảo (chỉ gọi cho ~5 bot gần hạng bạn nhất)
+    function pvpBotOpp(i, rank) {
+      const r = pvpRng(i * 97 + 11), myRank = pvpState.rank;
+      const f = Math.min(PVP_BOT_MAX, Math.max(PVP_BOT_MIN, PVP_BOT_CENTER + PVP_BOT_SLOPE * (myRank - rank)));
+      const perUnit = team.length ? pvpMyPower() / team.length : 1000;
+      const size = (i >= 100 && r() < 0.25) ? 4 : 5;
+      const pool = HEROES.slice(), picked = [];
+      while (picked.length < size && pool.length) picked.push(pool.splice(Math.floor(r() * pool.length), 1)[0]);
+      const T = Math.max(50, perUnit * f), bn = (typeof ttBonus === 'function') ? ttBonus([]) : {};
+      const stats = picked.map(h => {
+        let s; try { s = Object.assign({}, heroBattleStats(h.id, true, bn)); } catch (e) { s = Object.assign({}, heroStats(h.id, true)); }
+        const V = s.hp / 5 + s.atk * 2 + s.def * 3, F = (s.pierce || 0) * 2 + (s.crit || 0) * (s.critDmg || 0);
+        const k = Math.max(0.02, (T - F) / Math.max(1, V));
+        return { h, hp: Math.max(1, Math.round(s.hp * k)), atk: Math.max(1, Math.round(s.atk * k)), def: Math.max(0, Math.round(s.def * k)), spd: s.spd || h.spd, dodge: s.dodge || 0, acc: s.acc || 0, crit: s.crit || 0, critDmg: s.critDmg || 0, tough: s.tough || 0, pierce: s.pierce || 0, tia: Math.max(1, Math.floor(s.tia || h.tia || 1)), block: s.block || 0, heal: Math.max(0, Math.round((s.heal || 0) * k)), sk: Math.max(1, (typeof skillMult === 'function' ? skillMult(h.id) : 1) || 1), star: 5 };
+      });
+      const beasts = Object.keys(TT_SLUG), beast = r() < 0.7 ? beasts[Math.floor(r() * beasts.length)] : '';
+      return { real: false, bot: true, beast, pt: [], uid: 'bot_' + i, rank, steps: 0, heroes: stats.map(s => s.h), stats, name: pvpBotName(i), lvl: Math.max(5, Math.round(accLevel * Math.min(1.4, Math.max(0.6, f)) + Math.floor(r() * 5) - 2)), power: stats.reduce((a, s) => a + unitPower(s), 0) };
+    }
     // Bảng xếp hạng: [{ id, key, doc }] đã sắp (khóa tăng dần; trùng khóa thì theo uid để ổn định)
     async function pvpFetchBoard() {
       const snap = await clDb.collection('pvp_players').orderBy('rank').limit(PVP_BOARD_MAX).get();
-      const arr = []; snap.forEach(d => arr.push({ id: d.id, key: pvpKeyOf(d), doc: d }));
+      const arr = []; snap.forEach(d => arr.push({ id: d.id, key: pvpKeyOf(d), doc: d })); pvpBotEntries().forEach(b => arr.push(b));   // trộn đội hình ảo vào bảng
       arr.sort((a, b) => a.key - b.key || (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
       return arr;
     }
@@ -5337,7 +5381,7 @@ cfgOnApply(() => {
     async function pvpNewKey() {
       let mx = 0;
       try { const top = await clDb.collection('pvp_players').orderBy('rank', 'desc').limit(1).get(); top.forEach(d => { const v = d.data().rank; if (typeof v === 'number' && isFinite(v)) mx = Math.max(mx, v); }); } catch (e) {}
-      return Math.floor(mx) + 1;
+      return Math.floor(Math.max(mx, PVP_BOT_N + 0.5)) + 1;   // xếp dưới cả người thật lẫn toàn bộ đội hình ảo
     }
     // Tài khoản cũ đang trùng khóa (vd cùng 10.000): thứ tự tạm theo uid. Người đứng ĐẦU hoặc CUỐI cụm trùng tự tách khóa nhích đi
     // 1 chút (vẫn nằm giữa khóa kế bên) => thứ hạng của mọi người KHÔNG đổi, dần dần hết trùng.
@@ -5371,9 +5415,9 @@ cfgOnApply(() => {
       const me = board.findIndex(x => x.id === clUser.uid);
       if (me >= 0 && pvpState.rank !== me + 1) { pvpState.rank = me + 1; pvpSave(); }
       const P = pvpState.rank, cands = [];
-      board.forEach((x, i) => { if (x.id !== clUser.uid) { const o = pvpRealFromDoc(x.doc, i + 1); if (o) cands.push(o); } });
+      board.forEach((x, i) => { if (x.id === clUser.uid) return; if (x.bot !== undefined) { cands.push({ lazyBot: x.bot, rank: i + 1 }); return; } const o = pvpRealFromDoc(x.doc, i + 1); if (o) cands.push(o); });
       cands.sort((x, y) => Math.abs(x.rank - P) - Math.abs(y.rank - P) || x.rank - y.rank);
-      pvpOpps = cands.slice(0, 5);                            // chỉ người thật, tối đa 5 đối thủ (giao diện có 5 ô)
+      pvpOpps = team.length ? cands.slice(0, 5).map(c => c.lazyBot !== undefined ? pvpBotOpp(c.lazyBot, c.rank) : c) : [];   // 5 đối thủ gần hạng nhất (người thật + đội hình ảo); giao diện có 5 ô
       try { renderPvp(); } catch (e) {}
     }
     // THỜI GIAN THỰC: nghe thay đổi của bảng khi màn Tỷ Võ đang mở; rời màn thì tự ngắt để đỡ tốn lượt đọc
@@ -5387,14 +5431,14 @@ cfgOnApply(() => {
         if (scr && !scr.classList.contains('active')) { pvpLiveStop(); return; }   // đã rời màn Tỷ Võ
         clearTimeout(pvpLiveTimer);
         pvpLiveTimer = setTimeout(() => {                     // gom nhiều thay đổi liên tiếp thành 1 lần vẽ
-          const board = []; snap.forEach(d => board.push({ id: d.id, key: pvpKeyOf(d), doc: d }));
+          const board = []; snap.forEach(d => board.push({ id: d.id, key: pvpKeyOf(d), doc: d })); pvpBotEntries().forEach(b => board.push(b));
           pvpApplyBoard(board);
         }, 300);
       }, () => { pvpLiveUnsub = null; });
     }
     // Sau khi thắng đối thủ đang hạng cao hơn: chèn lên ngay trên đối thủ (khóa nằm giữa người đứng trước đối thủ và đối thủ)
     async function pvpRankCloud(opp) {
-      if (typeof clUser === 'undefined' || !clUser || !clDb || !opp || !opp.real) return;
+      if (typeof clUser === 'undefined' || !clUser || !clDb || !opp || !(opp.real || opp.bot)) return;
       try {
         const board = await pvpFetchBoard();
         const me = board.findIndex(x => x.id === clUser.uid), op = board.findIndex(x => x.id === opp.uid);
@@ -5540,7 +5584,7 @@ cfgOnApply(() => {
         `<div class="pi-bar"><span>Cấp ${o.lvl}</span><b>${o.name}</b><i>${ot.icon} ${ot.name}</i><em>Lực chiến ${fmtN(o.power)}</em></div>` +
         piSlots(oc, piBeast(o.beast)) +
         `<div class="pi-rib blue"><span>ĐỘI HÌNH BẢN THÂN</span></div>` + piMine() +
-        `<div class="pi-note">Hạng hiện tại: <b>${fmtN(st.rank)}</b>. ${up ? `Chiến thắng sẽ tăng lên hạng <b>${fmtN(o.rank)}</b> - ${ot.icon} ${ot.name}` : 'Đối thủ có hạng thấp hơn hoặc bằng bạn nên chiến thắng không đổi hạng'} • Độ khó: <b style="color:${d[1]}">${d[0]}</b>${o.real ? ' • 👤 Người chơi thật' : ' • Cộng dồn ×' + o.steps}</div>` +
+        `<div class="pi-note">Hạng hiện tại: <b>${fmtN(st.rank)}</b>. ${up ? `Chiến thắng sẽ tăng lên hạng <b>${fmtN(o.rank)}</b> - ${ot.icon} ${ot.name}` : 'Đối thủ có hạng thấp hơn hoặc bằng bạn nên chiến thắng không đổi hạng'} • Độ khó: <b style="color:${d[1]}">${d[0]}</b>${o.real ? ' • 👤 Người chơi thật' : ''}</div>` +
         `<button class="pi-go" ${!team.length ? 'disabled' : ''} onclick="pvpGo(${i})">Bắt Đầu</button>`), true);
     }
     function pvpGo(i) {   // danh sách có thể vừa tự làm mới: tìm lại đúng đối thủ theo uid
@@ -8184,16 +8228,23 @@ function dsQtyMax(i) { const el = document.getElementById('ds-q' + i); el.value 
 function dsDonate() {
   if (!dsG) return scToast('Hãy vào bang trước khi quyên góp');
   const m = document.getElementById('qs-modal');
-  m.innerHTML = `<div class="md-box"><button class="md-x" onclick="document.getElementById('qs-modal').style.display='none'">✕</button><div class="hd-name" style="text-align:center;color:#fde047">Quyên Góp</div>${DS_DONATE.map((d, i) => `<div class="bm-row" style="flex-wrap:wrap"><div class="bm-info"><b id="ds-t${i}">${fmtN(d[2] * dsQty[i])} ${d[0]}</b><small id="ds-r${i}">+${fmtN(d[4] * dsQty[i])} Uy Tín • +${fmtN(d[5] * dsQty[i])} EXP Bang</small><small>Có: ${fmtN(d[1]())} • góp tối đa ${fmtN(dsMax(i))} lần (mỗi lần ${fmtN(d[2])})</small></div><div class="ds-qbox"><input type="number" class="ds-q" id="ds-q${i}" min="1" step="1" inputmode="numeric" value="${dsQty[i]}" oninput="dsQtyRefresh(${i})" aria-label="Số lần góp"><button class="ds-qmax" onclick="dsQtyMax(${i})">Tối đa</button><button class="btn-attack" onclick="dsGive(${i})">Góp</button></div></div>`).join('')}</div>`; m.style.display = 'flex';
+  m.innerHTML = `<div class="md-box"><button class="md-x" onclick="document.getElementById('qs-modal').style.display='none'">✕</button><div class="hd-name" style="text-align:center;color:#fde047">Quyên Góp</div><div class="set-note">Mỗi loại chỉ góp được <b>1 lần mỗi ngày</b>.</div>${DS_DONATE.map((d, i) => { const done = dsDonDone(i); return `<div class="bm-row" style="flex-wrap:wrap"><div class="bm-info"><b>${fmtN(d[2])} ${d[0]}</b><small>+${fmtN(d[4])} Uy Tín • +${fmtN(d[5])} EXP Bang</small><small>Có: ${fmtN(d[1]())} • ${done ? 'hôm nay đã góp' : 'còn 1 lần hôm nay'}</small></div><div class="ds-qbox"><button class="btn-attack" ${done ? 'disabled' : ''} onclick="dsGive(${i})">${done ? 'Đã góp' : 'Góp'}</button></div></div>`; }).join('')}</div>`; m.style.display = 'flex';
 }
+// Mỗi loại quyên góp (bạc / gạo / vàng) chỉ được góp 1 lần mỗi ngày (đổi ngày theo giờ máy, giống gdTick). Cờ lưu trong guild_state: donDay + don[i]
+const dsDonDone = i => { const s = gdSt(); return s.donDay === new Date().toDateString() && !!(s.don && s.don[i]); };
+const dsDonBusy = {};
 async function dsGive(i) {
   if (!dsG) return scToast('Hãy vào bang trước khi quyên góp');
-  const d = DS_DONATE[i], q = dsQtyGet(i), cost = d[2] * q; if (d[1]() < cost) return scToast('Không đủ tài nguyên');
+  if (dsDonDone(i)) return scToast('Hôm nay bạn đã góp loại này rồi, mai quay lại nhé');
+  if (dsDonBusy[i]) return;
+  const d = DS_DONATE[i], q = 1, cost = d[2] * q; if (d[1]() < cost) return scToast('Không đủ tài nguyên');
   const uy = d[4] * q, ex = d[5] * q, nm = d[0].replace(/<[^>]+>/g, "").replace(/^\S+\s/, "");
+  dsDonBusy[i] = true;
   try {
     const lv = await dsTx(g => { g.exp = (g.exp || 0) + ex; while (g.exp >= gdExpMax(g.lv)) { g.exp -= gdExpMax(g.lv); g.lv++; dsPushNews(g, 'Bang lên cấp ' + g.lv + '!'); } dsPushNews(g, `${pvName()} quyên góp ${fmtN(cost)} ${nm}`); return g.lv; });
-    d[3](cost); resSave(); const s = gdBang(); s.uytin = s.uytin + uy; s.bangLv = lv; gdSave(s); scToast(`+${uy} Uy Tín`);
-  } catch (e) { return scToast(dsErr(e)); }
+    d[3](cost); resSave(); const s = gdBang(); s.uytin = s.uytin + uy; s.bangLv = lv; { const dk = new Date().toDateString(); if (s.donDay !== dk) { s.donDay = dk; s.don = {}; } s.don = s.don || {}; s.don[i] = 1; } gdSave(s); scToast(`+${uy} Uy Tín`);
+  } catch (e) { dsDonBusy[i] = false; return scToast(dsErr(e)); }
+  dsDonBusy[i] = false;
   await dsLoad(); dsDonate(); dsDraw();
 }
 /* ---- Tụ Bảo Bồn ---- */
