@@ -71,7 +71,7 @@ window.GP = (function () {
     tia: 1, role: 'skill',
     constants: { lv: 1, star: 1, border: 'orange', ultName: 'Cuồng Phong Thiết Phiến' },
     idle: { sheet: 'tpIdle', h: 120, ms: 1600 },
-    ultFn: 'thietPhienUlt',
+    ultFn: 'thietPhienUlt', audio: 'thiet-phien-ult.mp3?v=1',
     sprites: {
       tpIdle:    { src: 'thiet-phien-idle.webp?v=1',    cw: 307,   ch: 256, n: 20 },   // 6140×256 = 20 khung đứng yên
       tpAtk:     { src: 'thiet-phien-attack.webp?v=1',  cw: 350,   ch: 350, n: 20 },   // 7000×350 = 20 khung đánh thường
@@ -79,6 +79,22 @@ window.GP = (function () {
       tpTornado: { src: 'thiet-phien-tornado.webp?v=1', cw: 307,   ch: 300, n: 20 }    // 6140×300 = 20 khung lốc xoáy lớn
     },
     skillConfig: { TP_MULT: 2.4, TP_HITS: 4, TP_SLOW: 0.15, TP_SLOW_TURNS: 3, TP_SILENCE_TARGETS: 3, TP_SILENCE_TURNS: 1 }
+  });
+  // === DƯƠNG TIỄN (id 24, tướng công kích): ảnh + âm thanh ở heros/duong-tien/ ===
+  if (!window.HERO_DATA.heroes.some(h => h.id === 24)) window.HERO_DATA.heroes.push({
+    id: 24, slug: 'duong-tien', name: 'Dương Tiễn', emoji: '🔱',
+    img: 'duong-tien.webp?v=1', body: 'duong-tien-body.webp?v=1', bodyH: 96,
+    stats: { hp: 6000, atk: 800, spd: 125 },
+    combat: { def: 300, dodge: 60, acc: 300, crit: 0, critDmg: 0, tough: 0, pierce: 0, block: 0 },
+    tia: 1, role: 'atk',
+    constants: { lv: 1, star: 1, border: 'orange', ultName: 'Thiên Thương Xuyên Trận' },
+    idle: { sheet: 'dtIdle', h: 120, ms: 1600 },
+    ultFn: 'duongTienUlt', audio: 'duong-tien-ult.mp3?v=1',
+    sprites: {
+      dtIdle: { src: 'duong-tien-idle.webp?v=1', cw: 307, ch: 256, n: 20, face: 'R' },   // 6140×256 = 20 khung đứng yên (quay mặt sang PHẢI)
+      dtUlt:  { src: 'duong-tien-ult.webp?v=1',  cw: 307, ch: 205, n: 25, face: 'R' }    // 7675×205 = 25 khung: 0-4 lao tới • 5-19 xoay thương (19 = nổ) • 20-24 thu thế
+    },
+    skillConfig: { DY_MULT: 3, DY_HITS: 7, DY_PIERCE: 15000, DY_PIERCE_TURNS: 2, DY_BLOCK_DOWN: 0.2, DY_TURNS: 2 }
   });
   const META = window.HERO_DATA.heroes;
   const T = { combat: {}, tia: {}, startProg: {}, border: {}, ultName: {}, role: {}, sound: {}, seq: {}, seqIdle: {}, skill: {}, ultFn: {} };
@@ -2259,6 +2275,7 @@ function addAccExp(n) {
       else if (id === 21) ult = `Cần đầy 100 nộ. TRƯỚC khi bắn: bản thân tăng ${pct(HR_CRIT_UP)}% Bạo, ${pct(HR_CDMG_UP)}% Bạo Sát và ${pct(HR_ACC_UP)}% Chuẩn trong ${HR_TURNS} hiệp. Rồi bắn lên trời: MƯA ${HR_ARROWS} mũi tên lớn từ trời bên ta ập xuống bên địch, gây ${HR_HITS} lần sát thương lên ${HR_TARGETS} tướng địch ngẫu nhiên; tổng ${pct(HR_MULT * sk)}% Công (≈ ${fmtN(st.atk * HR_MULT * sk)}, mỗi lần ≈ ${fmtN(st.atk * HR_MULT * sk / HR_HITS)} lên mỗi tướng bị trúng).`;
       else if (id === 22) ult = `KHÔNG TỐN NỘ – lượt nào cũng ulti được. TRƯỚC khi ra đòn: bản thân tăng ${pct(BQ_CRIT_UP)}% Bạo trong ${BQ_TURNS} hiệp. Rồi phân thân làm ${BQ_CLONES} người chạy sang đập đàn vào đầu ${BQ_CLONES} địch ngẫu nhiên, mỗi địch bị đánh ${BQ_HITS} lần; tổng ${pct(BQ_MULT * sk)}% Công (≈ ${fmtN(st.atk * BQ_MULT * sk)}, mỗi lần ≈ ${fmtN(st.atk * BQ_MULT * sk / BQ_HITS)} lên mỗi địch). SAU khi đánh: ${BQ_CLONES} địch bị đánh bị choáng ${BQ_STUN} hiệp và bị CẤM HỒI MÁU ${BQ_TURNS} hiệp.`;
       else if (id === 23) ult = `KHÔNG TỐN NỘ – lượt nào cũng ulti được. Nhảy lên tung quạt, xoay tròn tạo LỐC XOÁY LỚN giữa đội địch: gây ${TP_HITS} lần sát thương lên TOÀN địch, tổng ${pct(TP_MULT * sk)}% Công (≈ ${fmtN(st.atk * TP_MULT * sk)}, mỗi lần ≈ ${fmtN(st.atk * TP_MULT * sk / TP_HITS)}). Toàn địch giảm ${pct(TP_SLOW)}% Tốc trong ${TP_SLOW_TURNS} hiệp; sau khi đánh, ${TP_SILENCE_TARGETS} địch ngẫu nhiên bị CÂM LẶNG ${TP_SILENCE_TURNS} hiệp (không thể dùng tuyệt kỹ).`;
+      else if (id === 24) ult = `Cần đầy 100 nộ. TRƯỚC khi ra đòn: bản thân +${fmtN(DY_PIERCE)} Phá giáp trong ${DY_PIERCE_TURNS} hiệp, toàn địch giảm ${pct(DY_BLOCK_DOWN)}% Đỡ đòn trong ${DY_TURNS} hiệp. Rồi lao xuyên đội địch, đánh địch có CÔNG CAO NHẤT ${DY_HITS} lần trong 1 lần ulti; tổng ${pct(DY_MULT * sk)}% Công (≈ ${fmtN(st.atk * DY_MULT * sk)}, mỗi lần ≈ ${fmtN(st.atk * DY_MULT * sk / DY_HITS)}).`;
       else ult = `Lao vào địch, đánh ${ULT_HITS} đòn liên tiếp, mỗi đòn ${pct(ULT_MULT * sk)}% Công (≈ ${fmtN(st.atk * ULT_MULT * sk)} mỗi đòn). Cần đầy 100 nộ.`;
       { const hh = heroById(id), free = /^KHÔNG TỐN NỘ – (lượt|hiệp) nào cũng ulti được\.\s*/;
         if (hh.alwaysUlt) { if (!free.test(ult)) ult = 'KHÔNG TỐN NỘ – lượt nào cũng ulti được. ' + ult.replace(/Cần đầy 100 nộ[,.]?\s*/g, ''); }
@@ -2303,6 +2320,7 @@ function addAccExp(n) {
           case 21: return `Bản thân +${pct(HR_CRIT_UP)}% Bạo, +${pct(HR_CDMG_UP)}% Bạo Sát, +${pct(HR_ACC_UP)}% Chuẩn ${HR_TURNS} hiệp, rồi mưa ${HR_ARROWS} mũi tên từ trời đánh ${HR_TARGETS} tướng địch ngẫu nhiên ${HR_HITS} lần.`;
           case 22: return `Phân thân ${BQ_CLONES} người đập đàn vào đầu ${BQ_CLONES} địch ngẫu nhiên, mỗi địch ${BQ_HITS} lần. Bản thân +${pct(BQ_CRIT_UP)}% Bạo ${BQ_TURNS} hiệp; địch bị đánh choáng ${BQ_STUN} hiệp và cấm hồi máu ${BQ_TURNS} hiệp.`;
           case 23: return `Lốc xoáy lớn giữa đội địch, đánh TOÀN địch ${TP_HITS} lần. Toàn địch -${pct(TP_SLOW)}% Tốc ${TP_SLOW_TURNS} hiệp, ${TP_SILENCE_TARGETS} địch ngẫu nhiên bị câm lặng ${TP_SILENCE_TURNS} hiệp.`;
+          case 24: return `Lao xuyên địch, đánh địch Công cao nhất ${DY_HITS} lần. Bản thân +${fmtN(DY_PIERCE)} Phá giáp ${DY_PIERCE_TURNS} hiệp, toàn địch -${pct(DY_BLOCK_DOWN)}% Đỡ đòn ${DY_TURNS} hiệp.`;
           default: return `Lao vào địch đánh ${ULT_HITS} đòn liên tiếp.`;
         }
       } catch (e) { return ''; }
@@ -5542,6 +5560,56 @@ GP.add(TM_SWORD_IMG, 2);
         await sleep(T0 + TN.n * TF + 200); if (tok !== battleToken) return;
         dropDeadEffects(es0);
       } finally { timers.forEach(clearTimeout); cast.end(); made.forEach(d => d.remove()); tor.remove(); u.el.getAnimations().forEach(a => a.cancel()); u.el.style.zIndex = oldZ; }
+    }
+/* === duong-tien (tuyệt kỹ Dương Tiễn) === */
+/* DƯƠNG TIỄN (id 24, tướng công kích): TRƯỚC khi ra đòn bản thân +DY_PIERCE Phá giáp (DY_PIERCE_TURNS hiệp), toàn địch giảm DY_BLOCK_DOWN Đỡ đòn (DY_TURNS hiệp)
+   → LAO XUYÊN đội địch (SEQ.dtUlt khung 0-4) tới địch có CÔNG CAO NHẤT → xoay thương, đánh DY_HITS lần (khung 5-19, nhát cuối ở khung 18, khung 19 nổ)
+   → thu thế chạy về (khung 20-24). Tổng DY_MULT × Công chia đều cho DY_HITS lần. Nếu mục tiêu chết giữa chừng thì chuyển sang địch Công cao nhất còn lại.
+   Tham số: heros/hero-data.js → skillConfig (DY_*), hoặc admin → tab Chiêu thức. Âm thanh: heros/duong-tien/duong-tien-ult.mp3 */
+    async function duongTienUlt(u, tok) {
+      const g = nt(u), { W, H, base, made } = g, es0 = g.es(); if (!es0.length) return;
+      const S = SEQ.dtUlt, I = SEQ.dtIdle, timers = [], oldZ = u.el.style.zIndex;
+      const at = (ms, fn) => timers.push(setTimeout(() => { if (tok === battleToken) fn(); }, seqT(ms)));
+      const topAtk = list => list.reduce((a, b) => (b.atk > a.atk ? b : a), list[0]);
+      let tgt = topAtk(es0);                                                    // địch có Công cao nhất
+      const nHit = Math.max(1, Math.floor(DY_HITS)), per = u.atk * DY_MULT * (u.sk || 1) / nHit;
+      const idleH = (SEQ_IDLE[u.id] && SEQ_IDLE[u.id].h) || 120, castW = Math.round(S.cw * idleH / I.ch);
+      const cast = seqOverlay(u, S, castW);
+      let dx = (tgt.x - u.x) * W / 100, dy = (tgt.y - u.y) * H / 100; dx -= Math.sign(dx) * 60;
+      const go = `translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px))`;
+      const DASH = 420, FR = 70, BACK = 420;                                    // ms: lao tới • mỗi khung xoay thương • chạy về
+      const hitFr = Array.from({ length: nHit }, (_, k) => nHit === 1 ? 18 : Math.round(6 + 12 * k / (nHit - 1)));   // khung xảy ra từng nhát (6…18)
+      try {
+        u.el.style.zIndex = 99;
+        u.el.animate([{ filter: 'drop-shadow(0 0 0 #60a5fa)' }, { filter: 'drop-shadow(0 0 20px #60a5fa)' }, { filter: 'drop-shadow(0 0 0 #60a5fa)' }], { duration: 900 });
+        // 1. Trước khi ra đòn: bản thân +Phá giáp, toàn địch -Đỡ đòn
+        if (noBuff(u)) floatText(u, '🚫 KHÓA TĂNG PHÚC'); else { addMod(u, 'pierce', DY_PIERCE, DY_PIERCE_TURNS, 'buff', 'dy:pierce'); floatText(u, '🗡️ +' + fmtN(DY_PIERCE) + ' Phá giáp'); }
+        es0.forEach(e => { if (!e.alive) return; pctMod(e, 'block', -DY_BLOCK_DOWN, DY_TURNS, 'debuff', 'dy:blk'); sayLater(e, '🛡️ ĐỠ ĐÒN -' + Math.round(DY_BLOCK_DOWN * 100) + '%', 250); });
+        refreshPanel();
+        // 2. Lao xuyên đội địch tới mục tiêu (khung 0-4)
+        u.el.animate([{ transform: base }, { transform: go }], { duration: seqT(DASH) || 1, easing: 'cubic-bezier(.45,0,.85,.55)', fill: 'forwards' });
+        for (let i = 0; i < 5; i++) at(i * (DASH / 5), () => cast.show(i));
+        // 3. Xoay thương (khung 5-19), nhát đánh ở các khung hitFr
+        for (let i = 5; i < 20; i++) at(DASH + (i - 5) * FR, () => cast.show(i));
+        hitFr.forEach((fr, k) => at(DASH + (fr - 5) * FR, () => {
+          const es = g.es(); if (!es.length) return;
+          if (!tgt.alive) tgt = topAtk(es);
+          g.shake(); skillHit(tgt, per, u);
+          const fl = document.createElement('div'); fl.className = 'bf-bflash'; fl.style.left = tgt.x + '%'; fl.style.top = tgt.y + '%'; fl.style.setProperty('--fc', k === nHit - 1 ? '#bfdbfe' : '#60a5fa');
+          g.box.appendChild(fl); made.push(fl); setTimeout(() => fl.remove(), 450);
+          if (k === nHit - 1) g.ring(tgt.x, tgt.y, '#60a5fa');
+          refreshPanel();
+        }));
+        const tEnd = DASH + 15 * FR;
+        // 4. Thu thế, chạy về chỗ cũ (khung 20-24)
+        at(tEnd, () => {
+          u.el.getAnimations().forEach(a => a.cancel());
+          u.el.animate([{ transform: go }, { transform: base }], { duration: seqT(BACK) || 1, easing: 'ease-in-out', fill: 'forwards' });
+          for (let i = 20; i < 25; i++) at((i - 20) * (BACK / 5), () => cast.show(i));
+        });
+        await sleep(tEnd + BACK + 60); if (tok !== battleToken) return;
+        dropDeadEffects(es0);
+      } finally { timers.forEach(clearTimeout); cast.end(); made.forEach(d => d.remove()); u.el.getAnimations().forEach(a => a.cancel()); u.el.style.zIndex = oldZ; }
     }
 ;
 
