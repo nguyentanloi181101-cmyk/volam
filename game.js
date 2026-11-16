@@ -62,11 +62,29 @@ window.GP = (function () {
   const base = 'heros/';
   const fix = (slug, p) => p ? base + slug + '/' + p : p;            // đường dẫn trong dữ liệu tính từ thư mục tướng
 
+  // === THIẾT PHIẾN (id 23, tướng kỹ năng): tự thêm vào bảng tướng nếu heros/hero-data.js chưa có. Ảnh nằm ở heros/thiet-phien/ ===
+  if (!window.HERO_DATA.heroes.some(h => h.id === 23)) window.HERO_DATA.heroes.push({
+    id: 23, slug: 'thiet-phien', name: 'Thiết Phiến', emoji: '🪭',
+    img: 'thiet-phien.webp?v=1', body: 'thiet-phien-body.webp?v=1', bodyH: 96,
+    stats: { hp: 6000, atk: 700, spd: 120 },
+    combat: { def: 300, dodge: 60, acc: 300, crit: 0, critDmg: 0, tough: 0, pierce: 0, block: 0 },
+    tia: 1, role: 'skill',
+    constants: { lv: 1, star: 1, border: 'orange', ultName: 'Cuồng Phong Thiết Phiến' },
+    idle: { sheet: 'tpIdle', h: 120, ms: 1600 },
+    ultFn: 'thietPhienUlt',
+    sprites: {
+      tpIdle:    { src: 'thiet-phien-idle.webp?v=1',    cw: 307,   ch: 256, n: 20 },   // 6140×256 = 20 khung đứng yên
+      tpAtk:     { src: 'thiet-phien-attack.webp?v=1',  cw: 350,   ch: 350, n: 20 },   // 7000×350 = 20 khung đánh thường
+      tpUlt:     { src: 'thiet-phien-ult.webp?v=1',     cw: 332.5, ch: 341, n: 20 },   // 6650×341 = 20 khung nhảy lên + xoay trong lốc
+      tpTornado: { src: 'thiet-phien-tornado.webp?v=1', cw: 307,   ch: 300, n: 20 }    // 6140×300 = 20 khung lốc xoáy lớn
+    },
+    skillConfig: { TP_MULT: 2.4, TP_HITS: 4, TP_SLOW: 0.15, TP_SLOW_TURNS: 3, TP_SILENCE_TARGETS: 3, TP_SILENCE_TURNS: 1 }
+  });
   const META = window.HERO_DATA.heroes;
   const T = { combat: {}, tia: {}, startProg: {}, border: {}, ultName: {}, role: {}, sound: {}, seq: {}, seqIdle: {}, skill: {}, ultFn: {} };
   META.forEach(m => {
     const id = m.id;
-    T.combat[id] = m.combat; T.tia[id] = m.tia || 1; T.startProg[id] = { lv: m.constants.lv, star: m.constants.star };
+    T.combat[id] = m.combat; T.tia[id] = 1; T.startProg[id] = { lv: m.constants.lv, star: m.constants.star };
     if (m.constants.border && m.constants.border !== 'orange') T.border[id] = m.constants.border;
     T.ultName[id] = m.constants.ultName; T.role[id] = m.role;
     if (m.audio) T.sound[id] = fix(m.slug, m.audio);
@@ -82,7 +100,7 @@ window.GP = (function () {
     if (m.bodyH) h.bodyH = m.bodyH;
     Object.assign(h, m.stats);
     const c = m.combat; h.def = c.def; h.dodge = c.dodge; h.acc = c.acc; h.crit = c.crit; h.critDmg = c.critDmg; h.tough = c.tough; h.pierce = c.pierce; h.block = c.block;
-    h.tia = Math.max(1, Math.floor(m.tia || 1));
+    h.tia = 1;   // đã bỏ cơ chế tia: mỗi nhịp đánh chỉ 1 lần sát thương
     return h;
   });
 
@@ -1152,8 +1170,7 @@ window.renderStages = function () {
       { k:'block', label:'Đỡ đòn (%)', min:0, max:100 },
       { k:'heal',  label:'Hồi máu (mỗi hiệp)', min:0, max:99999999 },
       { k:'spd',   label:'Tốc',        min:0, max:99999 },
-      { k:'startRage', label:'Nộ khởi đầu', min:0, max:100 },
-      { k:'tia',   label:'Tia đánh',   min:1, max:99 }
+      { k:'startRage', label:'Nộ khởi đầu', min:0, max:100 }
     ];
 
 ;
@@ -2240,13 +2257,14 @@ function addAccExp(n) {
       else if (id === 19) ult = `Cần đầy 100 nộ. Tung kiếm khí rồi LAO QUA đội hình địch, kéo theo ${TM_SWORDS} thanh kiếm từ phía sau đội ta ào ạt bay thành từng hàng ngang sang đội địch; gây ${TM_HITS} lần sát thương lên TOÀN địch, tổng ${pct(TM_MULT * sk)}% Công (≈ ${fmtN(st.atk * TM_MULT * sk)}, mỗi lần ≈ ${fmtN(st.atk * TM_MULT * sk / TM_HITS)}). TRƯỚC khi kiếm giáng xuống: toàn địch giảm ${pct(TM_BLOCK_DOWN)}% Đỡ đòn, toàn đội ta tăng ${pct(TM_BLOCK_UP)}% Đỡ đòn trong ${TM_TURNS} hiệp.`;
       else if (id === 20) ult = `Cần đầy 100 nộ. TRƯỚC khi ra đòn: toàn đội ta tăng ${pct(QA_DODGE_UP)}% Né, toàn địch giảm ${pct(QA_DODGE_DOWN)}% Né trong ${QA_TURNS} hiệp. Rồi chạy XUYÊN qua đội địch: đưa thương từ dưới lên ${QA_HITS_UP} lần, rồi bổ từ trên xuống ${QA_HITS_DOWN} lần — tổng ${QA_HITS_UP + QA_HITS_DOWN} lần sát thương lên TOÀN địch, tổng ${pct(QA_MULT * sk)}% Công (≈ ${fmtN(st.atk * QA_MULT * sk)}, mỗi lần ≈ ${fmtN(st.atk * QA_MULT * sk / (QA_HITS_UP + QA_HITS_DOWN))}).`;
       else if (id === 21) ult = `Cần đầy 100 nộ. TRƯỚC khi bắn: bản thân tăng ${pct(HR_CRIT_UP)}% Bạo, ${pct(HR_CDMG_UP)}% Bạo Sát và ${pct(HR_ACC_UP)}% Chuẩn trong ${HR_TURNS} hiệp. Rồi bắn lên trời: MƯA ${HR_ARROWS} mũi tên lớn từ trời bên ta ập xuống bên địch, gây ${HR_HITS} lần sát thương lên ${HR_TARGETS} tướng địch ngẫu nhiên; tổng ${pct(HR_MULT * sk)}% Công (≈ ${fmtN(st.atk * HR_MULT * sk)}, mỗi lần ≈ ${fmtN(st.atk * HR_MULT * sk / HR_HITS)} lên mỗi tướng bị trúng).`;
-      else if (id === 22) ult = `KHÔNG TỐN NỘ – lượt nào cũng ulti được. TRƯỚC khi ra đòn: bản thân tăng ${pct(BQ_CRIT_UP)}% Bạo trong ${BQ_TURNS} hiệp. Rồi phân thân làm ${BQ_CLONES} người chạy sang đập đàn vào đầu ${BQ_CLONES} địch ngẫu nhiên, mỗi địch bị đánh ${BQ_HITS} lần; tổng ${pct(BQ_MULT * sk)}% Công (≈ ${fmtN(st.atk * BQ_MULT * sk)}, mỗi lần ≈ ${fmtN(st.atk * BQ_MULT * sk / BQ_HITS)} lên mỗi địch). SAU khi đánh: ${BQ_CLONES} địch bị đánh bị choáng ${BQ_STUN} hiệp và bị CẤM HỒI MÁU ${BQ_TURNS} hiệp.`;
+      else if (id === 22) ult = `KHÔNG TỐN NỘ – lượt nào cũng ulti được. TRƯỚC khi ra đòn: bản thân tăng ${pct(BQ_CRIT_UP)}% Bạo trong ${BQ_TURNS} hiệp. Rồi phân thân làm ${BQ_CLONES} người chạy sang đập đàn vào đầu ${BQ_CLONES} địch ngẫu nhiên, mỗi địch bị đánh ${BQ_HITS} lần; tổng ${pct(BQ_MULT * sk)}% Công (≈ ${fmtN(st.atk * BQ_MULT * sk)}, mỗi lần ≈ ${fmtN(st.atk * BQ_MULT * sk / BQ_HITS)} lên mỗi địch). SAU khi đánh: ${BQ_CLONES} địch bị đánh bị choáng ${BQ_STUN} hiệp và bị CẤM HỒI MÁU ${BQ_TURNS} hiệp.`;
+      else if (id === 23) ult = `KHÔNG TỐN NỘ – lượt nào cũng ulti được. Nhảy lên tung quạt, xoay tròn tạo LỐC XOÁY LỚN giữa đội địch: gây ${TP_HITS} lần sát thương lên TOÀN địch, tổng ${pct(TP_MULT * sk)}% Công (≈ ${fmtN(st.atk * TP_MULT * sk)}, mỗi lần ≈ ${fmtN(st.atk * TP_MULT * sk / TP_HITS)}). Toàn địch giảm ${pct(TP_SLOW)}% Tốc trong ${TP_SLOW_TURNS} hiệp; sau khi đánh, ${TP_SILENCE_TARGETS} địch ngẫu nhiên bị CÂM LẶNG ${TP_SILENCE_TURNS} hiệp (không thể dùng tuyệt kỹ).`;
       else ult = `Lao vào địch, đánh ${ULT_HITS} đòn liên tiếp, mỗi đòn ${pct(ULT_MULT * sk)}% Công (≈ ${fmtN(st.atk * ULT_MULT * sk)} mỗi đòn). Cần đầy 100 nộ.`;
       { const hh = heroById(id), free = /^KHÔNG TỐN NỘ – (lượt|hiệp) nào cũng ulti được\.\s*/;
         if (hh.alwaysUlt) { if (!free.test(ult)) ult = 'KHÔNG TỐN NỘ – lượt nào cũng ulti được. ' + ult.replace(/Cần đầy 100 nộ[,.]?\s*/g, ''); }
         else if (free.test(ult)) ult = ult.replace(free, 'Cần đầy 100 nộ mới ulti được. '); }
       return [
-        { tag:'Đánh thường', name:'Đòn Thường', desc:`Lao vào 1 địch ngẫu nhiên, gây ${fmtN(st.atk)} sát thương (100% Công). Mỗi lần đánh thường +${RAGE_ATK} nộ; mỗi lần tuyệt kỹ gây sát thương trúng +${RAGE_HIT} nộ; bị đánh không nhận nộ (PvP: +${RAGE_PVP} nộ mỗi lượt).${st.tia > 1 ? ` Mỗi nhịp đánh (đòn thường lẫn từng nhịp tuyệt kỹ) có ${st.tia} tia: mỗi tia gây đủ 3 loại sát thương (Công, Bạo, Phá giáp) 100%, hiện ${st.tia} lần sát thương riêng.` : ''}` },
+        { tag:'Đánh thường', name:'Đòn Thường', desc:`Lao vào 1 địch ngẫu nhiên, gây ${fmtN(st.atk)} sát thương (100% Công). Mỗi lần đánh thường +${RAGE_ATK} nộ; mỗi lần tuyệt kỹ gây sát thương trúng +${RAGE_HIT} nộ; bị đánh không nhận nộ (PvP: +${RAGE_PVP} nộ mỗi lượt).` },
         { tag:'Tuyệt kỹ', name:HERO_ULT_NAME[id] || 'Tuyệt Kỹ', lv:p.sk, desc:ult },
         { tag:'Nội tại', name:'Nộ Khí', desc:`Mỗi lần bị đánh trúng +20 nộ (đủ 100 nộ để ulti). Né ${tsFmt(st.dodge)} điểm; kẻ tấn công cần Chuẩn ≥ Né + ${HIT_GAP} mới đánh trúng (VD Né ${tsFmt(st.dodge)} → Chuẩn ${tsFmt(st.dodge + HIT_GAP)}).${st.rage ? ` Vào trận với sẵn ${st.rage} nộ.` : ''}` },
         ...(id === 1 ? [{ tag:'Nội tại', name:'Thanh Liên Bất Tử', desc:`Vào trận KHÔNG có nộ. BẤT TỬ trong ${IMMORTAL_TURNS} hiệp đầu mỗi trận: nhận sát thương nhưng máu không thể xuống dưới 1.` }] : []),
@@ -2283,7 +2301,8 @@ function addAccExp(n) {
           case 19: return `Lao qua địch kéo theo ${TM_SWORDS} kiếm bay hàng ngang, đánh TOÀN địch ${TM_HITS} lần. Địch -${pct(TM_BLOCK_DOWN)}% Đỡ đòn, cả đội ta +${pct(TM_BLOCK_UP)}% Đỡ đòn, ${TM_TURNS} hiệp.`;
           case 20: return `Chạy qua địch: hất thương ${QA_HITS_UP} lần rồi bổ xuống ${QA_HITS_DOWN} lần lên TOÀN địch. Cả đội ta +${pct(QA_DODGE_UP)}% Né, toàn địch -${pct(QA_DODGE_DOWN)}% Né, ${QA_TURNS} hiệp.`;
           case 21: return `Bản thân +${pct(HR_CRIT_UP)}% Bạo, +${pct(HR_CDMG_UP)}% Bạo Sát, +${pct(HR_ACC_UP)}% Chuẩn ${HR_TURNS} hiệp, rồi mưa ${HR_ARROWS} mũi tên từ trời đánh ${HR_TARGETS} tướng địch ngẫu nhiên ${HR_HITS} lần.`;
-          case 22: return `Phân thân ${BQ_CLONES} người đập đàn vào đầu ${BQ_CLONES} địch ngẫu nhiên, mỗi địch ${BQ_HITS} lần. Bản thân +${pct(BQ_CRIT_UP)}% Bạo ${BQ_TURNS} hiệp; địch bị đánh choáng ${BQ_STUN} hiệp và cấm hồi máu ${BQ_TURNS} hiệp.`;
+          case 22: return `Phân thân ${BQ_CLONES} người đập đàn vào đầu ${BQ_CLONES} địch ngẫu nhiên, mỗi địch ${BQ_HITS} lần. Bản thân +${pct(BQ_CRIT_UP)}% Bạo ${BQ_TURNS} hiệp; địch bị đánh choáng ${BQ_STUN} hiệp và cấm hồi máu ${BQ_TURNS} hiệp.`;
+          case 23: return `Lốc xoáy lớn giữa đội địch, đánh TOÀN địch ${TP_HITS} lần. Toàn địch -${pct(TP_SLOW)}% Tốc ${TP_SLOW_TURNS} hiệp, ${TP_SILENCE_TARGETS} địch ngẫu nhiên bị câm lặng ${TP_SILENCE_TURNS} hiệp.`;
           default: return `Lao vào địch đánh ${ULT_HITS} đòn liên tiếp.`;
         }
       } catch (e) { return ''; }
@@ -2317,7 +2336,7 @@ function addAccExp(n) {
       const tb = tsBonus(id);
       document.getElementById('hd-stats').innerHTML =
         line('❤️ HP', fmtN(st.hp), st.parts.eq.hp, pb.hp, st.parts.bv.hp, st.parts.bang.hp) + line('⚔️ Công', fmtN(st.atk), st.parts.eq.atk, pb.atk, st.parts.bv.atk, st.parts.bang.atk) + line('🛡️ Thủ', fmtN(st.def), st.parts.eq.def, pb.def, st.parts.bv.def, st.parts.bang.def) +
-        line('⚡ Tốc', st.spd, st.parts.eq.spd, 0, st.parts.bv.spd, st.parts.bang.spd) + line('💨 Né', tsFmt(st.dodge)) + line('🎯 Chuẩn', tsFmt(st.acc)) + line('💥 Bạo', tsFmt(st.crit)) + line('🔥 Bạo Sát', tsFmt(st.critDmg), 0, 0, 0, gb.critDmg) + line('🧱 Bền', tsFmt(st.tough)) + line('🗡️ Phá giáp', fmtN(st.pierce), 0, 0, 0, gb.pierce) + line('☄️ Tia đánh', st.tia + ' tia') + line('💚 Hồi máu', fmtN(st.heal || 0) + '/hiệp', 0, 0, 0, gb.heal) + line('🛡️ Đỡ đòn', tsFmt(st.block) + '%') +
+        line('⚡ Tốc', st.spd, st.parts.eq.spd, 0, st.parts.bv.spd, st.parts.bang.spd) + line('💨 Né', tsFmt(st.dodge)) + line('🎯 Chuẩn', tsFmt(st.acc)) + line('💥 Bạo', tsFmt(st.crit)) + line('🔥 Bạo Sát', tsFmt(st.critDmg), 0, 0, 0, gb.critDmg) + line('🧱 Bền', tsFmt(st.tough)) + line('🗡️ Phá giáp', fmtN(st.pierce), 0, 0, 0, gb.pierce) + line('💚 Hồi máu', fmtN(st.heal || 0) + '/hiệp', 0, 0, 0, gb.heal) + line('🛡️ Đỡ đòn', tsFmt(st.block) + '%') +
         line('🎭 Chất tướng', ROLE_ICON[HERO_ROLE[id]] + ' ' + ROLE_NAME[HERO_ROLE[id]]) + line('🔥 Nộ khởi đầu', st.rage) +
         line('📈 Hệ số cấp/sao', '×' + g.toFixed(2)) +
         (f < 0 ? '<div class="set-note" style="margin-top:6px">Tướng chưa ra trận nên không có khung để gắn trang bị.</div>' : '');
@@ -2942,8 +2961,17 @@ function addAccExp(n) {
         return { end() { tm.forEach(clearTimeout); ov.end(); } };
       } catch (e) { return null; }
     }
+    // Thiết Phiến (id 23): lúc đánh thường phát chuỗi 20 khung "đánh thường" (SEQ.tpAtk) phủ lên tướng, trải đều trong suốt nhịp đánh
+    function tpAttackFx(u, hits, tok) {
+      if (u.id !== 23 || !SEQ.tpAtk || !SEQ_IDLE[23] || !u.el) return null;
+      try {
+        const ov = seqOverlay(u, SEQ.tpAtk, Math.round(SEQ.tpAtk.cw * SEQ_IDLE[23].h / SEQ.tpIdle.ch)), tm = [], dur = 460 + 150 * hits;
+        for (let i = 0; i < SEQ.tpAtk.n; i++) tm.push(setTimeout(() => { if (tok === battleToken) ov.show(i); }, seqT(dur * i / SEQ.tpAtk.n)));
+        return { end() { tm.forEach(clearTimeout); ov.end(); } };
+      } catch (e) { return null; }
+    }
     async function attack(u, foes, hits, dmg, tok, ultHit) {
-      const fx = tlAttackFx(u, hits, tok);
+      const fx = tlAttackFx(u, hits, tok) || tpAttackFx(u, hits, tok);
       try { return await attackBase(u, foes, hits, dmg, tok, ultHit); } finally { if (fx) fx.end(); }
     }
     async function attackBase(u, foes, hits, dmg, tok, ultHit) {
@@ -2986,17 +3014,14 @@ function addAccExp(n) {
     // TIA ĐÁNH: số lần sát thương của MỖI nhịp đánh (đòn thường, từng cây tre / bướm / nhát chém / lốc xoáy…). Số nhịp của chiêu giữ nguyên.
     // MỖI TIA = 1 lần ĐỦ 3 loại sát thương (Công−Thủ • Bạo • Phá giáp), mỗi loại 100%, hiện thành từng con số riêng (KHÔNG cộng dồn thành 1).
     // VD Bắc Cái cố định 18 cây tre, 5 tia → mỗi cây trúng 5 lần; Hoa Mãn Lâu 3 bướm, 5 tia → mỗi bướm 5 lần; Trương Tam Phong 5 tia → lốc xoáy 5 lần.
-    const tiaOf = u => Math.min(100, Math.max(1, Math.floor((u && u.tia) || 1)));
+    const tiaOf = () => 1;   // ĐÃ BỎ cơ chế tia: mọi nhịp đánh chỉ gây 1 lần sát thương
     const rayWait = i => (battleFast ? 0 : i * 170 * ultTimeScale * battleSlow);
     // PvE: mỗi lần chiêu gây sát thương trúng đích thì người đánh +RAGE_HIT nộ (PvP không có; trượt không có; đánh thường đã có +RAGE_ATK riêng)
     function rageOnHit(u) { if (!pvp && u && u.rage != null && u.alive) gainRage(u, RAGE_HIT); }
     function strike(u, t, raw) {   // false = trượt (trượt thì cả nhịp trượt)
       if (missed(u, t)) return false;
-      const n = tiaOf(u);
-      for (let i = 0; i < n && t.alive; i++) {
-        const p = calcDmg(u, t, raw);   // tính lại mỗi tia (Thủ / Đỡ đòn / khiên của mục tiêu có thể đổi)
-        hit(t, p.main + p.crit + p.pierce, false, u, false, p, { i, wait: rayWait(i) });
-      }
+      const p = calcDmg(u, t, raw);
+      hit(t, p.main + p.crit + p.pierce, false, u, false, p);
       return true;
     }
     function floatText(u, t) {
@@ -5462,6 +5487,61 @@ GP.add(TM_SWORD_IMG, 2);
         setFace(true); [16, 17, 16, 17].forEach((fr, i) => at(i * 105, () => cast.show(fr)));
         await sleep(460); if (tok !== battleToken) return;
       } finally { timers.forEach(clearTimeout); cast.end(); made.forEach(d => d.remove()); u.el.getAnimations().forEach(a => a.cancel()); u.el.style.zIndex = oldZ; }
+    }
+/* === thiet-phien (tuyệt kỹ Thiết Phiến) === */
+/* THIẾT PHIẾN (id 23, tướng kỹ năng – lượt nào cũng ulti): NHẢY LÊN tung quạt, xoay tròn (SEQ.tpUlt: khung 0-7 nhảy lên, 8-19 xoay trong lốc)
+   → LỐC XOÁY LỚN (SEQ.tpTornado, 20 khung) xuất hiện GIỮA đội địch → TP_HITS lần sát thương lên TOÀN địch (tổng TP_MULT × Công).
+   Khi lốc xuất hiện: toàn địch giảm TP_SLOW Tốc (TP_SLOW_TURNS hiệp). SAU khi đánh xong: TP_SILENCE_TARGETS địch ngẫu nhiên bị CÂM LẶNG TP_SILENCE_TURNS hiệp.
+   Tham số: heros/hero-data.js → skillConfig (TP_*), hoặc admin → tab Chiêu thức. */
+    async function thietPhienUlt(u, tok) {
+      const g = nt(u), { W, H, made } = g, es0 = g.es(); if (!es0.length) return;
+      const S = SEQ.tpUlt, TN = SEQ.tpTornado, I = SEQ.tpIdle, timers = [], oldZ = u.el.style.zIndex;
+      const at = (ms, fn) => timers.push(setTimeout(() => { if (tok === battleToken) fn(); }, seqT(ms)));
+      const nHit = Math.max(1, Math.floor(TP_HITS)), per = u.atk * TP_MULT * (u.sk || 1) / nHit;   // tổng TP_MULT × Công chia đều cho các lần
+      const idleH = (SEQ_IDLE[u.id] && SEQ_IDLE[u.id].h) || 120, castW = Math.round(S.cw * idleH / I.ch);   // cùng tỉ lệ người với dáng đứng
+      const be = g.box0(es0);
+      const spanX = (be.maxX - be.minX) * W / 100, spanY = (be.maxY - be.minY) * H / 100;
+      const tw = Math.round(Math.max(idleH * 2.4, Math.min(W * 0.85, Math.max(spanX + 150, spanY * 1.2 + 150))));   // lốc xoáy phủ cả đội địch
+      const cast = seqOverlay(u, S, castW);
+      const F1 = 70, F2 = 90, TF = 60, T0 = 480;   // ms: mỗi khung nhảy (0-7) • mỗi khung xoay (8-19) • mỗi khung lốc xoáy • lúc lốc xoáy bắt đầu hiện
+      const hitFr = Array.from({ length: nHit }, (_, k) => nHit === 1 ? 10 : Math.round(7 + 8 * k / (nHit - 1)));   // khung lốc xoáy khi xảy ra từng đợt sát thương (7…15)
+      const tor = g.mk('bf-seq-fx', '', be.cx, be.cy); tor.style.zIndex = 106; tor.style.transform = 'translate(-50%,-58%)'; tor.style.opacity = '0'; tor.style.transition = 'opacity .15s';
+      const te = seqEl(TN, tw); tor.appendChild(te);
+      try {
+        u.el.style.zIndex = 99;
+        u.el.animate([{ filter: 'drop-shadow(0 0 0 #7dd3fc)' }, { filter: 'drop-shadow(0 0 20px #7dd3fc)' }, { filter: 'drop-shadow(0 0 0 #7dd3fc)' }], { duration: 900 });
+        // 1. Nhảy lên (khung 0-7) rồi xoay tròn tung quạt (khung 8-19)
+        for (let i = 0; i < 8; i++) at(i * F1, () => cast.show(i));
+        for (let i = 8; i < 20; i++) at(8 * F1 + (i - 8) * F2, () => cast.show(i));
+        // 2. Lốc xoáy lớn hiện giữa đội địch; toàn địch giảm Tốc
+        at(T0, () => {
+          tor.style.opacity = '1'; te.show(0);
+          es0.forEach(e => { if (!e.alive) return; pctMod(e, 'spd', -TP_SLOW, TP_SLOW_TURNS, 'debuff', 'tp:slow'); sayLater(e, '🐌 TỐC -' + Math.round(TP_SLOW * 100) + '%', 250); });
+          refreshPanel();
+        });
+        for (let i = 1; i < TN.n; i++) at(T0 + i * TF, () => te.show(i));
+        // 3. Các đợt sát thương lên TOÀN địch
+        hitFr.forEach(fr => at(T0 + fr * TF, () => {
+          const es = g.es(); if (!es.length) return;
+          g.shake();
+          es.forEach(e => {
+            skillHit(e, per, u);
+            const fl = document.createElement('div'); fl.className = 'bf-bflash'; fl.style.left = e.x + '%'; fl.style.top = e.y + '%'; fl.style.setProperty('--fc', '#7dd3fc');
+            g.box.appendChild(fl); made.push(fl); setTimeout(() => fl.remove(), 450);
+          });
+          refreshPanel();
+        }));
+        // 4. Sau khi đánh xong: CÂM LẶNG ngẫu nhiên TP_SILENCE_TARGETS địch
+        at(T0 + (hitFr[hitFr.length - 1] + 2) * TF, () => {
+          g.es().sort(() => Math.random() - 0.5).slice(0, Math.max(1, Math.floor(TP_SILENCE_TARGETS))).forEach(e => {
+            const d = e.dn || (e.dn = {}); d.silence = Math.max(TP_SILENCE_TURNS, d.silence || 0); refreshDbf(e); floatText(e, '🤐 CÂM LẶNG ' + TP_SILENCE_TURNS + ' HIỆP');
+          });
+          refreshPanel();
+        });
+        at(T0 + TN.n * TF, () => { tor.style.opacity = '0'; });
+        await sleep(T0 + TN.n * TF + 200); if (tok !== battleToken) return;
+        dropDeadEffects(es0);
+      } finally { timers.forEach(clearTimeout); cast.end(); made.forEach(d => d.remove()); tor.remove(); u.el.getAnimations().forEach(a => a.cancel()); u.el.style.zIndex = oldZ; }
     }
 ;
 
