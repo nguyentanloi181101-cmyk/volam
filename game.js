@@ -75,7 +75,7 @@ window.GP = (function () {
     sprites: {
       tpIdle:    { src: 'thiet-phien-idle.webp?v=1',    cw: 307,   ch: 256, n: 20 },   // 6140×256 = 20 khung đứng yên
       tpAtk:     { src: 'thiet-phien-attack.webp?v=1',  cw: 350,   ch: 350, n: 20 },   // 7000×350 = 20 khung đánh thường
-      tpUlt:     { src: 'thiet-phien-ult.webp?v=1',     cw: 332.5, ch: 341, n: 20 },   // 6650×341 = 20 khung nhảy lên + xoay trong lốc
+      tpUlt:     { src: 'thiet-phien-ult.webp?v=2',     cw: 350,   ch: 341, n: 19 },   // 6650×341 = 19 khung 350×341: nhảy lên + xoay trong lốc
       tpTornado: { src: 'thiet-phien-tornado.webp?v=1', cw: 307,   ch: 300, n: 20 }    // 6140×300 = 20 khung lốc xoáy lớn
     },
     skillConfig: { TP_MULT: 2.4, TP_HITS: 4, TP_SLOW: 0.15, TP_SLOW_TURNS: 3, TP_SILENCE_TARGETS: 3, TP_SILENCE_TURNS: 1 }
@@ -5489,7 +5489,7 @@ GP.add(TM_SWORD_IMG, 2);
       } finally { timers.forEach(clearTimeout); cast.end(); made.forEach(d => d.remove()); u.el.getAnimations().forEach(a => a.cancel()); u.el.style.zIndex = oldZ; }
     }
 /* === thiet-phien (tuyệt kỹ Thiết Phiến) === */
-/* THIẾT PHIẾN (id 23, tướng kỹ năng – lượt nào cũng ulti): NHẢY LÊN tung quạt, xoay tròn (SEQ.tpUlt: khung 0-7 nhảy lên, 8-19 xoay trong lốc)
+/* THIẾT PHIẾN (id 23, tướng kỹ năng – lượt nào cũng ulti): NHẢY LÊN tung quạt, xoay tròn (SEQ.tpUlt: khung 0-7 nhảy lên, 8-18 xoay trong lốc)
    → LỐC XOÁY LỚN (SEQ.tpTornado, 20 khung) xuất hiện GIỮA đội địch → TP_HITS lần sát thương lên TOÀN địch (tổng TP_MULT × Công).
    Khi lốc xuất hiện: toàn địch giảm TP_SLOW Tốc (TP_SLOW_TURNS hiệp). SAU khi đánh xong: TP_SILENCE_TARGETS địch ngẫu nhiên bị CÂM LẶNG TP_SILENCE_TURNS hiệp.
    Tham số: heros/hero-data.js → skillConfig (TP_*), hoặc admin → tab Chiêu thức. */
@@ -5512,7 +5512,7 @@ GP.add(TM_SWORD_IMG, 2);
         u.el.animate([{ filter: 'drop-shadow(0 0 0 #7dd3fc)' }, { filter: 'drop-shadow(0 0 20px #7dd3fc)' }, { filter: 'drop-shadow(0 0 0 #7dd3fc)' }], { duration: 900 });
         // 1. Nhảy lên (khung 0-7) rồi xoay tròn tung quạt (khung 8-19)
         for (let i = 0; i < 8; i++) at(i * F1, () => cast.show(i));
-        for (let i = 8; i < 20; i++) at(8 * F1 + (i - 8) * F2, () => cast.show(i));
+        for (let i = 8; i < S.n; i++) at(8 * F1 + (i - 8) * F2, () => cast.show(i));
         // 2. Lốc xoáy lớn hiện giữa đội địch; toàn địch giảm Tốc
         at(T0, () => {
           tor.style.opacity = '1'; te.show(0);
