@@ -8020,7 +8020,8 @@ function ttFake(seed) { let h = 0; String(seed || '').split('').forEach(c => h =
 function gdBang() {
   const s = gdSt(); s.bang = Object.assign({ name: 'Văn Lang', notice: 'Chạm vào đây để sửa công cáo bang.', exp: 0, news: [], basin: 0 }, s.bang || {}); s.bangId = s.bangId || ''; s.bangApply = s.bangApply || ''; return s;
 }
-const gdExpMax = lv => G2.expBase * Math.pow(G2.expMult, Math.max(0, lv - 1));   // cấp 1 = 5.000 EXP, mỗi cấp sau nhân 2, không giới hạn cấp
+const GD_LV_MAX = 10;   // cấp bang tối đa; đạt cấp này thì EXP Bang dừng ở mức đầy của cấp 10, không lên nữa
+const gdExpMax = lv => G2.expBase * Math.pow(G2.expMult, Math.max(0, lv - 1));   // cấp 1 = 5.000 EXP, mỗi cấp sau nhân 2, tối đa cấp GD_LV_MAX
 const DS_MAXMEM = 45, DS_ROLE = { chu: 'Bang Chủ', pho: 'Phó Bang', tv: 'Thành Viên' };
 const dsOn = () => !!(typeof clDb !== 'undefined' && clDb && typeof clUser !== 'undefined' && clUser);
 const dsRef = id => clDb.collection('guilds').doc(id);
@@ -8141,7 +8142,7 @@ function dsDraw() {
   document.getElementById('ds-tabs').innerHTML = [['bang', 'Bang Hội'], ['tv', 'Thành Viên'], ['tin', 'Tin Tức']].map(([k, n]) => `<button class="${dsTab === k ? 'on' : ''}" onclick="dsTabSet('${k}')">${n}</button>`).join('');
   let body = '';
   if (dsTab === 'bang') body = `<div class="ds-head"><div class="ds-logo">🔥</div><div class="ds-nm"><b><i class="lvb">${g.lv}</i> ${chEsc(g.name)}</b><div>Nhân Số ${dsMemN(g)}/${DS_MAXMEM} <small>(Cần cấp ${g.minLv || 1})</small></div></div><button class="ds-leave" onclick="dsLeave()">Rời Bang</button></div>
-    <div class="ds-body"><div class="ds-paper"><div onclick="dsNotice()" style="cursor:${mgr ? 'pointer' : 'default'}"><span class="k">Công Cáo :</span> ${chEsc(g.notice || '')}${mgr ? '' : ''}</div><div><span class="k">Chức Vụ :</span> ${DS_ROLE[me.r]}</div><div><span class="k">Uy Tín :</span> ${fmtN(s.uytin)}</div><div><span class="k">EXP Bang :</span> ${fmtN(g.exp || 0)}/${fmtN(max)}</div>
+    <div class="ds-body"><div class="ds-paper"><div onclick="dsNotice()" style="cursor:${mgr ? 'pointer' : 'default'}"><span class="k">Công Cáo :</span> ${chEsc(g.notice || '')}${mgr ? '' : ''}</div><div><span class="k">Chức Vụ :</span> ${DS_ROLE[me.r]}</div><div><span class="k">Uy Tín :</span> ${fmtN(s.uytin)}</div><div><span class="k">EXP Bang :</span> ${g.lv >= GD_LV_MAX ? 'MAX (cấp ' + GD_LV_MAX + ')' : fmtN(g.exp || 0) + '/' + fmtN(max)}</div>
       <div><span class="k">Kỹ Năng :</span></div><div class="ds-sk">${GD_SKILLS.slice(0, 6).map((k, i) => { const lock = GD_SKILL_UNLOCK[i] > (s.dvLv || g.lv); return `<i class="${lock ? 'lock' : ''}">${lock ? GD_SKILL_UNLOCK[i] + ' Cấp Mở' : k[1]}</i>`; }).join('')}</div></div>
       <div class="ds-side"><button onclick="dsShop()">Xin Vào${mgr && nApp ? ` <span style="background:#dc2626;border-radius:9px;padding:0 6px;font-size:11px">${nApp}</span>` : ''}</button><button onclick="dsReq()">Yêu Cầu</button><button onclick="dsKick()">Mời Rời Bang</button><button onclick="dsRank()">Xếp Hạng</button></div></div>
     <div class="ds-foot"><button onclick="dsDonate()">🏅 Quyên Góp</button><button onclick="openDienVo()">💪 Cường Thân</button></div>`;
@@ -8241,7 +8242,7 @@ async function dsGive(i) {
   const uy = d[4] * q, ex = d[5] * q, nm = d[0].replace(/<[^>]+>/g, "").replace(/^\S+\s/, "");
   dsDonBusy[i] = true;
   try {
-    const lv = await dsTx(g => { g.exp = (g.exp || 0) + ex; while (g.exp >= gdExpMax(g.lv)) { g.exp -= gdExpMax(g.lv); g.lv++; dsPushNews(g, 'Bang lên cấp ' + g.lv + '!'); } dsPushNews(g, `${pvName()} quyên góp ${fmtN(cost)} ${nm}`); return g.lv; });
+    const lv = await dsTx(g => { g.exp = (g.exp || 0) + ex; if (g.lv > GD_LV_MAX) g.lv = GD_LV_MAX; while (g.lv < GD_LV_MAX && g.exp >= gdExpMax(g.lv)) { g.exp -= gdExpMax(g.lv); g.lv++; dsPushNews(g, 'Bang lên cấp ' + g.lv + '!'); } if (g.lv >= GD_LV_MAX) g.exp = Math.min(g.exp, gdExpMax(GD_LV_MAX)); dsPushNews(g, `${pvName()} quyên góp ${fmtN(cost)} ${nm}`); return g.lv; });
     d[3](cost); resSave(); const s = gdBang(); s.uytin = s.uytin + uy; s.bangLv = lv; { const dk = new Date().toDateString(); if (s.donDay !== dk) { s.donDay = dk; s.don = {}; } s.don = s.don || {}; s.don[i] = 1; } gdSave(s); scToast(`+${uy} Uy Tín`);
   } catch (e) { dsDonBusy[i] = false; return scToast(dsErr(e)); }
   dsDonBusy[i] = false;
