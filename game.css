@@ -1550,7 +1550,7 @@ img.gi-g{height:1.15em;width:auto;vertical-align:-.2em;display:inline-block}.bm-
    Nạp SAU cascade-fixes.css. !important để đè cả nền riêng từng Ải (has-bg / style inline). Muốn đổi nền: thay file battle-bg.webp. */
 #battle-overlay .bf-field,
 #battle-overlay .bf-field.has-bg{
-  background:#0b1030 url('giao-dien/battle-bg.webp?v=2') center 85%/cover no-repeat !important;
+  background:#0b1030 var(--bf-bg, url('giao-dien/battle-bg.webp?v=2')) center 85%/cover no-repeat !important;
 }
 #battle-overlay .bf-field .bf-mount,
 #battle-overlay .bf-field .bf-ground{display:none !important}
@@ -1701,3 +1701,48 @@ img.gi-g{height:1.15em;width:auto;vertical-align:-.2em;display:inline-block}.bm-
 /* Đám mây thần thú: đặt theo ĐƯỜNG CHÂN (đáy khung thần thú), nằm TRÊN thần thú để che chân. Không còn neo theo đáy sân nên đổi ảnh mây cao thấp khác nhau vẫn che đúng chân.
    Muốn che nhiều/ít chân: đổi -45% (số âm lớn hơn = mây nhô lên cao hơn). */
 .bf-bst-cloud{bottom:auto;top:calc(100% - 12px);translate:0 -80%;z-index:2}
+
+/* === giang-ho/than-dan.css — THẦN ĐÀN (boss vô tận 5 trang theo chất tướng) === */
+#screen-thandan{--tdc:#f97316;background:radial-gradient(circle at 50% 0%,color-mix(in srgb,var(--tdc) 38%,#0b0716) 0%,#0b0716 70%)}
+.td-head{display:flex;align-items:center;gap:8px;padding:10px 12px;flex-shrink:0;background:linear-gradient(180deg,rgba(0,0,0,.55),rgba(0,0,0,0));border-bottom:2px solid var(--tdc)}
+.td-back{width:34px;height:34px;border-radius:50%;border:1px solid #fde68a;background:rgba(0,0,0,.5);color:#fde68a;font-size:15px;font-weight:900;cursor:pointer}
+.td-title{flex:1;font-size:20px;font-weight:900;color:#fde047;letter-spacing:1px;text-shadow:0 0 10px rgba(250,204,21,.7),2px 2px 0 #7c2d12}
+.td-rst{font-size:11px;color:#e0e7ff}.td-rst b{color:#fde047}
+.td-tabs{display:flex;gap:8px;overflow-x:auto;padding:10px 10px 6px;flex-shrink:0;scrollbar-width:none}
+.td-tabs::-webkit-scrollbar{display:none}
+.td-tab{position:relative;flex:0 0 46%;max-width:240px;cursor:pointer;opacity:.55;filter:saturate(.7);transition:transform .15s,opacity .15s}
+.td-tab img{display:block;width:100%;height:auto;filter:drop-shadow(0 3px 5px rgba(0,0,0,.6))}
+.td-tab b{position:absolute;right:6%;bottom:2%;font-size:11px;color:#fff;background:rgba(0,0,0,.65);border:1px solid var(--tdc);border-radius:8px;padding:0 6px}
+.td-tab.on{opacity:1;filter:none;transform:scale(1.04)}
+.td-tab.on img{filter:drop-shadow(0 0 10px var(--tdc)) drop-shadow(0 3px 5px rgba(0,0,0,.6))}
+.td-body{flex:1;overflow-y:auto;padding:6px 14px 20px;display:flex;flex-direction:column;align-items:center;gap:10px;color:#e0e7ff}
+.td-ai{font-size:30px;font-weight:900;color:#fde047;text-shadow:0 0 12px rgba(250,204,21,.7)}
+.td-sub{font-size:12px;text-align:center;margin-top:-6px}
+.td-rule{width:100%;display:flex;flex-direction:column;gap:6px;font-size:12px;line-height:1.4}
+.td-rule .ok,.td-rule .bad{border-radius:10px;padding:7px 10px;background:rgba(0,0,0,.4)}
+.td-rule .ok{border:1px solid #4ade80;color:#bbf7d0}.td-rule .bad{border:1px solid #f87171;color:#fecaca}
+.td-rule b{color:#fde047}
+.td-team{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;width:100%}
+.td-chip{width:calc(20% - 6px);min-width:58px;border-radius:10px;padding:4px 2px;text-align:center;background:rgba(0,0,0,.45);border:1px solid #64748b}
+.td-chip.ok{border-color:#4ade80;box-shadow:0 0 8px rgba(74,222,128,.45)}.td-chip.bad{border-color:#f87171}
+.td-chip .e{height:44px;display:flex;align-items:center;justify-content:center;font-size:30px}
+.td-chip .e img{max-height:44px;max-width:100%;object-fit:contain}
+.td-chip .n{font-size:10px;font-weight:bold;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.td-chip .t{font-size:9px;line-height:1.2;margin-top:2px}.td-chip.ok .t{color:#86efac}.td-chip.bad .t{color:#fca5a5}
+.td-none{font-size:12px;color:#94a3b8}
+.td-warn{width:100%;font-size:12px;text-align:center;color:#fecaca;background:rgba(127,29,29,.45);border:1px solid #f87171;border-radius:8px;padding:6px 8px}
+.td-go{width:100%;max-width:340px;padding:12px;border-radius:14px;border:2px solid #fde68a;background:linear-gradient(var(--tdc),#1f1235);color:#fff;font-size:17px;font-weight:900;letter-spacing:.5px;box-shadow:0 0 14px var(--tdc),0 3px 8px rgba(0,0,0,.6);cursor:pointer}
+.td-go:active{transform:scale(.97);filter:brightness(1.15)}
+.td-note{font-size:11px;line-height:1.6;text-align:center;color:#c7d2fe}
+.td-note b{color:#fde047}.td-note .gi{width:18px;height:18px;vertical-align:middle}
+.td-entry{flex-shrink:0;cursor:pointer;border-radius:8px;padding:14px 16px;border:2px solid #fde68a;box-shadow:0 3px 8px rgba(0,0,0,.6);background:linear-gradient(100deg,#7c2d12 0%,#581c87 55%,#0f172a 100%);color:#fff}
+.td-entry .t{font-size:22px;font-weight:900;color:#fde047;text-shadow:0 0 10px rgba(250,204,21,.7),2px 2px 0 #7c2d12}
+.td-entry .s{font-size:12px;margin-top:2px;color:#e9d5ff}
+.td-entry:active{transform:scale(.98);filter:brightness(1.1)}
+
+/* Thần Đàn: mỗi ngày 1 ải → chỉ hiện 1 banner ở giữa */
+.td-tabs{justify-content:center}
+.td-tab{cursor:default;flex:0 0 62%;max-width:300px}
+.td-entry{display:none!important}
+.tn-pi.rm.cap { font-size: 11px; line-height: 1.25; text-align: center; padding: 2px; flex-direction: column; background: linear-gradient(180deg, #b45309, #78350f); border-color: #f59e0b; }
+.tn-pi.rm.cap.sel { box-shadow: 0 0 0 2px #4ade80, 0 0 10px #22c55e; }
