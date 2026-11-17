@@ -8437,8 +8437,25 @@ var clAuth = null, clDb = null, clUser = null, clTimer = null, clDirty = false, 
 const clOwner = () => { try { return _lsGet.call(localStorage, 'cloud_owner') || ''; } catch (e) { return ''; } };
 const clSetOwner = u => { try { _lsSet.call(localStorage, 'cloud_owner', u); } catch (e) {} };
 // Đồng bộ xong -> sau 2,5 giây đăng lại đội hình Tỷ Võ mới (bỏ cờ stale do admin đặt khi reset / khôi phục)
-function clReadyOk(uid) { clReady = uid; clSetOwner(uid); clStartCtlPoll(); setTimeout(() => { try { clPublishPvp().catch(() => {}); } catch (e) {} }, 2500); if (clDirty && !clTimer) clTimer = setTimeout(clPush, 3000); }
+function clReadyOk(uid) { clReady = uid; clGate(false); clSetOwner(uid); clStartCtlPoll(); setTimeout(() => { try { clPublishPvp().catch(() => {}); } catch (e) {} }, 2500); if (clDirty && !clTimer) clTimer = setTimeout(clPush, 3000); }
 const clCfgOk = () => !!(FIREBASE_CONFIG.apiKey && FIREBASE_CONFIG.projectId);
+// MÀN CHỜ ĐỒNG BỘ: dữ liệu trên máy có thể là của bản cũ / đã bị admin reset. Chưa đồng bộ xong với đám mây thì
+// KHÔNG cho thấy dữ liệu máy (tránh nháy ra acc cũ rồi mới nhảy sang acc thật). Đồng bộ xong (hoặc lỗi / hết giờ) mới mở.
+var clReloading = false, clGateTimer = null;
+function clGate(on, txt) {
+  try {
+    let g = document.getElementById('cl-gate');
+    if (!on) { if (g) g.remove(); clearTimeout(clGateTimer); clGateTimer = null; return; }
+    if (!g) {
+      g = document.createElement('div'); g.id = 'cl-gate';
+      g.style.cssText = 'position:fixed;inset:0;z-index:2147483000;background:#0b1a12;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:#fde68a;font:700 15px sans-serif';
+      g.innerHTML = '<div style="font-size:38px">☁️</div><div id="cl-gate-t"></div>';
+      (document.body || document.documentElement).appendChild(g);
+    }
+    const t = document.getElementById('cl-gate-t'); if (t) t.innerText = txt || 'Đang đồng bộ dữ liệu tài khoản...';
+    clearTimeout(clGateTimer); clGateTimer = setTimeout(() => clGate(false), 20000);   // an toàn: mất mạng / treo quá 20s thì vẫn mở game
+  } catch (e) {}
+}
 const clLocalT = () => Number(_lsGet.call(localStorage, 'cloud_local_t')) || 0;
 const clHasLocal = () => SV_KEYS.some(k => _lsGet.call(localStorage, k) !== null);
 
@@ -8458,15 +8475,16 @@ function clLoadScript(src) {
 }
 async function clInit() {
   if (clInited) return; clInited = true;
+  try { if (clCfgOk() && _lsGet.call(localStorage, 'cl_was_in') === '1') clGate(true); } catch (e) {}   // đã đăng nhập từ trước: chờ đồng bộ rồi mới hiện game
   clRender();
-  if (!clCfgOk()) { lgOfflineShow(); return; }
+  if (!clCfgOk()) { clGate(false); lgOfflineShow(); return; }
   try {
     await clLoadScript(CL_SDK + 'firebase-app-compat.js');
     await Promise.all([clLoadScript(CL_SDK + 'firebase-auth-compat.js'), clLoadScript(CL_SDK + 'firebase-firestore-compat.js')]);
     firebase.initializeApp(FIREBASE_CONFIG);
     clAuth = firebase.auth(); clDb = firebase.firestore();
-    clAuth.onAuthStateChanged(u => { clUser = u; if (!u) clSessStop(); clRender(); lgUpdate(u); try { if (typeof updateMailBadge === 'function') updateMailBadge(); } catch (e) {} if (u) clSync(); });
-  } catch (e) { clMsg('Không tải được Firebase (mất mạng hoặc bị chặn). Game vẫn chơi bình thường.', false); lgOfflineShow(); }
+    clAuth.onAuthStateChanged(u => { clUser = u; if (!u) { clSessStop(); clGate(false); } else if (clReady !== u.uid) clGate(true); clRender(); lgUpdate(u); try { if (typeof updateMailBadge === 'function') updateMailBadge(); } catch (e) {} if (u) clSync(); });
+  } catch (e) { clGate(false); clMsg('Không tải được Firebase (mất mạng hoặc bị chặn). Game vẫn chơi bình thường.', false); lgOfflineShow(); }
 }
 
 function clErr(e) {
@@ -8507,6 +8525,7 @@ function clStartFresh(uid) {
     _lsSet.call(localStorage, 'cloud_ep', String(clEp || 0));
     if (uid) _lsSet.call(localStorage, 'cloud_owner', uid);
   } catch (e) {}
+  clReloading = true; clGate(true, 'Đang khởi tạo tài khoản...');
   setTimeout(() => location.reload(), 600);
 }
 async function clLogin(pfx) {
@@ -8676,12 +8695,17 @@ function clApplyCloud(cloud, uid) {
     _lsSet.call(localStorage, 'cloud_ep', String(clEp || 0));
     if (uid) _lsSet.call(localStorage, 'cloud_owner', uid);
   } catch (e) { clMsg('Không ghi được dữ liệu vào máy này.', false); return; }
+  clReloading = true; clGate(true, 'Đang tải dữ liệu tài khoản...');
   clMsg('✔ Đã tải dữ liệu từ đám mây, đang tải lại game...');
   setTimeout(() => location.reload(), 500);
 }
 // Đồng bộ theo TÀI KHOẢN: dữ liệu trên máy có "chủ" (cloud_owner). Khác chủ -> luôn lấy dữ liệu đám mây của tài khoản đang đăng nhập
 // (không bao giờ đẩy dữ liệu của tài khoản khác lên). Cùng chủ -> bản nào MỚI HƠN thì thắng.
 async function clSync() {
+  try { await clSync0(); }
+  finally { if (!clReloading && !clBusy && (!clUser || clReady !== clUser.uid)) clGate(false); }   // đồng bộ lỗi / bị khóa / nơi khác đăng nhập: không để màn chờ kẹt
+}
+async function clSync0() {
   if (!clUser || !clDb || clBusy) return; clBusy = true;
   const ask = clAsk; clAsk = false;
   const fresh = clFresh; clFresh = false;
