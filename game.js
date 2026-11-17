@@ -2759,8 +2759,10 @@ function addAccExp(n) {
     // ---- Thẻ tướng ở trang chủ ----
     function renderHomeTeam() {
       const row = document.getElementById('home-team-row'); if (!row) return;
-      row.innerHTML = team.map(id => {
-        const h = heroById(id); if (!h) return '';
+      // Luôn hiện đủ 5 khung theo đúng vị trí ô (teamSlots). Ô trống giữ nguyên chỗ, không dồn tướng, không biến mất.
+      row.innerHTML = [0, 1, 2, 3, 4].map(i => {
+        const id = teamSlots[i], h = id != null ? heroById(id) : null;
+        if (!h) return `<div class="hero-card hero-empty" onclick="tnOpenPick('team',${i})"><div class="he-txt"><span>Chọn</span><span>Tướng</span><span>Ra</span><span>Trận</span></div></div>`;
         const p = getProg(id), b = HERO_BORDER[id] || 'orange';
         return `<div class="hero-card border-${b}" onclick="openHeroDetail(${id})"><div class="hero-top-star"></div><div class="hero-bg-sprite">${heroIcon(h)}</div><div class="hero-bottom-bar"><div class="hero-lvl">${p.lv}</div><div class="hero-stars">${homeStars(p.star)}</div></div></div>`;
       }).join('');
