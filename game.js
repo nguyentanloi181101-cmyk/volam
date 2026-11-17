@@ -277,13 +277,13 @@ window.GP = (function () {
     combat: { def: 300, dodge: 60, acc: 300, crit: 0, critDmg: 0, tough: 0, pierce: 0, block: 0 },
     tia: 1, role: 'atk',
     constants: { lv: 1, star: 1, border: 'orange', ultName: 'Bạch Cốt Hóa Thân' },
-    idle: { sheet: 'bcIdle', h: 125, ms: 1800 },
+    idle: { sheet: 'bctIdle', h: 125, ms: 1800 },
     ultFn: 'bachCotUlt', audio: 'bach-cot-tinh-ult.mp3?v=1',
     sprites: {
-      bcIdle: { src: 'bach-cot-tinh-idle.webp?v=1', cw: 339, ch: 231, n: 20,"face":"R" },               // 6780×231 = 20 khung đứng yên
-      bcUlt:  { src: 'bach-cot-tinh-ult.webp?v=1',  cw: 307, ch: 256, n: 20, face: 'R' }    // 6140×256 = 20 khung bộ xương: 0-3 thủ thế • 4-6 phóng vào • 7-12 giáng đòn + bụi đá • 13-19 tan bụi, đứng lại (quay mặt sang PHẢI)
+      bctIdle: { src: 'bach-cot-tinh-idle.webp?v=1', cw: 339, ch: 231, n: 20,"face":"R" },               // 6780×231 = 20 khung đứng yên
+      bctUlt:  { src: 'bach-cot-tinh-ult.webp?v=1',  cw: 307, ch: 256, n: 20, face: 'R' }    // 6140×256 = 20 khung bộ xương: 0-3 thủ thế • 4-6 phóng vào • 7-12 giáng đòn + bụi đá • 13-19 tan bụi, đứng lại (quay mặt sang PHẢI)
     },
-    skillConfig: { BC_HITS: 3, BC_SCALE: 1.25 }
+    skillConfig: { BCT_HITS: 3, BCT_SCALE: 1.25 }
   });
   // === THÁI THƯỢNG LÃO QUÂN (id 33, tướng hỗ trợ): ảnh + âm thanh ở heros/thai-thuong-lao-quan/ ===
   if (!window.HERO_DATA.heroes.some(h => h.id === 33)) window.HERO_DATA.heroes.push({
@@ -2687,7 +2687,7 @@ function addAccExp(n) {
       else if (id === 29) ult = `Cần đầy 100 nộ. TRƯỚC khi ra đòn: toàn đội ta tăng ${pct(NT_ATK_UP)}% Công ${NT_ATK_TURNS} hiệp, toàn địch giảm ${pct(NT_DODGE_DOWN)}% Né ${NT_DODGE_TURNS} hiệp. Rồi nhảy vọt lên cao, đá liên tiếp ${NT_WHEELS} Hỏa Luân khổng lồ từ đội ta sang đội địch: gây ${NT_HITS} lần sát thương lên TOÀN địch, tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}, mỗi lần ≈ ${fmtN(st.atk * sk / NT_HITS)}). Toàn địch bị THIÊU ĐỐT: mỗi hiệp mất ${pct(NT_BURN_PCT)}% HP hiện tại trong ${NT_BURN_TURNS} hiệp.`;
       else if (id === 30) ult = `Cần đầy 100 nộ. TRƯỚC khi ra đòn: toàn đội ta TĂNG ${SB_TOUGH_UP} Bền ${SB_TURNS} hiệp, toàn địch GIẢM ${SB_TOUGH_DOWN} Bền ${SB_TURNS} hiệp. Rồi Sa Tăng hóa thân KHỔNG LỒ, vung Nguyệt Nha Sản chém xuống TOÀN địch ${SB_HITS} lần, tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}, mỗi lần ≈ ${fmtN(st.atk * sk / SB_HITS)}).`;
       else if (id === 31) ult = `KHÔNG TỐN NỘ – lượt nào cũng ulti được. Ulti TẠI CHỖ: bản thân tăng ${pct(BG_DEF_UP)}% Thủ trong ${BG_DEF_TURNS} hiệp, rồi hồi ${pct(BG_HEAL)}% HP tối đa của bản thân (≈ ${fmtN(st.hp * BG_HEAL)}).`;
-      else if (id === 32) ult = `Cần đầy 100 nộ. HÓA THÂN thành BẠCH CỐT (bộ xương), nhảy vào GIỮA đội địch gây ${BC_HITS} lần sát thương lên TOÀN địch, tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}, mỗi lần ≈ ${fmtN(st.atk * sk / BC_HITS)}). Đánh xong, THÔI MIÊN 1 địch (ưu tiên công kích / kỹ năng): địch đó lập tức TỰ ULTI đánh chính đồng đội của mình.`;
+      else if (id === 32) ult = `Cần đầy 100 nộ. HÓA THÂN thành BẠCH CỐT (bộ xương), nhảy vào GIỮA đội địch gây ${BCT_HITS} lần sát thương lên TOÀN địch, tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}, mỗi lần ≈ ${fmtN(st.atk * sk / BCT_HITS)}). Đánh xong, THÔI MIÊN 1 địch (ưu tiên công kích / kỹ năng): địch đó lập tức TỰ ULTI đánh chính đồng đội của mình.`;
       else if (id === 33) ult = `Cần đầy 100 nộ. TRƯỚC khi ra đòn: toàn đội ta tăng ${pct(LQ_HEAL_UP)}% hiệu quả hồi máu (x${1 + LQ_HEAL_UP}) trong ${LQ_HEAL_TURNS} hiệp, toàn địch bị CẤM HỒI MÁU ${LQ_NOHEAL_TURNS} hiệp. Rồi nhảy lên, giơ ĐỈNH khổng lồ quá đầu và ném xuống đội địch: gây ${LQ_HITS} lần sát thương lên TOÀN địch, tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}, mỗi lần ≈ ${fmtN(st.atk * sk / LQ_HITS)}).`;
       else if (id === 34) ult = `VÀO TRẬN ĐẦY 100 NỘ – ulti được ngay hiệp đầu. TRƯỚC khi ra đòn: toàn đội ta tăng ${pct(DL_CRIT_UP)}% Bạo và ${pct(DL_CDMG_UP)}% Bạo Sát trong ${DL_TURNS} hiệp. Rồi Diêm La Vương đứng yên chọi Lệnh Bài Sinh Tử xuống: lệnh bài rơi giữa đội địch rồi nổ, gây ${DL_HITS} lần sát thương lên TOÀN địch, tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}, mỗi lần ≈ ${fmtN(st.atk * sk / DL_HITS)}).`;
       else ult = `Lao vào địch, đánh ${ULT_HITS} đòn liên tiếp, tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}, mỗi đòn ≈ ${fmtN(st.atk * sk / Math.max(1, ULT_HITS))}). Cần đầy 100 nộ.`;
@@ -2743,7 +2743,7 @@ function addAccExp(n) {
           case 29: return `Cả đội +${pct(NT_ATK_UP)}% Công ${NT_ATK_TURNS} hiệp, toàn địch -${pct(NT_DODGE_DOWN)}% Né ${NT_DODGE_TURNS} hiệp. Đá ${NT_WHEELS} Hỏa Luân gây ${NT_HITS} lần sát thương lên TOÀN địch, rồi thiêu đốt mất ${pct(NT_BURN_PCT)}% HP hiện tại mỗi hiệp ${NT_BURN_TURNS} hiệp.`;
           case 30: return `Cả đội +${SB_TOUGH_UP} Bền, toàn địch -${SB_TOUGH_DOWN} Bền ${SB_TURNS} hiệp. Hóa khổng lồ chém xuống TOÀN địch ${SB_HITS} lần.`;
           case 31: return `Tại chỗ: bản thân +${pct(BG_DEF_UP)}% Thủ ${BG_DEF_TURNS} hiệp, hồi ${pct(BG_HEAL)}% HP tối đa. Lượt nào cũng ulti.`;
-          case 32: return `Hóa Bạch Cốt nhảy vào giữa địch, ${BC_HITS} lần sát thương TOÀN địch. Rồi thôi miên 1 địch (ưu tiên công kích/kỹ năng) tự ulti đánh đồng đội.`;
+          case 32: return `Hóa Bạch Cốt nhảy vào giữa địch, ${BCT_HITS} lần sát thương TOÀN địch. Rồi thôi miên 1 địch (ưu tiên công kích/kỹ năng) tự ulti đánh đồng đội.`;
           case 33: return `Cả đội ta x${1 + LQ_HEAL_UP} hồi máu ${LQ_HEAL_TURNS} hiệp, toàn địch cấm hồi máu ${LQ_NOHEAL_TURNS} hiệp. Ném đỉnh khổng lồ xuống địch, ${LQ_HITS} lần sát thương TOÀN địch.`;
           case 34: return `Vào trận đầy nộ, ulti hiệp đầu. Cả đội +${pct(DL_CRIT_UP)}% Bạo, +${pct(DL_CDMG_UP)}% Bạo Sát ${DL_TURNS} hiệp. Chọi lệnh bài xuống địch, ${DL_HITS} lần sát thương TOÀN địch.`;
           default: return `Lao vào địch đánh ${ULT_HITS} đòn liên tiếp.`;
@@ -6244,18 +6244,18 @@ async function batGioiUlt(u, tok) {
   } finally { timers.forEach(clearTimeout); cast.end(); made.forEach(d => d.remove()); u.el.getAnimations().forEach(a => a.cancel()); u.el.style.zIndex = oldZ; }
 }
 /* === bach-cot-tinh (tuyệt kỹ Bạch Cốt Tinh) === */
-/* BẠCH CỐT TINH (id 32, tướng công kích): HÓA THÂN thành bộ xương BẠCH CỐT (SEQ.bcUlt, 20 khung) — nhảy vào GIỮA đội địch (khung 4-6 phóng vào)
-   → BC_HITS (3) lần sát thương lên TOÀN địch (khung 7 • 9,5 • 12); tổng HL × Công chia đều cho các lần → thu thân, chạy về.
+/* BẠCH CỐT TINH (id 32, tướng công kích): HÓA THÂN thành bộ xương BẠCH CỐT (SEQ.bctUlt, 20 khung) — nhảy vào GIỮA đội địch (khung 4-6 phóng vào)
+   → BCT_HITS (3) lần sát thương lên TOÀN địch (khung 7 • 9,5 • 12); tổng HL × Công chia đều cho các lần → thu thân, chạy về.
    Đánh xong (pha KHỐNG CHẾ làm sau cùng): THÔI MIÊN 1 địch — ưu tiên vai trò công kích / kỹ năng, thiếu thì lấy địch khác (boss bang miễn nhiễm).
    Địch bị thôi miên TỰ ULTI NGAY (không cần Nộ, bất chấp câm lặng) và ĐÁNH ĐỒNG ĐỘI CỦA CHÍNH NÓ: trong lúc đó u.charm = true khiến foesOf/alliesOf của nó đảo phe.
    Tham số: skillConfig (BC_*) hoặc admin → tab Chiêu thức. Âm thanh: heros/bach-cot-tinh/bach-cot-tinh-ult.mp3 (khớp nhịp: hóa thân 0s • đòn 0,6/0,77/1,02s • thôi miên 1,7s) */
-['bcIdle', 'bcUlt'].forEach(k => { const s = SEQ[k]; if (!s) return; const im = new Image(); im.onload = () => { if (im.naturalWidth && s.n) { s.cw = im.naturalWidth / s.n; s.ch = im.naturalHeight; } }; im.src = s.src; });
+['bctIdle', 'bctUlt'].forEach(k => { const s = SEQ[k]; if (!s) return; const im = new Image(); im.onload = () => { if (im.naturalWidth && s.n) { s.cw = im.naturalWidth / s.n; s.ch = im.naturalHeight; } }; im.src = s.src; });
 async function bachCotUlt(u, tok) {
   const g = nt(u), { W, H, base, made } = g, es0 = g.es(); if (!es0.length) return;
-  const S = SEQ.bcUlt, I = SEQ.bcIdle, timers = [], oldZ = u.el.style.zIndex;
+  const S = SEQ.bctUlt, I = SEQ.bctIdle, timers = [], oldZ = u.el.style.zIndex;
   const at = (ms, fn) => timers.push(setTimeout(() => { if (tok === battleToken) fn(); }, seqT(ms)));
-  const nHit = Math.max(1, Math.floor(BC_HITS));
-  const idleH = (SEQ_IDLE[u.id] && SEQ_IDLE[u.id].h) || 125, castW = Math.round(S.cw * idleH / I.ch * (Number(BC_SCALE) || 1.25));
+  const nHit = Math.max(1, Math.floor(BCT_HITS));
+  const idleH = (SEQ_IDLE[u.id] && SEQ_IDLE[u.id].h) || 125, castW = Math.round(S.cw * idleH / I.ch * (Number(BCT_SCALE) || 1.25));
   const cast = seqOverlay(u, S, castW);
   const COL = '#a78bfa', FR = 85, T_END = S.n * FR;
   const be = g.box0(es0), dx = (be.cx - u.x) * W / 100, dy = (be.cy - u.y) * H / 100;
