@@ -121,14 +121,21 @@ window.GP = (function () {
 
   // === THIẾT PHIẾN (id 23, tướng kỹ năng): tự thêm vào bảng tướng nếu heros/hero-data.js chưa có. Ảnh nằm ở heros/thiet-phien/ ===
   if (!window.HERO_DATA.heroes.some(h => h.id === 23)) window.HERO_DATA.heroes.push({
-    id: 23, slug: 'thiet-phien', name: 'Thiết Phiến', emoji: '🪭',
-    img: 'thiet-phien.webp?v=1', body: 'thiet-phien-body.webp?v=1', bodyH: 96,
+    id: 23,
+    slug: 'thiet-phien',
+    name: 'Thiết Phiến',
+    emoji: '🪭',
+    img: 'thiet-phien.webp?v=1',
+    body: 'thiet-phien-body.webp?v=1',
+    bodyH: 96,
     stats: { hp: 6000, atk: 700, spd: 120 },
     combat: { def: 300, dodge: 60, acc: 300, crit: 0, critDmg: 0, tough: 0, pierce: 0, block: 0 },
-    tia: 1, role: 'skill',
+    tia: 1,
+    role: 'skill',
     constants: { lv: 1, star: 1, border: 'orange', ultName: 'Cuồng Phong Thiết Phiến' },
     idle: { sheet: 'tpIdle', h: 120, ms: 1600 },
-    ultFn: 'thietPhienUlt', audio: 'thiet-phien-ult.mp3?v=1',
+    ultFn: 'thietPhienUlt',
+    audio: 'thiet-phien-ult.mp3?v=1',
     sprites: {
       tpIdle:    { src: 'thiet-phien-idle.webp?v=1',    cw: 307,   ch: 256, n: 20 },   // 6140×256 = 20 khung đứng yên
       tpAtk:     { src: 'thiet-phien-attack.webp?v=1',  cw: 350,   ch: 350, n: 20 },   // 7000×350 = 20 khung đánh thường
@@ -137,32 +144,48 @@ window.GP = (function () {
     },
     skillConfig: { TP_MULT: 2.4, TP_HITS: 4, TP_SLOW: 0.15, TP_SLOW_TURNS: 3, TP_SILENCE_TARGETS: 3, TP_SILENCE_TURNS: 1 }
   });
+
   // === DƯƠNG TIỄN (id 24, tướng công kích): ảnh + âm thanh ở heros/duong-tien/ ===
   if (!window.HERO_DATA.heroes.some(h => h.id === 24)) window.HERO_DATA.heroes.push({
-    id: 24, slug: 'duong-tien', name: 'Dương Tiễn', emoji: '🔱',
-    img: 'duong-tien.webp?v=1', body: 'duong-tien-body.webp?v=1', bodyH: 96,
+    id: 24,
+    slug: 'duong-tien',
+    name: 'Dương Tiễn',
+    emoji: '🔱',
+    img: 'duong-tien.webp?v=1',
+    body: 'duong-tien-body.webp?v=1',
+    bodyH: 96,
     stats: { hp: 6000, atk: 800, spd: 125 },
     combat: { def: 300, dodge: 60, acc: 300, crit: 0, critDmg: 0, tough: 0, pierce: 0, block: 0 },
-    tia: 1, role: 'atk',
+    tia: 1,
+    role: 'atk',
     constants: { lv: 1, star: 1, border: 'orange', ultName: 'Thiên Thương Xuyên Trận' },
     idle: { sheet: 'dyIdle', h: 162, ms: 1600 },
-    ultFn: 'duongTienUlt', audio: 'duong-tien-ult.mp3?v=1',
+    ultFn: 'duongTienUlt',
+    audio: 'duong-tien-ult.mp3?v=1',
     sprites: {
       dyIdle: { src: 'duong-tien-idle.webp?v=2', cw: 397, ch: 346, n: 20, drop: 0.13, face: 'R' },   // 6140×256 = 20 khung đứng yên (quay mặt sang PHẢI)
       dyUlt:  { src: 'duong-tien-ult.webp?v=2',  cw: 397, ch: 295, n: 25, drop: 0.153, face: 'R' }    // 7675×205 = 25 khung: 0-4 lao tới • 5-19 xoay thương (19 = nổ) • 20-24 thu thế
     },
     skillConfig: { DY_MULT: 3, DY_HITS: 7, DY_PIERCE: 15000, DY_PIERCE_TURNS: 2, DY_BLOCK_DOWN: 0.2, DY_TURNS: 2 }
   });
+
   // === QUAN ÂM (id 25, tướng hỗ trợ): ảnh + âm thanh ở heros/quan-am/ ===
   if (!window.HERO_DATA.heroes.some(h => h.id === 25)) window.HERO_DATA.heroes.push({
-    id: 25, slug: 'quan-am', name: 'Quan Âm', emoji: '🪷',
-    img: 'quan-am.webp?v=1', body: 'quan-am-body.webp?v=1', bodyH: 96,
+    id: 25,
+    slug: 'quan-am',
+    name: 'Quan Âm',
+    emoji: '🪷',
+    img: 'quan-am.webp?v=1',
+    body: 'quan-am-body.webp?v=1',
+    bodyH: 96,
     stats: { hp: 6000, atk: 500, spd: 1000 },
     combat: { def: 300, dodge: 60, acc: 300, crit: 0, critDmg: 0, tough: 0, pierce: 0, block: 0 },
-    tia: 1, role: 'sup',
+    tia: 1,
+    role: 'sup',
     constants: { lv: 1, star: 1, border: 'orange', ultName: 'Cam Lộ Tán Hoa' },
     idle: { sheet: 'qyIdle', h: 142, ms: 1800 },
-    ultFn: 'quanAmUlt', audio: 'quan-am-ult.mp3?v=1',
+    ultFn: 'quanAmUlt',
+    audio: 'quan-am-ult.mp3?v=1',
     sprites: {
       qyIdle: { src: 'quan-am-idle.webp?v=1', cw: 330, ch: 330, n: 20 },   // 6600×330 = 20 khung đứng yên
       qyUlt:  { src: 'quan-am-ult.webp?v=1',  cw: 307, ch: 300, n: 20 },   // 6140×300 = 20 khung đứng lên không trung, rải hoa
@@ -172,16 +195,24 @@ window.GP = (function () {
     },
     skillConfig: { QA_BLOCK_UP: 1, QA_HEAL: 3, QA_PIERCE_DOWN: 0.5, QY_TURNS: 2 }
   });
+
   // === ĐƯỜNG TĂNG (id 26, tướng hỗ trợ): ảnh + âm thanh ở heros/duong-tang/ ===
   if (!window.HERO_DATA.heroes.some(h => h.id === 26)) window.HERO_DATA.heroes.push({
-    id: 26, slug: 'duong-tang', name: 'Đường Tăng', emoji: '📿',
-    img: 'duong-tang.webp?v=1', body: 'duong-tang-body.webp?v=1', bodyH: 96,
+    id: 26,
+    slug: 'duong-tang',
+    name: 'Đường Tăng',
+    emoji: '📿',
+    img: 'duong-tang.webp?v=1',
+    body: 'duong-tang-body.webp?v=1',
+    bodyH: 96,
     stats: { hp: 6000, atk: 500, spd: 110 },
     combat: { def: 300, dodge: 60, acc: 300, crit: 0, critDmg: 0, tough: 0, pierce: 0, block: 0 },
-    tia: 1, role: 'sup',
+    tia: 1,
+    role: 'sup',
     constants: { lv: 1, star: 1, border: 'orange', ultName: 'Tích Trượng Trấn Pháp Trận' },
     idle: { sheet: 'dtgIdle', h: 130, ms: 1800 },
-    ultFn: 'duongTangUlt', audio: 'duong-tang-ult.mp3?v=1',
+    ultFn: 'duongTangUlt',
+    audio: 'duong-tang-ult.mp3?v=1',
     sprites: {
       dtgIdle: { src: 'duong-tang-idle.webp?v=1',     cw: 339, ch: 300, n: 20, drop: 0.15 },   // 6780×300 = 20 khung đứng yên
       dtgUlt:  { src: 'duong-tang-ult.webp?v=1',      cw: 307, ch: 256, n: 20 },               // 6140×256 = 20 khung: 0-3 lao tới • 4-10 giơ tích trượng • 11-14 nện xuống • 15-19 thu thế
@@ -189,16 +220,24 @@ window.GP = (function () {
     },
     skillConfig: { DTA_MULT: 1.8, DTA_HITS: 3, DTA_ACC_DOWN: 0.5, DTA_DODGE_DOWN: 0.3, DTA_TURNS: 2 }
   });
+
   // === LINH LUNG (id 27, tướng hỗ trợ): ảnh + âm thanh ở heros/linh-lung/ ===
   if (!window.HERO_DATA.heroes.some(h => h.id === 27)) window.HERO_DATA.heroes.push({
-    id: 27, slug: 'linh-lung', name: 'Linh Lung', emoji: '🏯',
-    img: 'linh-lung.webp?v=1', body: 'linh-lung-body.webp?v=1', bodyH: 96,
+    id: 27,
+    slug: 'linh-lung',
+    name: 'Linh Lung',
+    emoji: '🏯',
+    img: 'linh-lung.webp?v=1',
+    body: 'linh-lung-body.webp?v=1',
+    bodyH: 96,
     stats: { hp: 6000, atk: 500, spd: 115 },
     combat: { def: 300, dodge: 60, acc: 300, crit: 0, critDmg: 0, tough: 0, pierce: 0, block: 0 },
-    tia: 1, role: 'sup',
+    tia: 1,
+    role: 'sup',
     constants: { lv: 1, star: 1, border: 'orange', ultName: 'Bảo Tháp Chiếu Quang' },
     idle: { sheet: 'llgIdle', h: 120, ms: 1800 },
-    ultFn: 'linhLungUlt', audio: 'linh-lung-ult.mp3?v=1',
+    ultFn: 'linhLungUlt',
+    audio: 'linh-lung-ult.mp3?v=1',
     sprites: {
       llgIdle:  { src: 'linh-lung-idle.webp?v=1',  cw: 307, ch: 256, n: 20, face: 'R' },               // 6140×256 = 20 khung đứng yên (quay mặt sang PHẢI)
       llgUlt:   { src: 'linh-lung-ult.webp?v=1',   cw: 320, ch: 300, n: 20, face: 'R', drop: 0.10 },   // 6400×300 = 20 khung đứng yên triệu hồi bảo tháp
@@ -206,32 +245,48 @@ window.GP = (function () {
     },
     skillConfig: { LLG_MULT: 1.8, LLG_HITS: 3, LLG_TURNS: 1 }
   });
+
   // === TÔN NGỘ KHÔNG (id 28, tướng kỹ năng – lượt nào cũng ulti): ảnh + âm thanh ở heros/ngo-khong/ ===
   if (!window.HERO_DATA.heroes.some(h => h.id === 28)) window.HERO_DATA.heroes.push({
-    id: 28, slug: 'ngo-khong', name: 'Tôn Ngộ Không', emoji: '🐵',
-    img: 'ton-ngo-khong.webp?v=1', body: 'ton-ngo-khong-body.webp?v=1', bodyH: 96,
+    id: 28,
+    slug: 'ngo-khong',
+    name: 'Tôn Ngộ Không',
+    emoji: '🐵',
+    img: 'ton-ngo-khong.webp?v=1',
+    body: 'ton-ngo-khong-body.webp?v=1',
+    bodyH: 96,
     stats: { hp: 6500, atk: 750, spd: 125 },
     combat: { def: 300, dodge: 60, acc: 300, crit: 0, critDmg: 0, tough: 0, pierce: 0, block: 0 },
-    tia: 1, role: 'skill',
+    tia: 1,
+    role: 'skill',
     constants: { lv: 1, star: 1, border: 'orange', ultName: 'Đại Náo Thiên Cung' },
     idle: { sheet: 'nkIdle', h: 130, ms: 1800 },
-    ultFn: 'ngoKhongUlt', audio: 'ton-ngo-khong-ult.mp3?v=1',
+    ultFn: 'ngoKhongUlt',
+    audio: 'ton-ngo-khong-ult.mp3?v=1',
     sprites: {
       nkIdle: { src: 'ton-ngo-khong-idle.webp?v=1', cw: 300, ch: 300, n: 20 },   // chuỗi đứng yên (cw/ch tự lấy lại theo kích thước ảnh thật, xem khối ngo-khong bên dưới)
       nkUlt:  { src: 'ton-ngo-khong-ult.webp?v=1',  cw: 300, ch: 300, n: 20 }    // chuỗi ulti: dùng cho 3 phân thân chạy qua địch
     },
     skillConfig: { NK_ATK_UP: 3, NK_ATK_TURNS: 1, NK_CLONES: 3, NK_HITS: 2, NK_MULT: 1.5, NK_STAFFS: 3, NK_STAFF_MULT: 2.5 }
   });
+
   // === NA TRA (id 29, tướng công kích): ảnh ở heros/na-tra/ (âm thanh ulti: na-tra-ult.mp3) ===
   if (!window.HERO_DATA.heroes.some(h => h.id === 29)) window.HERO_DATA.heroes.push({
-    id: 29, slug: 'na-tra', name: 'Na Tra', emoji: '🔥',
-    img: 'na-tra.webp?v=1', body: 'na-tra-body.webp?v=1', bodyH: 96,
+    id: 29,
+    slug: 'na-tra',
+    name: 'Na Tra',
+    emoji: '🔥',
+    img: 'na-tra.webp?v=1',
+    body: 'na-tra-body.webp?v=1',
+    bodyH: 96,
     stats: { hp: 6000, atk: 800, spd: 125 },
     combat: { def: 300, dodge: 60, acc: 300, crit: 0, critDmg: 0, tough: 0, pierce: 0, block: 0 },
-    tia: 1, role: 'atk',
+    tia: 1,
+    role: 'atk',
     constants: { lv: 1, star: 1, border: 'orange', ultName: 'Hỏa Luân Liên Hoàn Cước' },
     idle: { sheet: 'ntIdle', h: 140, ms: 1700 },
-    ultFn: 'naTraUlt', audio: 'na-tra-ult.mp3?v=1',
+    ultFn: 'naTraUlt',
+    audio: 'na-tra-ult.mp3?v=1',
     sprites: {
       ntIdle:  { src: 'na-tra-idle.webp?v=1',  cw: 307, ch: 300, n: 21 },                 // 6447×300 = 21 khung đứng yên (quay mặt sang TRÁI)
       ntUlt:   { src: 'na-tra-ult.webp?v=1',   cw: 320, ch: 320, n: 20, face: 'R' },      // 6400×320 = 20 khung: 0-4 nhảy lên • 5 đá bánh 1 • 11 đá bánh 2 • 14-19 hạ xuống (quay mặt sang PHẢI)
@@ -239,80 +294,122 @@ window.GP = (function () {
     },
     skillConfig: { NT_HITS: 3, NT_WHEELS: 2, NT_BURN_PCT: 0.2, NT_BURN_TURNS: 2, NT_DODGE_DOWN: 0.3, NT_DODGE_TURNS: 2, NT_ATK_UP: 0.2, NT_ATK_TURNS: 2 }
   });
+
   // === SA TĂNG (id 30, tướng công kích): ảnh ở heros/sa-tang/ (âm thanh ulti tổng hợp bằng code, không cần file mp3) ===
   if (!window.HERO_DATA.heroes.some(h => h.id === 30)) window.HERO_DATA.heroes.push({
-    id: 30, slug: 'sa-tang', name: 'Sa Tăng', emoji: '🪓',
-    img: 'sa-tang.webp?v=1', body: 'sa-tang-body.webp?v=1', bodyH: 96,
+    id: 30,
+    slug: 'sa-tang',
+    name: 'Sa Tăng',
+    emoji: '🪓',
+    img: 'sa-tang.webp?v=1',
+    body: 'sa-tang-body.webp?v=1',
+    bodyH: 96,
     stats: { hp: 6500, atk: 780, spd: 118 },
     combat: { def: 320, dodge: 60, acc: 300, crit: 0, critDmg: 0, tough: 0, pierce: 0, block: 0 },
-    tia: 1, role: 'atk',
+    tia: 1,
+    role: 'atk',
     constants: { lv: 1, star: 1, border: 'orange', ultName: 'Nguyệt Nha Giáng Thế' },
     idle: { sheet: 'saIdle', h: 125, ms: 1800 },
-    ultFn: 'saTangUlt', audio: 'sa-tang-ult.mp3?v=1',
+    ultFn: 'saTangUlt',
+    audio: 'sa-tang-ult.mp3?v=1',
     sprites: {
       saIdle: { src: 'sa-tang-idle.webp?v=1', cw: 339, ch: 231, n: 20 },   // 6780×231 = 20 khung đứng yên
       saUlt:  { src: 'sa-tang-ult.webp?v=1',  cw: 307, ch: 256, n: 20 }    // 6140×256 = 20 khung: 0-7 gồng + xoay lốc • 8-12 chém xoáy xanh • 13-19 đá vỡ + sét nổ rồi tan
     },
     skillConfig: { SB_HITS: 3, SB_TOUGH_UP: 30, SB_TOUGH_DOWN: 30, SB_TURNS: 2, SB_GIANT: 3.2 }
   });
+
   // === BÁT GIỚI (id 31, tướng thủ/tank – lượt nào cũng ulti): ảnh + âm thanh ở heros/bat-gioi/ ===
   if (!window.HERO_DATA.heroes.some(h => h.id === 31)) window.HERO_DATA.heroes.push({
-    id: 31, slug: 'bat-gioi', name: 'Bát Giới', emoji: '🐷',
-    img: 'bat-gioi.webp?v=1', body: 'bat-gioi-body.webp?v=1', bodyH: 96,
+    id: 31,
+    slug: 'bat-gioi',
+    name: 'Bát Giới',
+    emoji: '🐷',
+    img: 'bat-gioi.webp?v=1',
+    body: 'bat-gioi-body.webp?v=1',
+    bodyH: 96,
     stats: { hp: 8500, atk: 600, spd: 105 },
     combat: { def: 450, dodge: 40, acc: 300, crit: 0, critDmg: 0, tough: 0, pierce: 0, block: 0 },
-    tia: 1, role: 'tank', alwaysUlt: true,
+    tia: 1,
+    role: 'tank',
+    alwaysUlt: true,
     constants: { lv: 1, star: 1, border: 'orange', ultName: 'Thiết Bảo Hộ Thể' },
     idle: { sheet: 'bgIdle', h: 125, ms: 1800 },
-    ultFn: 'batGioiUlt', audio: 'bat-gioi-ult.mp3?v=1',
+    ultFn: 'batGioiUlt',
+    audio: 'bat-gioi-ult.mp3?v=1',
     sprites: {
       bgIdle: { src: 'bat-gioi-idle.webp?v=1', cw: 307, ch: 256, n: 20 },   // 6140×256 = 20 khung đứng yên
       bgUlt:  { src: 'bat-gioi-ult.webp?v=1',  cw: 350, ch: 350, n: 20 }    // 7000×350 = 20 khung: 0-7 nhảy lên giơ cào • 8-14 nện xuống • 15-19 đứng lại
     },
     skillConfig: { BG_DEF_UP: 1, BG_DEF_TURNS: 3, BG_HEAL: 1 }
   });
+
   // === BẠCH CỐT TINH (id 32, tướng công kích): ảnh + âm thanh ở heros/bach-cot-tinh/ ===
   if (!window.HERO_DATA.heroes.some(h => h.id === 32)) window.HERO_DATA.heroes.push({
-    id: 32, slug: 'bach-cot-tinh', name: 'Bạch Cốt Tinh', emoji: '💀',
-    img: 'bach-cot-tinh.webp?v=1', body: 'bach-cot-tinh-body.webp?v=1', bodyH: 96,
+    id: 32,
+    slug: 'bach-cot-tinh',
+    name: 'Bạch Cốt Tinh',
+    emoji: '💀',
+    img: 'bach-cot-tinh.webp?v=1',
+    body: 'bach-cot-tinh-body.webp?v=1',
+    bodyH: 96,
     stats: { hp: 6000, atk: 820, spd: 122 },
     combat: { def: 300, dodge: 60, acc: 300, crit: 0, critDmg: 0, tough: 0, pierce: 0, block: 0 },
-    tia: 1, role: 'atk',
+    tia: 1,
+    role: 'atk',
     constants: { lv: 1, star: 1, border: 'orange', ultName: 'Bạch Cốt Hóa Thân' },
     idle: { sheet: 'bctIdle', h: 125, ms: 1800 },
-    ultFn: 'bachCotUlt', audio: 'bach-cot-tinh-ult.mp3?v=1',
+    ultFn: 'bachCotUlt',
+    audio: 'bach-cot-tinh-ult.mp3?v=1',
     sprites: {
       bctIdle: { src: 'bach-cot-tinh-idle.webp?v=1', cw: 339, ch: 231, n: 20,"face":"R" },               // 6780×231 = 20 khung đứng yên
       bctUlt:  { src: 'bach-cot-tinh-ult.webp?v=1',  cw: 307, ch: 256, n: 20, face: 'R' }    // 6140×256 = 20 khung bộ xương: 0-3 thủ thế • 4-6 phóng vào • 7-12 giáng đòn + bụi đá • 13-19 tan bụi, đứng lại (quay mặt sang PHẢI)
     },
     skillConfig: { BCT_HITS: 3, BCT_SCALE: 1.25 }
   });
+
   // === THÁI THƯỢNG LÃO QUÂN (id 33, tướng hỗ trợ): ảnh + âm thanh ở heros/thai-thuong-lao-quan/ ===
   if (!window.HERO_DATA.heroes.some(h => h.id === 33)) window.HERO_DATA.heroes.push({
-    id: 33, slug: 'thai-thuong-lao-quan', name: 'Thái Thượng Lão Quân', emoji: '☯️',
-    img: 'thai-thuong-lao-quan.webp?v=1', body: 'thai-thuong-lao-quan-body.webp?v=1', bodyH: 96,
+    id: 33,
+    slug: 'thai-thuong-lao-quan',
+    name: 'Thái Thượng Lão Quân',
+    emoji: '☯️',
+    img: 'thai-thuong-lao-quan.webp?v=1',
+    body: 'thai-thuong-lao-quan-body.webp?v=1',
+    bodyH: 96,
     stats: { hp: 7500, atk: 700, spd: 112 },
     combat: { def: 380, dodge: 50, acc: 300, crit: 0, critDmg: 0, tough: 0, pierce: 0, block: 0 },
-    tia: 1, role: 'sup',
+    tia: 1,
+    role: 'sup',
     constants: { lv: 1, star: 1, border: 'orange', ultName: 'Bát Quái Đỉnh Trấn Thiên' },
     idle: { sheet: 'lqIdle', h: 130, ms: 1900 },
-    ultFn: 'thaiThuongUlt', audio: 'thai-thuong-lao-quan-ult.mp3?v=1',
+    ultFn: 'thaiThuongUlt',
+    audio: 'thai-thuong-lao-quan-ult.mp3?v=1',
     sprites: {
       lqIdle: { src: 'thai-thuong-lao-quan-idle.webp?v=1', cw: 307, ch: 256, n: 20,"face":"R" },   // 6140×256 = 20 khung đứng yên
       lqUlt:  { src: 'thai-thuong-lao-quan-ult.webp?v=1',  cw: 307, ch: 256, n: 20,"face":"R" }    // 6140×256 = 20 khung: 0-4 chuẩn bị • 5-9 nhảy lên GIƠ ĐỈNH qua đầu • 10 lao xuống • 11-14 NỔ băng + sét (đỉnh chạm đất) • 15-19 thu thế
     },
     skillConfig: { LQ_HITS: 5, LQ_NOHEAL_TURNS: 3, LQ_HEAL_UP: 1, LQ_HEAL_TURNS: 3, LQ_DING_W: 0.5 }
   });
+
   // === DIÊM LA VƯƠNG (id 34, tướng công kích, VÀO TRẬN ĐẦY NỘ → ulti ngay hiệp đầu): ảnh + âm thanh ở heros/diem-la-vuong/ ===
   if (!window.HERO_DATA.heroes.some(h => h.id === 34)) window.HERO_DATA.heroes.push({
-    id: 34, slug: 'diem-la-vuong', name: 'Diêm La Vương', emoji: '👹',
-    img: 'diem-la-vuong.webp?v=1', body: 'diem-la-vuong-body.webp?v=1', bodyH: 96,
+    id: 34,
+    slug: 'diem-la-vuong',
+    name: 'Diêm La Vương',
+    emoji: '👹',
+    img: 'diem-la-vuong.webp?v=1',
+    body: 'diem-la-vuong-body.webp?v=1',
+    bodyH: 96,
     stats: { hp: 6500, atk: 850, spd: 118 },
     combat: { def: 320, dodge: 50, acc: 300, crit: 25, critDmg: 20, tough: 0, pierce: 0, block: 0 },
-    tia: 1, role: 'atk', startRage: 100,   // startRage: ghi đè Nộ khởi đầu theo chất (atk = 50) → 100 để dùng ulti ngay hiệp đầu
+    tia: 1,
+    role: 'atk',
+    startRage: 100,   // startRage: ghi đè Nộ khởi đầu theo chất (atk = 50) → 100 để dùng ulti ngay hiệp đầu
     constants: { lv: 1, star: 1, border: 'orange', ultName: 'Sinh Tử Bạc Phán Quyết' },
     idle: { sheet: 'dlIdle', h: 130, ms: 1900 },
-    ultFn: 'diemLaVuongUlt', audio: 'diem-la-vuong-ult.mp3?v=1',
+    ultFn: 'diemLaVuongUlt',
+    audio: 'diem-la-vuong-ult.mp3?v=1',
     sprites: {
       dlIdle: { src: 'diem-la-vuong-idle.webp?v=1', cw: 307, ch: 256, n: 20, face: 'R' },                 // 6140×256 = 20 khung đứng yên (quay mặt sang PHẢI)
       dlUlt:  { src: 'diem-la-vuong-ult.webp?v=1',  cw: 350, ch: 300, n: 9,  face: 'R', drop: 0.057 },   // 3150×300 = 9 khung CHỈ có Diêm La Vương: 0-2 giơ lệnh bài • 3-8 chọi lệnh bài đi (đứng yên tại chỗ)
@@ -320,6 +417,7 @@ window.GP = (function () {
     },
     skillConfig: { DL_HITS: 4, DL_CRIT_UP: 3, DL_CDMG_UP: 2.5, DL_TURNS: 2 }
   });
+
   // === ĐÃ XOÁ THANH Y (id 1) khỏi danh sách tướng: không còn trong kho tướng, chiêu mộ, đội hình ===
   window.HERO_DATA.heroes = window.HERO_DATA.heroes.filter(h => h.id !== 1);
   // ===== HAI ID CHO MỖI TƯỚNG — BẮT BUỘC ĐÚNG CẢ HAI (tránh trùng id, lấy nhầm hình ảnh / dữ liệu) =====
@@ -2697,7 +2795,8 @@ function addAccExp(n) {
       // 3) BANG
       ['hp', 'atk', 'def', 'pierce', 'spd', 'critDmg', 'heal'].forEach(k => { P.bang[k] = gb[k] || 0; });
       // 4) TRANG BỊ, NGỌC, PHỤ LINH: 3 nguồn cộng RIÊNG, độc lập nhau, mỗi nguồn cộng thẳng vào tướng (không nhân qua lại)
-      ['hp', 'atk', 'def', 'spd'].forEach(k => { P.eq[k] = R(eb[k] || 0); P.gem[k] = R(gem[k] || 0); P.phu[k] = R(phu[k] || 0); });
+      ['hp', 'atk', 'def', 'spd'].forEach(k => { P.eq[k] = R(eb[k] || 0); P.gem[k] = R(gem[k] || 0); });
+      STAT_KEYS.forEach(k => { P.phu[k] = k === 'dodge' ? Math.round((phu[k] || 0) * 10) / 10 : R(phu[k] || 0); });   // phụ linh (Linh Phù đủ 4 ô): cộng được mọi chỉ số
       // 5) HỖ TRỢ (chỉ tướng ra trận)
       if (team.includes(id)) { const b = supTotal(base); ['hp', 'atk', 'def', 'heal'].forEach(k => { P.sup[k] = b[k] || 0; }); }
       // 6) BỒI DƯỠNG
@@ -2872,7 +2971,7 @@ function addAccExp(n) {
       document.getElementById('hd-slots').innerHTML = EQUIP.map(e => {
         const it = eqAt(f, e.k);
         return `<div class="hd-slot ${it ? '' : 'empty'}" onclick="openEquip('${e.k}',${f})"><span>${e.icon}</span><small>${it ? 'Lv.' + it.lv + (it.star ? ' ★' + it.star : '') : 'Gắn'}</small></div>`;
-      }).join('') + ltSlotHTML(f);
+      }).join('') + `<div class="hd-gp-btns" style="display:flex;flex-direction:column;gap:5px;margin:8px 0"><button class="btn-attack" style="padding:5px 2px;font-size:11px;width:100%" onclick="hdOpenGemPhu('gem',${f})">💎 Ngọc</button><button class="btn-attack" style="padding:5px 2px;font-size:11px;width:100%" onclick="hdOpenGemPhu('phu',${f})">📜 Phụ Linh</button></div>` + ltSlotHTML(f);
       const tl = tsOfFrame(f);
       document.getElementById('hd-ts').innerHTML = Array.from({ length: TS_PER_HERO }, (_, i) => {
         const x = tl[i], act = f >= 0 ? `tsOpen(${f})` : '';
@@ -2882,6 +2981,13 @@ function addAccExp(n) {
         `<div class="sk-card"><div class="sk-name">${k.name}<span class="sk-tag">${k.tag}</span>${k.lv ? `<span class="sk-lv">Lv ${k.lv}</span>` : ''}</div><div class="sk-desc">${heroUltOverride(id) ? k.desc : (heroUltShort(id) || k.desc)}</div></div>`).join('');
       document.getElementById('hero-modal').style.display = 'flex';
     }
+    function hdOpenGemPhu(kind, f) {   // nút Ngọc / Phụ Linh trong bảng Chi tiết tướng → mở màn Khảm Ngọc / Linh Phù đúng khung của tướng
+      if (f < 0) { try { scToast('Tướng chưa ra trận nên chưa có khung để gắn'); } catch (e) {} return; }
+      closeHeroDetail();
+      if (kind === 'gem') { window._egTab = 'gem'; window._egFrame = f; if (typeof openEqGem === 'function') openEqGem(); }
+      else { window._epTab = 'phu'; window._epFrame = f; if (typeof openEqPhu === 'function') openEqPhu(); }
+    }
+    window.hdOpenGemPhu = hdOpenGemPhu;
     function closeHeroDetail() { document.getElementById('hero-modal').style.display = 'none'; }
     function upgradeFromDetail() { const id = detailId; closeHeroDetail(); openVoHiep(id); }
 
@@ -2975,6 +3081,8 @@ function addAccExp(n) {
     }
     function closeEquip() { document.getElementById('equip-modal').style.display = 'none'; renderHomeTeam(); }
     function eqSetTab(k) { eqTab = k; renderEquip(); }
+    let eqFrameSel = 0;   // màn Tăng Cấp / Tăng Sao: khung đang chọn (0-4 = Khung 1-5, -1 = trang bị đang ở Túi đồ)
+    function eqSetFrame(f) { eqFrameSel = f; renderEquip(); }
     function eqSave() { saveJSON('eq_bag', eqBag); }
     function eqRefresh() {
       eqSave(); renderEquip();
@@ -3050,35 +3158,55 @@ function addAccExp(n) {
       eqSave();
       return `\n\n🎁 Nhận thưởng vào Túi đồ: ${EQ_REWARD.each} Mũ, ${EQ_REWARD.each} Áo, ${EQ_REWARD.each} Kiếm, ${EQ_REWARD.each} Giày!`;
     }
+    function eqRowCss() {   // nút Tăng / Tối đa / Tăng sao của trang bị nằm hàng riêng dưới thẻ, rộng hết bề ngang (không ảnh hưởng thẻ Bảo Vật / Linh Thú)
+      if (document.getElementById('eq-row-css')) return;
+      const st = document.createElement('style'); st.id = 'eq-row-css';
+      st.textContent = '.ts-row.eq-row{display:grid !important;grid-template-columns:auto 1fr auto !important;column-gap:12px !important;row-gap:6px !important;align-items:center !important}'
+        + '.ts-row.eq-row>.ts-ico{grid-column:1 !important;grid-row:1 !important;justify-self:center !important}'
+        + '.ts-row.eq-row>.ts-link{display:none !important}'
+        + '.ts-row.eq-row>.ts-hero{grid-column:1 !important;grid-row:2 !important;justify-self:center !important}'
+        + '.ts-row.eq-row>.ts-st{grid-column:2 !important;grid-row:1 / span 2 !important;min-width:0 !important;position:relative !important;align-self:stretch !important}'
+        + '.ts-row.eq-row>.ts-cost{grid-column:3 !important;grid-row:1 / span 2 !important;display:flex !important;flex-direction:column !important;align-items:center !important;justify-content:center !important;gap:8px !important;text-align:center;font-size:13px;font-weight:700;line-height:1.3;min-width:78px}'
+        + '.ts-row.eq-row .ts-cost img{width:72px !important;height:72px !important;object-fit:contain;display:block !important;margin:0 auto 1px !important}'
+        + '.ts-row.eq-row .ts-st img{width:18px !important;height:18px !important;vertical-align:middle}'
+        + '#eq-sub img{width:18px !important;height:18px !important;vertical-align:middle;display:inline !important}'
+        + '.ts-row.eq-row>.ts-btns{grid-column:1 / -1 !important;grid-row:3 !important;width:100% !important;display:flex !important;flex-direction:row !important;gap:8px !important;margin:2px 0 0 !important}'
+        + '.ts-row.eq-row>.ts-btns button{flex:1 1 0 !important;width:auto !important;min-width:0 !important;margin:0 !important}';
+      document.head.appendChild(st);
+    }
     function renderEquip() {
+      eqRowCss();
       const e = eqType(eqTab);
       document.getElementById('eq-pills').innerHTML = '';   // Viên Thể Lực chỉ nằm trong Túi Đồ
       const ttl = document.getElementById('eq-title'); if (ttl) ttl.textContent = eqLock ? '🎒 Trang Bị' : eqMode === 'star' ? '⭐ Tăng Sao Trang Bị' : '⬆️ Tăng Cấp Trang Bị';
-      document.getElementById('eq-sub').innerText = eqLock
+      document.getElementById('eq-sub').innerHTML = eqLock
         ? `Chọn ${e.name} gắn vào Khung ${eqCtx + 1}. Tướng đứng ở khung nào thì nhận chỉ số của khung đó.`
         : eqMode === 'star'
         ? `Tăng sao: tiêu ${EQ_STONE} (rơi từ Ải sau / quà hằng ngày) để +1★ cho món được chọn. Bạn có ${fmtN(skbQty(EQ_STONE))} ${gdIco(EQ_STONE, '🪨')}. Mỗi ★ +${Math.round(eqStarAdd() * 100)}% chỉ số gốc, mỗi cấp +${Math.round(eqLvAdd() * 100)}%. Tối đa ${eqStarMax()}★.`
         : `Cấp acc ${accLevel} → trang bị nâng tối đa tới cấp ${eqLvCap()} (vượt Ải nhận EXP để lên cấp acc). Nâng cấp tốn Đá Linh từ Hang Tụ Linh. Gắn vào khung nào thì tướng đứng ở khung đó được cộng chỉ số.`;
-      document.getElementById('eq-tabs').innerHTML = eqLock ? '' : EQUIP.map(x =>
-        `<button class="eq-tab ${x.k === eqTab ? 'on' : ''}" onclick="eqSetTab('${x.k}')">${x.icon} ${x.name} <small>${eqBag.filter(i => i.k === x.k).length}</small></button>`).join('');
+      const frBtn = f => { const h = f >= 0 && teamSlots[f] != null ? heroById(teamSlots[f]) : null, n = f >= 0 ? EQUIP.filter(x => eqAt(f, x.k)).length : eqBag.filter(i => i.f < 0).length; return `<button class="eq-tab ${f === eqFrameSel ? 'on' : ''}" onclick="eqSetFrame(${f})">${f >= 0 ? 'Khung ' + (f + 1) : '🎒 Túi đồ'} <small>${f >= 0 ? (h ? h.name : '(trống)') : n}</small></button>`; };
+      document.getElementById('eq-tabs').innerHTML = eqLock ? '' : `<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:100%">${[0, 1, 2, 3, 4, -1].map(frBtn).join('')}</div>`;
       const all = eqBag.filter(i => i.k === eqTab).sort((a, b) => a.id - b.id);
-      const rank = it => all.indexOf(it) + 1;
+      const rank = it => eqBag.filter(i => i.k === it.k).sort((a, b) => a.id - b.id).indexOf(it) + 1;
       const list = eqLock
         ? [...all].sort((a, b) => ((b.f === eqCtx) - (a.f === eqCtx)) || ((b.f < 0) - (a.f < 0)) || b.lv - a.lv)
-        : all;
+        : (eqFrameSel >= 0 ? EQUIP.map(x => eqAt(eqFrameSel, x.k)).filter(Boolean) : EQUIP.reduce((o, x) => o.concat(eqBag.filter(i => i.k === x.k && i.f < 0).sort((a, b) => a.id - b.id)), []));
       let html = list.map(it => {
+        const e = eqType(it.k);
         const cap = eqLvCap(), max = it.lv >= cap, fr = it.f;
         const starMode = !eqLock && eqMode === 'star', sMax = eqStarMax(), stNeed = eqStarCost((it.star | 0) + 1), stHave = skbQty(EQ_STONE), canStar = (it.star | 0) < sMax && stHave >= stNeed;
         const cst = (max || starMode) ? [] : eqStoneCost(it.lv), canUp = !max && !cst.some(x => eqStoneQty(x.item) < x.n);
-        const costHtml = (max || starMode) ? '' : `<div class="eq-cost" style="display:flex;flex-wrap:wrap;gap:2px 8px;font-size:11px;margin-top:2px">${cst.map(x => { const have = eqStoneQty(x.item); return `<span style="white-space:nowrap;color:${have >= x.n ? '#bbf7d0' : '#f87171'}">${eqStoneImg(x.item)} ${fmtN(have)}/${fmtN(x.n)}</span>`; }).join('')}</div>`;
+        const costHtml = starMode
+          ? ((it.star | 0) >= sMax ? '' : `<div class="ts-cost"><div title="${EQ_STONE}" style="color:${stHave >= stNeed ? '#bbf7d0' : '#f87171'}">${gdIco(EQ_STONE, '🪨')}<div>${fmtN(stHave)}/${fmtN(stNeed)}</div><div>→ ★${(it.star | 0) + 1}</div></div></div>`)
+          : (max ? '' : `<div class="ts-cost">${cst.map(x => { const have = eqStoneQty(x.item); return `<div title="${x.item}" style="color:${have >= x.n ? '#bbf7d0' : '#f87171'}">${eqStoneImg(x.item)}<div>${fmtN(have)}/${fmtN(x.n)}</div></div>`; }).join('')}</div>`);
         const hero = (fr >= 0 && teamSlots[fr] != null) ? heroById(teamSlots[fr]) : null;
         const act = eqLock ? `eqToggle(${it.id})` : `frPick('eq',${it.id})`;
-        return `<div class="ts-row"><div class="ts-ico"><div class="ts-em">${e.icon}</div><div class="ts-nm">${e.name} ${rank(it)}</div></div><div class="ts-link">🔗</div>${frSlot(fr, act, `eqUnmount(${it.id})`)}` +
-          `<div class="ts-st"><b>Cấp ${it.lv}/${cap}${max ? (it.lv >= eqMaxLv() ? ' (tối đa)' : ' 🔒') : ''}</b><div style="color:#fbbf24">★${it.star | 0}/${sMax}</div><div>Gốc ${fmtN(e.per)} ${e.label} • ★ +${Math.round(eqStarAdd() * 100)}% • Cấp +${Math.round(eqLvAdd() * 100)}%</div><div>Hiện +${fmtN(eqVal(it))} ${e.label}</div>${starMode ? ((it.star | 0) >= sMax ? '' : `<div style="font-size:11px;color:${stHave >= stNeed ? '#bbf7d0' : '#f87171'}">${gdIco(EQ_STONE, '🪨')} ${EQ_STONE}: ${fmtN(stHave)}/${fmtN(stNeed)} → ★${(it.star | 0) + 1}</div>`) : ''}${costHtml}` +
-          `<div class="ts-cnt">${fr < 0 ? '📦 Trong túi đồ' : `Khung ${fr + 1}${hero ? ' – ' + hero.name : ' (trống)'}`}</div></div>` +
-          `<div class="ts-btns">${starMode ? `<button class="btn-attack" style="background:linear-gradient(180deg,#a855f7,#6b21a8)" ${canStar ? '' : 'disabled'} onclick="eqStarUp(${it.id})">⭐ Tăng sao</button>` : `<button class="btn-attack" ${canUp ? '' : 'disabled'} onclick="eqUpgrade(${it.id},1)">Tăng</button><button class="btn-close-battle" ${canUp ? '' : 'disabled'} onclick="eqUpgrade(${it.id},10)">+10</button><button class="btn-close-battle" ${canUp ? '' : 'disabled'} onclick="eqUpgrade(${it.id},${eqMaxLv()})">Tối đa</button>`}</div></div>`;
+        return `<div class="ts-row eq-row"><div class="ts-ico"><div class="ts-em">${e.icon}</div><div class="ts-nm">${e.name} ${rank(it)}</div></div><div class="ts-link">🔗</div>${frSlot(fr, act, `eqUnmount(${it.id})`)}` +
+          `<div class="ts-st"><b>Cấp ${it.lv}/${cap}${max ? (it.lv >= eqMaxLv() ? ' (tối đa)' : ' 🔒') : ''}</b><div style="color:#fbbf24">★${it.star | 0}/${sMax}</div><div>Gốc ${fmtN(e.per)} ${e.label} • ★ +${Math.round(eqStarAdd() * 100)}% • Cấp +${Math.round(eqLvAdd() * 100)}%</div><div>Hiện +${fmtN(eqVal(it))} ${e.label}</div>` +
+          `<div class="ts-cnt">${fr < 0 ? '📦 Trong túi đồ' : `Khung ${fr + 1}${hero ? ' – ' + hero.name : ' (trống)'}`}</div></div>` + costHtml +
+          `<div class="ts-btns">${starMode ? `<button class="btn-attack" style="background:linear-gradient(180deg,#a855f7,#6b21a8)" ${canStar ? '' : 'disabled'} onclick="eqStarUp(${it.id})">⭐ Tăng sao</button>` : `<button class="btn-attack" ${canUp ? '' : 'disabled'} onclick="eqUpgrade(${it.id},1)">Tăng</button><button class="btn-close-battle" ${canUp ? '' : 'disabled'} onclick="eqUpgrade(${it.id},${eqMaxLv()})">Tối đa</button>`}</div></div>`;
       }).join('');
-      if (!list.length) html = `<div class="eq-empty">${eqBag.length ? `Chưa có ${e.name} nào.` : `🎒 Túi đồ trống.<br>Thắng <b>Ải ${EQ_REWARD.stage} - Bàn ${EQ_REWARD.battle}</b> để nhận ${EQ_REWARD.each} Mũ, ${EQ_REWARD.each} Áo, ${EQ_REWARD.each} Kiếm, ${EQ_REWARD.each} Giày.`}</div>`;
+      if (!list.length) html = `<div class="eq-empty">${eqBag.length ? (eqLock ? `Chưa có ${e.name} nào.` : eqFrameSel >= 0 ? `Khung ${eqFrameSel + 1} chưa mặc trang bị nào.` : 'Túi đồ không có trang bị nào đang tháo.') : `🎒 Túi đồ trống.<br>Thắng <b>Ải ${EQ_REWARD.stage} - Bàn ${EQ_REWARD.battle}</b> để nhận ${EQ_REWARD.each} Mũ, ${EQ_REWARD.each} Áo, ${EQ_REWARD.each} Kiếm, ${EQ_REWARD.each} Giày.`}</div>`;
       if (eqLock) html += `<div class="md-acts"><button class="btn-close-battle" onclick="openEquip('${eqTab}')">Xem toàn bộ túi đồ</button></div>`;
       document.getElementById('eq-body').innerHTML = html;
     }
@@ -3266,8 +3394,8 @@ function addAccExp(n) {
           const art = heroIcon(h);
           return `<div class="rc-p ${k}"><div class="rc-ttl">${r.name}</div><div class="rc-art">${art}</div><div class="rc-info" id="rc-st-${k}"></div><button class="rc-btn" id="rc-btn-${k}" onclick="doRecruit('${k}')"></button></div>`; }).join('')}</div>
         <div class="set-note" style="margin-top:8px">🎴 Ưu tiên: lượt miễn phí → Thẻ Chiêu Mộ (trong Túi Đồ) → 💰 vàng. Sơ Cấp = 1 tướng • Cao Cấp = 2 tướng • 10 Lần (vàng) = 10 tướng. Mỗi lần quay ra <b>nguyên tướng</b>; nếu đã có tướng đó thì nhận <b>${DUP_SHARDS} mảnh</b> của tướng ấy. Thẻ có trong Túi Đồ (Kho). Đủ ${MERGE_COST} mảnh của một tướng chưa có thì vào Võ Hiệp → Ghép Mảnh. Tăng sao cần mảnh của chính tướng đó: lên ★N cần N × ${SHARD_PER_STAR} mảnh (★6 = ${starCost(6)} mảnh). Lượt miễn phí không cộng dồn, quay xong mới tính lại thời gian.</div>
-        <div class="vm-up-info" style="margin:6px 0 2px"><b>🧩 Kho mảnh tướng</b></div><div class="hero-chips" id="rc-inv" style="flex-wrap:wrap;overflow:visible"></div>`;
-      renderRecruitInv(); recTick();
+        `;
+      recTick();
     }
     function renderRecruitInv() {
       const el = document.getElementById('rc-inv'); if (!el) return;
@@ -3367,7 +3495,7 @@ function addAccExp(n) {
     // Cột x (đội ta ở nửa trái; đội địch tự lấy đối xứng 100-x): SAU = 9–13 • GIỮA = 22–24 • TRƯỚC = 34–36.
     // Mọi đội hình 1–5 chỉ lấy điểm trên đúng 3 hàng × 3 cột này (kiểu mặt xúc xắc) → số tướng nào cũng cùng 1 mặt nền,
     // thêm ảnh nền mới (nen-dau15.png…) vẫn đứng đúng như nhau. Muốn nâng/hạ cả đội hình: sửa GROUND_FAR / GROUND_MID / GROUND_NEAR.
-    const GROUND_FAR = 62, GROUND_MID = 72.5, GROUND_NEAR = 83;
+    const GROUND_FAR = 60, GROUND_MID = 74, GROUND_NEAR = 89;   // giãn hàng dọc: hàng xa nâng nhẹ, hàng gần hạ xuống dùng phần sân trống phía dưới
     const HERO_POS = {
       1: [[24, GROUND_MID]],
       2: [[34, GROUND_FAR], [14, GROUND_NEAR]],
@@ -6969,8 +7097,8 @@ cfgOnApply(() => {
   Object.keys(SKILL_DEF).forEach(k => { window[k] = cfgNum('skill.' + k, SKILL_DEF[k]); });
   // Khiên Nguyệt Quang (Hằng Nga): nhập nhầm theo % (70, 15…) thì đổi về tỉ lệ; phản tối đa 70%, đồng đội nhận tối đa 30% sát thương địch gây ra
   const _mn = v => { v = Number(v); if (!isFinite(v) || v < 0) return 0; return v > 1 ? v / 100 : v; };
-  window.MOON_REFLECT = Math.min(0.7, _mn(window.MOON_REFLECT));
-  window.MOON_TAKE = Math.min(0.3, _mn(window.MOON_TAKE));
+  window.MOON_REFLECT = Math.min(0.4, _mn(window.MOON_REFLECT));
+  window.MOON_TAKE = Math.min(0.5, _mn(window.MOON_TAKE));
 });
 
 ;
@@ -7501,8 +7629,8 @@ cfgOnApply(() => {
     }
     // Vào trận với 1 đối thủ cho sẵn (Tỷ Võ, Danh Tướng Lầu, Luận Kiếm...). extra: { tower } hoặc { luan: số trận }
     // Tỷ Võ: kéo vị trí tướng về gần tâm đội hình (cx = tâm ngang phe ta, cy = GROUND_MID) cho nhỏ gọn; PVP_COMPACT = 1 là như cũ, nhỏ hơn = sát hơn
-    const PVP_COMPACT = 0.78;
-    const pvpCompact = (x, y, cx) => [cx + (x - cx) * PVP_COMPACT, GROUND_MID + (y - GROUND_MID) * PVP_COMPACT];
+    const PVP_COMPACT = 1, PVP_COMPACT_X = 0.9;   // dọc giữ nguyên (không ép lại), ngang co nhẹ 10%
+    const pvpCompact = (x, y, cx) => [cx + (x - cx) * PVP_COMPACT_X, GROUND_MID + (y - GROUND_MID) * PVP_COMPACT];
     function pvpBegin(o, extra) {
       if (!team.length) { alert('Hãy chọn Đội ngũ ra trận trước!'); return; }
       battleToken++; playBattleOpen(); battleFast = false;
@@ -8476,7 +8604,7 @@ function closeGiftCode() { document.getElementById('gc-modal').style.display = '
 /* ===== SAO LƯU / CHUYỂN DỮ LIỆU GIỮA CÁC MÁY ===== */
 const SV_KEYS = ['pve_progress','team_ids','team_slots','team_cap','hero_stat_ov','hero_role','hero_prog','acc_level','acc_exp',
                  'player_name','ts_bag','ts_shards','eq_bag','eq_lv','eq_mount','eq_reward_done','auto_battle','pvp_state','audio_set','sta_state',
-                 'gold_val','silver_val','rice_val','mail_state','ham_claimed','ham_spent','hero_shards','rec_state','guild_state','quest_state','giftcode_used','blank_start','hero_owned'];
+                 'gold_val','silver_val','rice_val','mail_state','ham_claimed','ham_spent','hero_shards','rec_state','guild_state','quest_state','giftcode_used','blank_start','hero_owned','ky_state'];
 function svMsg(t, ok) { const e = document.getElementById('sv-msg'); e.style.color = ok === false ? '#f87171' : '#4ade80'; e.innerText = t; }
 function svCollect() {
   const d = {};
@@ -10565,6 +10693,45 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
 .kd-msg{color:#fca5a5;font-size:12px;font-weight:700;text-align:center;margin-top:6px}
 #km-rules .md-box{max-width:420px}
 #km-rules li{font-size:13px;color:#f1e4c8;margin:5px 0;line-height:1.35}
+.ky-pads{position:relative;height:calc(100vh - 200px);height:calc(100dvh - 200px);min-height:540px;margin-top:0}
+.ky-pad{position:absolute;width:44%;text-align:center;cursor:pointer}
+.ky-pad-top{position:relative}
+.ky-buc{width:100%;height:auto;display:block;pointer-events:none}
+.ky-pad.act .ky-buc{filter:drop-shadow(0 0 8px #4ade80)}.ky-pad.fin .ky-buc{filter:drop-shadow(0 0 12px #fde047)}
+.ky-pad-top.nobuc{height:64px;border-radius:50%;background:radial-gradient(ellipse at 50% 35%,#e5e7eb,#9ca3af 60%,#6b7280);border:3px solid #d1d5db;box-shadow:0 10px 0 -2px #6b7280,0 14px 14px rgba(0,0,0,.5)}
+.ky-pad-ico{position:absolute;left:50%;bottom:34%;transform:translateX(-50%);width:54px;height:54px}
+.ky-pad-ico .hero-img,.ky-pad-ico img{width:100%;height:100%;object-fit:contain}
+.ky-pad-tx{margin-top:12px;color:#fde047;font-weight:900;font-size:15px;text-shadow:0 1px 3px #000,0 0 6px #000}
+.ky-pad.act .ky-pad-top{border-color:#4ade80}.ky-pad.fin .ky-pad-top{border-color:#fde047;box-shadow:0 0 18px #fde047,0 10px 0 -2px #6b7280}
+.ky-pm{position:relative;color:#e5e7eb}
+.ky-pm-x{position:absolute;right:-4px;top:-4px;width:30px;height:30px;border-radius:8px;border:2px solid #d1d5db;background:#b45309;color:#fff;font-weight:900;cursor:pointer;z-index:2}
+.ky-pm-h{background:linear-gradient(90deg,#14532d,#166534,#14532d);color:#fde68a;font-weight:900;text-align:center;padding:6px 30px;border-radius:4px;margin-right:30px;font-size:14px}
+.ky-pm-desc{display:flex;align-items:center;gap:8px;background:#111827;border-radius:10px;padding:10px;margin:10px 0;font-size:14px;line-height:1.4}
+.ky-pm-npc{flex:0 0 64px;height:80px}.ky-pm-npc .hero-img,.ky-pm-npc img{width:100%;height:100%;object-fit:contain}
+.ky-pm-mid{display:flex;gap:10px;align-items:stretch}
+.ky-pm-pad{flex:0 0 42%;background:#0b1220;border-radius:10px;display:flex;flex-direction:column;justify-content:center;padding:8px 4px}
+.ky-pm-inf{flex:1;font-size:13px;display:flex;flex-direction:column;gap:7px}.ky-pm-inf b{color:#c084fc}
+.ky-pm-rw{display:grid;grid-template-columns:repeat(2,52px);gap:5px}
+.ky-pm-rw .ky-cell{font-size:16px}
+.ky-btn2{padding:9px 26px;border-radius:12px;border:3px solid #14532d;background:linear-gradient(#22c55e,#15803d);color:#fff;font-weight:900;font-size:16px;cursor:pointer;text-shadow:0 1px 2px #000}
+.ky-btn2:disabled{filter:grayscale(.8);opacity:.6}
+#screen-kyngo .ky-top{position:sticky;top:0;z-index:20;background:linear-gradient(#0e2619,#10291c);border-bottom:1px solid #a16207}
+#screen-kyngo .ky-tabs{scrollbar-width:none}#screen-kyngo .ky-tabs::-webkit-scrollbar{display:none}
+.ky-die{width:70px;height:70px;margin:8px auto;border-radius:14px;background:linear-gradient(145deg,#fff,#d1d5db);box-shadow:0 6px 12px rgba(0,0,0,.55),inset 0 -4px 6px rgba(0,0,0,.18);display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);padding:9px;gap:2px}
+.ky-die i{border-radius:50%;background:transparent;width:100%;height:100%}.ky-die i.p{background:radial-gradient(circle at 35% 30%,#555,#000)}
+.ky-die.p1 i:nth-child(5),.ky-die.p6 i:nth-child(1){}
+@keyframes kyRoll{0%{transform:translateY(0) rotate(0) scale(1)}20%{transform:translateY(-26px) rotate(110deg) scale(1.12)}40%{transform:translateY(0) rotate(220deg) scale(.95)}60%{transform:translateY(-16px) rotate(320deg) scale(1.08)}80%{transform:translateY(0) rotate(400deg)}100%{transform:translateY(0) rotate(360deg) scale(1)}}
+.ky-die.rolling{animation:kyRoll .55s linear infinite}
+@keyframes kyPop{0%{transform:scale(1.5)}100%{transform:scale(1)}}.ky-die.land{animation:kyPop .3s ease-out}
+#screen-kyngo .ky-tabs{flex-wrap:wrap;overflow:visible;gap:6px;padding:6px}
+#screen-kyngo .ky-tab{flex:1 1 30%;text-align:center;padding:6px 4px;font-size:12.5px;white-space:nowrap}
+#screen-kyngo .ky-bag{max-height:230px;overflow-y:auto;padding:2px}
+.ky-dkwrap{display:flex;flex-direction:column;min-height:58vh}
+.ky-wpn{height:130px;width:auto;object-fit:contain}
+.ky-arena{align-items:center;gap:24px}
+.ky-arena .w{filter:drop-shadow(0 0 12px #fde047);transform:scale(1.15)}.ky-arena .l{opacity:.35;filter:grayscale(.7)}
+.ky-stand{position:absolute;left:50%;top:50%;width:0;height:0;transform:scale(1.1);transform-origin:50% 0;pointer-events:none;z-index:2}
+#ky-arena{overflow:hidden;height:220px;min-height:220px}
 `;
   document.head.appendChild(css);
 
@@ -11126,12 +11293,12 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
     if (b) { b.textContent = n; b.style.display = n ? '' : 'none'; }
   };
   window.ghepRender = function () {
-    document.getElementById('gh-sub').textContent = OWN_ON ? `Đủ ${MERGE_COST} mảnh của một tướng để ghép thành tướng đó` : 'Tài khoản này đã có đủ tướng';
+    document.getElementById('gh-sub').textContent = OWN_ON ? `Kho mảnh tướng • đủ ${MERGE_COST} mảnh của một tướng để ghép thành tướng đó` : 'Tài khoản này đã có đủ tướng';
     const order = HEROES.slice().sort((a, b) => (heroIsOwned(a.id) - heroIsOwned(b.id)) || (canMerge(b.id) - canMerge(a.id)) || (shardsOf(b.id) - shardsOf(a.id)) || (a.id - b.id));
     document.getElementById('gh-grid').innerHTML = order.map(h => {
       const own = heroIsOwned(h.id), n = shardsOf(h.id), ok = canMerge(h.id);
       return `<div class="pk-card ${(HERO_BORDER[h.id] || 'orange') === 'purple' ? 'purple' : ''}" style="${own ? 'opacity:.55;' : ''}cursor:default"><div class="e">${heroIcon(h)}</div><div class="n">${h.name}</div>` +
-        (own ? '<div class="lv">✔ Đã có</div>' : `<div class="lv">🧩 ${n}/${MERGE_COST}</div><button class="rc-btn" style="margin-top:4px;padding:3px 10px;font-size:12px" ${ok ? '' : 'disabled'} onclick="ghepDo(${h.id})">Ghép</button>`) + '</div>';
+        (own ? `<div class="lv">✔ Đã có</div><div class="lv">🧩 ${n} mảnh</div><div class="lv">${getProg(h.id).star < starCapOf(getProg(h.id).lv) ? '★' + (getProg(h.id).star + 1) + ': ' + starCost(getProg(h.id).star + 1) : '★ tối đa'}</div>` : `<div class="lv">🧩 ${n}/${MERGE_COST}</div><button class="rc-btn" style="margin-top:4px;padding:3px 10px;font-size:12px" ${ok ? '' : 'disabled'} onclick="ghepDo(${h.id})">Ghép</button>`) + '</div>';
     }).join('');
     ghepBadge();
   };
@@ -11293,7 +11460,7 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
      Mỗi trang bị gắn cố định 3 ngọc. Nâng cấp ngọc cấp n → n+1 tốn 2^n viên ngọc CẤP 1 cùng loại (1→2 = 2 viên, 2→3 = 4 viên, 3→4 = 8 viên ...).
      Chỉ số ngọc là 1 nguồn cộng RIÊNG (dòng "Ngọc") qua window.gemBonus, móc trong heroStatParts; phụ linh cũng là dòng riêng (window.phuLinhBonus), không nhân với trang bị / ngọc.
    • Linh Phù: mỗi trang bị khảm 1 phù (mỗi lần khảm tốn 25 phù cùng loại). 4 trang bị (Mũ/Áo/Kiếm/Giày) của 1 khung cùng 1 loại phù
-     → tướng đứng ở khung đó ra trận có hào quang phù đó quanh thân.
+     → tướng đứng ở khung đó ra trận có hào quang phù đó dưới chân + nhận chỉ số phù (PHU_STATS → window.phuLinhBonus).
    • Ngọc / phù là vật phẩm trong Kho (tên: 'Ngọc HP','Ngọc Công','Ngọc Thủ','Ngọc Tốc','Tiên Phù','Tôn Phù','Vương Phù','Ma Phù','Thánh Phù','Hoàng Phù','Đế Phù')
      → admin cho thưởng loại "Vật phẩm" đúng tên đó. Ngọc trong kho tự chuyển vào kho ngọc (cấp 1) khi mở màn Khảm Ngọc.
    • Ảnh: vat-pham-game/ngoc/*.png • vat-pham-game/phu-linh/*.png • giao-dien/trang-bi/kham-ngoc.png, linh-phu.png */
@@ -11367,6 +11534,20 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
     return key;
   }
   window.phuAuraOf = phuAuraOf;
+  /* ---------- CHỈ SỐ LINH PHÙ: đủ 4 ô (Mũ/Áo/Kiếm/Giày) cùng 1 loại phù → tướng ở khung đó nhận chỉ số, cộng THẲNG vào dòng "Phụ linh" ---------- */
+  const PHU_STATS = {
+    ton:    { atk: 15000, acc: 300, crit: 300 },
+    ma:     { dodge: 300, acc: 300, spd: 120 },
+    tien:   { pierce: 50000, tough: 300, spd: 50 },
+    vuong:  { hp: 100000, atk: 20000, def: 10000 },
+    thanh:  { acc: 500, dodge: 500, block: 100 },
+    hoang:  { critDmg: 300, crit: 300, heal: 60000 },
+    de:     { hp: 100000, atk: 100000, def: 100000, spd: 200, dodge: 500, acc: 500, crit: 500, critDmg: 5000, tough: 300, pierce: 50000, heal: 60000, block: 50 }
+  };
+  const PHU_LABEL = { hp: 'HP', atk: 'Công', def: 'Thủ', spd: 'Tốc', dodge: 'Né', acc: 'Chuẩn', crit: 'Bạo', critDmg: 'Bạo sát', tough: 'Bền', pierce: 'Phá giáp', heal: 'Hồi', block: 'Đỡ đòn' };
+  const phuStatsOf = k => { const o = {}, d = PHU_STATS[k] || {}; Object.keys(d).forEach(st => { const v = Math.max(0, cfgNum('phu.' + k + '.' + st, d[st])); if (v) o[st] = v; }); return o; };   // admin chỉnh: phu.<loại>.<chỉ số>
+  const phuStatsTxt = k => Object.keys(phuStatsOf(k)).map(st => PHU_LABEL[st] + ' ' + num(phuStatsOf(k)[st])).join(' • ');
+  window.phuLinhBonus = function (frame) { const k = phuAuraOf(frame); return k ? phuStatsOf(k) : {}; };   // móc vào heroStatParts
 
   /* ---------- giao diện ---------- */
   function addCss() {
@@ -11402,8 +11583,18 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
 .gp-opt .t{flex:1}
 .gp-hub{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:10px}
 .gp-hubbtn{cursor:pointer}
+.gp-card>.gp-i{display:block;margin:0 auto 2px}
+.gp-card>b{display:block;white-space:nowrap}
+.gp-tabs{display:flex;gap:10px;justify-content:center;margin-bottom:10px}
+.gp-tab{flex:1;max-width:160px;text-align:center;cursor:pointer;border:2px solid #475569;border-radius:12px;padding:6px 4px;background:rgba(0,0,0,.3);opacity:.75}
+.gp-tab img{display:block;margin:0 auto 2px;width:64px;height:64px;object-fit:contain;border-radius:8px}
+.gp-tab .e{display:block;font-size:36px;line-height:64px}
+.gp-tab b{font-size:13px}
+.gp-tab.on{border-color:#fde047;opacity:1;box-shadow:0 0 8px rgba(253,224,71,.5)}
+.gp-card.cur{border-color:#fde047;box-shadow:0 0 0 1px #fde047}
+.gp-det{margin-top:10px;background:rgba(0,0,0,.35);border:2px solid #a16207;border-radius:10px;padding:8px;font-size:13px;line-height:1.6}
 /* ===== HÀO QUANG LINH PHÙ (trong trận) ===== */
-.bf-phu{position:absolute;left:50%;top:60%;width:calc(var(--dep,.85)*210px);height:calc(var(--dep,.85)*210px);margin:calc(var(--dep,.85)*-105px) 0 0 calc(var(--dep,.85)*-105px);pointer-events:none;z-index:1;mix-blend-mode:screen}
+.bf-phu{position:absolute;left:50%;top:50%;width:calc(var(--dep,.85)*125px);height:calc(var(--dep,.85)*125px);margin:0;transform:translate(-50%,-50%) scaleY(.32);pointer-events:none;z-index:0;mix-blend-mode:screen}   /* vòng dẹt GỌN dưới chân tướng (gắn vào .bf-shadow), không còn bao quanh thân */
 .bf-phu *{position:absolute;pointer-events:none}
 .bf-phu .in{inset:0;border-radius:50%}
 .phu-tien .in{background:radial-gradient(circle,transparent 30%,rgba(59,130,246,.7) 54%,rgba(96,165,250,.28) 67%,transparent 75%);animation:phuTien 1.1s infinite}
@@ -11441,28 +11632,49 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
   const emptyEq = () => `<div class="gp-note">🎒 Túi đồ chưa có trang bị nào. Thắng <b>Ải ${EQ_REWARD.stage} - Bàn ${EQ_REWARD.battle}</b> để nhận trang bị.</div>`;
 
   /* ===== MÀN KHẢM NGỌC ===== */
+  /* thanh 2 nút chuyển mục (ảnh nút ở giao-dien/trang-bi/): list = [[khoá, tên file ảnh, nhãn, emoji dự phòng]] */
+  const tabsHtml = (list, cur, fn) => `<div class="gp-tabs">${list.map(([k, img, label, emoji]) => `<div class="gp-tab ${k === cur ? 'on' : ''}" onclick="${fn}('${k}')"><img src="${UI_DIR}${img}" alt="${label}" onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='block'"><span class="e" style="display:none">${emoji}</span><b>${label}</b></div>`).join('')}</div>`;
+  window._egTab = window._egTab || 'gem';   // 'gem' = Ngọc (gắn vào trang bị) • 'kho' = Kho Ngọc (xem + ghép nâng cấp)
   function gemRender() {
     const s = gemSync(), body = $('eg-body'); if (!body) return;
-    const cards = GEM_TYPES.map(t => {
-      const lvs = Object.keys(s.stock[t.k]).map(Number).filter(l => stockN(s, t.k, l) > 0).sort((a, b) => a - b);
-      const rows = lvs.map(l => {
-        const mats = gemMats(l), have1 = stockN(s, t.k, 1) - (l === 1 ? 1 : 0), can = l < gemMax() && have1 >= mats;
-        return `<div class="gp-lv"><span>Cấp ${l} ×${stockN(s, t.k, l)}</span>${l >= gemMax() ? '<small>Tối đa</small>' : `<button class="gp-btn" ${can ? '' : 'disabled'} title="Tốn ${mats} ngọc cấp 1" onclick="egUpStock('${t.k}',${l})">Nâng (${mats})</button>`}</div>`;
-      }).join('') || '<small>Chưa có</small>';
-      return `<div class="gp-card">${gemImgHtml(t)}<b>${t.name}</b><small>Cấp n: +${num(gemBase(t))}×n ${t.label}</small>${rows}</div>`;
+    const tab = window._egTab === 'kho' ? 'kho' : 'gem';
+    const head = tabsHtml([['gem', 'ngoc.png', 'Ngọc', '💎'], ['kho', 'kho-ngoc.png', 'Kho Ngọc', '🧰']], tab, 'egTab');
+    if (tab === 'kho') {
+      const cards = GEM_TYPES.map(t => {
+        const lvs = Object.keys(s.stock[t.k]).map(Number).filter(l => stockN(s, t.k, l) > 0).sort((a, b) => a - b);
+        const rows = lvs.map(l => {
+          const mats = gemMats(l), have1 = stockN(s, t.k, 1) - (l === 1 ? 1 : 0), can = l < gemMax() && have1 >= mats;
+          return `<div class="gp-lv"><span>Cấp ${l} ×${stockN(s, t.k, l)}<small>+${num(gemVal(t, l))} ${t.label}</small></span>${l >= gemMax() ? '<small>Tối đa</small>' : `<button class="gp-btn" ${can ? '' : 'disabled'} title="Tốn ${mats} ngọc cấp 1" onclick="egUpStock('${t.k}',${l})">Ghép (${mats})</button>`}</div>`;
+        }).join('') || '<small>Chưa có</small>';
+        return `<div class="gp-card">${gemImgHtml(t)}<b>${t.name}</b><small>Cấp n: +${num(gemBase(t))}×n ${t.label}</small>${rows}</div>`;
+      }).join('');
+      body.innerHTML = head + `<div class="gp-note">Ghép nâng cấp: ngọc cấp n → n+1 tốn <b>2<sup>n</sup></b> ngọc cấp 1 cùng loại (1→2: 2 viên, 2→3: 4 viên, 3→4: 8 viên…). Tối đa cấp ${gemMax()}.</div>
+      <div class="gp-h">💎 Kho ngọc</div><div class="gp-grid">${cards}</div>`;
+      return;
+    }
+    const F = Math.min(4, Math.max(0, Number(window._egFrame) || 0));
+    const fr = [0, 1, 2, 3, 4].map(f => {
+      const id = teamSlots[f], h = id != null ? heroById(id) : null;
+      let n = 0; EQUIP.forEach(e => { const it = eqAt(f, e.k); if (it) (s.slot[it.id] || []).forEach(g => { if (g) n++; }); });
+      return `<div class="gp-card ${f === F ? 'cur' : ''}" style="cursor:pointer" onclick="egFrame(${f})"><b>Khung ${f + 1}</b><small>${h ? h.name : '(trống)'}</small><small>${n ? '💎 ' + n + '/' + (EQUIP.length * GEM_SLOTS) : 'Chưa gắn ngọc'}</small></div>`;
     }).join('');
-    const rows = eqList().map(({ e, it, rank }) => {
+    const hF = teamSlots[F] != null ? heroById(teamSlots[F]) : null;
+    const rows = EQUIP.map(e => {
+      const it = eqAt(F, e.k);
+      if (!it) return `<div class="gp-row" style="opacity:.55"><div class="ico">${e.icon}</div><div class="inf"><b>${e.name}</b><small>Khung ${F + 1} chưa mặc ${e.name}</small></div></div>`;
       const sl = s.slot[it.id] || [null, null, null], sum = {};
       sl.forEach(g => { const t = g && gT(g.t); if (t) sum[t.label] = (sum[t.label] || 0) + gemVal(t, g.lv); });
       const sumTxt = Object.keys(sum).map(k => `+${num(sum[k])} ${k}`).join(' • ') || 'Chưa gắn ngọc';
       const slots = [0, 1, 2].map(i => { const g = sl[i], t = g && gT(g.t); return `<div class="gp-slot ${t ? 'on' : ''}" onclick="egSlot(${it.id},${i})">${t ? gemImgHtml(t) + `<em>${g.lv}</em>` : '＋'}</div>`; }).join('');
-      return `<div class="gp-row"><div class="ico">${e.icon}</div><div class="inf"><b>${e.name} ${rank}</b><small>${frTxt(it)}</small><small style="color:#bbf7d0">${sumTxt}</small></div><div class="gp-slots">${slots}</div></div>`;
-    }).join('') || emptyEq();
-    body.innerHTML = `<div class="gp-note">Mỗi trang bị gắn tối đa <b>${GEM_SLOTS} ngọc</b>. Ngọc cấp n = n × chỉ số gốc. Nâng ngọc cấp n → n+1 tốn <b>2<sup>n</sup></b> ngọc cấp 1 cùng loại (1→2: 2 viên, 2→3: 4 viên, 3→4: 8 viên…). Tối đa cấp ${gemMax()}. Ngọc đi theo món trang bị.</div>
-      <div class="gp-h">💎 Kho ngọc</div><div class="gp-grid">${cards}</div>
-      <div class="gp-h">🎒 Gắn ngọc vào trang bị</div>${rows}
-      <div style="text-align:center;margin-top:10px"><button class="gp-btn g" onclick="gpTest()">🎁 Nhận thử ngọc (Test)</button></div>`;
+      return `<div class="gp-row"><div class="ico">${e.icon}</div><div class="inf"><b>${e.name} ${eqRank(it)}</b><small>${frTxt(it)}</small><small style="color:#bbf7d0">${sumTxt}</small></div><div class="gp-slots">${slots}</div></div>`;
+    }).join('');
+    body.innerHTML = head + `<div class="gp-note">Mỗi trang bị gắn tối đa <b>${GEM_SLOTS} ngọc</b>. Ngọc đi theo món trang bị.</div>
+      <div class="gp-h">🛡️ Chọn khung</div><div class="gp-grid" style="grid-template-columns:repeat(3,1fr)">${fr}</div>
+      <div class="gp-h">🎒 Gắn ngọc vào trang bị — Khung ${F + 1}${hF ? ' · ' + hF.name : ''}</div>${rows}`;
   }
+  window._egFrame = window._egFrame == null ? 0 : window._egFrame;
+  window.egFrame = function (f) { window._egFrame = f; gemRender(); };
+  window.egTab = function (k) { window._egTab = k; gemRender(); };
   window.egUpStock = function (k, lv) {
     const s = gst(), mats = gemMats(lv);
     if (lv >= gemMax()) return;
@@ -11502,30 +11714,52 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
   }
 
   /* ===== MÀN LINH PHÙ ===== */
+  window._epTab = window._epTab || 'phu';        // 'phu' = Phù Linh (khảm vào trang bị) • 'kho' = Kho Phù (xem phù + thông số)
+  window._epFrame = window._epFrame == null ? 0 : window._epFrame;   // khung đang chọn ở Phù Linh (0 = Khung 1)
+  window._epSel = window._epSel || null;           // phù đang chọn ở Kho Phù
   function phuRender() {
     const body = $('ep-body'); if (!body) return;
-    const chips = PHU_TYPES.map(p => `<div class="gp-card">${phuImgHtml(p, 56)}<b>${p.name}</b><small>×${num(skbQty(p.name))}</small></div>`).join('');
+    const tab = (window._epTab === 'kho' || window._epTab === 'fx') ? window._epTab : 'phu';
+    const head = tabsHtml([['phu', 'phu-linh.png', 'Phù Linh', '📜'], ['kho', 'kho-phu.png', 'Kho Phù', '🗃️'], ['fx', 'hieu-ung.png', 'Hiệu Ứng', '✨']], tab, 'epTab');
+    if (tab === 'kho') {
+      const sel = window._epSel && pT(window._epSel);
+      const chips = PHU_TYPES.map(p => `<div class="gp-card ${sel && sel.k === p.k ? 'cur' : ''}" style="cursor:pointer" onclick="epPick('${p.k}')">${phuImgHtml(p, 56)}<b style="color:${p.col}">${p.name}</b><small>×${num(skbQty(p.name))}</small></div>`).join('');
+      const stt = sel ? phuStatsOf(sel.k) : null;
+      const det = sel
+        ? `<div class="gp-det" style="border-color:${sel.col}"><b style="color:${sel.col}">${sel.name}</b> — ${sel.fx}${Object.keys(stt).map(x => `<div>${PHU_LABEL[x]}: <b>+${num(stt[x])}</b></div>`).join('')}</div>`
+        : '<div class="gp-note" style="text-align:center;margin-top:10px">Chạm vào một phù để xem thông số</div>';
+      body.innerHTML = head + `<div class="gp-h">📜 Kho phù</div><div class="gp-grid p7" style="grid-template-columns:repeat(4,1fr)">${chips}</div>${det}`;
+      return;
+    }
+    if (tab === 'fx') {
+      body.innerHTML = head + `<div class="gp-h">✨ Xem thử hiệu ứng hào quang</div>
+      <div class="gp-grid p7" style="grid-template-columns:repeat(4,1fr)">${PHU_TYPES.map(p => `<div class="gp-card" id="ep-d-${p.k}" onclick="epDemo('${p.k}')" style="cursor:pointer">${phuImgHtml(p, 40)}<small>${p.name}</small></div>`).join('')}</div>
+      <div id="ep-stage" style="--dep:1;position:relative;height:270px;margin-top:8px;border:1px solid #475569;border-radius:12px;overflow:hidden;background:radial-gradient(ellipse at 50% 78%,#1e3a5f 0,#0b1220 70%)"></div>
+      <div id="ep-fx" style="text-align:center;font-size:12px;margin-top:4px"></div>`;
+      epDemo(window._epK || 'tien');
+      return;
+    }
+    const F = Math.min(4, Math.max(0, Number(window._epFrame) || 0));
     const fr = [0, 1, 2, 3, 4].map(f => {
       const id = teamSlots[f], h = id != null ? heroById(id) : null, a = phuAuraOf(f);
       const cnt = {}; EQUIP.forEach(e => { const it = eqAt(f, e.k); if (it && it.phu) cnt[it.phu] = (cnt[it.phu] || 0) + 1; });
       const best = Object.keys(cnt).sort((x, y) => cnt[y] - cnt[x])[0];
       const st = a ? `<span style="color:${pT(a).col}">✨ Hào quang ${pT(a).name}</span>` : best ? `${pT(best).name} ${cnt[best]}/4` : 'Chưa khảm';
-      return `<div class="gp-card ${a ? 'sel' : ''}"><b>Khung ${f + 1}</b><small>${h ? h.name : '(trống)'}</small><small>${st}</small></div>`;
+      return `<div class="gp-card ${a ? 'sel' : ''} ${f === F ? 'cur' : ''}" style="cursor:pointer" onclick="epFrame(${f})"><b>Khung ${f + 1}</b><small>${h ? h.name : '(trống)'}</small><small>${st}</small></div>`;
     }).join('');
-    const rows = eqList().map(({ e, it, rank }) => {
+    const hF = teamSlots[F] != null ? heroById(teamSlots[F]) : null;
+    const rows = EQUIP.map(e => {
+      const it = eqAt(F, e.k);
+      if (!it) return `<div class="gp-row" style="opacity:.55"><div class="ico">${e.icon}</div><div class="inf"><b>${e.name}</b><small>Khung ${F + 1} chưa mặc ${e.name}</small></div></div>`;
       const p = it.phu && pT(it.phu);
-      return `<div class="gp-row"><div class="ico">${e.icon}</div><div class="inf"><b>${e.name} ${rank}</b><small>${frTxt(it)}</small><small style="color:${p ? p.col : '#94a3b8'}">${p ? p.name : 'Chưa khảm phù'}</small></div><div class="gp-slots"><div class="gp-slot ${p ? 'on' : ''}" onclick="epSlot(${it.id})">${p ? phuImgHtml(p) : '＋'}</div></div></div>`;
-    }).join('') || emptyEq();
-    body.innerHTML = `<div class="gp-note">Mỗi trang bị khảm <b>1 phù</b> cố định, mỗi lần khảm tốn <b>${PHU_COST} phù</b> cùng loại. Khi <b>4 trang bị</b> (Mũ, Áo, Kiếm, Giày) ở cùng 1 khung đều khảm <b>cùng loại phù</b>, tướng đứng khung đó ra trận sẽ có <b>hào quang</b> toả quanh thân.<br>${PHU_TYPES.map(p => `<span style="color:${p.col}">● ${p.name}</span>: ${p.fx}`).join('<br>')}</div>
-      <div class="gp-h">📜 Kho phù</div><div class="gp-grid p7" style="grid-template-columns:repeat(4,1fr)">${chips}</div>
-      <div class="gp-h">🛡️ Hào quang theo khung</div><div class="gp-grid" style="grid-template-columns:repeat(3,1fr)">${fr}</div>
-      <div class="gp-h">🎒 Khảm phù vào trang bị</div>${rows}
-      <div class="gp-h">✨ Xem thử hiệu ứng hào quang</div>
-      <div class="gp-grid p7" style="grid-template-columns:repeat(4,1fr)">${PHU_TYPES.map(p => `<div class="gp-card" id="ep-d-${p.k}" onclick="epDemo('${p.k}')" style="cursor:pointer">${phuImgHtml(p, 40)}<small>${p.name}</small></div>`).join('')}</div>
-      <div id="ep-stage" style="--dep:1;position:relative;height:270px;margin-top:8px;border:1px solid #475569;border-radius:12px;overflow:hidden;background:radial-gradient(ellipse at 50% 78%,#1e3a5f 0,#0b1220 70%)"></div>
-      <div id="ep-fx" style="text-align:center;font-size:12px;margin-top:4px"></div>`;
-    epDemo(window._epK || 'tien');
+      return `<div class="gp-row"><div class="ico">${e.icon}</div><div class="inf"><b>${e.name} ${eqRank(it)}</b><small>${frTxt(it)}</small><small style="color:${p ? p.col : '#94a3b8'}">${p ? p.name : 'Chưa khảm phù'}</small></div><div class="gp-slots"><div class="gp-slot ${p ? 'on' : ''}" onclick="epSlot(${it.id})">${p ? phuImgHtml(p) : '＋'}</div></div></div>`;
+    }).join('');
+    body.innerHTML = head + `<div class="gp-h">🛡️ Chọn khung</div><div class="gp-grid" style="grid-template-columns:repeat(3,1fr)">${fr}</div>
+      <div class="gp-h">🎒 Khảm phù vào trang bị — Khung ${F + 1}${hF ? ' · ' + hF.name : ''}</div>${rows}`;
   }
+  window.epTab = function (k) { window._epTab = k; phuRender(); };
+  window.epFrame = function (f) { window._epFrame = f; phuRender(); };
+  window.epPick = function (k) { window._epSel = window._epSel === k ? null : k; phuRender(); };
   window.epSlot = function (eid) {
     const it = eqBag.find(x => x.id === eid); if (!it) return; const e = eqType(it.k);
     const opts = PHU_TYPES.map(p => { const n = skbQty(p.name), same = it.phu === p.k; return `<div class="gp-opt">${phuImgHtml(p, 38)}<div class="t"><b style="color:${p.col}">${p.name}</b> ×${num(n)}<br><small>${p.fx}</small></div><button class="gp-btn" ${(n < PHU_COST || same) ? 'disabled' : ''} onclick="epDo(${eid},'${p.k}')">${same ? 'Đang khảm' : 'Khảm (' + PHU_COST + ')'}</button></div>`; }).join('');
@@ -11552,17 +11786,12 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
       }
     } catch (e) {}
     st.innerHTML = auraHtml(k) + `<div style="position:absolute;z-index:2;left:50%;top:36%;width:0;height:0;transform:scale(1.5);transform-origin:50% 0;pointer-events:none">${sp}</div>`;
-    const g = st.querySelector('.bf-phu'); if (g) g.style.top = '52%';
+    const g = st.querySelector('.bf-phu'); if (g) { g.style.top = '79%'; g.style.width = g.style.height = '170px'; }
     PHU_TYPES.forEach(x => { const c = $('ep-d-' + x.k); if (c) c.classList.toggle('sel', x.k === k); });
-    const f = $('ep-fx'); if (f) f.innerHTML = `<b style="color:${p.col}">${p.name}</b>: ${p.fx}`;
+    const f = $('ep-fx'); if (f) f.innerHTML = `<b style="color:${p.col}">${p.name}</b>: ${p.fx}<br><small>${phuStatsTxt(k)}</small>`;
   };
   window.epClear = function (eid) { const it = eqBag.find(x => x.id === eid); if (!it) return; delete it.phu; eqSave(); modalClose(); phuRender(); };
 
-  window.gpTest = function () {   // nhận thử vật phẩm để kiểm tra (xoá nút này khi chính thức)
-    const s = gdSt();
-    GEM_TYPES.forEach(t => { s.kho[t.name] = s.kho[t.name] || { ico: '💎', qty: 0 }; s.kho[t.name].qty += 20; });
-    gdSave(s); gemRender(); toast('Đã nhận +20 mỗi loại ngọc');
-  };
   window.openEqGem = function () { switchScreen('eqgem'); gemRender(); };
   window.openEqPhu = function () { switchScreen('eqphu'); phuRender(); };
 
@@ -11596,6 +11825,11 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
   build();
 
   /* ===== hào quang phù trong trận (tự gắn / gỡ theo trang bị của khung tướng đang đứng) ===== */
+  function phuHost(el) {   // chỗ gắn hào quang: bóng dưới chân tướng (.bf-shadow); không có thì gắn vào đơn vị
+    const sh = el.querySelector('.bf-shadow');
+    if (sh) { try { if (getComputedStyle(sh).position === 'static') sh.style.position = 'relative'; sh.style.overflow = 'visible'; } catch (e) {} return sh; }
+    return el;
+  }
   function auraHtml(k) {
     let inner = '<i class="in"></i><i class="in2"></i>';
     if (k === 'ma') { inner = '<i class="in"></i>'; for (let i = 0; i < 8; i++) { const a = i * Math.PI / 4; inner += `<i class="f" style="--i:${i};left:${(50 + Math.cos(a) * 36).toFixed(1)}%;top:${(52 + Math.sin(a) * 36).toFixed(1)}%"></i>`; } }
@@ -11607,21 +11841,38 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
      hào quang gắn lên tướng đang xem (không cần có phù). Nhận diện màn demo = trong battle-overlay có nút bắt đầu bằng "Phe:". ----- */
   window._phuDemo = null;
   const phuDemoCycle = [null].concat(PHU_TYPES.map(p => p.k));
-  function demoBtnText() { const p = window._phuDemo && pT(window._phuDemo); return 'Phù: ' + (p ? p.name.replace(' Phù', '') : 'TẮT'); }
+  function demoBtnText() { const p = window._phuDemo && pT(window._phuDemo); return 'Phù ấn: ' + (p ? p.name.replace(' Phù', '') : 'TẮT'); }
+  const nenList = () => (typeof BATTLE_BGS !== 'undefined' && BATTLE_BGS.length) ? BATTLE_BGS : [];
+  function nenCur() { try { if (typeof lastBgIdx === 'number' && lastBgIdx >= 0) return lastBgIdx; if (typeof window._demoBg === 'number') return window._demoBg; } catch (e) {} return 0; }
+  function nenText() { const n = nenList().length; return 'Nền: ' + (nenCur() + 1) + '/' + (n || '?'); }
+  function nenApply(i) {   // đổi nền đấu: dùng đúng biến --bf-bg của sân đấu (như setBattleBg)
+    const L = nenList(); if (!L.length) return;
+    i = ((i % L.length) + L.length) % L.length; window._demoBg = i;
+    try { lastBgIdx = i; } catch (e) {}
+    const f = $('battle-arena'); if (f) f.style.setProperty('--bf-bg', 'url(' + L[i] + ')');
+  }
+  // Màn DEMO nhận diện bằng nút gốc "Phe: ..." (ở file khác). Nút gốc được ẨN đi và thay bằng 2 nút: "Nền: n/N" (đổi nền đấu 1→hết theo thứ tự) và "Phù ấn: ..." (đổi hiệu ứng phù theo thứ tự).
   function ensureDemoBtn(ov) {
-    const isDemo = [].some.call(ov.querySelectorAll('button'), b => /^Phe:/.test(b.textContent.trim())), ref = $('btn-slow');
-    let btn = $('btn-phu-demo');
-    if (!isDemo || !ref) { if (btn) btn.remove(); if (window._phuDemo) { window._phuDemo = null; ov.querySelectorAll('.bf-phu[data-demo]').forEach(x => x.remove()); } return isDemo; }
-    if (!btn) {
-      btn = document.createElement('button'); btn.id = 'btn-phu-demo'; btn.className = ref.className.replace(/\bon\b/, '').trim(); btn.style.cssText = ref.style.cssText;
-      btn.onclick = function () {
+    const orig = [].filter.call(ov.querySelectorAll('button'), b => /^Phe:/.test(b.textContent.trim()))[0] || ov.querySelector('button[data-nf-phe]');
+    let bn = $('btn-nen-demo'), bp = $('btn-phu-demo');
+    if (!orig) {   // không phải màn demo: dọn nút + hào quang demo
+      if (bn) bn.remove(); if (bp) bp.remove();
+      if (window._phuDemo) { window._phuDemo = null; ov.querySelectorAll('.bf-phu[data-demo]').forEach(x => x.remove()); }
+      window._demoBg = undefined; return false;
+    }
+    orig.setAttribute('data-nf-phe', '1'); orig.style.display = 'none';
+    const mk = (id, text, fn) => { const b = document.createElement('button'); b.id = id; b.className = orig.className.replace(/\bon\b/, '').trim(); b.style.cssText = orig.style.cssText; b.style.display = ''; b.textContent = text; b.onclick = fn; return b; };
+    if (!bn) { bn = mk('btn-nen-demo', nenText(), function () { nenApply(nenCur() + 1); bn.textContent = nenText(); }); orig.parentNode.insertBefore(bn, orig); }
+    if (!bp) {
+      bp = mk('btn-phu-demo', demoBtnText(), function () {
         const i = (phuDemoCycle.indexOf(window._phuDemo) + 1) % phuDemoCycle.length; window._phuDemo = phuDemoCycle[i];
-        btn.textContent = demoBtnText(); btn.classList.toggle('on', !!window._phuDemo);
+        bp.textContent = demoBtnText(); bp.classList.toggle('on', !!window._phuDemo);
         if (!window._phuDemo) ov.querySelectorAll('.bf-phu[data-demo]').forEach(x => x.remove());
         demoAura(ov);
-      };
-      btn.textContent = demoBtnText(); ref.parentNode.insertBefore(btn, ref.nextSibling);
+      });
+      bn.parentNode.insertBefore(bp, bn.nextSibling);
     }
+    if (bn.textContent !== nenText()) bn.textContent = nenText();   // nền đổi sau mỗi lần nạp đợt → nhãn theo kịp
     return true;
   }
   function demoAura(ov) {   // gắn hào quang demo lên mọi đơn vị là TƯỚNG (có chuỗi khung / thân / ảnh tướng), bỏ qua cọc gỗ, người nộm
@@ -11631,7 +11882,7 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
       const cur = el.querySelector('.bf-phu');
       if (cur && cur.dataset.p === k && cur.dataset.demo) return;
       if (cur) cur.remove();
-      el.insertAdjacentHTML('afterbegin', auraHtml(k).replace('class="bf-phu', 'data-demo="1" class="bf-phu'));
+      phuHost(el).insertAdjacentHTML('afterbegin', auraHtml(k).replace('class="bf-phu', 'data-demo="1" class="bf-phu'));
     });
   }
   setInterval(function () {
@@ -11644,8 +11895,343 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
         const cur = u.el.querySelector('.bf-phu'); if (cur && cur.dataset.demo) return;
         const k = (u.alive === false) ? null : phuAuraOf(frameOf(u.id));
         if (cur && (!k || cur.dataset.p !== k)) cur.remove();
-        if (k && !u.el.querySelector('.bf-phu')) u.el.insertAdjacentHTML('afterbegin', auraHtml(k));
+        if (k && !u.el.querySelector('.bf-phu')) phuHost(u.el).insertAdjacentHTML('afterbegin', auraHtml(k));
       });
     } catch (e) {}
   }, 500);
+})();
+
+;
+/* === js/ui/ky-ngo.js ===
+   KỲ NGỘ: Báo Danh (điểm danh 15 ngày) • Thăng Cấp (quà mốc cấp acc) • Đao Kiếm • Uống Rượu • Phái Võ Hiệp • Đổ Thần (cá cược)
+   Cấu hình admin (game_config → kyngo.*): quà dùng định dạng Gift Code { t, n, id?, name?, ico? }
+     kyngo.diemdanh   = [ <quà ngày 1>, ... <quà ngày 15> ]   mỗi ngày 1 quà hoặc 1 mảng quà; trống = ô trống
+     kyngo.thangcap   = { step: 5, max: 200, rows: { "75": [q1, q2, q3], "80": [...] } }   (mỗi hàng 3 ô quà; không điền = ô trống)
+     kyngo.phai       = { hours: 6, reward: [quà] }
+     kyngo.daokiem    = { win: 500, lose: 50 }      kyngo.ruou = { sta: 100 }      kyngo.dothan = { mult: 3 } */
+(function () {
+  const mc = document.querySelector('.main-content'); if (!mc) return;
+  const $ = id => document.getElementById(id);
+  const st = (() => { const o = loadJSON('ky_state'); return (o && typeof o === 'object' && !Array.isArray(o)) ? o : {}; })();
+  st.dd = st.dd || { n: 0, last: '' };            // n = số ngày đã nhận (0..15), last = ngày (mốc 05h) nhận gần nhất
+  st.lv = st.lv || {};                            // { "75": 1 } mốc cấp đã nhận
+  st.ruou = st.ruou || { day: '', done: [] };
+  st.dk = st.dk || { last: 0 };                    // Đao Kiếm: mốc thời gian lần chơi gần nhất (3 giờ / lần)
+  st.phai = Array.isArray(st.phai) ? st.phai : [];
+  const save = () => saveJSON('ky_state', st);
+  const toast = t => { try { scToast(t); } catch (e) {} };
+  const f = n => { try { return fmtN(n); } catch (e) { return String(n); } };
+  const asList = v => rwList(Array.isArray(v) ? v : (v && typeof v === 'object' ? [v] : []));
+  const dayKey5 = () => { const t = new Date(Date.now() - 5 * 3600e3); return t.getFullYear() + '-' + (t.getMonth() + 1) + '-' + t.getDate(); };
+  const dayKey0 = () => { const t = new Date(); return t.getFullYear() + '-' + (t.getMonth() + 1) + '-' + t.getDate(); };
+  const refreshTop = () => { try { updateGold(); } catch (e) {} try { staRender(); } catch (e) {} try { tickBadge(); } catch (e) {} };
+
+  /* ---------- giao diện ---------- */
+  const css = document.createElement('style');
+  css.textContent = `
+#screen-kyngo .ky-tabs{display:flex;gap:6px;overflow-x:auto;padding:8px 6px;-webkit-overflow-scrolling:touch}
+#screen-kyngo .ky-tab{flex:0 0 auto;padding:6px 12px;border-radius:18px;border:1px solid #a16207;background:rgba(0,0,0,.35);color:#fde68a;font-weight:800;font-size:13px;cursor:pointer;position:relative}
+#screen-kyngo .ky-tab.on{background:linear-gradient(#f59e0b,#b45309);color:#fff;border-color:#fde047}
+#screen-kyngo .ky-dot{position:absolute;top:-5px;right:-3px;background:#ef4444;color:#fff;border-radius:9px;min-width:16px;height:16px;font-size:10px;line-height:16px;text-align:center}
+#screen-kyngo .ky-body{padding:6px 10px 16px}
+.ky-dtwrap{display:flex;flex-direction:column;min-height:calc(100vh - 200px);min-height:calc(100dvh - 200px)}
+#screen-kyngo .ky-dtwrap .ky-bag{max-height:none;flex:1 1 0;min-height:180px;align-content:start}
+.ky-dtbot{margin-top:6px}
+.ky-bv{position:relative;display:block;aspect-ratio:1024/1536;margin:-6px -10px -16px;background:#0b1530 url(giao-dien/bang-vang.webp) center/100% 100% no-repeat;container-type:inline-size;overflow:hidden}
+.ky-bv-note{position:absolute;left:10%;width:80%;top:21.7%;height:3.4%;display:flex;align-items:center;justify-content:center;white-space:nowrap;font-weight:700;font-size:2.4cqw;color:#fff;text-shadow:0 1px 3px #000,0 0 6px #000}
+.ky-bv-note b{color:#fde047;margin-left:.4em}
+.ky-bvr{position:absolute;left:0;width:100%;height:10.5%}
+.ky-bvr>*{position:absolute;top:0;height:100%}
+.ky-bvl{left:7.6%;width:15.6%;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:900;font-size:3.3cqw;line-height:1.2;color:#fde68a;text-shadow:0 1px 3px #000,0 0 6px #000;padding-left:1.5%}
+.ky-bvq{width:16.2%}
+.ky-bvb{left:76.3%;width:13.8%;display:flex;align-items:center;justify-content:center}
+.ky-bv .ky-cell{width:100%;height:100%;aspect-ratio:auto;border:0;background:none;box-shadow:none;font-size:6.5cqw;overflow:visible}
+.ky-bv .ky-cell small{font-size:2.9cqw;text-shadow:0 1px 3px #000,0 0 5px #000}
+.ky-bv .ky-btn{padding:1.3cqw 2.2cqw;font-size:3.4cqw;border-radius:2cqw}
+.ky-bv .ky-lock{width:48%;height:auto;opacity:.85}
+.ky-bv.dd{background:url(giao-dien/diem-danh.webp) center/100% 100% no-repeat}
+.ky-ddc{position:absolute;width:14.84%;height:9.83%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:6.5cqw;border-radius:1.8cqw}
+.ky-ddc img{max-width:62%;max-height:54%}
+.ky-ddc small{font-size:2.7cqw;font-weight:800;color:#fff;text-shadow:0 1px 3px #000,0 0 5px #000}
+.ky-ddc .ky-d{position:absolute;top:.5cqw;left:1.4cqw;font-size:2.4cqw;font-weight:800;color:#dbe4ff;text-shadow:0 1px 2px #000}
+.ky-ddc.done{opacity:.5}
+.ky-ddc.cur{box-shadow:0 0 2.4cqw #fde047,inset 0 0 1.8cqw rgba(253,224,71,.5)}
+.ky-ddc .ky-ck{position:absolute;right:1.2cqw;bottom:.2cqw;color:#4ade80;font-size:4.6cqw;font-weight:900;text-shadow:0 1px 3px #000}
+.ky-ddbar{position:absolute;left:10.25%;top:58.27%;width:79.6%;height:9.6%;display:flex;align-items:center;justify-content:space-between;padding:0 3.2cqw;box-sizing:border-box;border:.5cqw solid #d6a93c;border-radius:2.4cqw;background:linear-gradient(#1c2d78,#121c4e);box-shadow:0 0 2cqw rgba(0,0,0,.55),inset 0 0 2cqw rgba(120,150,255,.25)}
+.ky-ddbar .ky-ddt{font-size:2.8cqw;line-height:1.5;font-weight:700;color:#e7ecff;text-shadow:0 1px 3px #000}
+.ky-ddbar .ky-ddt b{color:#fde047}
+.ky-ddbar .ky-btn{padding:1.6cqw 4cqw;font-size:4cqw;border-radius:2.4cqw}
+.ky-ttl{text-align:center;color:#fde68a;font-weight:900;font-size:17px;margin:6px 0}
+.ky-note{font-size:12px;color:#cbd5e1;text-align:center;margin:6px 0}
+.ky-g5{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.ky-cell{aspect-ratio:1;border:1px solid #6b5b3a;border-radius:8px;background:rgba(0,0,0,.32);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;font-size:22px;overflow:hidden}
+.ky-cell img{max-width:70%;max-height:60%}
+.ky-cell small{font-size:11px;font-weight:800;color:#fff}
+.ky-cell.done{opacity:.45}.ky-cell.cur{border-color:#fde047;box-shadow:0 0 8px #fde047}
+.ky-cell .ky-d{position:absolute;top:1px;left:3px;font-size:9px;color:#94a3b8}
+.ky-cell .ky-ck{position:absolute;right:2px;bottom:0;color:#4ade80;font-size:18px;font-weight:900}
+.ky-row{display:flex;align-items:center;gap:6px;background:rgba(0,0,0,.3);border:1px solid #6b5b3a;border-radius:10px;padding:6px;margin:6px 0}
+.ky-row .ky-lb{flex:0 0 62px;text-align:center;font-weight:900;color:#fde68a;font-size:13px}
+.ky-row .ky-q{flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
+.ky-row .ky-cell{font-size:18px}
+.ky-btn{padding:7px 16px;border:1px solid #fde047;border-radius:10px;background:linear-gradient(#f59e0b,#b45309);color:#fff;font-weight:900;font-size:14px;cursor:pointer}
+.ky-btn:disabled{filter:grayscale(1);opacity:.55;cursor:default}
+.ky-ctr{text-align:center;margin:10px 0}
+.ky-big{font-size:46px;line-height:1.2}
+.ky-pick{display:flex;gap:14px;justify-content:center;margin:10px 0}
+.ky-pick .ky-btn{font-size:20px;padding:14px 26px}
+.ky-arena{display:flex;justify-content:center;align-items:center;gap:20px;font-size:54px;min-height:84px}
+.ky-arena .w{filter:drop-shadow(0 0 10px #fde047);transform:scale(1.25)}.ky-arena .l{opacity:.3}
+@keyframes kyClash{0%{transform:translateX(0)}30%{transform:translateX(26px) rotate(12deg)}60%{transform:translateX(-4px)}100%{transform:translateX(0)}}
+.ky-arena .a1{animation:kyClash .45s 3}.ky-arena .a2{animation:kyClash .45s 3 reverse}
+.ky-plat{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:8px}
+.ky-pl{border:1px solid #6b5b3a;border-radius:50%/30%;background:rgba(120,120,120,.28);text-align:center;padding:16px 4px;cursor:pointer;color:#fde68a;font-weight:800;font-size:13px}
+.ky-pl.act{border-color:#4ade80}.ky-pl.fin{border-color:#fde047;background:rgba(250,204,21,.18)}
+.ky-pl small{display:block;color:#fff;font-weight:700}
+.ky-ov{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:99999;display:flex;align-items:center;justify-content:center}
+.ky-md{width:min(92vw,380px);background:#1f2937;border:2px solid #a16207;border-radius:14px;padding:14px;color:#e5e7eb;max-height:86vh;overflow:auto}
+.ky-md h3{margin:0 0 8px;text-align:center;color:#fde68a}
+.ky-bag{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:8px 0}
+.ky-bag .ky-cell{cursor:pointer;font-size:20px}.ky-bag .ky-cell.sel{border-color:#4ade80;box-shadow:0 0 8px #4ade80}
+.ky-nums{display:flex;gap:6px;justify-content:center;margin:8px 0}
+.ky-nums .ky-btn{padding:8px 0;width:40px}.ky-nums .ky-btn.sel{background:linear-gradient(#16a34a,#166534);border-color:#4ade80}
+`;
+  document.head.appendChild(css);
+  const sc = $('screen-kyngo') || document.createElement('div'); sc.className = 'screen'; sc.id = 'screen-kyngo';
+  sc.innerHTML = '<div class="ky-top"><div class="ky-tabs" id="ky-tabs"></div></div><div class="ky-body" id="ky-body"></div>';
+  if (!sc.parentNode) mc.appendChild(sc);
+
+  const TABS = [['dd', '📅 Báo Danh'], ['lv', '📈 Thăng Cấp'], ['dk', '⚔️ Đao Kiếm'], ['ru', '🍶 Uống Rượu'], ['ph', '🏯 Phái Võ Hiệp'], ['dt', '🎲 Đổ Thần']];
+  let tab = 'dd', selItem = null, selNum = null, selQty = 1, busy = false;
+  const cell = (r, extra) => { if (!r) return `<div class="ky-cell ${extra || ''}"></div>`; const i = rwInfo(r); return `<div class="ky-cell ${extra || ''}">${i.ico}<small>×${f(i.n)}</small></div>`; };
+  const cellMulti = (L, extra) => { const l = asList(L); return l.length ? cell(l[0], extra) + '' : cell(null, extra); };
+
+  /* ---------- Báo Danh ---------- */
+  const ddCfg = () => { const a = cfgGet('kyngo.diemdanh', []); return Array.from({ length: 15 }, (_, i) => asList(a && typeof a === 'object' ? a[i] : null)); };
+  const ddSync = () => { if (st.dd.n >= 15 && st.dd.last !== dayKey5()) { st.dd.n = 0; save(); } };
+  const ddCan = () => { ddSync(); return st.dd.last !== dayKey5(); };
+  function renderDD() {   // nền = giao-dien/diem-danh.webp (20 ô, nền trong suốt); game dùng 15 ngày = 3 hàng đầu, hàng 4 là thanh nút Báo Danh
+    ddSync(); const cfg = ddCfg(), n = st.dd.n, can = ddCan(), LEFT = [10.25, 26.46, 42.68, 58.89, 75.0], TOP = [25.65, 36.59, 47.46];
+    const cells = cfg.map((l, i) => { const done = i < n, cur = i === n && can, c = l.length ? rwInfo(l[0]) : null;
+      return `<div class="ky-ddc ${done ? 'done' : ''} ${cur ? 'cur' : ''}" style="left:${LEFT[i % 5]}%;top:${TOP[Math.floor(i / 5)]}%"><span class="ky-d">${i + 1}</span>${c ? c.ico + '<small>×' + f(c.n) + (l.length > 1 ? '+' : '') + '</small>' : ''}${done ? '<span class="ky-ck">✔</span>' : ''}</div>`; }).join('');
+    $('ky-body').innerHTML = `<div class="ky-bv dd">${cells}<div class="ky-ddbar"><div class="ky-ddt">Đã nhận <b>${n}/15</b> ngày<br>Làm mới lúc 05h00 mỗi ngày</div><button class="ky-btn" ${can ? '' : 'disabled'} onclick="kyDD()">${can ? 'Báo Danh' : 'Đã báo danh'}</button></div></div>`;
+  }
+  window.kyDD = function () {
+    if (!ddCan()) return;
+    const l = ddCfg()[st.dd.n % 15], got = l.length ? rwGrantAll(l) : '';
+    st.dd.n = Math.min(15, st.dd.n + 1); st.dd.last = dayKey5();
+    save(); toast('📅 Báo danh thành công' + (got ? ': ' + got : '')); refreshTop(); renderDD();
+  };
+
+  /* ---------- Thăng Cấp ---------- */
+  const lvStep = () => Math.max(1, Math.floor(cfgNum('kyngo.thangcap.step', 5))), lvMax = () => Math.max(1, Math.floor(cfgNum('kyngo.thangcap.max', 200)));
+  const lvRows = () => { const out = [], s = lvStep(); for (let lv = s; lv <= lvMax(); lv += s) if (!st.lv[lv]) out.push(lv); return out; };
+  const lvQ = lv => { const rows = cfgGet('kyngo.thangcap.rows', {}) || {}, l = asList(rows[lv] || rows[String(lv)]); return [0, 1, 2].map(i => l[i] || null); };   // mỗi hàng = tối đa 3 quà (admin thêm theo thứ tự)
+  const LV_LOCK = '<svg class="ky-lock" viewBox="0 0 24 24"><path fill="#8b93a7" d="M7 10V8a5 5 0 0 1 10 0v2h1a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1h1zm2 0h6V8a3 3 0 0 0-6 0v2zm3 4a1.6 1.6 0 0 0-.8 3v2h1.6v-2a1.6 1.6 0 0 0-.8-3z"/></svg>';
+  function renderLV() {   // nền = giao-dien/bang-vang.webp (đã xoá chữ/icon); chỉ phần cần cập nhật liên tục (cấp, quà, nút) vẽ đè lên theo %
+    const rows = lvRows().slice(0, 3), TOP = [29.95, 42.32, 54.69], LEFT = [24.2, 41.5, 58.8];
+    $('ky-body').innerHTML = `<div class="ky-bv"><div class="ky-bv-note">${rows.length ? `Mỗi ${lvStep()} cấp nhận 1 hàng quà. Hàng đã nhận sẽ ẩn, chưa nhận vẫn hiện.<b>Cấp hiện tại: ${accLevel}</b>` : 'Đã nhận hết quà.'}</div>` +
+      rows.map((lv, i) => { const can = accLevel >= lv;
+        return `<div class="ky-bvr" style="top:${TOP[i]}%"><div class="ky-bvl"><span>Cấp ${lv}<br>nhận</span></div>${lvQ(lv).map((r, k) => `<div class="ky-bvq" style="left:${LEFT[k]}%">${cell(r)}</div>`).join('')}<div class="ky-bvb">${can ? `<button class="ky-btn" onclick="kyLV(${lv})">Nhận</button>` : LV_LOCK}</div></div>`; }).join('') + '</div>';
+  }
+  window.kyLV = function (lv) {
+    if (st.lv[lv] || accLevel < lv) return;
+    const l = lvQ(lv).filter(Boolean), got = l.length ? rwGrantAll(l) : '';
+    st.lv[lv] = 1; save(); toast('🎁 Nhận quà cấp ' + lv + (got ? ': ' + got : '')); refreshTop(); renderLV();
+  };
+
+  /* ---------- Đao Kiếm ---------- */
+  const dkHours = () => Math.max(0.001, cfgNum('kyngo.daokiem.hours', 3));   // mỗi 3 giờ chơi 1 lần (admin chỉnh: kyngo.daokiem.hours)
+  const dkLeft = () => st.dk.last ? Math.max(0, st.dk.last + dkHours() * 3600e3 - Date.now()) : 0;
+  const dkWait = () => `<div class="ky-note" style="font-weight:700">Lượt kế tiếp sau <span data-end="${st.dk.last + dkHours() * 3600e3}">${clock(dkLeft())}</span></div>`;
+  const wpn = (k, cls) => `<img class="ky-wpn ${cls || ''}" src="giao-dien/icon-home/${k}.png" alt="${k}" onerror="this.outerHTML='${k === 'kiem' ? '🗡️' : '🔪'}'">`;
+  function renderDK() {
+    const W = Math.floor(cfgNum('kyngo.daokiem.win', 500)), Ls = Math.floor(cfgNum('kyngo.daokiem.lose', 50));
+    $('ky-body').innerHTML = `<div class="ky-dkwrap"><div class="ky-ttl">Đao hay Kiếm?</div><div class="ky-note">Đồ Long Đao, Ỷ Thiên Kiếm, đao kiếm tranh phong, ai thắng ai bại? Chọn đúng nhận <b>${f(W)}</b> vàng, chọn sai mất <b>${f(Ls)}</b> vàng. Tỷ lệ 50/50. Mỗi ${dkHours()} giờ chơi 1 lần.</div>
+      <div class="ky-arena" id="ky-arena">${wpn('kiem')}${wpn('dao')}</div><div class="ky-ctr" id="ky-res">${dkLeft() > 0 ? dkWait() : 'Hãy chọn binh khí'}</div>
+      <div class="ky-pick" style="margin-top:auto"><button class="ky-btn" ${dkLeft() > 0 ? 'disabled' : ''} onclick="kyDK('kiem')">Kiếm</button><button class="ky-btn" ${dkLeft() > 0 ? 'disabled' : ''} onclick="kyDK('dao')">Đao</button></div></div>`;
+  }
+  /* chuỗi ảnh (sprite sheet) đao kiếm giao tranh: giao-dien/icon-home/dao-kiem.webp = 5833x256 px, 19 khung xếp ngang, mỗi khung 307x256 (KHÔNG vuông).
+     Vẽ bằng <canvas>, cắt mỗi khung theo toạ độ số nguyên → không trôi. Đổi ảnh khác thì sửa DK_COLS / DK_ROWS bên dưới
+     (hoặc đặt window.KY_DK_COLS / window.KY_DK_ROWS); window.KY_DK_FPS = số khung/giây. */
+  const DK_SRC = 'giao-dien/icon-home/dao-kiem.webp', DK_COLS = 19, DK_ROWS = 1;
+  let dkSheet;
+  function dkLoad(cb) {
+    if (dkSheet !== undefined) return cb(dkSheet);
+    const im = new Image();
+    im.onload = () => { dkSheet = { im, w: im.naturalWidth, h: im.naturalHeight, cols: Math.floor(Number(window.KY_DK_COLS)) || DK_COLS, rows: Math.floor(Number(window.KY_DK_ROWS)) || DK_ROWS }; cb(dkSheet); };
+    im.onerror = () => { dkSheet = null; cb(null); };
+    im.src = DK_SRC;
+  }
+  function dkDraw(cv, sh, i) {   // khung i: cắt theo số nguyên px nên không sai số cộng dồn
+    const c = i % sh.cols, r = Math.floor(i / sh.cols) % sh.rows, x0 = Math.round(c * sh.w / sh.cols), x1 = Math.round((c + 1) * sh.w / sh.cols), y0 = Math.round(r * sh.h / sh.rows), y1 = Math.round((r + 1) * sh.h / sh.rows), cx = cv.getContext('2d');
+    cx.clearRect(0, 0, cv.width, cv.height); cx.drawImage(sh.im, x0, y0, x1 - x0, y1 - y0, 0, 0, cv.width, cv.height);
+  }
+  window.kyDK = function (pick) {
+    if (busy) return;
+    if (dkLeft() > 0) return toast('Chờ ' + clock(dkLeft()) + ' nữa mới chơi tiếp');
+    const W = Math.floor(cfgNum('kyngo.daokiem.win', 500)), Ls = Math.floor(cfgNum('kyngo.daokiem.lose', 50));
+    if (gold < Ls) return toast('Cần ít nhất ' + f(Ls) + ' vàng');
+    st.dk.last = Date.now(); save(); busy = true; const ar = $('ky-arena'), res = $('ky-res'); res.textContent = 'Đao kiếm giao tranh...';
+    const finish = keep => {
+      const win = Math.random() < 0.5 ? 'kiem' : 'dao', ok = win === pick;
+      if (!keep) ar.innerHTML = wpn('kiem', win === 'kiem' ? 'w' : 'l') + wpn('dao', win === 'dao' ? 'w' : 'l');
+      if (ok) { gold += W; res.innerHTML = `<b style="color:#4ade80">${win === 'kiem' ? 'Kiếm' : 'Đao'} thắng! Bạn đoán đúng, +${f(W)} vàng</b>`; }
+      else { gold = Math.max(0, gold - Ls); res.innerHTML = `<b style="color:#f87171">${win === 'kiem' ? 'Kiếm' : 'Đao'} thắng! Bạn đoán sai, -${f(Ls)} vàng</b>`; }
+      goldSave(); busy = false;
+      res.innerHTML += dkWait(); document.querySelectorAll('#screen-kyngo .ky-pick .ky-btn').forEach(b => { b.disabled = true; });
+    };
+    dkLoad(sh => {
+      if (!sh) { ar.innerHTML = wpn('kiem', 'a1') + '<span style="font-size:30px">💥</span>' + wpn('dao', 'a2'); setTimeout(() => finish(false), 1500); return; }
+      const fw = sh.w / sh.cols, fh = sh.h / sh.rows, N = sh.cols * sh.rows, fps = Number(window.KY_DK_FPS) || 12;
+      const Wd = Math.round(Math.max(120, Math.min(320, (ar.clientWidth || 320) - 10, 210 * fw / fh))), Hd = Math.round(Wd * fh / fw), dpr = Math.min(2, window.devicePixelRatio || 1);
+      ar.innerHTML = `<canvas id="ky-dk" width="${Math.round(Wd * dpr)}" height="${Math.round(Hd * dpr)}" style="width:${Wd}px;height:${Hd}px;display:block;margin:0 auto"></canvas>`;
+      const cv = $('ky-dk'), total = Math.max(N, Math.ceil(fps * 1.5)); let i = 0; dkDraw(cv, sh, 0);
+      const iv = setInterval(() => { i++; if (i >= total) { clearInterval(iv); setTimeout(() => finish(true), 200); return; } dkDraw(cv, sh, i % N); }, 1000 / fps);
+    });
+  };
+
+  /* ---------- Uống Rượu ---------- */
+  const WIN = [[12, 14], [18, 20], [21, 23]];
+  const pad = n => String(n).padStart(2, '0');
+  const ruouNow = () => { const h = new Date().getHours(); return WIN.findIndex(w => h >= w[0] && h < w[1]); };
+  const ruouSync = () => { if (st.ruou.day !== dayKey0()) st.ruou = { day: dayKey0(), done: [] }; };
+  const ruouCan = () => { ruouSync(); const i = ruouNow(); return i >= 0 && !st.ruou.done[i]; };
+  function renderRU() {
+    ruouSync(); const S = Math.floor(cfgNum('kyngo.ruou.sta', 100)), i = ruouNow();
+    $('ky-body').innerHTML = `<div class="ky-ttl">Uống Rượu</div><div class="ky-note">Rượu ngon dành tặng bạn hiền, uống vào được <b>+${f(S)} thể lực</b>. Mỗi khung giờ uống 1 lần.</div>
+      <div class="ky-ctr"><img src="giao-dien/icon-home/ruou.png" alt="Rượu" style="height:96px;width:auto" onerror="this.outerHTML='<div class=&quot;ky-big&quot;>🍶</div>'"><button class="ky-btn" ${ruouCan() ? '' : 'disabled'} onclick="kyRU()">${ruouCan() ? 'Uống' : (i >= 0 ? 'Đã uống khung giờ này' : 'Chưa tới giờ')}</button></div>
+      <div class="ky-note" style="font-weight:700">Thời gian uống rượu:${WIN.map((w, k) => `<br>${pad(w[0])}:00:00 - ${pad(w[1] - 1)}:59:59 ${st.ruou.done[k] ? '✔' : ''}`).join('')}</div>`;
+  }
+  window.kyRU = function () {
+    if (!ruouCan()) return;
+    const S = Math.floor(cfgNum('kyngo.ruou.sta', 100)); st.ruou.done[ruouNow()] = 1; save();
+    staState.v += S; staSave(); toast('🍶 Uống rượu: +' + S + ' thể lực'); refreshTop(); renderRU();
+  };
+
+  /* ---------- Phái Võ Hiệp ---------- */
+  const BUC = '<img class="ky-buc" src="giao-dien/icon-home/buc-phai-vo-hiep.png" alt="" onerror="this.parentNode.classList.add(\'nobuc\');this.remove()">';   // bục dưới chân võ hiệp được phái đi
+  const phHours = () => Math.max(0.001, cfgNum('kyngo.phai.hours', 6));
+  const randHero = skip => { const pool = HEROES.filter(h => !skip.includes(h.id)); return (pool[Math.floor(Math.random() * pool.length)] || HEROES[0]).id; };
+  /* Đo CHÂN từng tướng từ chính ảnh chuỗi khung (khung đầu): hàng điểm ảnh thấp nhất của thân + tâm ngang của chân,
+     rồi đặt chân đúng TÂM bục (mỗi tướng có khoảng trống dưới chân khác nhau nên không thể dùng 1 số chung).
+     Tinh chỉnh chung: biến CSS --ky-cy (mặc định 3px; số lớn hơn = tướng thấp xuống). Ghi đè riêng: window.KY_FOOT = { idTướng: dy_px } (dương = xuống). */
+  const kyFoot = {};
+  function kyFootFallback(h, c, s) { const hh = c.h; return { y: 1.1 * (((h && h.bodyH) || 76) + Math.round((s.drop || 0) * hh)), x: 0 }; }
+  function kyFootGet(h) {
+    const c = SEQ_IDLE[h.id]; if (!c) return null;
+    if (kyFoot[h.id] !== undefined) return kyFoot[h.id];
+    kyFoot[h.id] = null;
+    const s = SEQ[c.sheet], im = new Image();
+    const done = r => { kyFoot[h.id] = r; try { if (tab === 'ph' && $('screen-kyngo').classList.contains('active') && !$('ky-ov')) renderPH(); } catch (e) {} };
+    im.onload = () => {
+      let r;
+      try {
+        const fw = Math.max(1, Math.round(im.naturalWidth / s.n)), fh = im.naturalHeight, cv = document.createElement('canvas'); cv.width = fw; cv.height = fh;
+        const cx = cv.getContext('2d'); cx.drawImage(im, 0, 0, fw, fh, 0, 0, fw, fh); const d = cx.getImageData(0, 0, fw, fh).data, rows = new Array(fh).fill(0); let mx = 0;
+        for (let y = 0; y < fh; y++) { let n = 0; for (let x = 0; x < fw; x++) if (d[(y * fw + x) * 4 + 3] > 60) n++; rows[y] = n; if (n > mx) mx = n; }
+        let fy = fh - 1; while (fy > 0 && rows[fy] < mx * 0.12) fy--;   // bỏ vệt khói / tà áo thưa ở dưới
+        let sx = 0, cnt = 0; for (let y = Math.max(0, fy - Math.round(fh * 0.06)); y <= fy; y++) for (let x = 0; x < fw; x++) if (d[(y * fw + x) * 4 + 3] > 60) { sx += x; cnt++; }
+        const hh = c.h, w = Math.round(hh * s.cw / s.ch), lift = hh - ((h && h.bodyH) || 76) - Math.round((s.drop || 0) * hh), flip = seqFlip(s, 'hero') ? -1 : 1;
+        r = { y: 1.1 * (fy / fh * hh - lift), x: 1.1 * ((cnt ? sx / cnt : fw / 2) / fw - 0.5) * w * flip };
+      } catch (e) { r = kyFootFallback(h, c, s); }
+      done(r);
+    };
+    im.onerror = () => done(kyFootFallback(h, c, s));
+    im.src = s.src;
+    return null;
+  }
+  const heroStand = h => {   // dáng đứng yên (chuỗi ảnh) của tướng; thiếu thì dùng ảnh thân / ảnh đại diện
+    let sp = '', sty = '';
+    const adj = (window.KY_FOOT && Number(window.KY_FOOT[h.id])) || 0;
+    try {
+      const sq = (typeof seqIdleHTML === 'function') ? seqIdleHTML(h.id, h, 'hero') : '';
+      if (sq) { sp = sq; const f = kyFootGet(h); sty = f ? `top:calc(50% - ${(f.y - adj).toFixed(1)}px + var(--ky-cy,3px));margin-left:${(-f.x).toFixed(1)}px` : 'visibility:hidden'; }
+      else if (h.body) { sp = `<img src="${h.body}" style="position:absolute;left:0;top:0;height:${h.bodyH || 76}px;transform:translateX(-50%)">`; sty = `top:calc(50% - ${(((h.bodyH || 76) * 1.1) - adj).toFixed(1)}px + var(--ky-cy,3px))`; }
+    } catch (e) {}
+    return sp ? `<div class="ky-stand" style="${sty}">${sp}</div>` : `<div class="ky-pad-ico">${heroIcon(h)}</div>`;
+  };
+  function phSync() { for (let i = 0; i < 5; i++) { const s = st.phai[i]; if (!s || !heroById(s.hero)) st.phai[i] = { hero: randHero(st.phai.filter(Boolean).map(x => x.hero)), start: 0 }; } st.phai.length = 5; }
+  const phLeft = s => s.start ? Math.max(0, s.start + phHours() * 3600e3 - Date.now()) : 0;
+  const clock = ms => { const t = Math.ceil(ms / 1000); return pad(Math.floor(t / 3600)) + ':' + pad(Math.floor(t % 3600 / 60)) + ':' + pad(t % 60); };
+  function renderPH() {
+    phSync(); save();
+    const pos = ['left:2%;top:max(125px,16%);z-index:1', 'right:2%;top:max(125px,16%);z-index:1', 'left:50%;top:50%;transform:translate(-50%,-42%);z-index:2', 'left:2%;bottom:1%;z-index:3', 'right:2%;bottom:1%;z-index:3'];   // hàng dưới z-index cao hơn → không bị hàng trên che tướng
+    $('ky-body').innerHTML = `<div class="ky-pads">${st.phai.map((s, i) => {
+      const h = heroById(s.hero), act = s.start && phLeft(s) > 0, fin = s.start && phLeft(s) <= 0;
+      return `<div class="ky-pad ${act ? 'act' : ''} ${fin ? 'fin' : ''}" style="${pos[i]}" onclick="kyPH(${i})"><div class="ky-pad-top">${BUC}${s.start ? heroStand(h) : ''}</div><div class="ky-pad-tx">${fin ? 'Nhận thưởng' : act ? `<span data-end="${s.start + phHours() * 3600e3}">${clock(phLeft(s))}</span>` : 'Nhấn phái đi'}</div></div>`; }).join('')}</div>`;
+  }
+  const modal = html => { closeModal(); const d = document.createElement('div'); d.className = 'ky-ov'; d.id = 'ky-ov'; d.onclick = e => { if (e.target === d) closeModal(); }; d.innerHTML = `<div class="ky-md">${html}</div>`; document.body.appendChild(d); };
+  const closeModal = () => { const o = $('ky-ov'); if (o) o.remove(); };
+  window.kyClose = closeModal;
+  window.kyPH = function (i) {
+    const s = st.phai[i]; if (!s) return; const h = heroById(s.hero), rw = asList(cfgGet('kyngo.phai.reward', []));
+    const rwHtml = rw.length ? rw.map(r => cell(r)).join('') : '<div class="ky-note" style="text-align:left">Chưa có</div>';
+    const fin = s.start && phLeft(s) <= 0, act = s.start && !fin;
+    const owned = heroIsOwned(h.id), busyHero = st.phai.some((x, k) => k !== i && x.start && x.hero === h.id);
+    const btn = fin ? `<button class="ky-btn2" onclick="kyPHGet(${i})">Nhận thưởng</button>` : act ? `<button class="ky-btn2" disabled>Đang thực hiện</button>` : `<button class="ky-btn2" ${owned && !busyHero ? '' : 'disabled'} onclick="kyPHGo(${i})">Xác nhận phái</button>`;
+    const warn = fin || act ? '' : (!owned ? 'Bạn chưa có tướng này' : busyHero ? 'Tướng này đang đi làm nhiệm vụ khác' : '');
+    modal(`<div class="ky-pm"><button class="ky-pm-x" onclick="kyClose()">✕</button><div class="ky-pm-h">Linh đến chân thành</div>
+      <div class="ky-pm-desc"><span>Kỵ binh quân Kim tập kích, cần phái một võ hiệp hỗ trợ ngăn chặn quân địch tấn công.</span><div class="ky-pm-npc">${heroIcon(h)}</div></div>
+      <div class="ky-pm-mid"><div class="ky-pm-pad"><div class="ky-pad-top">${BUC}${s.start ? heroStand(h) : ''}</div><div class="ky-pad-tx">${fin ? 'Hoàn thành' : act ? `<span data-end="${s.start + phHours() * 3600e3}">${clock(phLeft(s))}</span>` : 'Nhấn phái đi'}</div></div>
+        <div class="ky-pm-inf"><div><b>Độ khó:</b> <span style="color:#fde047">★</span></div><div><b>Điều kiện:</b> Phái <span style="color:#fde68a;font-weight:800">${h.name}</span></div><div><b>Thời gian:</b> <span style="color:#fde68a">${clock(phHours() * 3600e3)}</span></div><div><b>Thưởng hoàn thành:</b></div><div class="ky-pm-rw">${rwHtml}</div></div></div>
+      <div class="ky-ctr">${btn}<div class="ky-note">${warn}</div></div></div>`);
+  };
+  window.kyPHGo = function (i) { const s = st.phai[i]; if (!s || s.start || !heroIsOwned(s.hero)) return; s.start = Date.now(); save(); closeModal(); renderPH(); toast('Đã phái ' + heroById(s.hero).name); };
+  window.kyPHGet = function (i) {
+    const s = st.phai[i]; if (!s || !s.start || phLeft(s) > 0) return;
+    const got = rwGrantAll(asList(cfgGet('kyngo.phai.reward', [])));
+    st.phai[i] = { hero: randHero(st.phai.filter(Boolean).map(x => x.hero)), start: 0 }; save(); closeModal(); toast('🏯 Hoàn thành nhiệm vụ' + (got ? ': ' + got : '')); refreshTop(); renderPH();
+  };
+
+  /* ---------- Đổ Thần (cá cược) ---------- */
+  const bagItems = () => { const out = []; try { const k = gdSt().kho || {}; Object.keys(k).forEach(n => { if (k[n].qty > 0) out.push({ name: n, qty: k[n].qty, ico: (typeof danIcoHTML === 'function' && danIcoHTML(n)) || gdIco(n, k[n].ico) }); }); } catch (e) {}
+    if (staState.pills > 0) out.push({ name: 'Viên Thể Lực', qty: staState.pills, ico: icoImg('pill', '1.4em'), pill: 1 }); return out; };
+  const bagSpend = it => it.pill ? ((staState.pills >= 1) && (staState.pills--, staSave(), true)) : skbSpend(it.name, 1);
+  const bagSpendN = (it, n) => { if (it.pill) { if (staState.pills < n) return false; staState.pills -= n; staSave(); return true; } return skbSpend(it.name, n); };
+  const bagGive = (it, n) => { if (it.pill) { staState.pills += n; staSave(); } else skbGive(it.name, n); };
+  const PIPS = { 1: [5], 2: [1, 9], 3: [1, 5, 9], 4: [1, 3, 7, 9], 5: [1, 3, 5, 7, 9], 6: [1, 3, 4, 6, 7, 9] };
+  const dieFace = n => Array.from({ length: 9 }, (_, i) => `<i class="${PIPS[n].includes(i + 1) ? 'p' : ''}"></i>`).join('');
+  let lastFace = 6, lastMsg = '';
+  function renderDT() {
+    const items = bagItems(), M = Math.max(2, Math.floor(cfgNum('kyngo.dothan.mult', 3)));
+    $('ky-body').innerHTML = `<div class="ky-dtwrap"><div class="ky-ttl">Đổ Thần • Cá Cược</div><div class="ky-note">Chọn 1 món trong túi đồ và 1 số từ 1 đến 6. Xúc xắc ra đúng số: nhận <b>×${M}</b> món đã cược. Sai: mất toàn bộ số lượng đã cược.</div>
+      <div class="ky-bag">${items.map((it, i) => `<div class="ky-cell ${selItem === it.name ? 'sel' : ''}" onclick="kyPick(${i})">${it.ico}<small>×${f(it.qty)}</small></div>`).join('') || '<div class="ky-note" style="grid-column:1/-1">Túi đồ trống</div>'}</div>
+      <div class="ky-dtbot"><div class="ky-nums" style="align-items:center"><span style="font-weight:800;color:#fde68a">Số lượng cược:</span><button class="ky-btn" onclick="kyQty(-10)">-10</button><button class="ky-btn" onclick="kyQty(-1)">-</button><b style="min-width:44px;text-align:center;font-size:16px">${f(Math.min(selQty, (bagItems().find(x => x.name === selItem) || { qty: 1 }).qty))}</b><button class="ky-btn" onclick="kyQty(1)">+</button><button class="ky-btn" onclick="kyQty(10)">+10</button><button class="ky-btn" style="width:auto;padding:8px 10px" onclick="kyQty(1e9)">Tối đa</button></div>
+      <div class="ky-nums">${[1, 2, 3, 4, 5, 6].map(n => `<button class="ky-btn ${selNum === n ? 'sel' : ''}" onclick="kyNum(${n})">${n}</button>`).join('')}</div>
+      <div class="ky-ctr"><div class="ky-die" id="ky-dice">${dieFace(lastFace)}</div><div id="ky-dres" class="ky-note">${lastMsg}</div><button class="ky-btn" onclick="kyRoll()">Đổ xúc xắc</button></div></div></div>`;
+  }
+  window.kyPick = function (i) { const it = bagItems()[i]; if (!it || busy) return; selItem = it.name; selQty = 1; lastMsg = ''; renderDT(); };
+  window.kyQty = function (d) { if (busy) return; const it = bagItems().find(x => x.name === selItem); if (!it) return toast('Hãy chọn 1 món trong túi đồ'); selQty = Math.max(1, Math.min(it.qty, selQty + d)); renderDT(); };
+  window.kyNum = function (n) { if (busy) return; selNum = n; renderDT(); };
+  window.kyRoll = function () {
+    if (busy) return; const it = bagItems().find(x => x.name === selItem), M = Math.max(2, Math.floor(cfgNum('kyngo.dothan.mult', 3)));
+    if (!it) return toast('Hãy chọn 1 món trong túi đồ'); if (!selNum) return toast('Hãy chọn 1 số từ 1 đến 6');
+    const q = Math.max(1, Math.min(it.qty, selQty)); if (!bagSpendN(it, q)) return toast('Không đủ vật phẩm'); busy = true;
+    const d = $('ky-dice'); d.classList.add('rolling'); $('ky-dres').textContent = 'Đang tung xúc xắc...'; const iv = setInterval(() => { d.innerHTML = dieFace(1 + Math.floor(Math.random() * 6)); }, 80);
+    setTimeout(() => {
+      clearInterval(iv); const r = 1 + Math.floor(Math.random() * 6); lastFace = r; d.classList.remove('rolling'); d.innerHTML = dieFace(r); d.classList.add('land');
+      const name = it.name, win = r === selNum;
+      if (win) { bagGive(it, q * (M + 1)); $('ky-dres').innerHTML = `<b style="color:#4ade80">Ra số ${r} — đúng! Nhận ×${M}: +${f(q * M)} ${name}</b>`; }   // trả lại món cược + thưởng ×M
+      else $('ky-dres').innerHTML = `<b style="color:#f87171">Ra số ${r} — sai. Mất ${f(q)} ${name}</b>`;
+      busy = false; refreshTop(); const left = bagItems().find(x => x.name === name); if (!left) selItem = null;
+      lastMsg = $('ky-dres').innerHTML; setTimeout(() => { if (tab === 'dt' && !busy) renderDT(); }, 700);
+    }, 1300);
+  };
+
+  /* ---------- khung chung ---------- */
+  const badgeOf = k => k === 'dd' ? (ddCan() ? 1 : 0) : k === 'lv' ? lvRows().filter(lv => accLevel >= lv).length : k === 'ru' ? (ruouCan() ? 1 : 0) : k === 'ph' ? (st.phai.filter(s => s && s.start && phLeft(s) <= 0).length) : 0;
+  function renderTabs() { $('ky-tabs').innerHTML = TABS.map(([k, n]) => { const b = badgeOf(k); return `<div class="ky-tab ${k === tab ? 'on' : ''}" onclick="kyTab('${k}')">${n}${b ? `<span class="ky-dot">${b}</span>` : ''}</div>`; }).join(''); }
+  window.kyRender = function () { busy = false; renderTabs(); ({ dd: renderDD, lv: renderLV, dk: renderDK, ru: renderRU, ph: renderPH, dt: renderDT })[tab](); };
+  window.kyTab = function (k) { if (busy) return; tab = k; kyRender(); };
+  window.openKyNgo = function () { switchScreen('kyngo'); };
+  function tickBadge() { try { phSync(); } catch (e) {} const n = ['dd', 'lv', 'ru', 'ph'].reduce((a, k) => a + badgeOf(k), 0); if (typeof NB_CHECKS !== 'undefined') NB_CHECKS['nb-kyngo'] = () => n; if (window.nbSet) window.nbSet('nb-kyngo', n); }
+  setInterval(() => {   // đếm ngược Phái Võ Hiệp + cập nhật chấm đỏ
+    document.querySelectorAll('#screen-kyngo [data-end], #ky-ov [data-end]').forEach(el => { const ms = Number(el.getAttribute('data-end')) - Date.now(); if (ms > 0) el.textContent = clock(ms); else if (el.closest('#screen-kyngo') && !$('ky-ov')) { if (tab === 'ph') renderPH(); else if (tab === 'dk' && !busy) renderDK(); } });
+    tickBadge(); if ($('screen-kyngo').classList.contains('active')) renderTabs();
+  }, 1000);
+  const _ss = switchScreen;
+  switchScreen = function (id) { _ss(id); if (id === 'kyngo') { try { $('app-header').style.display = 'none'; $('app-nav').style.display = 'flex'; } catch (e) {} kyRender(); } };
+  const _nb = $('nav-btn-kyngo'); if (_nb && !_nb.getAttribute('onclick')) _nb.addEventListener('click', () => openKyNgo());
+  tickBadge();
 })();
