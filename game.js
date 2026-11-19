@@ -418,6 +418,56 @@ window.GP = (function () {
     skillConfig: { DL_HITS: 4, DL_CRIT_UP: 3, DL_CDMG_UP: 2.5, DL_TURNS: 2 }
   });
 
+  // === LINDA (id 58316, tướng công kích): ảnh + âm thanh ở heros/linda/ ===
+  if (!window.HERO_DATA.heroes.some(h => h.id === 58316)) window.HERO_DATA.heroes.push({
+    id: 58316,
+    key: 'linda',
+    slug: 'linda',
+    name: 'Linda',
+    emoji: '🧱',
+    img: 'linda.webp?v=1',
+    body: 'linda-body.webp?v=1',
+    bodyH: 96,
+    stats: { hp: 6200, atk: 830, spd: 120 },
+    combat: { def: 300, dodge: 55, acc: 300, crit: 25, critDmg: 20, tough: 0, pierce: 0, block: 0 },
+    tia: 1,
+    role: 'atk',
+    constants: { lv: 1, star: 1, border: 'orange', ultName: 'Vạn Gạch Giáng Thế' },
+    idle: { sheet: 'ldIdle', h: 130, ms: 1900 },
+    ultFn: 'lindaUlt',
+    audio: 'linda-ult.mp3?v=1',
+    sprites: {
+      ldIdle: { src: 'linda-idle.webp?v=1', cw: 307, ch: 256, n: 20 },   // 6140×256 = 20 khung đứng yên (quay mặt sang PHẢI)
+      ldUlt:  { src: 'linda-ult.webp?v=1',  cw: 307, ch: 256, n: 20}    // 6140×256 = 20 khung: 0-7 giơ gạch qua đầu • 8-9 CHỌI gạch đi • 10-19 thu tay, đứng lại (đứng yên tại chỗ)
+    },
+    skillConfig: { LD_HITS: 4, LD_BRICKS: 32, LD_CRIT_UP: 3, LD_CDMG_UP: 3, LD_TURNS: 2, LD_TOUGH_DOWN: 50 }
+  });
+
+  // === LÍNH ĐÁNH THUÊ (id 63917, tướng công kích): ảnh ở heros/linh-danh-thue/ (âm thanh ulti: linh-danh-thue-ult.mp3, tổng hợp, khớp lịch bom) ===
+  if (!window.HERO_DATA.heroes.some(h => h.id === 63917)) window.HERO_DATA.heroes.push({
+    id: 63917,
+    key: 'linhdanhthue',
+    slug: 'linh-danh-thue',
+    name: 'Lính Đánh Thuê',
+    emoji: '🪖',
+    img: 'linh-danh-thue.webp?v=1',
+    body: 'linh-danh-thue-body.webp?v=1',
+    bodyH: 96,
+    stats: { hp: 6400, atk: 840, spd: 120 },
+    combat: { def: 300, dodge: 55, acc: 300, crit: 25, critDmg: 20, tough: 0, pierce: 0, block: 0 },
+    tia: 1,
+    role: 'atk',
+    constants: { lv: 1, star: 1, border: 'orange', ultName: 'Oanh Tạc Mortar' },
+    idle: { sheet: 'ltIdle', h: 130, ms: 1900 },
+    ultFn: 'linhDanhThueUlt',
+    audio: 'linh-danh-thue-ult.mp3?v=1',
+    sprites: {
+      ltIdle: { src: 'linh-danh-thue-idle.webp?v=1', cw: 307, ch: 256, n: 20, face: 'R' },   // 6140×256 = 20 khung đứng yên (quay mặt sang PHẢI)
+      ltUlt:  { src: 'linh-danh-thue-ult.webp?v=1',  cw: 805, ch: 560, n: 1,  face: 'R' }    // 805×560 = 1 khung: tướng QUỲ GỐI nạp đạn cối (giữ nguyên dáng suốt ulti)
+    },
+    skillConfig: { LDT_HITS: 5, LDT_BOMBS: 36, LDT_PIERCE_UP: 50000, LDT_TURNS: 2, LDT_DEF_DOWN: 0.5, LDT_BLOCK_DOWN: 0.5 }
+  });
+
   // === ĐÃ XOÁ THANH Y (id 1) khỏi danh sách tướng: không còn trong kho tướng, chiêu mộ, đội hình ===
   window.HERO_DATA.heroes = window.HERO_DATA.heroes.filter(h => h.id !== 1);
   // ===== HAI ID CHO MỖI TƯỚNG — BẮT BUỘC ĐÚNG CẢ HAI (tránh trùng id, lấy nhầm hình ảnh / dữ liệu) =====
@@ -562,20 +612,21 @@ function cfgOnApply(fn) { cfgHooks.push(fn); try { fn(); } catch (e) { console.w
 
 // ----- Quà (reward): cùng định dạng với Gift Code. Dùng cho Hộp Thư, Nhiệm Vụ, Sự Kiện. -----
 const RW_DAN_ICO = f => ({ 'than-dan': IC_THAN, 'tien-dan': IC_TIEN, 'vien-the-luc': IC_PILL }[f] || '');
-// ===== ICON TIỀN TỆ DÙNG CHUNG (muốn đổi icon vàng/bạc/gạo toàn game: sửa 3 dòng này) =====
-const IC_GOLD = '💰', IC_SILVER = '🥈', IC_RICE = '🍚';
-const IC_THAN = '🟣', IC_TIEN = '🔴', IC_PILL = '💊', IC_PEACH = '🍑';   // Thần Đan / Tiên Đan / Viên Thể Lực / Đào Tiên
+// ===== ICON VẬT PHẨM DÙNG CHUNG (toàn bộ là ẢNH PNG trong vat-pham-game/bang/, không dùng emoji) =====
+const ICO_SRC = { silver: 'vat-pham-game/bang/thoi-bac.png', rice: 'vat-pham-game/bang/gao.png', gold: 'vat-pham-game/bang/thoi-vang.png', than: 'vat-pham-game/bang/than-dan.png', tien: 'vat-pham-game/bang/tien-dan.png', pill: 'vat-pham-game/bang/vien-the-luc.png', peach: 'vat-pham-game/bang/dao-tien.png', hammer: 'vat-pham-game/trang-bi/icon_hao_thien_chuy_khong_ten.webp', blockUp: 'giao-dien/icon-home/tang-do-don.webp?v=1' };
+const ICO_NAME = { silver: 'Bạc', rice: 'Gạo', gold: 'Vàng', than: 'Thần Đan', tien: 'Tiên Đan', pill: 'Viên Thể Lực', peach: 'Đào Tiên', hammer: 'Búa', blockUp: 'Chặn' };
+const icoImg = (k, h) => `<img class="gi-g" src="${ICO_SRC[k]}" alt="${ICO_NAME[k]}" style="height:${h || '1.15em'};width:auto;vertical-align:middle" onerror="this.style.display='none'">`;
+const IC_GOLD = icoImg('gold'), IC_SILVER = icoImg('silver'), IC_RICE = icoImg('rice');
+const IC_THAN = icoImg('than'), IC_TIEN = icoImg('tien'), IC_PILL = icoImg('pill'), IC_PEACH = icoImg('peach');   // Thần Đan / Tiên Đan / Viên Thể Lực / Đào Tiên
 const RW_GOLD_ICO = IC_GOLD;
-// ICON ẢNH dùng chung (nơi nào có ảnh thì hiện ảnh, ảnh lỗi/chưa có thì tự về emoji). Chỉ dùng trong HTML (innerHTML), KHÔNG dùng trong alert / toast chữ thuần.
-const ICO_SRC = { silver: 'giao-dien/icon-home/thoi-bac.webp', rice: 'giao-dien/icon-home/gao.webp', gold: 'giao-dien/icon-home/thoi-vang.webp', than: 'vat-pham-game/than-dan.webp', tien: 'vat-pham-game/tien-dan.webp', pill: 'vat-pham-game/vien-the-luc.webp', hammer: 'vat-pham-game/trang-bi/icon_hao_thien_chuy_khong_ten.webp', blockUp: 'giao-dien/icon-home/tang-do-don.webp?v=1' };
-const ICO_EMO = { silver: IC_SILVER, rice: IC_RICE, gold: IC_GOLD, than: IC_THAN, tien: IC_TIEN, pill: IC_PILL, hammer: '🔨', blockUp: '🛡️' };
-const icoImg = (k, h) => `<img class="gi-g" src="${ICO_SRC[k]}" alt="${ICO_EMO[k]}" style="height:${h || '1.15em'};width:auto" onerror="this.outerHTML='${ICO_EMO[k]}'">`;
+// đổi emoji còn sót trong CHỮ THƯỜNG (đã escape) thành ảnh; dùng cho toast / thông báo innerHTML
+const emoToImg = h => String(h).replace(/🥈/g, icoImg('silver')).replace(/🍚/g, icoImg('rice')).replace(/💰/g, icoImg('gold')).replace(/🟣/g, icoImg('than')).replace(/🔴/g, icoImg('tien')).replace(/💊/g, icoImg('pill')).replace(/🍑/g, icoImg('peach'));
 const rwOk = r => !!(r && r.t && Number(r.n) > 0);
 const rwList = v => (Array.isArray(v) ? v : []).filter(rwOk);
 // Trả { ico (HTML), name, n } để hiển thị 1 phần quà
 function rwInfo(r) {
   const n = Math.floor(Number(r.n)) || 0;
-  const simple = { silver: [icoImg('silver'), 'Bạc'], rice: [icoImg('rice'), 'Gạo'], gold: [icoImg('gold'), 'Vàng'], than: [icoImg('than'), 'Thần Đan'], tien: [icoImg('tien'), 'Tiên Đan'], pill: [icoImg('pill'), 'Viên Thể Lực'], hammer: [icoImg('hammer'), 'Búa'], exp: ['✨', 'EXP'] };
+  const simple = { silver: [icoImg('silver'), 'Bạc'], rice: [icoImg('rice'), 'Gạo'], gold: [icoImg('gold'), 'Vàng'], than: [icoImg('than'), 'Thần Đan'], tien: [icoImg('tien'), 'Tiên Đan'], pill: [icoImg('pill'), 'Viên Thể Lực'], hammer: [icoImg('hammer'), 'Búa'], exp: ['', 'EXP'], peach: [icoImg('peach'), 'Đào Tiên'] };
   if (simple[r.t]) return { ico: simple[r.t][0], name: simple[r.t][1], n };
   // ẢNH luôn ưu tiên (không phụ thuộc admin): có ảnh thì hiện ảnh, thiếu ảnh / lỗi mới về emoji
   const safe = (fn, emo) => { try { const v = fn(); return v || emo; } catch (e) { return emo; } };
@@ -872,7 +923,7 @@ const bdSweepLeft = m => Math.max(0, bdN(m, 'sweepPerDay') - bdDay(m).sweep);
 const bdWhy = (m, ai) => ghLockWhy(BD_CFG[m].lockMode, ai === 1 || !!bdInit(m).clear[ai - 1], bdLvNeed(m, ai), 'Ải ' + (ai - 1));
 const bdOpen = (m, ai) => !bdWhy(m, ai);
 
-function dtGive(n) { const s = gdSt(); (s.kho['Đào Tiên'] = s.kho['Đào Tiên'] || { ico: '🍑', qty: 0 }).qty += n; gdSave(s); }   // vào kho (Túi Đồ) giống Đá Linh / Sách kỹ năng
+function dtGive(n) { const s = gdSt(); (s.kho['Đào Tiên'] = s.kho['Đào Tiên'] || { ico: '', qty: 0 }).qty += n; gdSave(s); }   // vào kho (Túi Đồ) giống Đá Linh / Sách kỹ năng
 const dtQty = () => skbQty('Đào Tiên');
 function bdGrant(m, ai) {   // trả chuỗi mô tả thưởng
   const n = bdReward(m, ai);
@@ -893,7 +944,7 @@ function renderBD(m) {
   let h = '';
   for (let ai = 1; ai <= (M.ais || BD_AI); ai++) {
     const open = bdOpen(m, ai), cleared = !!bdSt[m].clear[ai], s = bdStats(m, ai), r = bdReward(m, ai);
-    const rw = m === 'bk' ? `<span>🥈 <b>${fmtN(r)}</b> bạc</span><span>🍚 <b>${fmtN(bdReward(m, ai, true))}</b> gạo</span>` : m === 'tr' ? `<span>${icoImg('hammer', '1.2em')} <b>${fmtN(r)}</b> Búa</span>` : `<span>🍑 <b>${fmtN(r)}</b> Đào Tiên</span>`;
+    const rw = m === 'bk' ? `<span>${IC_SILVER} <b>${fmtN(r)}</b> bạc</span><span>${IC_RICE} <b>${fmtN(bdReward(m, ai, true))}</b> gạo</span>` : m === 'tr' ? `<span>${icoImg('hammer', '1.2em')} <b>${fmtN(r)}</b> Búa</span>` : `<span>${IC_PEACH} <b>${fmtN(r)}</b> Đào Tiên</span>`;
     h += `<div class="hg-row ${open ? '' : 'locked'}">` +
       `<div class="hg-art"><img class="hg-ban" src="${M.ban}${ai}.${M.ext}" alt="${M.name} ${roman[ai - 1]}" draggable="false">` +
       `<div class="bd-info">${rw}<span>❤️ ${fmtN(s.hp)} ⚔️ ${fmtN(s.atk)}</span></div>` +
@@ -1349,7 +1400,7 @@ function ghTowerFinish(m, win, timeout) {   // pvp-battle.js gọi khi trận T�
           <div class="battle-item ${isLocked ? 'locked' : ''}" onclick="${isLocked ? '' : `startBattleSequence(${stageNum}, ${i})`}">
             <div>
               <div class="battle-item-title">Bàn ${i} ${isLocked ? '🔒' : ''}</div>
-              <div class="battle-item-desc">🥈 ${fmtN(banReward(stageNum, i).silver)} bạc • 🍚 ${fmtN(banReward(stageNum, i).rice)} gạo<br>${danIcoHTML('Thần Đan', '1.1em')} ${fmtN(banReward(stageNum, i).than)} Thần Đan • ${danIcoHTML('Tiên Đan', '1.1em')} ${fmtN(banReward(stageNum, i).tien)} Tiên Đan${banReward(stageNum, i).exp > 0 ? ' • ✨ ' + fmtN(banReward(stageNum, i).exp) + ' EXP' : ''}<br>⚡ Tốn ${STA_WAVES * STA_PER_WAVE} thể lực • ${pillPerClear() > 0 ? '💊 Thưởng ' + pillPerClear() + ' viên thể lực' : ''}${extraList().length ? '<br>🎁 Thêm: ' + extraRewardText() : ''}${stageNum === EQ_REWARD.stage && i === EQ_REWARD.battle ? '<br>🎁 Thưởng: ' + EQ_REWARD.each + ' Mũ, ' + EQ_REWARD.each + ' Áo, ' + EQ_REWARD.each + ' Kiếm, ' + EQ_REWARD.each + ' Giày' : ''}</div>
+              <div class="battle-item-desc">${IC_SILVER} ${fmtN(banReward(stageNum, i).silver)} bạc • ${IC_RICE} ${fmtN(banReward(stageNum, i).rice)} gạo<br>${danIcoHTML('Thần Đan', '1.1em')} ${fmtN(banReward(stageNum, i).than)} Thần Đan • ${danIcoHTML('Tiên Đan', '1.1em')} ${fmtN(banReward(stageNum, i).tien)} Tiên Đan${banReward(stageNum, i).exp > 0 ? ' • ✨ ' + fmtN(banReward(stageNum, i).exp) + ' EXP' : ''}<br>⚡ Tốn ${STA_WAVES * STA_PER_WAVE} thể lực • ${pillPerClear() > 0 ? IC_PILL + ' Thưởng ' + pillPerClear() + ' viên thể lực' : ''}${extraList().length ? '<br>🎁 Thêm: ' + extraRewardText() : ''}${stageNum === EQ_REWARD.stage && i === EQ_REWARD.battle ? '<br>🎁 Thưởng: ' + EQ_REWARD.each + ' Mũ, ' + EQ_REWARD.each + ' Áo, ' + EQ_REWARD.each + ' Kiếm, ' + EQ_REWARD.each + ' Giày' : ''}</div>
             </div>
             ${isLocked ? '<div class="battle-item-btn disabled">Chưa mở</div>' : `<div class="battle-btns">${isCleared(stageNum, i) ? `<div class="battle-item-btn sweep" onclick="event.stopPropagation();sweepBattle(${stageNum}, ${i})">Quét ×${SWEEP_N}<small>⚡${SWEEP_N * STA_WAVES * STA_PER_WAVE}</small></div>` : ''}<div class="battle-item-btn">Đánh ▶</div></div>`}
           </div>
@@ -1367,7 +1418,7 @@ function ghTowerFinish(m, win, timeout) {   // pvp-battle.js gọi khi trận T�
     function sweepBattle(stage, battle) {
       if (!isCleared(stage, battle)) return;
       const cost = SWEEP_N * STA_WAVES * STA_PER_WAVE;
-      if (!staSpend(cost)) { alert('⚡ Không đủ thể lực để quét! Cần ' + cost + ' thể lực (có ' + staState.v + ').\nDùng 💊 Viên Thể Lực trong Túi đồ để hồi thêm.'); return; }
+      if (!staSpend(cost)) { alert('⚡ Không đủ thể lực để quét! Cần ' + cost + ' thể lực (có ' + staState.v + ').\nDùng Viên Thể Lực trong Túi đồ để hồi thêm.'); return; }
       const r = banReward(stage, battle); let extra = ''; const lv0 = accLevel;
       for (let n = 0; n < SWEEP_N; n++) { grantBanReward(stage, battle); grantPills(); if (n === 0) extra = grantStageReward(stage, battle); }
       extra = grantExtraReward(SWEEP_N) + extra;
@@ -1774,16 +1825,21 @@ var fmtN = n => {
     const saveJSON = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
     var statOv = cfgHeroPatch().stat;   // chỉ số tướng do ADMIN chỉnh (không còn chỉnh trong Cài đặt)
     let gold = (() => { try { const v = parseInt(localStorage.getItem('gold_val')); return isNaN(v) ? (BLANK_START ? 0 : 2291) : Math.max(0, v); } catch (e) { return BLANK_START ? 0 : 2291; } })();
-    const updateGold = () => { ['gold-val', 'rc-gold'].forEach(i => { const el = document.getElementById(i); if (el) el.innerText = gold; }); };
+    const updateGold = () => { ['gold-val', 'rc-gold'].forEach(i => { const el = document.getElementById(i); if (el) el.innerText = gold; }); try { hudIcons(); } catch (e) {} };
     const goldSave = () => { try { localStorage.setItem('gold_val', String(gold)); } catch (e) {} updateGold(); };
-    // BẠC 🥈 và GẠO 🍚: nhận khi thắng mỗi Bàn PVE, dùng để tăng cấp tướng. (VÀNG 💰 ở trên: dùng Chiêu Mộ, nhận quà Hộp Thư mỗi ngày)
+    // BẠC và GẠO: nhận khi thắng mỗi Bàn PVE, dùng để tăng cấp tướng. (VÀNG ở trên: dùng Chiêu Mộ, nhận quà Hộp Thư mỗi ngày)
     const _numLS = (k, d) => { try { const v = parseFloat(localStorage.getItem(k)); return isNaN(v) ? d : Math.max(0, v); } catch (e) { return d; } };
     let silver = _numLS('silver_val', BLANK_START ? 0 : 21873054), rice = _numLS('rice_val', BLANK_START ? 0 : 2549836);
     // THẦN ĐAN và TIÊN ĐAN: thưởng khi thắng mỗi Bàn PVE (xem trong Túi Đồ). Hiển thị bằng ảnh trong vat-pham-game/ (không dùng emoji)
 const DAN_IMG = { 'Thần Đan': icoImg('than'), 'Tiên Đan': icoImg('tien') };   // ảnh (lỗi ảnh thì tự về emoji)
 const danIcoHTML = (name, h) => { const k = name === 'Thần Đan' ? 'than' : name === 'Tiên Đan' ? 'tien' : ''; return k ? icoImg(k, h) : (DAN_IMG[name] || ''); };
     let thanDan = _numLS('thandan_val', 0), tienDan = _numLS('tiendan_val', 0);
-    const updateRes = () => { [['silver-val', silver], ['rice-val', rice]].forEach(([i, v]) => { const el = document.getElementById(i); if (el) el.innerText = fmtN(v); }); };
+    // Thay icon cũ (emoji / ảnh cũ) ở thanh tài nguyên trên cùng bằng ảnh mới; chạy 1 lần cho mỗi ô, gọi lại vô hại
+    const hudIcons = () => { [['silver-val', 'silver'], ['rice-val', 'rice'], ['gold-val', 'gold']].forEach(([id, key]) => { try {
+      const el = document.getElementById(id), p = el && el.parentElement; if (!p || p.dataset.icoDone === key) return;
+      [].slice.call(p.childNodes).forEach(n => { if (n === el || (n.contains && n.contains(el))) return; if (n.nodeType === 3) { if (/[^\s]/.test(n.textContent) && !/\d/.test(n.textContent)) n.remove(); return; } if (n.nodeType === 1 && (n.tagName === 'IMG' || n.tagName === 'I' || n.tagName === 'SVG' || (n.tagName === 'SPAN' && !n.querySelector('[id]') && !/\d/.test(n.textContent) ))) n.remove(); });
+      p.style.backgroundImage = 'none'; p.insertAdjacentHTML('afterbegin', icoImg(key, '1.5em') + ' '); p.dataset.icoDone = key; } catch (e) {} }); };
+    const updateRes = () => { [['silver-val', silver], ['rice-val', rice]].forEach(([i, v]) => { const el = document.getElementById(i); if (el) el.innerText = fmtN(v); }); hudIcons(); };
     const resSave = () => { try { localStorage.setItem('silver_val', String(Math.floor(silver))); localStorage.setItem('rice_val', String(Math.floor(rice))); localStorage.setItem('thandan_val', String(Math.floor(thanDan))); localStorage.setItem('tiendan_val', String(Math.floor(tienDan))); } catch (e) {} updateRes(); };
     updateRes();
     let heroShards = loadJSON('hero_shards');   // mảnh tướng: { heroId: số mảnh }
@@ -2542,8 +2598,8 @@ progCfgSync();   // áp thông số admin (sau khi các biến ở trên đã kh
       { k:'sword', name:'Kiếm', icon:'<img class="eq-img" src="vat-pham-game/trang-bi/equipment-sword.webp?v=24">', stat:'atk', per:300,  label:'Công' },
       { k:'boots', name:'Giày', icon:'<img class="eq-img" src="vat-pham-game/trang-bi/equipment-boots.webp?v=24">', stat:'spd', per:1,    label:'Tốc'  }
     ];
-    // Phần thưởng: đánh thắng Ải 4 - Bàn 10 nhận mỗi loại 4 món vào Túi đồ (once = chỉ nhận lần đầu thắng)
-    const EQ_REWARD = cfgSnap('eqReward', { stage:4, battle:10, each:4, startLv:1, once:true });
+    // Phần thưởng: đánh thắng Ải 1 - Bàn 5 nhận mỗi loại 4 món vào Túi đồ (once = chỉ nhận lần đầu thắng)
+    const EQ_REWARD = cfgSnap('eqReward', { stage:1, battle:5, each:4, startLv:1, once:true });
     cfgSnap('eqper', EQUIP.map(e => e.per)); EQUIP.forEach(e => { e.per = cfgNum('equip.per.' + e.k, e.per); });   // admin chỉnh "mỗi cấp +bao nhiêu"
     EQ_REWARD.each = cfgNum('equip.rewardEach', EQ_REWARD.each); EQ_REWARD.startLv = cfgNum('equip.rewardStartLv', EQ_REWARD.startLv);
 
@@ -2665,7 +2721,7 @@ function addAccExp(n) {
     }
     function pillPanelHtml() {
       const c = staState.pills;
-      return `<div class="pill-box"><div class="pb-info">💊 <b>Viên Thể Lực</b> × ${c}<br><small>Mỗi viên +${PILL_STA} thể lực • Hiện có ${staState.v}/${STA_MAX}</small></div>` +
+      return `<div class="pill-box"><div class="pb-info">${IC_PILL} <b>Viên Thể Lực</b> × ${c}<br><small>Mỗi viên +${PILL_STA} thể lực • Hiện có ${staState.v}/${STA_MAX}</small></div>` +
         `<button ${c < 1 ? 'disabled' : ''} onclick="usePills(1)">Dùng 1</button><button ${c < 1 ? 'disabled' : ''} onclick="usePills(10)">Dùng 10</button></div>`;
     }
     setInterval(staRender, 1000); staRender();
@@ -2872,6 +2928,8 @@ function addAccExp(n) {
       else if (id === 32) ult = `Cần đầy 100 nộ. HÓA THÂN thành BẠCH CỐT (bộ xương), nhảy vào GIỮA đội địch gây ${BCT_HITS} lần sát thương lên TOÀN địch, tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}, mỗi lần ≈ ${fmtN(st.atk * sk / BCT_HITS)}). Đánh xong, THÔI MIÊN 1 địch (ưu tiên công kích / kỹ năng): địch đó lập tức TỰ ULTI đánh chính đồng đội của mình.`;
       else if (id === 33) ult = `Cần đầy 100 nộ. TRƯỚC khi ra đòn: toàn đội ta tăng ${pct(LQ_HEAL_UP)}% hiệu quả hồi máu (x${1 + LQ_HEAL_UP}) trong ${LQ_HEAL_TURNS} hiệp, toàn địch bị CẤM HỒI MÁU ${LQ_NOHEAL_TURNS} hiệp. Rồi nhảy lên, giơ ĐỈNH khổng lồ quá đầu và ném xuống đội địch: gây ${LQ_HITS} lần sát thương lên TOÀN địch, tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}, mỗi lần ≈ ${fmtN(st.atk * sk / LQ_HITS)}).`;
       else if (id === 34) ult = `VÀO TRẬN ĐẦY 100 NỘ – ulti được ngay hiệp đầu. TRƯỚC khi ra đòn: toàn đội ta tăng ${pct(DL_CRIT_UP)}% Bạo và ${pct(DL_CDMG_UP)}% Bạo Sát trong ${DL_TURNS} hiệp. Rồi Diêm La Vương đứng yên chọi Lệnh Bài Sinh Tử xuống: lệnh bài rơi giữa đội địch rồi nổ, gây ${DL_HITS} lần sát thương lên TOÀN địch, tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}, mỗi lần ≈ ${fmtN(st.atk * sk / DL_HITS)}).`;
+      else if (id === 58316) ult = `Cần đầy 100 nộ. TRƯỚC khi ra đòn: bản thân tăng ${pct(LD_CRIT_UP)}% Bạo và ${pct(LD_CDMG_UP)}% Bạo Sát trong ${LD_TURNS} hiệp, toàn địch GIẢM ${LD_TOUGH_DOWN}% Bền ${LD_TURNS} hiệp. Rồi Linda đứng yên chọi ${LD_BRICKS} viên gạch bay qua đội địch, xoay nhiều góc độ, rơi dồn dập xuống, gây ${LD_HITS} lần sát thương lên TOÀN địch, tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}, mỗi lần ≈ ${fmtN(st.atk * sk / LD_HITS)}).`;
+      else if (id === 63917) ult = `Cần đầy 100 nộ. TRƯỚC khi ra đòn: bản thân tăng ${fmtN(LDT_PIERCE_UP)} Phá giáp trong ${LDT_TURNS} hiệp, toàn địch GIẢM ${pct(LDT_DEF_DOWN)}% Thủ và ${pct(LDT_BLOCK_DOWN)}% Đỡ đòn ${LDT_TURNS} hiệp. Rồi Lính Đánh Thuê quỳ gối nạp đạn cối, trực thăng xuất hiện trên trời phía địch thả ${LDT_BOMBS} quả bom, nổ sáng chói, gây ${LDT_HITS} lần sát thương lên TOÀN địch, tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}, mỗi lần ≈ ${fmtN(st.atk * sk / LDT_HITS)}); Phá giáp tính đủ MỖI lần.`
       else ult = `Lao vào địch, đánh ${ULT_HITS} đòn liên tiếp, tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}, mỗi đòn ≈ ${fmtN(st.atk * sk / Math.max(1, ULT_HITS))}). Cần đầy 100 nộ.`;
       { const hh = heroById(id), free = /^KHÔNG TỐN NỘ – (lượt|hiệp) nào cũng ulti được\.\s*/;
         if (hh.alwaysUlt) { if (!free.test(ult)) ult = 'KHÔNG TỐN NỘ – lượt nào cũng ulti được. ' + ult.replace(/Cần đầy 100 nộ[,.]?\s*/g, ''); }
@@ -2928,6 +2986,8 @@ function addAccExp(n) {
           case 32: return `Hóa Bạch Cốt nhảy vào giữa địch, ${BCT_HITS} lần sát thương TOÀN địch. Rồi thôi miên 1 địch (ưu tiên công kích/kỹ năng) tự ulti đánh đồng đội.`;
           case 33: return `Cả đội ta x${1 + LQ_HEAL_UP} hồi máu ${LQ_HEAL_TURNS} hiệp, toàn địch cấm hồi máu ${LQ_NOHEAL_TURNS} hiệp. Ném đỉnh khổng lồ xuống địch, ${LQ_HITS} lần sát thương TOÀN địch.`;
           case 34: return `Vào trận đầy nộ, ulti hiệp đầu. Cả đội +${pct(DL_CRIT_UP)}% Bạo, +${pct(DL_CDMG_UP)}% Bạo Sát ${DL_TURNS} hiệp. Chọi lệnh bài xuống địch, ${DL_HITS} lần sát thương TOÀN địch.`;
+          case 58316: return `Bản thân +${pct(LD_CRIT_UP)}% Bạo, +${pct(LD_CDMG_UP)}% Bạo Sát ${LD_TURNS} hiệp, toàn địch -${LD_TOUGH_DOWN}% Bền ${LD_TURNS} hiệp. Chọi ${LD_BRICKS} viên gạch xuống địch, ${LD_HITS} lần sát thương TOÀN địch.`;
+          case 63917: return `Bản thân +${fmtN(LDT_PIERCE_UP)} Phá giáp ${LDT_TURNS} hiệp, toàn địch -${pct(LDT_DEF_DOWN)}% Thủ, -${pct(LDT_BLOCK_DOWN)}% Đỡ đòn ${LDT_TURNS} hiệp. Trực thăng thả ${LDT_BOMBS} bom xuống địch, ${LDT_HITS} lần sát thương TOÀN địch.`;
           default: return `Lao vào địch đánh ${ULT_HITS} đòn liên tiếp.`;
         }
       } catch (e) { return ''; }
@@ -3230,7 +3290,7 @@ function addAccExp(n) {
       document.getElementById('vm-body').innerHTML = `
         <div class="hero-chips">${chips}</div>
         <div class="vm-hero"><div class="hd-ico">${heroIcon(h)}</div><div class="hd-info"><div class="hd-name">${h.name}</div><div class="hd-sub">Cấp ${p.lv}/${LV_MAX} • ★${p.star}/${starCapOf(p.lv)} • Kỹ năng ${p.sk}/${SKILL_MAX}</div><div class="hd-sub">HP ${fmtN(st.hp)} • Công ${fmtN(st.atk)} • Thủ ${fmtN(st.def)} • Tốc ${st.spd}</div></div></div>
-        ${up('⬆ Tăng Cấp', 'Cấp ' + p.lv + '/' + lvCap, lvMax ? '' : 'Cấp ' + (p.lv + 1), `+${LV_GROWTH * 100}% HP / Công / Thủ mỗi cấp` + (lvMax ? '' : ` • Lên cấp ${p.lv + 1} tốn 🥈 ${fmtN(lvCost(p.lv + 1).silver)} + 🍚 ${fmtN(lvCost(p.lv + 1).rice)} (có 🥈 ${fmtN(silver)} • 🍚 ${fmtN(rice)}). +10 cấp: nâng tối đa 10 cấp trong khả năng`) + (lvMax ? (lvFull ? ' • Đã đạt cấp tối đa' : ' • 🔒 Đã chạm cấp acc — vượt Ải nhận EXP để lên cấp acc, mở thêm cấp tướng') : ''),
+        ${up('⬆ Tăng Cấp', 'Cấp ' + p.lv + '/' + lvCap, lvMax ? '' : 'Cấp ' + (p.lv + 1), `+${LV_GROWTH * 100}% HP / Công / Thủ mỗi cấp` + (lvMax ? '' : ` • Lên cấp ${p.lv + 1} tốn ${IC_SILVER} ${fmtN(lvCost(p.lv + 1).silver)} + ${IC_RICE} ${fmtN(lvCost(p.lv + 1).rice)} (có ${IC_SILVER} ${fmtN(silver)} • ${IC_RICE} ${fmtN(rice)}). +10 cấp: nâng tối đa 10 cấp trong khả năng`) + (lvMax ? (lvFull ? ' • Đã đạt cấp tối đa' : ' • 🔒 Đã chạm cấp acc — vượt Ải nhận EXP để lên cấp acc, mở thêm cấp tướng') : ''),
              `<button ${lvMax || lvAffordable(p.lv, 1) < 1 ? 'disabled' : ''} onclick="upgradeHero('lv',1)">+1 cấp</button><button ${lvMax || lvAffordable(p.lv, 1) < 1 ? 'disabled' : ''} onclick="upgradeHero('lv',10)">+10 cấp</button>`)}
         ${up('⭐ Tăng Sao', '★' + p.star, starMax ? '' : '★' + (p.star + 1), `+${STAR_GROWTH * 100}% HP / Công / Thủ mỗi sao` + (starMax ? (p.star >= STAR_ABS_MAX ? ' • Đã đạt sao tối đa' : ` • 🔒 Cần tướng cấp ${PROG_CFG.lvPerStar * (p.star + 1)} để lên ★${p.star + 1}`) : ` • 🧩 Cần ${starCost(p.star + 1)} mảnh (có ${shardsOf(vmId)})` + (starPhach(p.star + 1).length ? ' • 🔮 ' + phachText(p.star + 1) : '')),
              `<button ${starMax || shardsOf(vmId) < starCost(p.star + 1) || phachMiss(p.star + 1).length ? 'disabled' : ''} onclick="upgradeHero('star',1)">Tăng sao</button>`)}
@@ -3245,7 +3305,7 @@ function addAccExp(n) {
    Luồng: Võ Hiệp -> chọn mục -> chọn tướng -> màn này (trước ➜ sau). Tăng sao chỉ cần MẢNH của chính tướng. */
 
     let upgId = 0;
-    // icon bạc / gạo giống thanh tài nguyên trên cùng (giao-dien/icon-home/thoi-bac.webp, gao.webp)
+    // icon bạc / gạo giống thanh tài nguyên trên cùng (vat-pham-game/bang/thoi-bac.png, gao.png)
     const UPG_RES_ICO = f => (f === 'gao' ? IC_RICE : IC_SILVER);
     const UPG_TITLE = { sao: 'Tăng Sao', boiduong: 'Thăng Cấp', kynang: 'Nâng Kỹ Năng', phamchat: 'Nâng Phẩm Chất' };
     (function () {
@@ -3293,7 +3353,7 @@ function addAccExp(n) {
         btns = `<button class="up-go" ${maxed || !ok ? 'disabled' : ''} onclick="upgradeHero('star',1)">Tăng Sao</button>`;
       } else if (mode === 'boiduong') {
         const c = lvCost(p.lv + 1), exN = heroExpNeed(p.lv), exHave = heroExpAvail(upgId), k = lvAffordable(p.lv, 1) >= 1 && exHave >= exN;
-        cost = maxed ? '<div class="up-max">Đã chạm cấp acc (vượt Ải nhận EXP để lên cấp acc)</div>' : (() => { const own = heroExpOf(upgId), pct = Math.min(100, Math.round(exHave / exN * 100)), miss = Math.max(0, exN - exHave); return `<div style="margin:10px 18px 0"><div style="display:flex;justify-content:space-between;font-size:11px;color:#fde68a;margin-bottom:3px"><span>EXP lên cấp ${p.lv + 1}</span><b>${fmtN(exHave)}/${fmtN(exN)}${miss > 0 ? ' · còn thiếu ' + fmtN(miss) : ' · đủ'}</b></div><div style="height:10px;border-radius:6px;background:#0008;border:1px solid #fde047;overflow:hidden"><div style="width:${pct}%;height:100%;background:linear-gradient(90deg,#f59e0b,#fde047)"></div></div><div style="font-size:10px;color:#a0aec0;margin-top:2px">EXP tướng ${fmtN(own)} + ${fmtN(taoQty())} đào × ${TAO_EXP}</div></div>`; })() + `<div class="up-cost"><div class="up-it"><div class="e">${UPG_RES_ICO('thoi-bac')}</div><b class="${silver >= c.silver ? '' : 'bad'}">${fmtN(silver)}/${fmtN(c.silver)}</b><small>Bạc</small></div><div class="up-it"><div class="e">${UPG_RES_ICO('gao')}</div><b class="${rice >= c.rice ? '' : 'bad'}">${fmtN(rice)}/${fmtN(c.rice)}</b><small>Gạo</small></div><div class="up-it"><div class="e">${gdIco('Đào Tiên', '🍑')}</div><b class="${exHave >= exN ? '' : 'bad'}">${fmtN(exHave)}/${fmtN(exN)}</b><small>EXP (có ${fmtN(taoQty())} đào)</small></div></div>`;
+        cost = maxed ? '<div class="up-max">Đã chạm cấp acc (vượt Ải nhận EXP để lên cấp acc)</div>' : (() => { const own = heroExpOf(upgId), pct = Math.min(100, Math.round(exHave / exN * 100)), miss = Math.max(0, exN - exHave); return `<div style="margin:10px 18px 0"><div style="display:flex;justify-content:space-between;font-size:11px;color:#fde68a;margin-bottom:3px"><span>EXP lên cấp ${p.lv + 1}</span><b>${fmtN(exHave)}/${fmtN(exN)}${miss > 0 ? ' · còn thiếu ' + fmtN(miss) : ' · đủ'}</b></div><div style="height:10px;border-radius:6px;background:#0008;border:1px solid #fde047;overflow:hidden"><div style="width:${pct}%;height:100%;background:linear-gradient(90deg,#f59e0b,#fde047)"></div></div><div style="font-size:10px;color:#a0aec0;margin-top:2px">EXP tướng ${fmtN(own)} + ${fmtN(taoQty())} đào × ${TAO_EXP}</div></div>`; })() + `<div class="up-cost"><div class="up-it"><div class="e">${UPG_RES_ICO('thoi-bac')}</div><b class="${silver >= c.silver ? '' : 'bad'}">${fmtN(silver)}/${fmtN(c.silver)}</b><small>Bạc</small></div><div class="up-it"><div class="e">${UPG_RES_ICO('gao')}</div><b class="${rice >= c.rice ? '' : 'bad'}">${fmtN(rice)}/${fmtN(c.rice)}</b><small>Gạo</small></div><div class="up-it"><div class="e">${gdIco('Đào Tiên', '')}</div><b class="${exHave >= exN ? '' : 'bad'}">${fmtN(exHave)}/${fmtN(exN)}</b><small>EXP (có ${fmtN(taoQty())} đào)</small></div></div>`;
         btns = `<button class="up-go" ${maxed || !k ? 'disabled' : ''} onclick="upgradeHero('lv',1)">+1 Cấp</button><button class="up-go alt" ${maxed || !k ? 'disabled' : ''} onclick="upgradeHero('lv',10)">+10 Cấp</button>`;
       } else if (mode === 'phamchat') {
         const need = maxed ? [] : qlCost(p.ql + 1), starLock = !maxed && p.star < qlMinStar(), ok = !starLock && need.every(x => qlHave(x.k, upgId) >= x.n);
@@ -3393,7 +3453,7 @@ function addAccExp(n) {
         `<div class="rc-row">${Object.keys(REC).map(k => { const r = REC[k], h = HEROES[(r.art * 3 + 1) % HEROES.length];
           const art = heroIcon(h);
           return `<div class="rc-p ${k}"><div class="rc-ttl">${r.name}</div><div class="rc-art">${art}</div><div class="rc-info" id="rc-st-${k}"></div><button class="rc-btn" id="rc-btn-${k}" onclick="doRecruit('${k}')"></button></div>`; }).join('')}</div>
-        <div class="set-note" style="margin-top:8px">🎴 Ưu tiên: lượt miễn phí → Thẻ Chiêu Mộ (trong Túi Đồ) → 💰 vàng. Sơ Cấp = 1 tướng • Cao Cấp = 2 tướng • 10 Lần (vàng) = 10 tướng. Mỗi lần quay ra <b>nguyên tướng</b>; nếu đã có tướng đó thì nhận <b>${DUP_SHARDS} mảnh</b> của tướng ấy. Thẻ có trong Túi Đồ (Kho). Đủ ${MERGE_COST} mảnh của một tướng chưa có thì vào Võ Hiệp → Ghép Mảnh. Tăng sao cần mảnh của chính tướng đó: lên ★N cần N × ${SHARD_PER_STAR} mảnh (★6 = ${starCost(6)} mảnh). Lượt miễn phí không cộng dồn, quay xong mới tính lại thời gian.</div>
+        <div class="set-note" style="margin-top:8px">🎴 Ưu tiên: lượt miễn phí → Thẻ Chiêu Mộ (trong Túi Đồ) → ${IC_GOLD} vàng. Sơ Cấp = 1 tướng • Cao Cấp = 2 tướng • 10 Lần (vàng) = 10 tướng. Mỗi lần quay ra <b>nguyên tướng</b>; nếu đã có tướng đó thì nhận <b>${DUP_SHARDS} mảnh</b> của tướng ấy. Thẻ có trong Túi Đồ (Kho). Đủ ${MERGE_COST} mảnh của một tướng chưa có thì vào Võ Hiệp → Ghép Mảnh. Tăng sao cần mảnh của chính tướng đó: lên ★N cần N × ${SHARD_PER_STAR} mảnh (★6 = ${starCost(6)} mảnh). Lượt miễn phí không cộng dồn, quay xong mới tính lại thời gian.</div>
         `;
       recTick();
     }
@@ -3410,7 +3470,7 @@ function addAccExp(n) {
         bt.disabled = false;
         if (free) bt.innerHTML = 'Miễn phí<small>Mời</small>';
         else if (r.card && have >= 1) bt.innerHTML = `🎴 1 thẻ<small>${r.name}</small>`;
-        else if (r.cost) bt.innerHTML = `💰 ${fmtN(r.cost)}<small>${r.card ? 'Hết thẻ' : '10 Lần'}</small>`;
+        else if (r.cost) bt.innerHTML = `${IC_GOLD} ${fmtN(r.cost)}<small>${r.card ? 'Hết thẻ' : '10 Lần'}</small>`;
         else { bt.disabled = true; bt.innerHTML = 'Chờ<small>miễn phí</small>'; }
       });
     }
@@ -3443,7 +3503,7 @@ function addAccExp(n) {
       if (recLeft(k) <= 0) { recState[k] = Date.now() + r.cd; saveJSON('rec_state', recState); }   // lượt miễn phí: bắt đầu tính lại thời gian chờ (không tốn thẻ)
       else if (r.card && skbQty(r.card) >= 1) skbSpend(r.card, 1);   // Sơ Cấp / Cao Cấp: ưu tiên dùng 1 thẻ trong Kho
       else if (r.cost) {   // hết thẻ (hoặc 10 Lần): tốn vàng
-        if (gold < r.cost) { alert(`Không đủ vàng! Cần ${r.cost} 💰 (có ${gold}).`); return; }
+        if (gold < r.cost) { alert(`Không đủ vàng! Cần ${r.cost} vàng (có ${gold}).`); return; }
         gold -= r.cost; goldSave();
       } else return;
       // quay r.n tướng: chưa có → nhận tướng; đã có (hoặc vừa trúng ở lượt trước) → +DUP_SHARDS mảnh
@@ -6673,6 +6733,202 @@ async function diemLaVuongUlt(u, tok) {
     dropDeadEffects(es0);
   } finally { timers.forEach(clearTimeout); cast.end(); made.forEach(d => d.remove()); u.el.getAnimations().forEach(a => a.cancel()); }
 }
+/* === linda (tuyệt kỹ Linda) === */
+/* LINDA (id 58316, tướng công kích): TRƯỚC khi ra đòn (luật: cộng thêm → giảm → sát thương):
+     • bản thân +LD_CRIT_UP (300%) Bạo và +LD_CDMG_UP (300%) Bạo Sát trong LD_TURNS (2) hiệp (pctMod: tính % trên chỉ số hiện có)
+     • toàn địch GIẢM LD_TOUGH_DOWN (50) Bền trong LD_TURNS (2) hiệp (Bền là chỉ số điểm, tính như Sa Tăng)
+   → Linda ĐỨNG YÊN TẠI CHỖ (SEQ.ldUlt, 20 khung), giơ gạch qua đầu rồi CHỌI (viên gạch rời tay ở khung 8).
+   → LD_BRICKS (32) viên gạch (ảnh heros/linda/linda-gach.webp) bay từ tay Linda QUA ĐỘI ĐỊCH theo đường vòng cung (như cây gậy bắc qua), rơi DỒN DẬP xuống đội địch,
+     mỗi viên XOAY theo góc khác nhau. Viên đầu chạm ở ~1,24s, viên cuối ở ~1,93s.
+   → LD_HITS (4) lần sát thương lên TOÀN địch; tổng HL × Công chia đều. 4 nhát nằm đúng lúc viên thứ 8 / 16 / 24 / 32 chạm đất.
+   Nhịp (FR = 85ms/khung): buff khung 3 • giảm Bền khung 4 • gạch bắt đầu bay khung 8 (mỗi viên cách nhau 21ms, bay 560-640ms) • tan khung 20.
+   Tham số: skillConfig (LD_*) hoặc admin → tab Chiêu thức. Âm thanh: heros/linda/linda-ult.mp3 (khớp đúng lịch gạch chạm đất ở trên). */
+const LD_BRICK_IMG = 'heros/linda/linda-gach.webp?v=1';
+GP.add(LD_BRICK_IMG, 2);
+['ldIdle', 'ldUlt'].forEach(k => { const s = SEQ[k]; if (!s) return; const im = new Image(); im.onload = () => { if (im.naturalWidth && s.n) { s.cw = im.naturalWidth / s.n; s.ch = im.naturalHeight; } }; im.src = s.src; });
+async function lindaUlt(u, tok) {
+  const g = nt(u), { W, H, made } = g, es0 = g.es(); if (!es0.length) return;
+  const S = SEQ.ldUlt, I = SEQ.ldIdle, timers = [];
+  const at = (ms, fn) => timers.push(setTimeout(() => { if (tok === battleToken) fn(); }, seqT(ms)));
+  const nHit = Math.max(1, Math.floor(LD_HITS)), nBrick = Math.max(nHit, Math.floor(LD_BRICKS));
+  const idleH = (SEQ_IDLE[u.id] && SEQ_IDLE[u.id].h) || 130, castW = Math.round(S.cw * idleH / I.ch);
+  const cast = seqOverlay(u, S, castW);
+  const BCOL = '#fb923c', GOLD = '#fbbf24', FR = 85, F_THROW = 8;
+  const dirS = u.side === 'hero' ? 1 : -1, be = g.box0(es0), per = u.atk * (u.sk || 1) / nHit;   // tổng HL × Công chia đều
+  const sx = Math.max(3, Math.min(97, u.x + dirS * 3)), sy = u.y - 6;                            // tay Linda (nơi viên gạch rời tay)
+  const bW = Math.round(Math.max(26, Math.min(W * 0.075, 54))), bH = Math.round(bW * 176 / 256);
+  const R = (a, b) => a + Math.random() * (b - a), cl = (v, a, b) => Math.max(a, Math.min(b, v));
+  const flash = (x, y, c) => { const fl = document.createElement('div'); fl.className = 'bf-bflash'; fl.style.left = x + '%'; fl.style.top = y + '%'; fl.style.setProperty('--fc', c || BCOL); g.box.appendChild(fl); made.push(fl); setTimeout(() => fl.remove(), 450); };
+  // Lịch cố định (âm thanh khớp theo lịch này): viên i rời tay lúc 680 + 21·i ms, bay 560 + 20·(i%5) ms
+  const bricks = Array.from({ length: nBrick }, (_, i) => { const launch = F_THROW * FR + i * 21, fly = 560 + (i % 5) * 20; return { i, launch, fly, land: launch + fly }; });
+  const lands = bricks.map(b => b.land).sort((a, b) => a - b);
+  const hitT = Array.from({ length: nHit }, (_, k) => lands[cl(Math.floor((k + 1) * nBrick / nHit) - 1, 0, nBrick - 1)]);   // nhát k trùng viên chạm thứ (k+1)·N/nHit
+  const T_END = Math.max(S.n * FR, lands[nBrick - 1] + 320);
+  try {
+    u.el.animate([{ filter: 'drop-shadow(0 0 0 #fb923c)' }, { filter: 'drop-shadow(0 0 20px #fb923c)' }, { filter: 'drop-shadow(0 0 0 #fb923c)' }], { duration: seqT(900) || 1 });
+    // 1. TRƯỚC khi ra đòn: cộng thêm (bản thân +300% Bạo, +300% Bạo Sát) rồi giảm (toàn địch -50 Bền)
+    at(3 * FR, () => {
+      if (noBuff(u)) floatText(u, '🚫 KHÓA TĂNG PHÚC');
+      else {
+        pctMod(u, 'crit', LD_CRIT_UP, LD_TURNS, 'buff', 'ld:crit'); pctMod(u, 'critDmg', LD_CDMG_UP, LD_TURNS, 'buff', 'ld:cdmg');
+        sayLater(u, '💥 BẠO +' + Math.round(LD_CRIT_UP * 100) + '%'); sayLater(u, '🔥 BẠO SÁT +' + Math.round(LD_CDMG_UP * 100) + '%', 700);
+      }
+      refreshPanel();
+    });
+    at(4 * FR, () => {
+      es0.forEach(e => { if (!e.alive) return; addMod(e, 'tough', -LD_TOUGH_DOWN, LD_TURNS, 'debuff', 'ld:tough'); sayLater(e, '💔 BỀN -' + LD_TOUGH_DOWN + '%', 250); });
+      refreshPanel();
+    });
+    // 2. Linda ĐỨNG YÊN, giơ gạch rồi chọi (khung 0-19); xong thì trả về dáng đứng yên
+    for (let i = 0; i < S.n; i++) at(i * FR, () => cast.show(i));
+    at(S.n * FR, () => cast.end());
+    // 3. nBrick viên gạch bay từ tay Linda qua đội địch theo vòng cung rồi rơi xuống, mỗi viên xoay góc khác nhau
+    bricks.forEach(b => {
+      const tx = cl(be.minX - 4 + ((b.i * 0.618034 + R(0, 0.12)) % 1) * (be.maxX - be.minX + 8), 4, 96);   // rải đều khắp đội địch
+      const ty = cl(R(be.minY - 3, be.maxY + 7), 14, 94);
+      const dx = (tx - sx) * W / 100, dy = (ty - sy) * H / 100, ah = H * R(0.16, 0.30);                     // ah: độ cao vòng cung
+      const r0 = R(0, 360), spin = (Math.random() < 0.5 ? -1 : 1) * R(540, 1260);                           // xoay 1,5 → 3,5 vòng, chiều khác nhau
+      const d = g.mk('bf-seq-fx', '', sx, sy); d.style.zIndex = 108; d.style.opacity = '0'; d.style.width = bW + 'px'; d.style.height = bH + 'px'; d.style.pointerEvents = 'none';
+      d.style.transform = 'translate(-50%,-50%)';
+      const im = document.createElement('img'); im.src = LD_BRICK_IMG; im.alt = '🧱'; im.draggable = false; im.style.cssText = 'width:100%;height:100%;display:block;pointer-events:none;filter:drop-shadow(0 0 6px #fb923c);'; d.appendChild(im);
+      const kf = Array.from({ length: 10 }, (_, j) => { const t = j / 9, x = dx * t, y = dy * t - 4 * ah * t * (1 - t);
+        return { transform: `translate(calc(-50% + ${x.toFixed(1)}px),calc(-50% + ${y.toFixed(1)}px)) rotate(${(r0 + spin * t).toFixed(0)}deg) scale(${(0.55 + 0.5 * Math.min(1, t * 2.2)).toFixed(2)})`, opacity: j === 0 ? 0 : 1, offset: t }; });
+      at(b.launch, () => d.animate(kf, { duration: seqT(b.fly) || 1, easing: 'linear', fill: 'forwards' }));
+      at(b.land, () => {                                                   // chạm đất: đứng lại ở điểm rơi rồi mờ nhanh
+        d.getAnimations().forEach(a => a.cancel());
+        d.style.left = tx + '%'; d.style.top = ty + '%'; d.style.opacity = '1'; d.style.transform = `translate(-50%,-50%) rotate(${((r0 + spin) % 360).toFixed(0)}deg)`;
+        d.animate([{ opacity: 1 }, { opacity: 0 }], { duration: seqT(260) || 1, delay: seqT(90), fill: 'forwards' });
+        if (b.i % 3 === 0) flash(tx, ty, BCOL);
+        if (b.i % 8 === 7) g.shake();
+      });
+    });
+    // 4. nHit lần sát thương lên TOÀN địch (trùng lúc viên thứ 8 / 16 / 24 / 32 chạm)
+    hitT.forEach((t, i) => at(t, () => {
+      const es = g.es(); if (!es.length) return;
+      g.shake(); es.forEach(e => { skillHit(e, per, u); flash(e.x, e.y, i === nHit - 1 ? '#fef3c7' : (i % 2 ? GOLD : BCOL)); });
+      if (i === nHit - 1) { g.ring(be.cx, be.cy, BCOL); g.ring(be.cx, be.cy + 2, GOLD); }
+      refreshPanel();
+    }));
+    await sleep(T_END + 150); if (tok !== battleToken) return;
+    dropDeadEffects(es0);
+  } finally { timers.forEach(clearTimeout); cast.end(); made.forEach(d => d.remove()); u.el.getAnimations().forEach(a => a.cancel()); }
+}
+/* === linh-danh-thue (tuyệt kỹ Lính Đánh Thuê) === */
+/* LÍNH ĐÁNH THUÊ (id 63917, tướng công kích): TRƯỚC khi ra đòn (luật: cộng thêm → giảm → sát thương):
+     • bản thân +LDT_PIERCE_UP (50000) Phá giáp trong LDT_TURNS (2) hiệp (addMod: cộng điểm, không phải %)
+     • toàn địch GIẢM LDT_DEF_DOWN (50%) Thủ (pctMod) và LDT_BLOCK_DOWN (50 điểm %) Đỡ đòn (blockMod) trong LDT_TURNS (2) hiệp
+   → Lính Đánh Thuê QUỲ GỐI nạp đạn cối (SEQ.ltUlt, 1 khung) và giữ dáng đó suốt ulti.
+   → TRỰC THĂNG (heros/linh-danh-thue/linh-danh-thue-may-bay.webp) bay vào, đậu trên trời PHÍA ĐỊCH rồi quét ngang thả LDT_BOMBS (36) quả bom (…-bom.webp)
+     rơi đầu chúc xuống khắp đội địch; mỗi quả chạm đất nổ 1 cục lửa nhỏ.
+   → LDT_HITS (5) lần sát thương lên TOÀN địch trùng lúc quả thứ 7 / 14 / 21 / 29 / 36 chạm đất, mỗi lần NỔ SÁNG CHÓI bên địch (nhát cuối chói nhất).
+     Tổng HL × Công chia đều cho các lần; Phá giáp (và Bạo) tính ĐỦ MỖI lần theo engine (không chia).
+   Nhịp (ms): buff 300 • debuff 600 • trực thăng vào 500→1200 • bom bắt đầu rơi 1150 (cách nhau 42) • trực thăng bay đi sau quả cuối.
+   Tham số: skillConfig (LDT_*) hoặc admin → tab Chiêu thức. Âm thanh: heros/linh-danh-thue/linh-danh-thue-ult.mp3 (pháo cối 0s • cánh quạt 0,5-3,6s • 5 tiếng nổ lớn ở 1,89/2,22/2,49/2,85/3,12s). */
+const LDT_HELI_IMG = 'heros/linh-danh-thue/linh-danh-thue-may-bay.webp?v=1', LDT_BOMB_IMG = 'heros/linh-danh-thue/linh-danh-thue-bom.webp?v=1';
+GP.add([LDT_HELI_IMG, LDT_BOMB_IMG], 2);
+['ltIdle', 'ltUlt'].forEach(k => { const s = SEQ[k]; if (!s) return; const im = new Image(); im.onload = () => { if (im.naturalWidth && s.n) { s.cw = im.naturalWidth / s.n; s.ch = im.naturalHeight; } }; im.src = s.src; });
+function sfxBoomLdt(big) {
+  try {
+    const ctx = (typeof sfxGet === 'function') && sfxGet(); if (!ctx || typeof sfxNoise !== 'function') return;
+    const t = ctx.currentTime, out = ctx.createGain(), lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.setValueAtTime(big ? 900 : 1400, t); lp.frequency.exponentialRampToValueAtTime(120, t + (big ? 0.7 : 0.35));
+    out.gain.setValueAtTime(big ? 0.9 : 0.35, t); out.gain.exponentialRampToValueAtTime(0.0001, t + (big ? 0.75 : 0.4));
+    const nz = sfxNoise(ctx, 0.8); nz.connect(lp); lp.connect(out); out.connect(ctx.destination); nz.start(t); nz.stop(t + 0.8);
+  } catch (e) {}
+}
+async function linhDanhThueUlt(u, tok) {
+  const g = nt(u), { W, H, made } = g, es0 = g.es(); if (!es0.length) return;
+  const S = SEQ.ltUlt, I = SEQ.ltIdle, timers = [];
+  const at = (ms, fn) => timers.push(setTimeout(() => { if (tok === battleToken) fn(); }, seqT(ms)));
+  const nHit = Math.max(1, Math.floor(LDT_HITS)), nBomb = Math.max(nHit, Math.floor(LDT_BOMBS));
+  const idleH = (SEQ_IDLE[u.id] && SEQ_IDLE[u.id].h) || 130, castW = Math.round(idleH * 0.98 * S.cw / S.ch);   // dáng quỳ cao ≈ dáng đứng
+  const cast = seqOverlay(u, S, castW);
+  const FIRE = '#fb923c', GOLD = '#fde047', WHITE = '#ffffff';
+  const dirS = u.side === 'hero' ? 1 : -1, be = g.box0(es0), per = u.atk * (u.sk || 1) / nHit;   // tổng HL × Công chia đều
+  const R = (a, b) => a + Math.random() * (b - a), cl = (v, a, b) => Math.max(a, Math.min(b, v));
+  const hW = Math.round(cl(W * 0.30, 150, 260)), hH = Math.round(hW * 358 / 640);               // trực thăng
+  const bW = Math.round(cl(W * 0.024, 12, 22)), bH = Math.round(bW * 260 / 148);               // quả bom
+  const hy = cl(be.minY - 26, 12, 34), hx0 = cl(be.cx - 9, 8, 92), hx1 = cl(be.cx + 9, 8, 92);   // trực thăng đậu trên trời phía địch, quét ngang ±9%
+  const startX = dirS === 1 ? -20 : 120, endX = startX;                                         // bay vào / bay đi về phía đội mình
+  const T_ARRIVE = 1200, D0 = 1150, GAP = 42, T_LEAVE = D0 + (nBomb - 1) * GAP + 150;
+  const hxAt = ms => hx0 + (hx1 - hx0) * cl((ms - D0) / ((nBomb - 1) * GAP || 1), 0, 1) ;       // vị trí ngang của trực thăng tại thời điểm ms
+  const fall = i => 470 + (i % 5) * 18;
+  const bombs = Array.from({ length: nBomb }, (_, i) => { const launch = D0 + i * GAP; return { i, launch, land: launch + fall(i) }; });
+  const lands = bombs.map(b => b.land).sort((a, b) => a - b);
+  const hitT = Array.from({ length: nHit }, (_, k) => lands[cl(Math.floor((k + 1) * nBomb / nHit) - 1, 0, nBomb - 1)]);
+  const T_END = Math.max(T_LEAVE + 700, lands[nBomb - 1] + 500);
+  // NỔ: cầu lửa trắng–vàng–cam, to dần rồi tan (mix-blend screen cho sáng chói)
+  const boom = (x, y, px, ms, strong) => {
+    const d = g.mk('bf-seq-fx', '', x, y); d.style.zIndex = 118; d.style.pointerEvents = 'none'; d.style.width = px + 'px'; d.style.height = px + 'px'; d.style.borderRadius = '50%'; d.style.mixBlendMode = 'screen'; d.style.opacity = '0';
+    d.style.background = 'radial-gradient(circle,#fff 0%,#fff 22%,#fff3a0 38%,#ffb347 56%,rgba(255,80,0,.75) 70%,rgba(255,60,0,0) 74%)';
+    d.style.boxShadow = strong ? '0 0 60px 30px rgba(255,230,150,.9)' : '0 0 24px 8px rgba(255,170,60,.7)';
+    d.animate([{ transform: 'translate(-50%,-50%) scale(.15)', opacity: 1 }, { transform: 'translate(-50%,-50%) scale(1)', opacity: 1, offset: .35 }, { transform: 'translate(-50%,-50%) scale(1.25)', opacity: 0 }], { duration: seqT(ms) || 1, easing: 'ease-out', fill: 'forwards' });
+    setTimeout(() => d.remove(), seqT(ms) + 60);
+  };
+  // CHÓI: tia sáng trắng phủ cả bên địch (nhát cuối phủ kín hơn)
+  const glare = (strong) => {
+    const px = Math.round(Math.max(W * (strong ? 1.1 : 0.7), 300)), d = g.mk('bf-seq-fx', '', be.cx, be.cy); d.style.zIndex = 119; d.style.pointerEvents = 'none'; d.style.width = px + 'px'; d.style.height = px + 'px'; d.style.borderRadius = '50%'; d.style.mixBlendMode = 'screen'; d.style.opacity = '0';
+    d.style.background = 'radial-gradient(circle,rgba(255,255,255,1) 0%,rgba(255,255,230,.95) 30%,rgba(255,220,120,.55) 55%,rgba(255,200,80,0) 72%)';
+    d.animate([{ transform: 'translate(-50%,-50%) scale(.3)', opacity: 0 }, { transform: 'translate(-50%,-50%) scale(1)', opacity: 1, offset: .22 }, { transform: 'translate(-50%,-50%) scale(1.15)', opacity: 0 }], { duration: seqT(strong ? 620 : 420) || 1, easing: 'ease-out', fill: 'forwards' });
+    setTimeout(() => d.remove(), seqT(700) + 60);
+  };
+  try {
+    u.el.animate([{ filter: 'drop-shadow(0 0 0 #fb923c)' }, { filter: 'drop-shadow(0 0 20px #fb923c)' }, { filter: 'drop-shadow(0 0 0 #fb923c)' }], { duration: seqT(900) || 1 });
+    // 1. Tướng QUỲ GỐI nạp đạn cối ngay từ đầu, giữ dáng đến hết ulti
+    cast.show(0);
+    cast.el.animate([{ filter: 'brightness(1.8)' }, { filter: 'brightness(1)' }], { duration: seqT(300) || 1 });
+    at(T_END, () => cast.end());
+    // 2. TRƯỚC khi ra đòn: cộng thêm (bản thân +50000 Phá giáp) rồi giảm (toàn địch -50% Thủ, -50% Đỡ đòn)
+    at(300, () => {
+      if (noBuff(u)) floatText(u, '🚫 KHÓA TĂNG PHÚC');
+      else { addMod(u, 'pierce', LDT_PIERCE_UP, LDT_TURNS, 'buff', 'ldt:pierce'); sayLater(u, '🛡️ PHÁ GIÁP +' + fmtN(LDT_PIERCE_UP)); }
+      refreshPanel();
+    });
+    at(600, () => {
+      es0.forEach(e => {
+        if (!e.alive) return;
+        pctMod(e, 'def', -LDT_DEF_DOWN, LDT_TURNS, 'debuff', 'ldt:def'); blockMod(e, -LDT_BLOCK_DOWN, LDT_TURNS, 'debuff', 'ldt:block');
+        sayLater(e, '💔 THỦ -' + Math.round(LDT_DEF_DOWN * 100) + '%', 250); sayLater(e, '💔 ĐỠ ĐÒN -' + Math.round(LDT_BLOCK_DOWN * 100) + '%', 850);
+      });
+      refreshPanel();
+    });
+    // 3. TRỰC THĂNG xuất hiện trên trời phía địch: bay vào → quét ngang thả bom → bay đi
+    const hel = g.mk('bf-seq-fx', '', startX, hy); hel.style.zIndex = 112; hel.style.pointerEvents = 'none'; hel.style.width = hW + 'px'; hel.style.height = hH + 'px'; hel.style.opacity = '0';
+    const hi = document.createElement('img'); hi.src = LDT_HELI_IMG; hi.alt = '🚁'; hi.draggable = false; hi.style.cssText = 'width:100%;height:100%;display:block;pointer-events:none;filter:drop-shadow(0 6px 8px rgba(0,0,0,.45));' + (dirS === -1 ? 'transform:scaleX(-1);' : ''); hel.appendChild(hi);
+    hel.style.transform = 'translate(-50%,-50%)';
+    at(500, () => { hel.style.opacity = '1'; hel.animate([{ left: startX + '%' }, { left: hx0 + '%' }], { duration: seqT(T_ARRIVE - 500) || 1, easing: 'cubic-bezier(.15,.7,.3,1)', fill: 'forwards' }); });
+    at(T_ARRIVE, () => hel.animate([{ left: hx0 + '%' }, { left: hx1 + '%' }], { duration: seqT(Math.max(1, T_LEAVE - T_ARRIVE)) || 1, easing: 'linear', fill: 'forwards' }));
+    at(T_LEAVE, () => hel.animate([{ left: hx1 + '%', opacity: 1 }, { left: endX + '%', opacity: 1, offset: .85 }, { left: endX + '%', opacity: 0 }], { duration: seqT(650) || 1, easing: 'cubic-bezier(.6,0,1,.6)', fill: 'forwards' }));
+    hi.animate([{ translate: '0 0' }, { translate: '0 -4px' }, { translate: '0 0' }], { duration: seqT(260) || 1, iterations: Infinity });   // rung nhẹ khi bay
+    // 4. nBomb quả bom từ bụng trực thăng rơi (đầu chúc xuống) khắp đội địch, chạm đất thì nổ nhỏ
+    bombs.forEach(b => {
+      const lx = hxAt(b.launch), sy = hy + 5;
+      const tx = cl(lx + R(-13, 13), be.minX - 5, be.maxX + 5), ty = cl(R(be.minY - 4, be.maxY + 8), 22, 94);
+      const dx = (tx - lx) * W / 100, dy = (ty - sy) * H / 100, tilt = R(-14, 14);
+      const d = g.mk('bf-seq-fx', '', lx, sy); d.style.zIndex = 114; d.style.pointerEvents = 'none'; d.style.opacity = '0'; d.style.width = bW + 'px'; d.style.height = bH + 'px'; d.style.transform = 'translate(-50%,-50%) rotate(180deg)';
+      const im = document.createElement('img'); im.src = LDT_BOMB_IMG; im.alt = '💣'; im.draggable = false; im.style.cssText = 'width:100%;height:100%;display:block;pointer-events:none;'; d.appendChild(im);
+      at(b.launch, () => d.animate([
+        { transform: 'translate(-50%,-50%) rotate(' + (180 + tilt) + 'deg) scale(.6)', opacity: 0 },
+        { opacity: 1, offset: .08 },
+        { transform: 'translate(calc(-50% + ' + dx.toFixed(1) + 'px),calc(-50% + ' + dy.toFixed(1) + 'px)) rotate(' + (180 + tilt * 0.3) + 'deg) scale(1)', opacity: 1 }
+      ], { duration: seqT(fall(b.i)) || 1, easing: 'cubic-bezier(.4,0,.9,.6)', fill: 'forwards' }));
+      at(b.land, () => {
+        d.getAnimations().forEach(a => a.cancel()); d.style.opacity = '0';
+        boom(tx, ty, Math.round(cl(W * 0.07, 34, 64)), 380, false);
+      });
+    });
+    // 5. nHit lần sát thương lên TOÀN địch (trùng lúc quả thứ 7 / 14 / 21 / 29 / 36 chạm), mỗi lần NỔ SÁNG CHÓI
+    hitT.forEach((t, i) => at(t, () => {
+      const es = g.es(); if (!es.length) return;
+      const last = i === nHit - 1;
+      g.shake(); glare(last);
+      es.forEach(e => { skillHit(e, per, u); boom(e.x, e.y - 3, Math.round(cl(W * (last ? 0.2 : 0.13), 60, last ? 180 : 120)), last ? 620 : 460, true); });
+      g.ring(be.cx, be.cy, i % 2 ? GOLD : FIRE); if (last) { g.ring(be.cx, be.cy + 2, WHITE); g.shake(); }
+      refreshPanel();
+    }));
+    await sleep(T_END + 150); if (tok !== battleToken) return;
+    dropDeadEffects(es0);
+  } finally { timers.forEach(clearTimeout); cast.end(); made.forEach(d => d.remove()); u.el.getAnimations().forEach(a => a.cancel()); }
+}
 /* === ngo-khong (tuyệt kỹ Tôn Ngộ Không) === */
 /* TÔN NGỘ KHÔNG (id 28, tướng kỹ năng – lượt nào cũng ulti): TRƯỚC khi ra đòn bản thân +NK_ATK_UP (300%) Công trong NK_ATK_TURNS (1) hiệp
    → PHÂN THÂN làm NK_CLONES (3) bản chạy sang NK_CLONES địch ngẫu nhiên, ƯU TIÊN địch vai trò kỹ năng / công kích / trị liệu; mỗi phân thân đánh NK_HITS (2) lần,
@@ -7187,7 +7443,7 @@ cfgOnApply(() => {
     function startBattleSequence(stage, battle) {
       if (!team.length) { alert('Chưa có tướng ra trận!\nHãy vào Chiêu Mộ để nhận tướng rồi xếp Đội ngũ.'); return; }
       const staCost = STA_WAVES * STA_PER_WAVE;
-      if (!staSpend(staCost)) { alert('⚡ Không đủ thể lực! Cần ' + staCost + ' thể lực (có ' + staState.v + ').\nThể lực hồi 1 mỗi phút, hoặc dùng 💊 Viên Thể Lực trong Túi đồ (bấm vào ô Thể Lực).'); return; }
+      if (!staSpend(staCost)) { alert('⚡ Không đủ thể lực! Cần ' + staCost + ' thể lực (có ' + staState.v + ').\nThể lực hồi 1 mỗi phút, hoặc dùng Viên Thể Lực trong Túi đồ (bấm vào ô Thể Lực).'); return; }
       battleToken++;
       playBattleOpen();
       currentStage = stage; currentBattle = battle; currentWave = 1;
@@ -7766,7 +8022,7 @@ cfgOnApply(() => {
       }
       t.style.background = win ? 'linear-gradient(#14532d,#052e16)' : 'linear-gradient(#7f1d1d,#450a0a)';
       t.style.border = '2px solid ' + (win ? '#fde047' : '#f87171');
-      t.innerHTML = String(msg).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/🔮/g, danIcoHTML('Thần Đan', '1.1em')).replace(/🔴/g, danIcoHTML('Tiên Đan', '1.1em')).replace(/🔨/g, icoImg('hammer', '1.2em')); t.style.opacity = '1';
+      t.innerHTML = String(msg).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/🔮/g, danIcoHTML('Thần Đan', '1.1em')).replace(/🔨/g, icoImg('hammer', '1.2em')); t.innerHTML = emoToImg(t.innerHTML); t.style.opacity = '1';
       clearTimeout(t._h); t._h = setTimeout(() => { t.style.opacity = '0'; }, 3500);
     }
 
@@ -8231,8 +8487,8 @@ function grantBanReward(stage, battle) {
   rice += r.rice;
   resSave();
 
-  danAdd('Thần Đan', '🟣', r.than);
-  danAdd('Tiên Đan', '🔴', r.tien);
+  danAdd('Thần Đan', '', r.than);
+  danAdd('Tiên Đan', '', r.tien);
   const up = typeof addAccExp === 'function' ? addAccExp(r.exp) : 0;   // EXP → tự lên cấp acc khi đủ
 
   return `\n\n🥈 +${fmtRewardN(r.silver)} bạc • 🍚 +${fmtRewardN(r.rice)} gạo\n🟣 +${fmtRewardN(r.than)} Thần Đan • 🔴 +${fmtRewardN(r.tien)} Tiên Đan` + (r.exp > 0 ? `\n✨ +${fmtRewardN(r.exp)} EXP` : '') + (up ? `\n🎉 Lên cấp ${accLevel}! Tướng & Trang bị nâng được tới cấp ${accLevel}.` : '');
@@ -8504,7 +8760,7 @@ function gcGrant(r) {
     return `${fmtN(n)} ${r.name}`;
   }
   if (r.t === 'than' || r.t === 'tien') {
-    const nm = r.t === 'than' ? 'Thần Đan' : 'Tiên Đan', ico = r.t === 'than' ? '🟣' : '🔴';
+    const nm = r.t === 'than' ? 'Thần Đan' : 'Tiên Đan', ico = '';
     const s = gdSt(); (s.kho[nm] = s.kho[nm] || { ico, qty: 0 }).qty += n; gdSave(s);
     return `${fmtN(n)} ${nm}`;
   }
@@ -9288,7 +9544,7 @@ const G2 = Object.assign({}, G2_DEF);
 const GD_UNLOCK_DEF = [1, 1, 1, 1, 1, 7, 8, 9, 10, 10];
 const GD_DROPS_LOW_DEF = ['Thú Hồn', 'Thú Linh', 'Thú Noãn', 'Đá Nữ Oa', 'Dị Linh', 'Châu {boss}', 'Đào Tiên', 'Tử Linh Thạch'];
 const GD_DROPS_HIGH_DEF = ['Đào Tiên Vương', 'Đá Nữ Oa', 'Châu {boss}', 'Dị Linh', 'Lá Linh', 'Hộp Linh', 'Hộp Tinh', 'Ngọc Tím'];
-const GD_DROP_ICO = { 'Thú Hồn': '🟠', 'Thú Linh': '🔥', 'Thú Noãn': '🔶', 'Đá Nữ Oa': '🔻', 'Dị Linh': '🎭', 'Đào Tiên': '🍑', 'Tử Linh Thạch': '🪨', 'Đào Tiên Vương': '🍑', 'Lá Linh': '🍃', 'Hộp Linh': '📦', 'Hộp Tinh': '🎁', 'Ngọc Tím': '🟣' };
+const GD_DROP_ICO = { 'Thú Hồn': '🟠', 'Thú Linh': '🔥', 'Thú Noãn': '🔶', 'Đá Nữ Oa': '🔻', 'Dị Linh': '🎭', 'Đào Tiên': '', 'Tử Linh Thạch': '🪨', 'Đào Tiên Vương': '', 'Lá Linh': '🍃', 'Hộp Linh': '📦', 'Hộp Tinh': '🎁', 'Ngọc Tím': '🟣' };
 let G2_RESET_DAYS = [1, 4];   // ngày boss hồi đầy (0 = Chủ nhật … 6 = thứ 7) — admin chỉnh: guild2.resetDays, giờ: guild2.resetHour
 let GD_DROPS_LOW = GD_DROPS_LOW_DEF, GD_DROPS_HIGH = GD_DROPS_HIGH_DEF;
 const GD_SKILL_UNLOCK = GD_UNLOCK_DEF.slice(), GD_SKILL_MAX = [Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity];   // Lò Luyện Hỏa: nâng cấp không giới hạn
@@ -9296,7 +9552,7 @@ const GD_ICO = { 'Thú Noãn': 'thu-noan', 'Thú Hồn': 'thu-hon', 'Thú Linh':
 const GD_ICO2 = { 'Đá Xanh Lá': 'vat-pham-game/da-linh/da-xanh-la', 'Đá Tím': 'vat-pham-game/da-linh/da-tim', 'Đá Đen': 'vat-pham-game/da-linh/da-den', 'Đá Vàng': 'vat-pham-game/da-linh/da-vang', 'Đá Cam': 'vat-pham-game/da-linh/da-cam', 'Đá Đỏ': 'vat-pham-game/da-linh/da-do', 'Đá Trắng': 'vat-pham-game/da-linh/da-trang',
   'Hỏa Thạch': 'vat-pham-game/trang-bi/hoa-thach', 'Linh Phách': 'vat-pham-game/phach/linh_phach', 'Tiên Phách': 'vat-pham-game/phach/tien_phach', 'Thần Phách': 'vat-pham-game/phach/than_phach', 'Bí Kíp': 'vat-pham-game/ky-nang/bi-kip', 'Yếu Quyết': 'vat-pham-game/ky-nang/yeu-quyet', 'Vô Tự Thiên Thư': 'vat-pham-game/ky-nang/vo-tu-thien-thu' };   // ảnh ngoài thư mục bang-hoi (Hang Tụ Linh, kỹ năng)
 const GD_ICO_FULL = { 'Thẻ Chiêu Mộ Sơ Cấp': 'vat-pham-game/the-chieu-mo/so-cap.png', 'Thẻ Chiêu Mộ Cao Cấp': 'vat-pham-game/the-chieu-mo/cao-cap.png' };   // ảnh có đường dẫn đầy đủ (kể cả đuôi file)
-function gdIco(name, ico) { if (GD_ICO_FULL[name]) return `<img class="gi" src="${GD_ICO_FULL[name]}" alt="${name}">`; if (typeof DAN_IMG !== 'undefined' && DAN_IMG[name]) return DAN_IMG[name]; if (String(name).indexOf('Đào Tiên') === 0) return IC_PEACH; if (GD_ICO2[name]) return `<img class="gi" src="${GD_ICO2[name]}.webp" alt="${name}">`; const f = GD_ICO[name] || (String(name).indexOf('Châu ') === 0 ? 'chau' : ''); return f ? `<img class="gi" src="${f === 'dao-tien' ? 'vat-pham-game/dao-tien' : 'vat-pham-game/bang/' + f}.webp" alt="${name}">` : ico; }
+function gdIco(name, ico) { if (GD_ICO_FULL[name]) return `<img class="gi" src="${GD_ICO_FULL[name]}" alt="${name}">`; if (typeof DAN_IMG !== 'undefined' && DAN_IMG[name]) return DAN_IMG[name]; if (String(name).indexOf('Đào Tiên') === 0) return IC_PEACH; if (GD_ICO2[name]) return `<img class="gi" src="${GD_ICO2[name]}.webp" alt="${name}">`; const f = GD_ICO[name] || (String(name).indexOf('Châu ') === 0 ? 'chau' : ''); return f ? `<img class="gi" src="${f === 'dao-tien' ? 'vat-pham-game/bang/dao-tien.png' : 'vat-pham-game/bang/' + f + '.webp'}" alt="${name}">` : ico; }
 function gdSt() {
   const s = loadJSON('guild_state');
   s.kho = s.kho || {}; [['Quỷ Linh', 'Dị Linh'], ['Hỏa Tinh', 'Thú Noãn']].forEach(p => { if (s.kho[p[0]]) { s.kho[p[1]] = s.kho[p[1]] || { ico: s.kho[p[0]].ico, qty: 0 }; s.kho[p[1]].qty += s.kho[p[0]].qty; delete s.kho[p[0]]; } });
@@ -9400,7 +9656,7 @@ function gdTick() {   // đổi ngày: +lượt; thứ 2 & thứ 5 3h: boss hồ
 function bbTabSet(t) { bbTab = t; renderBangBoss(); }
 function gdInGuild() { const s = gdSt(); if (s.bangId) return true; scToast('Hãy vào bang trước (Đại Sảnh → tạo bang hoặc ứng tuyển)'); return false; }   // Cấm Địa / Bang Chiến / Tụ Bảo Các chỉ dành cho người đã vào bang
 function openBangBoss() { if (!gdInGuild()) return; renderBangBoss(); switchScreen('bangboss'); }
-function bbCtUnlock(k) { const s = gdSt(); if (gold < G2.ctCost) return scToast('Cần ' + fmtN(G2.ctCost) + ' Vàng'); if (!confirm('Mở khóa Boss Chí Tôn bằng ' + fmtN(G2.ctCost) + ' Vàng?')) return; gold -= G2.ctCost; resSave(); s.ct[k] = 1; gdSave(s); renderBangBoss(); }
+function bbCtUnlock(k) { const s = gdSt(); if (gold < G2.ctCost) return scToast('Cần ' + fmtN(G2.ctCost) + ' Vàng'); if (!confirm('Mở khóa Boss Chí Tôn bằng ' + fmtN(G2.ctCost) + ' Vàng?')) return; gold -= G2.ctCost; resSave(); goldSave(); s.ct[k] = 1; gdSave(s); renderBangBoss(); }
 function bbInfo(k, ct) {
   bbCur = [k, ct]; const b = GD_BOSS[k], m = document.getElementById('boss-modal');
   m.innerHTML = `<div class="md-box"><button class="md-x" onclick="document.getElementById('boss-modal').style.display='none'">✕</button><div class="hd-name" style="text-align:center;color:#fde047">BOSS${ct ? ' CHÍ TÔN' : ''}</div>
@@ -9450,13 +9706,13 @@ function renderBangBoss() {
 function renderBossShop(s, body) {
   const t = n => { const x = Math.max(0, Math.floor(n / 1000)); return [x / 3600 | 0, x / 60 % 60 | 0, x % 60].map(v => String(v).padStart(2, '0')).join(':'); };
   body.innerHTML = `<div class="dv-uy">Điểm BOSS: ${fmtN(s.pts)}</div><div class="bs-list">${s.lots.length ? s.lots.map((l, i) => `<div class="bs-row"><div class="bs-ico">${gdIco(l.name, l.ico)}<em>${l.qty}</em></div><div class="bs-mid"><b>${l.name}</b>
-    <div>Giá cao nhất: ${l.bid ? l.bid + (l.mine ? ' (bạn)' : '') : 'Chưa có'}<br>Mua ${fmtN(l.buy)} 💰 &nbsp; Giá đấu: ${l.bid ? l.bid + 1 : l.bid0}</div></div>
+    <div>Giá cao nhất: ${l.bid ? l.bid + (l.mine ? ' (bạn)' : '') : 'Chưa có'}<br>Mua ${fmtN(l.buy)} ${IC_GOLD} &nbsp; Giá đấu: ${l.bid ? l.bid + 1 : l.bid0}</div></div>
     <div class="bs-t" data-exp="${l.exp}">Còn:${t(l.exp - Date.now())}</div><div class="bs-b"><button class="g" onclick="bsBuy(${i})">Mua</button><button onclick="bsBid(${i})">Đấu Giá</button></div></div>`).join('') : '<div class="ch-empty" style="padding:30px">Chưa có vật phẩm. Hạ Boss để vật phẩm rơi vào đây.</div>'}</div>
     <div class="bs-note">Lưu ý: Vật phẩm trong phó bản Bang Hội sẽ chuyển vào Kho, dùng Điểm BOSS để đấu giá trước 12h00 mỗi ngày. Kho xem trong Túi Đồ.</div>`;
 }
 function bsBuy(i) {
   const s = gdTick(), l = s.lots[i]; if (!l) return; if (gold < l.buy) return scToast('Không đủ Vàng');
-  gold -= l.buy; resSave(); const k = s.kho[l.name] || (s.kho[l.name] = { ico: l.ico, qty: 0 }); k.qty += l.qty;
+  gold -= l.buy; resSave(); goldSave(); const k = s.kho[l.name] || (s.kho[l.name] = { ico: l.ico, qty: 0 }); k.qty += l.qty;
   if (l.bid && l.mine) s.pts += l.bid; s.lots.splice(i, 1); gdSave(s); renderBangBoss(); scToast('Đã chuyển vào Kho');
 }
 function bsBid(i) {
@@ -9593,7 +9849,7 @@ const TT_BEASTS = [   // [tên, hạng, mảnh cần, icon, [hiệu quả phụ 
   ['Cửu Vỹ Hồ', 'S', 250, '🦊', [['Thần Tốc', 12], ['Tàn Ảnh', 24], ['Kỳ Thuẫn', 25], ['Cường Công', 20]]], ['Hỏa Kỳ Lân', 'S', 250, '🔥', []], ['Khổng Tước', 'S', 250, '🦚', [['Thần Tốc', 17], ['Cấp Tốc', 17], ['Trợ Tốc', 14], ['Cường Công', 30]]]];
 /* ===== Admin chỉnh được (admin.html → tab "Thần Thú"): tt.beasts.<tên> = { rank, shards, fx: [{n,v,p}] } và tt.<tham số công thức> ===== */
 const TT_BEASTS_DEF = JSON.parse(JSON.stringify(TT_BEASTS));
-const TT_P_DEF = { capBase: 20, capPer: 20, needMul: 2.7, needAdd: 100, hpPer: 963.5, starGrow: 0.15, sMul: 1.5, ptsMul: 0.4008, healDiv: 5, phaPer: 800, dodgePer: 10, maxStar: 5, sSlots: 5, starLinh: 10, starDa: 400, freeMin: 2, rerollCost: 500, histMax: 30, pct1: 5, pct2: 10, pct3: 15, pct4: 20, pct5: 25, pct6: 30, pct7: 35, rate7: 1, rate6: 3, rate5: 5, rate4: 10, rate3: 50, rate2: 90, rate1: 100, hpct1: 30, hpct2: 50, hpct3: 100, hpct4: 150, hpct5: 200, hpct6: 250, hpct7: 300 };
+const TT_P_DEF = { capBase: 20, capPer: 20, needMul: 2.7, needAdd: 100, hpPer: 963.5, starGrow: 0.15, sMul: 1.5, ptsMul: 0.4008, healDiv: 5, phaPer: 800, dodgePer: 10, maxStar: 15, sSlots: 5, starLinh: 10, starDa: 400, freeMin: 2, rerollCost: 500, histMax: 30, pct1: 5, pct2: 10, pct3: 15, pct4: 20, pct5: 25, pct6: 30, pct7: 35, rate7: 1, rate6: 3, rate5: 5, rate4: 10, rate3: 50, rate2: 90, rate1: 100, hpct1: 30, hpct2: 50, hpct3: 100, hpct4: 150, hpct5: 200, hpct6: 250, hpct7: 300 };
 const TT_P = Object.assign({}, TT_P_DEF);
 cfgOnApply(() => {
   Object.keys(TT_P_DEF).forEach(k => { TT_P[k] = cfgNum('tt.' + k, TT_P_DEF[k]); });
@@ -9657,11 +9913,13 @@ function ttSt() {
   if (!s.tt) { s.tt = { cur: 'Kỳ Lân', own: { 'Kỳ Lân': { lv: 1, star: 1, exp: 0 } }, sh: {}, slots: {}, sel: 0, prev: null, freeAt: 0, cc: { day: '', left: 3 } };
     s.kho['Thú Hồn'] = { ico: '🟠', qty: 100 }; s.kho['Thú Linh'] = { ico: '🔥', qty: 10 }; s.kho['Dị Linh'] = { ico: '🎭', qty: 10 }; s.kho['Đá Nữ Oa'] = { ico: '🔻', qty: 400 }; gdSave(s); }   // quà khởi đầu
   const t = s.tt; t.hist = Array.isArray(t.hist) ? t.hist : []; if (t.pick === undefined) t.pick = -1; t.newN = t.newN | 0;
-  if (t.ptv !== 2) { t.slots = {}; t.hist = []; t.pick = -1; t.newN = 0; t.prev = null; t.ptv = 2; gdSave(s); }   // hệ Phụ Thể mới: xoá toàn bộ phụ thể cũ (ô đã lắp + kết quả tẩy + hoàn tác)   // hist: tối đa 30 Phụ Thể vừa tẩy
+  if (t.ptv !== 2) { t.slots = {}; t.hist = []; t.pick = -1; t.newN = 0; t.prev = null; t.ptv = 2; t.pts = []; gdSave(s); }   // hệ Phụ Thể mới: xoá toàn bộ phụ thể cũ (ô đã lắp + kết quả tẩy + hoàn tác)   // hist: tối đa 30 Phụ Thể vừa tẩy
+  if (!Array.isArray(t.pts)) { const sv = t.slots && (t.slots[t.cur] || Object.values(t.slots).find(a => Array.isArray(a) && a.some(Boolean))); t.pts = Array.isArray(sv) ? sv.slice(0, 10) : []; gdSave(s); }   // Phụ Thể GÁN CỨNG vào ô (10 ô dùng chung), đổi thần thú vẫn nằm nguyên trong ô; chuyển dữ liệu cũ (theo từng thú) sang
+  if (!t.prog) { const ow = Object.keys(t.own || {}).map(k => t.own[k]).filter(Boolean); const best = ow.reduce((a, c) => (!a || (c.star * 1e6 + c.lv * 1e3 + c.exp) > (a.star * 1e6 + a.lv * 1e3 + a.exp)) ? c : a, null); t.prog = best ? { lv: best.lv, star: best.star, exp: best.exp } : { lv: 1, star: 1, exp: 0 }; gdSave(s); }   // chuyển cấp/sao cũ (theo từng thú) sang ô chung: lấy của thú mạnh nhất
   Object.keys(s.kho).forEach(k => { if (k.indexOf('Châu ') === 0 && s.kho[k].qty > 0 && ttBeast(k.slice(5))) { t.sh[k.slice(5)] = (t.sh[k.slice(5)] || 0) + s.kho[k].qty; s.kho[k].qty = 0; } });   // Châu = mảnh thần thú
   return s;
 }
-const ttCur = s => s.tt.own[s.tt.cur];
+const ttCur = s => s.tt.prog;   // CẤP / SAO / EXP gán theo Ô (dùng chung): đổi thần thú vẫn giữ nguyên cấp & sao
 // Cấp thú tối đa = cấp acc. Sao thú tối đa theo cấp acc (cùng quy tắc với tướng: starCapByLv).
 const ttCap = o => Math.max(1, Math.floor(Number(typeof accLevel !== 'undefined' ? accLevel : 1)) || 1);
 const ttStarCap = () => Math.min(TT_P.maxStar, starCapByLv(Math.max(1, Math.floor(Number(typeof accLevel !== 'undefined' ? accLevel : 1)) || 1)));
@@ -9670,6 +9928,7 @@ function ttStarNeedAcc(n) { for (let lv = 1; lv <= 1000; lv++) if (starCapByLv(l
 const ttNeed = lv => Math.round(TT_P.needMul * lv * lv * lv) + TT_P.needAdd;
 const ttStat = (b, o) => { const hp = Math.round(TT_P.hpPer * o.lv * (1 + TT_P.starGrow * (o.star - 4)) * (b[1] === 'S' ? TT_P.sMul : 1)); return { pts: Math.round(hp * TT_P.ptsMul), hp, heal: Math.round(hp / Math.max(1, TT_P.healDiv)), pha: TT_P.phaPer * o.star, dodge: TT_P.dodgePer * o.star }; };
 const ttSlotsOpen = (b, o) => Math.min(o.star, 5) + (b[1] === 'S' ? Math.max(0, Math.min(5, Math.floor(TT_P.sSlots))) : 0);
+const ttSlotOn = (b, o, i) => i < 5 ? i < Math.min(o.star, 5) : (b[1] === 'S' && (i - 5) < Math.max(0, Math.min(5, Math.floor(TT_P.sSlots))));   // ô 1-5 mở theo sao; ô 6-10 mở khi thần thú hạng S
 const ttItem = (s, n) => (s.kho[n] && s.kho[n].qty) || 0;
 const ttTake = (s, n, q) => { s.kho[n].qty -= q; };
 let ttTab = 'thu', ttTimerOn = false;
@@ -9696,25 +9955,80 @@ function ttStarUp() {
   ttTake(s, 'Dị Linh', ql); ttTake(s, 'Đá Nữ Oa', da); o.star++; gdSave(s); renderThanThu(); scToast('Lên ' + o.star + ' sao!');
 }
 function ttSel(i) { const s = ttSt(); s.tt.sel = i; gdSave(s); renderThanThu(); }
+/* HÀNG 10 Ô PHỤ THỂ: có THANH TRƯỢT ngang (ô nào bị khuất thì kéo thanh trượt / vuốt ngang để xem); mỗi ô giữ nguyên cỡ, không bị ép nhỏ hay cắt mất */
+(function () {
+  if (document.getElementById('tt-slots-css')) return;
+  const st = document.createElement('style'); st.id = 'tt-slots-css';
+  st.textContent = '#tt-slots{display:flex!important;flex-wrap:nowrap!important;overflow-x:auto!important;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:#fbbf24 rgba(0,0,0,.35);padding-bottom:8px}'
+    + '#tt-slots .tt-sk{flex:0 0 auto!important}'
+    + '#tt-slots::-webkit-scrollbar{height:10px}#tt-slots::-webkit-scrollbar-track{background:rgba(0,0,0,.35);border-radius:6px}#tt-slots::-webkit-scrollbar-thumb{background:#fbbf24;border-radius:6px}';
+  document.head.appendChild(st);
+})();
+/* KÉO THẢ Ô PHỤ THỂ: giữ chuột (hoặc nhấn giữ ~0,3s trên điện thoại) vào 1 ô có phụ thể rồi kéo sang ô khác trong hàng 10 ô → ĐỔI CHỖ (ô đích trống thì chuyển sang).
+   Chỉ kéo được từ/vào ô ĐÃ MỞ. Chạm nhanh vẫn là chọn ô như cũ. Dùng pointer events nên chạy cả chuột lẫn cảm ứng. */
+function ttSlotMove(i, j) {
+  if (i === j) return;
+  const s = ttSt(), t = s.tt, o = ttCur(s), b = ttBeast(t.cur), arr = t.pts = t.pts || [];
+  if (!ttSlotOn(b, o, i) || !ttSlotOn(b, o, j)) return scToast('Ô này chưa mở');
+  while (arr.length < 10) arr.push(null);
+  const a = arr[i] || null; arr[i] = arr[j] || null; arr[j] = a;
+  t.sel = j; t.prev = null; gdSave(s); renderThanThu();
+}
+(function () {
+  let d = null, justDragged = false;
+  const slotAt = el => el && el.closest ? el.closest('#tt-body .tt-sk[data-i]') : null;
+  const cleanup = () => { if (!d) return; clearTimeout(d.timer); if (d.ghost) d.ghost.remove(); if (d.over) d.over.style.outline = ''; if (d.src) d.src.style.opacity = ''; d = null; };
+  const place = () => { if (d && d.ghost) { d.ghost.style.left = (d.x - d.w / 2) + 'px'; d.ghost.style.top = (d.y - d.h / 2) + 'px'; } };
+  const begin = () => {
+    if (!d || d.on) return; d.on = true;
+    const r = d.src.getBoundingClientRect(); d.w = r.width; d.h = r.height;
+    const g = d.src.cloneNode(true); g.removeAttribute('onclick'); g.style.cssText += ';position:fixed;z-index:99999;pointer-events:none;opacity:.88;width:' + r.width + 'px;transform:scale(1.12);filter:drop-shadow(0 6px 10px rgba(0,0,0,.6))';
+    document.body.appendChild(g); d.ghost = g; d.src.style.opacity = '.35'; place();
+  };
+  document.addEventListener('dragstart', e => { if (slotAt(e.target)) e.preventDefault(); });
+  document.addEventListener('click', e => { if (justDragged) { e.stopPropagation(); e.preventDefault(); justDragged = false; } }, true);
+  document.addEventListener('touchmove', e => { if (d && d.on) e.preventDefault(); }, { passive: false });
+  document.addEventListener('pointerdown', e => {
+    const el = slotAt(e.target); if (!el || (e.pointerType === 'mouse' && e.button !== 0)) return;
+    const i = +el.dataset.i; let ok = false;
+    try { const s = ttSt(), t = s.tt; ok = !!(t.pts && t.pts[i] && t.pts[i].n) && ttSlotOn(ttBeast(t.cur), ttCur(s), i); } catch (er) {}
+    if (!ok) return;
+    cleanup(); d = { i, src: el, x0: e.clientX, y0: e.clientY, x: e.clientX, y: e.clientY, on: false, touch: e.pointerType !== 'mouse', ghost: null, over: null, w: 0, h: 0 };
+    if (d.touch) d.timer = setTimeout(begin, 300);   // cảm ứng: nhấn giữ mới kéo (vuốt nhanh vẫn cuộn hàng ô)
+  });
+  document.addEventListener('pointermove', e => {
+    if (!d) return; d.x = e.clientX; d.y = e.clientY;
+    if (!d.on) { const mv = Math.hypot(d.x - d.x0, d.y - d.y0); if (d.touch) { if (mv > 10) cleanup(); } else if (mv > 6) begin(); return; }
+    place(); { const row = document.getElementById('tt-slots'); if (row) { const r = row.getBoundingClientRect(); if (d.x < r.left + 36) row.scrollLeft -= 14; else if (d.x > r.right - 36) row.scrollLeft += 14; } }   // kéo sát mép thì hàng tự cuộn
+    const ov = slotAt(document.elementFromPoint(d.x, d.y)), tg = ov && ov !== d.src ? ov : null;
+    if (d.over && d.over !== tg) d.over.style.outline = ''; if (tg) tg.style.outline = '2px solid #fde047'; d.over = tg;
+  });
+  document.addEventListener('pointerup', e => {
+    if (!d) return; const was = d.on, from = d.i; let to = -1;
+    if (was) { const ov = slotAt(document.elementFromPoint(e.clientX, e.clientY)); if (ov) to = +ov.dataset.i; justDragged = true; setTimeout(() => { justDragged = false; }, 60); }
+    cleanup(); if (was && to >= 0) ttSlotMove(from, to);
+  });
+  document.addEventListener('pointercancel', cleanup);
+})();
 /* TT_P.histMax = TT_P.histMax */
-function ttReroll(n) {   // Tẩy: n=1 (miễn phí, 2 phút/lần) hoặc n=10 (500 vàng). Kết quả vào danh sách (tối đa 30 gần nhất); chọn 1 cái rồi bấm Lưu
+function ttReroll(n) {   // Tẩy: n=1 (miễn phí, 2 phút/lần) hoặc n=10 (500 vàng). Mỗi lần tẩy cho danh sách MỚI thay hẳn danh sách cũ (không lưu lại); chọn 1 cái rồi bấm Lưu
   const s = ttSt(), t = s.tt;
   if (n === 1) { if (Date.now() < t.freeAt) return scToast('Chưa hết thời gian miễn phí'); t.freeAt = Date.now() + TT_P.freeMin * 60000; }
-  else { if (gold < TT_P.rerollCost) return scToast('Cần ' + fmtN(TT_P.rerollCost) + ' Vàng'); gold -= TT_P.rerollCost; resSave(); }
+  else { if (gold < TT_P.rerollCost) return scToast('Cần ' + fmtN(TT_P.rerollCost) + ' Vàng'); gold -= TT_P.rerollCost; goldSave(); }
   const res = []; for (let i = 0; i < n; i++) res.push(ttRoll());
-  t.hist = res.concat(t.hist).slice(0, TT_P.histMax); t.newN = res.length; t.pick = -1; gdSave(s); renderThanThu();
+  t.hist = res; t.newN = res.length; t.pick = -1; gdSave(s); renderThanThu();
 }
 function ttPick(i) { const s = ttSt(), t = s.tt; t.pick = t.pick === i ? -1 : i; gdSave(s); renderThanThu(); }
 function ttSave() {   // Lưu Phụ Thể đã chọn vào ô đang chọn
-  const s = ttSt(), t = s.tt, o = ttCur(s), b = ttBeast(t.cur), arr = t.slots[t.cur] = t.slots[t.cur] || [];
+  const s = ttSt(), t = s.tt, o = ttCur(s), b = ttBeast(t.cur), arr = t.pts = t.pts || [];
   const it = t.hist[t.pick]; if (!it) return scToast('Chưa chọn Phụ Thể nào');
-  if (t.sel >= ttSlotsOpen(b, o)) return scToast('Ô này chưa mở');
-  t.hist.splice(t.pick, 1); if (t.pick < t.newN) t.newN--;
+  if (!ttSlotOn(b, o, t.sel)) return scToast('Ô này chưa mở');
+  t.hist = []; t.newN = 0;   // chọn 1 cái → các cái còn lại mất hết, không lưu
   t.prev = { i: t.sel, v: arr[t.sel] || null, saved: it }; arr[t.sel] = it; t.pick = -1; gdSave(s); renderThanThu(); scToast('Đã lưu ' + it.n + ' vào ô ' + (t.sel + 1));
 }
 function ttRevert() {   // hoàn tác lần Lưu gần nhất: ô trở lại như cũ, Phụ Thể đã lưu quay về danh sách
-  const s = ttSt(), t = s.tt, arr = t.slots[t.cur] = t.slots[t.cur] || []; if (!t.prev) return scToast('Chưa có lần lưu trước');
-  arr[t.prev.i] = t.prev.v; if (t.prev.saved) { t.hist.unshift(t.prev.saved); t.hist = t.hist.slice(0, TT_P.histMax); t.newN++; } t.prev = null; t.pick = -1; gdSave(s); renderThanThu();
+  const s = ttSt(), t = s.tt, arr = t.pts = t.pts || []; if (!t.prev) return scToast('Chưa có lần lưu trước');
+  arr[t.prev.i] = t.prev.v; if (t.prev.saved) { t.hist = [t.prev.saved]; t.newN = 1; } t.prev = null; t.pick = -1; gdSave(s); renderThanThu();
 }
 function ttList() {   // Danh sách Phụ Thể: 8 loại × 7 bậc
   const cell = (x, i) => `<div style="flex:1 1 0;min-width:0;text-align:center;border:2px solid ${TT_QC[i]};border-radius:8px;padding:3px 1px;background:rgba(0,0,0,.35)"><div>${ttPtImg(x.n, i + 1, 2.2)}</div><small style="display:block;font-size:10px;line-height:1.2;color:${TT_QC[i]}">Bậc ${i + 1}<br>+${ttPct(x.n, i + 1)}%</small></div>`;
@@ -9729,13 +10043,14 @@ function ttChange() {
   document.getElementById('tt-modal').innerHTML = `<div class="md-box"><button class="md-x" onclick="ttClose()">✕</button><div class="hd-name" style="text-align:center;color:#fde047">Thần Thú</div><div class="tt-bgrid">${TT_BEASTS.map(bx).join('')}</div><div style="text-align:center;color:#4ade80;margin-top:6px;font-weight:700">Mảnh Thần Thú nhận từ Cấm Địa</div></div>`; document.getElementById('tt-modal').style.display = 'flex';
 }
 function ttUse(n) { const s = ttSt(); s.tt.cur = n; s.tt.sel = 0; s.tt.prev = null; gdSave(s); ttClose(); renderThanThu(); }
+/* own[n] chỉ đánh dấu ĐÃ SỞ HỮU thần thú; cấp/sao/exp dùng chung ở t.prog (gán theo ô) */
 function ttGet(n) { const s = ttSt(), b = ttBeast(n); if ((s.tt.sh[n] || 0) < b[2]) return; s.tt.sh[n] -= b[2]; s.tt.own[n] = { lv: 1, star: 1, exp: 0 }; gdSave(s); ttChange(); scToast('Đã nhận ' + n); }
 function renderThanThu() {
   const s = ttSt(), t = s.tt, o = ttCur(s), b = ttBeast(t.cur), st = ttStat(b, o), nx = o.star < TT_P.maxStar ? ttStat(b, Object.assign({}, o, { star: o.star + 1 })) : null;
   document.getElementById('tt-tabs').innerHTML = [['thu', 'Thần Thú'], ['lv', 'Cấp'], ['star', 'Sao'], ['phu', 'Phụ Thể']].map(([k, n]) => `<button class="${ttTab === k ? 'on' : ''}" onclick="ttTabSet('${k}')">${n}</button>`).join('');
-  const stars = `<span class="gold">${'★'.repeat(o.star)}${'☆'.repeat(Math.max(0, TT_P.maxStar - o.star))}</span>`, open = ttSlotsOpen(b, o), arr = t.slots[t.cur] || [];
-  const slotRow = (cnt, offs) => Array.from({ length: cnt }, (_, k) => { const i = k + offs, sl = arr[i], on = i < open;
-    return `<div class="tt-sk ${t.sel === i && on ? 'use' : ''}" onclick="${on ? `ttSel(${i})` : ''}"><i style="${on && sl ? 'border-color:' + TT_QC[sl.q - 1] : ''}">${!on ? '🔒' : sl ? ttPtImg(sl.n, sl.q) : '＋'}</i>${!on ? (i < 5 ? (i + 1) + ' Sao mở' : 'Cấp S mở') : sl ? sl.n : 'Trống'}</div>`; }).join('');
+  const stars = `<span class="gold">${'★'.repeat(o.star)}${'☆'.repeat(Math.max(0, TT_P.maxStar - o.star))}</span>`, arr = t.pts || [];
+  const slotRow = (cnt, offs) => Array.from({ length: cnt }, (_, k) => { const i = k + offs, sl = arr[i], on = ttSlotOn(b, o, i);
+    return `<div class="tt-sk ${t.sel === i && on ? 'use' : ''}" data-i="${i}" style="user-select:none;-webkit-user-select:none;${on && sl ? 'cursor:grab;' : ''}" onclick="${on ? `ttSel(${i})` : ''}"><i style="${on && sl ? 'border-color:' + TT_QC[sl.q - 1] : ''}">${!on ? '🔒' : sl ? ttPtImg(sl.n, sl.q) : '＋'}</i>${!on ? (i < 5 ? (i + 1) + ' Sao mở' : 'Cấp S mở') : sl ? sl.n : 'Trống'}</div>`; }).join('');
   let body = '';
   if (ttTab === 'thu') body = `<div class="tt-card"><div class="tt-pic">${ttImg(b[0])}<button onclick="ttChange()">Đổi</button></div><div class="tt-info"><div class="tt-nm">${b[0]} <small>${b[1]}</small></div><div>Điểm: <b class="gold">${fmtN(st.pts)}</b></div><div>Sao: ${stars} &nbsp; Cấp: ${o.lv}</div><div>HP: ${fmtN(st.hp)} &nbsp; Hồi: ${fmtN(st.heal)}</div><div>Phá Giáp: ${fmtN(st.pha)} &nbsp; Đỡ Đòn: ${st.dodge}%</div></div></div>`;
   if (ttTab === 'lv') { const need = ttNeed(o.lv), have = Object.keys(TT_FEED).map(k => ttItem(s, k));
@@ -9745,14 +10060,16 @@ function renderThanThu() {
     body = o.star >= TT_P.maxStar ? `<div class="ch-empty" style="padding:40px">Thần thú đã đạt ${TT_P.maxStar} sao</div>` : `<div class="tt-lv"><div class="tt-pic big">${ttImg(b[0])}</div><div class="tt-info box"><div>HP:</div><div class="cmp">${fmtN(st.hp)} → ${fmtN(nx.hp)}</div><div>Hồi:</div><div class="cmp">${fmtN(st.heal)} → ${fmtN(nx.heal)}</div><div>Phá Giáp:</div><div class="cmp">${st.pha} → ${nx.pha}</div><div>Đỡ Đòn:</div><div class="cmp">${st.dodge}% → ${nx.dodge}%</div><small class="gr">Thăng sao sẽ mở thêm 1 ô Phụ Thể</small></div></div>
     <div class="gs-bar">Tăng Sao</div><div class="tt-row cost"><div class="tt-sk"><small>Dị Linh</small><i>${gdIco('Dị Linh', '🎭')}</i>${hq}/${ql}</div><div class="tt-sk"><small>Đá Nữ Oa</small><i>${gdIco('Đá Nữ Oa', '🔻')}</i>${hd}/${da}</div></div><div class="gs-act"><div>${ttStarLocked(o) ? '🔒 Cần cấp acc ' + ttStarNeedAcc(o.star + 1) + ' để lên ' + (o.star + 1) + ' sao (acc hiện tại ' + accLevel + ')' : 'Cần Dị Linh & Đá Nữ Oa (rơi từ Boss bang)'}</div><button ${ttStarLocked(o) ? 'disabled' : ''} onclick="ttStarUp()">Tăng</button></div>`; }
   if (ttTab === 'phu') { const sl = arr[t.sel] || null, left = Math.max(0, Math.ceil((t.freeAt - Date.now()) / 1000)), pk = t.hist[t.pick] || null;
-    body = `<div class="tt-row">${slotRow(10, 0)}</div><div class="gs-bar">Lĩnh Ngộ <button class="tt-ngo" onclick="ttList()">Danh Sách</button></div>
+    body = `<div class="tt-row" id="tt-slots">${slotRow(10, 0)}</div><div class="gs-bar">Lĩnh Ngộ <button class="tt-ngo" onclick="ttList()">Danh Sách</button></div>
     <div class="tt-ngo2"><div class="c"><h4>Hiện Tại (ô ${t.sel + 1})</h4><div class="cb" style="${sl ? 'border-color:' + TT_QC[sl.q - 1] : ''}"><i>${sl ? ttPtImg(sl.n, sl.q, 2.4) : '＋'}</i><b>${sl ? sl.n : 'Trống'}</b><p>${ttSlotDesc(sl)}</p></div></div>
-    <div class="c"><h4>Tẩy phụ thể</h4><div class="cb dark"><p>Tẩy để có Phụ Thể mới.</p><div>Miễn phí 💰</div><button ${left ? 'disabled' : ''} onclick="ttReroll(1)">Tẩy</button><div style="margin-top:6px">${fmtN(TT_P.rerollCost)} 💰 <em>Siêu</em></div><button onclick="ttReroll(10)">Tẩy 10 lần</button></div></div></div>
-    <div class="gs-bar">Kết quả tẩy <span>${t.hist.length}/${TT_P.histMax} gần nhất • chọn 1 rồi bấm Lưu</span></div>
+    <div class="c"><h4>Tẩy phụ thể</h4><div class="cb dark"><p>Tẩy để có Phụ Thể mới.</p><div>Miễn phí ${IC_GOLD}</div><button ${left ? 'disabled' : ''} onclick="ttReroll(1)">Tẩy</button><div style="margin-top:6px">${fmtN(TT_P.rerollCost)} ${IC_GOLD} <em>Siêu</em></div><button onclick="ttReroll(10)">Tẩy 10 lần</button></div></div></div>
+    <div class="gs-bar">Kết quả tẩy <span>${t.hist.length} kết quả • chọn 1 rồi bấm Lưu (tẩy tiếp sẽ thay danh sách)</span></div>
     <div class="tt-hist">${t.hist.length ? t.hist.map((p, i) => `<div class="${t.pick === i ? 'sel' : ''} ${i < t.newN ? 'new' : ''}" style="border-color:${TT_QC[p.q - 1]}" onclick="ttPick(${i})"><i>${ttPtImg(p.n, p.q)}</i>${p.n}<small>+${ttPct(p.n, p.q)}%</small></div>`).join('') : '<div class="tt-hist-empty">Chưa có kết quả. Bấm Tẩy hoặc Tẩy 10 lần.</div>'}</div>
     <div class="gs-act"><div>${pk ? `Đã chọn: <b>${pk.n}</b> ${ttSlotDesc(pk).replace('Hiệu quả ', '')} → ô ${t.sel + 1}` : 'Chưa chọn Phụ Thể'}</div><button class="tt-save" ${pk ? '' : 'disabled'} onclick="ttSave()">Lưu</button></div>
     <div class="gs-act"><button class="red" onclick="ttRevert()">Hoàn tác lần lưu</button><div id="tt-free">Miễn phí: ${[left / 3600 | 0, left / 60 % 60 | 0, left % 60].map(v => String(v).padStart(2, '0')).join(':')}</div></div>`; }
+  const _ts = document.getElementById('tt-slots'), _sl = _ts ? _ts.scrollLeft : 0;   // giữ vị trí thanh trượt hàng ô khi vẽ lại
   document.getElementById('tt-body').innerHTML = body;
+  { const n = document.getElementById('tt-slots'); if (n && _sl) n.scrollLeft = _sl; }
 }
 setInterval(() => { const e = document.getElementById('tt-free'); if (e && gdSt().tt) { const l = Math.max(0, Math.ceil((gdSt().tt.freeAt - Date.now()) / 1000)); e.textContent = 'Miễn phí: ' + [l / 3600 | 0, l / 60 % 60 | 0, l % 60].map(v => String(v).padStart(2, '0')).join(':'); } }, 1000);
 function openCamDia() { openBangBoss(); }   // Cấm Địa = Boss bang (mảnh Thần Thú rơi từ Châu của boss)
@@ -9775,11 +10092,11 @@ function ttPtList(cur, slotsArr, star) {
   const b = TT_BEASTS.find(x => x[0] === cur); if (!b) return [];
   const out = (b[4] || []).map(e => ({ n: e[0], v: e[1], pts: !!e[2], inn: true }));
   const open = ttSlotsOpen(b, { star: star || 1 });
-  (slotsArr || []).slice(0, open).forEach(sl => { if (sl && sl.n) out.push({ n: sl.n, v: ttPct(sl.n, sl.q), pts: false, q: sl.q }); });
+  (slotsArr || []).forEach((sl, i) => { if (sl && sl.n && ttSlotOn(b, { star: star || 1 }, i)) out.push({ n: sl.n, v: ttPct(sl.n, sl.q), pts: false, q: sl.q }); });
   return out;
 }
 function ttMine() {
-  try { const s = ttSt(), c = ttCur(s); if (!c) return null; return { beast: s.tt.cur, pt: ttPtList(s.tt.cur, s.tt.slots[s.tt.cur], c.star) }; } catch (e) { return null; }
+  try { const s = ttSt(), c = ttCur(s); if (!c) return null; return { beast: s.tt.cur, pt: ttPtList(s.tt.cur, s.tt.pts, c.star) }; } catch (e) { return null; }
 }
 // cộng dồn theo chỉ số: % hoặc điểm (Kích Phá). Phụ thể theo chất tướng gom riêng: bonus.<chỉ số>.role = { skill, tank, atk, sup, heal }
 function ttBonus(pt) {
@@ -10126,7 +10443,7 @@ function dsDrawNoGuild() {
   if (!dsOn()) { document.getElementById('ds-body').innerHTML = '<div class="ch-empty">Cần đăng nhập tài khoản đám mây (và có mạng) để vào Bang Hội.</div>'; return; }
   const rows = (dsList || []).map(g => { const n = dsMemN(g), mine = s.bangApply === g.id, low = accLevel < (g.minLv || 1), full = n >= DS_MAXMEM;
     return `<div class="bm-row"><div class="bm-ico">🔥</div><div class="bm-info"><b><i class="lvb">${g.lv}</i> ${chEsc(g.name)}</b><small>Nhân số ${n}/${DS_MAXMEM} • Cần cấp ${g.minLv || 1}</small></div>${mine ? `<button class="btn-attack" onclick="dsCancelApply()">Hủy đơn</button>` : `<button class="btn-attack" ${low || full || s.bangApply || cd ? 'disabled' : ''} onclick="dsApply('${g.id}')">${full ? 'Đầy' : low ? 'Thiếu cấp' : 'Ứng tuyển'}</button>`}</div>`; }).join('');
-  document.getElementById('ds-body').innerHTML = `<div class="dv-uy">Bạn chưa có bang</div><div style="text-align:center;margin:6px 0 10px"><button class="btn-attack" ${cd ? 'disabled' : ''} onclick="dsCreate()">➕ Tạo Bang Mới (${fmtN(DS_CREATE)} 💰)</button></div>${cd ? `<div class="set-note" style="color:#fca5a5">Bạn vừa rời bang: còn ${dsCdText(cd)} mới được tạo bang hoặc vào bang mới.</div>` : ''}${s.bangApply ? '<div class="set-note">Bạn đang chờ Bang Chủ / Phó Bang duyệt đơn. Có thể hủy đơn để nộp bang khác.</div>' : ''}<div style="padding:0 8px">${rows || '<div class="ch-empty">Chưa có bang nào. Hãy tạo bang đầu tiên!</div>'}</div>`;
+  document.getElementById('ds-body').innerHTML = `<div class="dv-uy">Bạn chưa có bang</div><div style="text-align:center;margin:6px 0 10px"><button class="btn-attack" ${cd ? 'disabled' : ''} onclick="dsCreate()">➕ Tạo Bang Mới (${fmtN(DS_CREATE)} ${IC_GOLD})</button></div>${cd ? `<div class="set-note" style="color:#fca5a5">Bạn vừa rời bang: còn ${dsCdText(cd)} mới được tạo bang hoặc vào bang mới.</div>` : ''}${s.bangApply ? '<div class="set-note">Bạn đang chờ Bang Chủ / Phó Bang duyệt đơn. Có thể hủy đơn để nộp bang khác.</div>' : ''}<div style="padding:0 8px">${rows || '<div class="ch-empty">Chưa có bang nào. Hãy tạo bang đầu tiên!</div>'}</div>`;
 }
 async function dsApply(id) {
   if (dsBusy) return; const cd = dsCdLeft(); if (cd > 0) return scToast('Vừa rời bang: còn ' + dsCdText(cd) + ' mới được vào bang mới'); dsBusy = true;
@@ -10157,7 +10474,7 @@ async function dsCreate() {
     // bang mới luôn bắt đầu từ cấp 1
     await ref.set({ name, notice: 'Chào mừng đến với bang ' + name + '!', lv: 1, exp: 0, basin: 0, minLv: 1, leader: uid, t: Date.now(),
       mem: { [uid]: { n: pvName(), lv: accLevel, pw: Math.round(typeof clPower === 'function' ? clPower() : 0), r: 'chu', t: Date.now() } }, apps: {}, news: [{ t: Date.now(), x: pvName() + ' lập bang ' + name }] });
-    gold -= DS_CREATE; resSave(); s.bangId = ref.id; s.bangLv = 1; gdSave(s); scToast('Đã tạo bang ' + name + ' (-' + fmtN(DS_CREATE) + ' Vàng)');
+    gold -= DS_CREATE; resSave(); goldSave(); s.bangId = ref.id; s.bangLv = 1; gdSave(s); scToast('Đã tạo bang ' + name + ' (-' + fmtN(DS_CREATE) + ' Vàng)');
   } catch (e) { scToast(dsErr(e)); }
   dsBusy = false; renderDaiSanh();
 }
@@ -10241,7 +10558,7 @@ async function dsRank() {
   } catch (e) { dsModal('🏆 Xếp Hạng Bang', `<div class="ch-empty">${chEsc(dsErr(e))}</div>`); }
 }
 // [nhãn, tài nguyên đang có, số lượng / 1 lần góp, trừ tài nguyên(n), Uy Tín / lần, EXP Bang / lần]
-const DS_DONATE = [[IC_SILVER + ' bạc', () => silver, 100000, n => { silver -= n; }, 40, 10000], [IC_RICE + ' gạo', () => rice, 100000, n => { rice -= n; }, 40, 10000], ['💰 vàng', () => gold, 100, n => { gold -= n; }, 150, 50000]];
+const DS_DONATE = [[IC_SILVER + ' bạc', () => silver, 100000, n => { silver -= n; }, 40, 10000], [IC_RICE + ' gạo', () => rice, 100000, n => { rice -= n; }, 40, 10000], [IC_GOLD + ' vàng', () => gold, 100, n => { gold -= n; }, 150, 50000]];
 const DS_DEF = DS_DONATE.map(d => [d[2], d[4], d[5]]);
 cfgOnApply(() => DS_DONATE.forEach((d, i) => { const g = k => cfgNum('guild2.donate.' + i + '.' + k, null); const n = Math.floor(cfgNum('guild2.donate.' + i + '.n', DS_DEF[i][0])), uy = cfgNum('guild2.donate.' + i + '.uy', DS_DEF[i][1]), ex = cfgNum('guild2.donate.' + i + '.exp', DS_DEF[i][2]); d[2] = Math.max(1, n); d[4] = Math.max(0, uy); d[5] = Math.max(0, ex); }));   // admin chỉnh: guild2.donate.<0 bạc|1 gạo|2 vàng>.{n,uy,exp}
 let dsQty = [1, 1, 1];   // số lần góp người chơi đã nhập cho từng dòng (1 lần = DS_DONATE[i][2] tài nguyên)
@@ -10288,16 +10605,16 @@ cfgOnApply(() => {   // admin chỉnh: guild2.basin.{full,silverCost,silverAdd,g
 function openBasin() { renderBasin(); document.getElementById('qs-modal').style.display = 'flex'; }
 function renderBasin() {
   const v = (dsG && dsG.basin) || 0, m = document.getElementById('qs-modal');
-  m.innerHTML = `<div class="md-box"><button class="md-x" onclick="document.getElementById('qs-modal').style.display='none'">✕</button><div class="hd-name" style="text-align:center;color:#fde047">💰 Tụ Bảo Bồn</div><div class="gd-img bz-pic" style="--a:1.475;width:72%;margin:6px auto"><img src="giao-dien/bang-hoi/tu-bao-bon.webp?v=28" alt="Tụ Bảo Bồn"></div><div class="set-note">Góp bảo vật vào bồn: mỗi lần góp nhận ngay 1 phần thưởng ngẫu nhiên, đầy bồn nhận thêm quà lớn.</div>
+  m.innerHTML = `<div class="md-box"><button class="md-x" onclick="document.getElementById('qs-modal').style.display='none'">✕</button><div class="hd-name" style="text-align:center;color:#fde047">${IC_GOLD} Tụ Bảo Bồn</div><div class="gd-img bz-pic" style="--a:1.475;width:72%;margin:6px auto"><img src="giao-dien/bang-hoi/tu-bao-bon.webp?v=28" alt="Tụ Bảo Bồn"></div><div class="set-note">Góp bảo vật vào bồn: mỗi lần góp nhận ngay 1 phần thưởng ngẫu nhiên, đầy bồn nhận thêm quà lớn.</div>
   <div class="qs-bar" style="position:relative;left:0;right:0;top:0;margin:10px 0"><i style="width:${Math.min(100, v / BASIN.full * 100)}%"></i></div><div class="dv-uy">${v}/${fmtN(BASIN.full)}</div>
-  <div class="gs-act"><div>${IC_SILVER} ${fmtN(BASIN.silverCost)} bạc → +${fmtN(BASIN.silverAdd)} bồn</div><button onclick="basinPut(0)">Góp</button></div><div class="gs-act"><div>💰 ${fmtN(BASIN.goldCost)} vàng → +${fmtN(BASIN.goldAdd)} bồn</div><button onclick="basinPut(1)">Góp</button></div></div>`;
+  <div class="gs-act"><div>${IC_SILVER} ${fmtN(BASIN.silverCost)} bạc → +${fmtN(BASIN.silverAdd)} bồn</div><button onclick="basinPut(0)">Góp</button></div><div class="gs-act"><div>${IC_GOLD} ${fmtN(BASIN.goldCost)} vàng → +${fmtN(BASIN.goldAdd)} bồn</div><button onclick="basinPut(1)">Góp</button></div></div>`;
 }
 async function basinPut(k) {   // bồn là của BANG (chung); phần thưởng nhận về kho của người chơi
   const cost = k ? BASIN.goldCost : BASIN.silverCost, add = k ? BASIN.goldAdd : BASIN.silverAdd; if ((k ? gold : silver) < cost) return scToast('Không đủ tài nguyên');
   if (!dsG) return scToast('Hãy vào bang trước');
   let full = false;
   try { await dsTx(g => { g.basin = (g.basin || 0) + add; if (g.basin >= BASIN.full) { g.basin -= BASIN.full; full = true; dsPushNews(g, pvName() + ' làm đầy Tụ Bảo Bồn'); } }); } catch (e) { return scToast(dsErr(e)); }
-  if (k) gold -= cost; else silver -= cost; resSave();
+  if (k) gold -= cost; else silver -= cost; resSave(); goldSave();
   const s = gdBang(), r = BASIN_REW[Math.floor(Math.random() * BASIN_REW.length)]; (s.kho[r[0]] = s.kho[r[0]] || { ico: r[1], qty: 0 }).qty += r[2]; let msg = `Nhận ${r[2]} ${r[0]}`;
   gdSave(s); if (full) msg += ' • BỒN ĐẦY: ' + rwGrantAll(BASIN_FULL); await dsLoad(); renderBasin(); scToast(msg);
 }
@@ -10906,7 +11223,7 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
   }
 
   window.dpAddItem = (name, n) =>
-    itemAdd(name, n, name === DP_GOD ? '🟣' : '🔴');
+    itemAdd(name, n, '');
 
   try {
     if (typeof BAG_PRICE !== 'undefined') {
@@ -10923,8 +11240,8 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
     if (typeof GIFT_CODES !== 'undefined') {
       GIFT_CODES['DOTPHA'] = {
         rewards: [
-          { t: 'item', name: DP_GOD, ico: '🟣', n: 100 },
-          { t: 'item', name: DP_PILL, ico: '🔴', n: 5000 }
+          { t: 'item', name: DP_GOD, ico: '', n: 100 },
+          { t: 'item', name: DP_PILL, ico: '', n: 5000 }
         ]
       };
     }
@@ -11143,7 +11460,7 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
             <div class="dp-arrow">➡</div>
             <div class="dp-pct">${maxed ? 'Đã tối đa' : 'Thuộc tính +' + DP_ATTR_PCT + '%'}</div>
             <div class="dp-vl">Vật Liệu</div>
-            <div class="dp-orb"><span style="display:flex;width:100%;height:100%;align-items:center;justify-content:center;font-size:44px;line-height:1">🟣</span></div>
+            <div class="dp-orb"><span style="display:flex;width:100%;height:100%;align-items:center;justify-content:center;font-size:44px;line-height:1"><img src="vat-pham-game/bang/than-dan.png" alt="Thần Đan" style="height:1em;width:auto"></span></div>
             <div>${DP_GOD}</div>
             <div class="${ok || maxed ? '' : 'dp-bad'}">${fmtN(have)} / ${maxed ? '-' : fmtN(need)}</div>
           </div>
@@ -11265,7 +11582,7 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
     const e = Math.min(k * per, left);
 
     itemAdd(DP_PILL, -k);
-    if (dpAdv) { gold -= k * DP_ADV_GOLD; try { resSave(); } catch (er) {} }
+    if (dpAdv) { gold -= k * DP_ADV_GOLD; try { resSave(); goldSave(); } catch (er) {} }
     dpSet(id, { bp: p.bp, exp: p.exp + e });
 
     refresh();
@@ -11326,7 +11643,7 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
    Nạp CUỐI CÙNG trong index.html. */
 (function () {
   const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  const rich = s => { let h = esc(s); if (typeof danIcoHTML === 'function') h = h.replace(/🔮/g, danIcoHTML('Thần Đan', '1.15em')).replace(/🔴/g, danIcoHTML('Tiên Đan', '1.15em')); return h; };
+  const rich = s => { let h = esc(s); if (typeof danIcoHTML === 'function') h = h.replace(/🔮/g, danIcoHTML('Thần Đan', '1.15em')); return emoToImg(h); };
   const CHIP = /^(<img[^>]*>|\p{Extended_Pictographic}\uFE0F?)\s*([\s\S]*)$/u, LEAD = /^(?:\p{Extended_Pictographic}\uFE0F?\s*)+/u;
 
   function notifyBanner(msg, ms) {
@@ -11443,7 +11760,7 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
    Trước đây icon/khung chỉ tải khi mở màn → mạng chậm thì chỗ hiện chỗ trống, ảnh nhảy vị trí. Giờ sau khi trang hiện xong, game tải ngầm icon/khung/ảnh tướng
    (tối đa 4 ảnh cùng lúc, lúc rảnh, không chặn trò chơi) để lúc mở màn đã có sẵn trong cache. Ảnh nặng (bản đồ Ải, sprite chiêu) vẫn tải khi cần. === */
 (function () {
-  const LIST = ["giao-dien/icon-home/thoi-bac.webp","giao-dien/icon-home/bang-hoi.webp","giao-dien/icon-home/bao-li-xi.webp","giao-dien/icon-home/bao-vat.webp","giao-dien/icon-home/cai-dat.webp","giao-dien/icon-home/chieu-mo.webp","giao-dien/icon-home/de-mo.webp","giao-dien/icon-home/cua-tiem.webp","giao-dien/icon-home/doi-ngu.webp","giao-dien/icon-home/gao.webp","giao-dien/icon-home/giang-ho.webp","giao-dien/icon-home/gift-code.webp","giao-dien/icon-home/hop-thu.webp","giao-dien/icon-home/ky-ngo.webp","giao-dien/icon-home/luyen-hoa.webp","giao-dien/icon-home/nhiem-vu.webp","giao-dien/icon-home/pve.webp","giao-dien/icon-home/pvp.webp","giao-dien/icon-home/su-kien.webp","giao-dien/icon-home/tang-cap.webp","giao-dien/icon-home/the-thang.webp","giao-dien/icon-home/thoi-vang.webp","giao-dien/icon-home/trang-bi.webp","giao-dien/icon-home/trang-chu.webp","giao-dien/icon-home/tui-do.webp","giao-dien/icon-home/vo-hiep.webp","giao-dien/icon-kihieu/bat_tu.png","giao-dien/icon-kihieu/cam_lang.png","giao-dien/icon-kihieu/chay_mau.png","giao-dien/icon-kihieu/chay_nhanh.png","giao-dien/icon-kihieu/choang.png","giao-dien/icon-kihieu/do_don.png","giao-dien/icon-kihieu/giam_bao.png","giao-dien/icon-kihieu/giam_bao_sat.png","giao-dien/icon-kihieu/giam_chinh_xac.png","giao-dien/icon-kihieu/giam_cong.png","giao-dien/icon-kihieu/giam_hoi.png","giao-dien/icon-kihieu/giam_hp.png","giao-dien/icon-kihieu/giam_ne.png","giao-dien/icon-kihieu/giam_no.png","giao-dien/icon-kihieu/giam_pha_giap.png","giao-dien/icon-kihieu/giam_thu.png","giao-dien/icon-kihieu/giam_toc.png","giao-dien/icon-kihieu/khang.png","giao-dien/icon-kihieu/khoa_tang_phuc.png","giao-dien/icon-kihieu/me_hoac.png","giao-dien/icon-kihieu/phong_an.png","giao-dien/icon-kihieu/tang_bao.png","giao-dien/icon-kihieu/tang_bao_sat.png","giao-dien/icon-kihieu/tang_chinh_xac.png","giao-dien/icon-kihieu/tang_cong.png","giao-dien/icon-kihieu/tang_hoi.png","giao-dien/icon-kihieu/tang_hp.png","giao-dien/icon-kihieu/tang_ne.png","giao-dien/icon-kihieu/tang_no.png","giao-dien/icon-kihieu/tang_pha_giap.png","giao-dien/icon-kihieu/tang_thu.png","giao-dien/icon-kihieu/tang_toc.png","giao-dien/icon-kihieu/thieu_dot.png","giao-dien/icon-kihieu/trung_doc.png","giao-dien/icon-home/linh-thu.webp","giao-dien/linh-thu/linh-thu.webp","giao-dien/linh-thu/manh-thu.webp","giao-dien/bao-vat/bao-vat.webp","giao-dien/bao-vat/manh-bao-vat.webp","giao-dien/tuong/boi_duong.webp","giao-dien/tuong/dot_pha.webp","giao-dien/tuong/ghep_manh.webp","giao-dien/tuong/giang_ho_ky.webp","giao-dien/tuong/kinh_mach.webp","giao-dien/tuong/ky_nang.webp","giao-dien/tuong/manh_vo_hiep.webp","giao-dien/tuong/tang_sao.webp","vat-pham-game/trang-bi/equipment-hat.webp?v=24","vat-pham-game/trang-bi/equipment-armor.webp?v=24","vat-pham-game/trang-bi/equipment-sword.webp?v=24","vat-pham-game/trang-bi/equipment-boots.webp?v=24","vat-pham-game/thoi-vang.webp","vat-pham-game/than-dan.webp","vat-pham-game/tien-dan.webp","vat-pham-game/vien-the-luc.webp","giao-dien/buc-may.webp","giao-dien/thong-bao/khung-thong-bao.webp?v=5","giao-dien/thong-bao/khung-thua.webp","giao-dien/thong-bao/khung-thang.webp","giao-dien/thong-bao/khung-chat.webp?v=1","giao-dien/icon-phuthe/cap-toc-1.png","giao-dien/icon-phuthe/cap-toc-2.png","giao-dien/icon-phuthe/cap-toc-3.png","giao-dien/icon-phuthe/cap-toc-4.png","giao-dien/icon-phuthe/cap-toc-5.png","giao-dien/icon-phuthe/cap-toc-6.png","giao-dien/icon-phuthe/cap-toc-7.png","giao-dien/icon-phuthe/gia-toc-1.png","giao-dien/icon-phuthe/gia-toc-2.png","giao-dien/icon-phuthe/gia-toc-3.png","giao-dien/icon-phuthe/gia-toc-4.png","giao-dien/icon-phuthe/gia-toc-5.png","giao-dien/icon-phuthe/gia-toc-6.png","giao-dien/icon-phuthe/gia-toc-7.png","giao-dien/icon-phuthe/ho-thuan-1.png","giao-dien/icon-phuthe/ho-thuan-2.png","giao-dien/icon-phuthe/ho-thuan-3.png","giao-dien/icon-phuthe/ho-thuan-4.png","giao-dien/icon-phuthe/ho-thuan-5.png","giao-dien/icon-phuthe/ho-thuan-6.png","giao-dien/icon-phuthe/ho-thuan-7.png","giao-dien/icon-phuthe/ho-toc-1.png","giao-dien/icon-phuthe/ho-toc-2.png","giao-dien/icon-phuthe/ho-toc-3.png","giao-dien/icon-phuthe/ho-toc-4.png","giao-dien/icon-phuthe/ho-toc-5.png","giao-dien/icon-phuthe/ho-toc-6.png","giao-dien/icon-phuthe/ho-toc-7.png","giao-dien/icon-phuthe/than-thuan-1.png","giao-dien/icon-phuthe/than-thuan-2.png","giao-dien/icon-phuthe/than-thuan-3.png","giao-dien/icon-phuthe/than-thuan-4.png","giao-dien/icon-phuthe/than-thuan-5.png","giao-dien/icon-phuthe/than-thuan-6.png","giao-dien/icon-phuthe/than-thuan-7.png","giao-dien/icon-phuthe/than-toc-1.png","giao-dien/icon-phuthe/than-toc-2.png","giao-dien/icon-phuthe/than-toc-3.png","giao-dien/icon-phuthe/than-toc-4.png","giao-dien/icon-phuthe/than-toc-5.png","giao-dien/icon-phuthe/than-toc-6.png","giao-dien/icon-phuthe/than-toc-7.png","giao-dien/icon-phuthe/tro-thuan-1.png","giao-dien/icon-phuthe/tro-thuan-2.png","giao-dien/icon-phuthe/tro-thuan-3.png","giao-dien/icon-phuthe/tro-thuan-4.png","giao-dien/icon-phuthe/tro-thuan-5.png","giao-dien/icon-phuthe/tro-thuan-6.png","giao-dien/icon-phuthe/tro-thuan-7.png","giao-dien/icon-phuthe/tro-toc-1.png","giao-dien/icon-phuthe/tro-toc-2.png","giao-dien/icon-phuthe/tro-toc-3.png","giao-dien/icon-phuthe/tro-toc-4.png","giao-dien/icon-phuthe/tro-toc-5.png","giao-dien/icon-phuthe/tro-toc-6.png","giao-dien/icon-phuthe/tro-toc-7.png","vat-pham-game/bao-vat/ton-su-ki.webp?v=25","vat-pham-game/bao-vat/ba-vuong-kiem.webp?v=25","vat-pham-game/bao-vat/treasure-09.webp","vat-pham-game/bao-vat/treasure-10.webp","vat-pham-game/bao-vat/treasure-11.webp","vat-pham-game/bao-vat/treasure-12.webp","vat-pham-game/bao-vat/treasure-13.webp","vat-pham-game/bao-vat/treasure-14.webp","vat-pham-game/bao-vat/treasure-15.webp","vat-pham-game/bao-vat/treasure-16.webp","vat-pham-game/bao-vat/treasure-17.webp","vat-pham-game/bao-vat/treasure-18.webp","vat-pham-game/bao-vat/treasure-19.webp","vat-pham-game/bao-vat/treasure-20.webp","vat-pham-game/bao-vat/treasure-21.webp","vat-pham-game/ky-nang/bi-kip.webp","vat-pham-game/ky-nang/vo-tu-thien-thu.webp","vat-pham-game/ky-nang/yeu-quyet.webp"];
+  const LIST = ["giao-dien/icon-home/thoi-bac.webp","giao-dien/icon-home/bang-hoi.webp","giao-dien/icon-home/bao-li-xi.webp","giao-dien/icon-home/bao-vat.webp","giao-dien/icon-home/cai-dat.webp","giao-dien/icon-home/chieu-mo.webp","giao-dien/icon-home/de-mo.webp","giao-dien/icon-home/cua-tiem.webp","giao-dien/icon-home/doi-ngu.webp","giao-dien/icon-home/gao.webp","giao-dien/icon-home/giang-ho.webp","giao-dien/icon-home/gift-code.webp","giao-dien/icon-home/hop-thu.webp","giao-dien/icon-home/ky-ngo.webp","giao-dien/icon-home/luyen-hoa.webp","giao-dien/icon-home/nhiem-vu.webp","giao-dien/icon-home/pve.webp","giao-dien/icon-home/pvp.webp","giao-dien/icon-home/su-kien.webp","giao-dien/icon-home/tang-cap.webp","giao-dien/icon-home/the-thang.webp","giao-dien/icon-home/thoi-vang.webp","giao-dien/icon-home/trang-bi.webp","giao-dien/icon-home/trang-chu.webp","giao-dien/icon-home/tui-do.webp","giao-dien/icon-home/vo-hiep.webp","giao-dien/icon-kihieu/bat_tu.png","giao-dien/icon-kihieu/cam_lang.png","giao-dien/icon-kihieu/chay_mau.png","giao-dien/icon-kihieu/chay_nhanh.png","giao-dien/icon-kihieu/choang.png","giao-dien/icon-kihieu/do_don.png","giao-dien/icon-kihieu/giam_bao.png","giao-dien/icon-kihieu/giam_bao_sat.png","giao-dien/icon-kihieu/giam_chinh_xac.png","giao-dien/icon-kihieu/giam_cong.png","giao-dien/icon-kihieu/giam_hoi.png","giao-dien/icon-kihieu/giam_hp.png","giao-dien/icon-kihieu/giam_ne.png","giao-dien/icon-kihieu/giam_no.png","giao-dien/icon-kihieu/giam_pha_giap.png","giao-dien/icon-kihieu/giam_thu.png","giao-dien/icon-kihieu/giam_toc.png","giao-dien/icon-kihieu/khang.png","giao-dien/icon-kihieu/khoa_tang_phuc.png","giao-dien/icon-kihieu/me_hoac.png","giao-dien/icon-kihieu/phong_an.png","giao-dien/icon-kihieu/tang_bao.png","giao-dien/icon-kihieu/tang_bao_sat.png","giao-dien/icon-kihieu/tang_chinh_xac.png","giao-dien/icon-kihieu/tang_cong.png","giao-dien/icon-kihieu/tang_hoi.png","giao-dien/icon-kihieu/tang_hp.png","giao-dien/icon-kihieu/tang_ne.png","giao-dien/icon-kihieu/tang_no.png","giao-dien/icon-kihieu/tang_pha_giap.png","giao-dien/icon-kihieu/tang_thu.png","giao-dien/icon-kihieu/tang_toc.png","giao-dien/icon-kihieu/thieu_dot.png","giao-dien/icon-kihieu/trung_doc.png","giao-dien/icon-home/linh-thu.webp","giao-dien/linh-thu/linh-thu.webp","giao-dien/linh-thu/manh-thu.webp","giao-dien/bao-vat/bao-vat.webp","giao-dien/bao-vat/manh-bao-vat.webp","giao-dien/tuong/boi_duong.webp","giao-dien/tuong/dot_pha.webp","giao-dien/tuong/ghep_manh.webp","giao-dien/tuong/giang_ho_ky.webp","giao-dien/tuong/kinh_mach.webp","giao-dien/tuong/ky_nang.webp","giao-dien/tuong/manh_vo_hiep.webp","giao-dien/tuong/tang_sao.webp","vat-pham-game/trang-bi/equipment-hat.webp?v=24","vat-pham-game/trang-bi/equipment-armor.webp?v=24","vat-pham-game/trang-bi/equipment-sword.webp?v=24","vat-pham-game/trang-bi/equipment-boots.webp?v=24","vat-pham-game/thoi-vang.webp","vat-pham-game/than-dan.webp","vat-pham-game/tien-dan.webp","vat-pham-game/vien-the-luc.webp","giao-dien/buc-may.webp","giao-dien/thong-bao/khung-thong-bao.webp?v=5","giao-dien/thong-bao/khung-thua.webp","giao-dien/thong-bao/khung-thang.webp","giao-dien/thong-bao/khung-chat.webp?v=1","giao-dien/icon-phuthe/cap-toc-1.png","giao-dien/icon-phuthe/cap-toc-2.png","giao-dien/icon-phuthe/cap-toc-3.png","giao-dien/icon-phuthe/cap-toc-4.png","giao-dien/icon-phuthe/cap-toc-5.png","giao-dien/icon-phuthe/cap-toc-6.png","giao-dien/icon-phuthe/cap-toc-7.png","giao-dien/icon-phuthe/gia-toc-1.png","giao-dien/icon-phuthe/gia-toc-2.png","giao-dien/icon-phuthe/gia-toc-3.png","giao-dien/icon-phuthe/gia-toc-4.png","giao-dien/icon-phuthe/gia-toc-5.png","giao-dien/icon-phuthe/gia-toc-6.png","giao-dien/icon-phuthe/gia-toc-7.png","giao-dien/icon-phuthe/ho-thuan-1.png","giao-dien/icon-phuthe/ho-thuan-2.png","giao-dien/icon-phuthe/ho-thuan-3.png","giao-dien/icon-phuthe/ho-thuan-4.png","giao-dien/icon-phuthe/ho-thuan-5.png","giao-dien/icon-phuthe/ho-thuan-6.png","giao-dien/icon-phuthe/ho-thuan-7.png","giao-dien/icon-phuthe/ho-toc-1.png","giao-dien/icon-phuthe/ho-toc-2.png","giao-dien/icon-phuthe/ho-toc-3.png","giao-dien/icon-phuthe/ho-toc-4.png","giao-dien/icon-phuthe/ho-toc-5.png","giao-dien/icon-phuthe/ho-toc-6.png","giao-dien/icon-phuthe/ho-toc-7.png","giao-dien/icon-phuthe/than-thuan-1.png","giao-dien/icon-phuthe/than-thuan-2.png","giao-dien/icon-phuthe/than-thuan-3.png","giao-dien/icon-phuthe/than-thuan-4.png","giao-dien/icon-phuthe/than-thuan-5.png","giao-dien/icon-phuthe/than-thuan-6.png","giao-dien/icon-phuthe/than-thuan-7.png","giao-dien/icon-phuthe/than-toc-1.png","giao-dien/icon-phuthe/than-toc-2.png","giao-dien/icon-phuthe/than-toc-3.png","giao-dien/icon-phuthe/than-toc-4.png","giao-dien/icon-phuthe/than-toc-5.png","giao-dien/icon-phuthe/than-toc-6.png","giao-dien/icon-phuthe/than-toc-7.png","giao-dien/icon-phuthe/tro-thuan-1.png","giao-dien/icon-phuthe/tro-thuan-2.png","giao-dien/icon-phuthe/tro-thuan-3.png","giao-dien/icon-phuthe/tro-thuan-4.png","giao-dien/icon-phuthe/tro-thuan-5.png","giao-dien/icon-phuthe/tro-thuan-6.png","giao-dien/icon-phuthe/tro-thuan-7.png","giao-dien/icon-phuthe/tro-toc-1.png","giao-dien/icon-phuthe/tro-toc-2.png","giao-dien/icon-phuthe/tro-toc-3.png","giao-dien/icon-phuthe/tro-toc-4.png","giao-dien/icon-phuthe/tro-toc-5.png","giao-dien/icon-phuthe/tro-toc-6.png","giao-dien/icon-phuthe/tro-toc-7.png","vat-pham-game/bao-vat/ton-su-ki.webp?v=25","vat-pham-game/bao-vat/ba-vuong-kiem.webp?v=25","vat-pham-game/bao-vat/treasure-09.webp","vat-pham-game/bao-vat/treasure-10.webp","vat-pham-game/bao-vat/treasure-11.webp","vat-pham-game/bao-vat/treasure-12.webp","vat-pham-game/bao-vat/treasure-13.webp","vat-pham-game/bao-vat/treasure-14.webp","vat-pham-game/bao-vat/treasure-15.webp","vat-pham-game/bao-vat/treasure-16.webp","vat-pham-game/bao-vat/treasure-17.webp","vat-pham-game/bao-vat/treasure-18.webp","vat-pham-game/bao-vat/treasure-19.webp","vat-pham-game/bao-vat/treasure-20.webp","vat-pham-game/bao-vat/treasure-21.webp","vat-pham-game/ky-nang/bi-kip.webp","vat-pham-game/ky-nang/vo-tu-thien-thu.webp","vat-pham-game/ky-nang/yeu-quyet.webp","vat-pham-game/bang/thoi-bac.png","vat-pham-game/bang/thoi-vang.png","vat-pham-game/bang/gao.png","vat-pham-game/bang/than-dan.png","vat-pham-game/bang/tien-dan.png","vat-pham-game/bang/vien-the-luc.png","vat-pham-game/bang/dao-tien.png"];
   try { (window.HEROES || []).forEach(h => { if (h.img) LIST.unshift(h.img); if (h.body) LIST.push(h.body); }); } catch (e) {}
   // Phân ưu tiên theo thư mục: giao diện màn chính + ảnh đại diện tướng nạp ngay (prio 0); nhóm nặng của màn khác (phụ thể 5,9 MB, bảo vật 2 MB, thân tướng) chạy ngầm sau cùng (prio 2)
   const NOW = /^(icon-home|icon-kihieu|icons|trang-bi|vat-pham-game|ky-nang)\//;
