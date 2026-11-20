@@ -613,7 +613,7 @@ function cfgOnApply(fn) { cfgHooks.push(fn); try { fn(); } catch (e) { console.w
 // ----- Quà (reward): cùng định dạng với Gift Code. Dùng cho Hộp Thư, Nhiệm Vụ, Sự Kiện. -----
 const RW_DAN_ICO = f => ({ 'than-dan': IC_THAN, 'tien-dan': IC_TIEN, 'vien-the-luc': IC_PILL }[f] || '');
 // ===== ICON VẬT PHẨM DÙNG CHUNG (toàn bộ là ẢNH PNG trong vat-pham-game/bang/, không dùng emoji) =====
-const ICO_SRC = { silver: 'vat-pham-game/bang/thoi-bac.png', rice: 'vat-pham-game/bang/gao.png', gold: 'vat-pham-game/bang/thoi-vang.png', than: 'vat-pham-game/bang/than-dan.png', tien: 'vat-pham-game/bang/tien-dan.png', pill: 'vat-pham-game/bang/vien-the-luc.png', peach: 'vat-pham-game/bang/dao-tien.png', hammer: 'vat-pham-game/trang-bi/icon_hao_thien_chuy_khong_ten.webp', blockUp: 'giao-dien/icon-home/tang-do-don.webp?v=1' };
+const ICO_SRC = { silver: 'vat-pham-game/bang/thoi-bac.webp', rice: 'vat-pham-game/bang/gao.webp', gold: 'vat-pham-game/bang/thoi-vang.webp', than: 'vat-pham-game/bang/than-dan.webp', tien: 'vat-pham-game/bang/tien-dan.webp', pill: 'vat-pham-game/bang/vien-the-luc.webp', peach: 'vat-pham-game/bang/dao-tien.webp', hammer: 'vat-pham-game/trang-bi/icon_hao_thien_chuy_khong_ten.webp', blockUp: 'giao-dien/icon-home/tang-do-don.webp?v=1' };
 const ICO_NAME = { silver: 'Bạc', rice: 'Gạo', gold: 'Vàng', than: 'Thần Đan', tien: 'Tiên Đan', pill: 'Viên Thể Lực', peach: 'Đào Tiên', hammer: 'Búa', blockUp: 'Chặn' };
 const icoImg = (k, h) => `<img class="gi-g" src="${ICO_SRC[k]}" alt="${ICO_NAME[k]}" style="height:${h || '1.15em'};width:auto;vertical-align:middle" onerror="this.style.display='none'">`;
 const IC_GOLD = icoImg('gold'), IC_SILVER = icoImg('silver'), IC_RICE = icoImg('rice');
@@ -2260,7 +2260,7 @@ function seqAvatarHTML(id, w, extraStyle) {
    - TĂNG CẤP: tiêu Hỏa Thạch. Lên cấp 1 tốn LT_STONE_BASE (10) viên, mỗi cấp sau đắt gấp LT_STONE_GROW (x1.5) lần cấp trước. Tối đa LT_MAX (25) cấp.
    - Cách nhận (quà / Gift Code / mail...): { t: 'linhthu', id: 1, n: 1 } và { t: 'ltshard', id: 1, n: 5 }.
    - stats = [[loại chỉ số, gốc, điểm cộng mỗi cấp] x3]; CÔNG THỨC: gốc × (1 + 0.5×★) × (1 + điểm×Lv).
-   - Ảnh: LT_IMG[id] = 'giao-dien/linh-thu/ten.png' (chưa có ảnh thì hiện emoji). */
+   - Ảnh: LT_IMG[id] = 'giao-dien/linh-thu/ten.webp' (chưa có ảnh thì hiện emoji). */
 const LT_FRAMES = 5, LT_PER_FRAME = 1;
 let LT_MAX = 25, LT_STAR_MAX = 10, LT_STAR_ADD = 0.5, LT_MERGE_COST = 25;
 const LT_STONE = 'Hỏa Thạch', LT_STONE_BASE = 10, LT_STONE_GROW = 1.5;
@@ -2274,7 +2274,7 @@ const LT_DEFS = {
 };
 const LT_KINDS = Object.keys(LT_DEFS).map(Number);
 const LT_LABEL = { hp: 'HP', atk: 'Công', def: 'Thủ', spd: 'Tốc', heal: 'Hồi máu', dodge: 'Né', acc: 'Chuẩn', crit: 'Bạo', critDmg: 'Bạo Sát', tough: 'Bền', pierce: 'Phá giáp' };
-const LT_IMG = { 1: 'giao-dien/linh-thu/LT-bach-ho.png', 2: 'giao-dien/linh-thu/LT-thanh-long.png', 3: 'giao-dien/linh-thu/LT-chu-tuoc.png', 4: 'giao-dien/linh-thu/LT-huyen-vu.png' };
+const LT_IMG = { 1: 'giao-dien/linh-thu/LT-bach-ho.webp', 2: 'giao-dien/linh-thu/LT-thanh-long.webp', 3: 'giao-dien/linh-thu/LT-chu-tuoc.webp', 4: 'giao-dien/linh-thu/LT-huyen-vu.webp' };
 // Hỏa Thạch cần để lên cấp lv → lv+1: 10, 15, 23, 34, ... (mỗi cấp x1.5)
 const ltLvCost = lv => Math.ceil(LT_STONE_BASE * Math.pow(LT_STONE_GROW, Math.max(0, lv | 0)) - 1e-9);
 const ltStoneIco = () => { try { return gdIco(LT_STONE, '🪨'); } catch (e) { return '🪨'; } };
@@ -3305,7 +3305,7 @@ function addAccExp(n) {
    Luồng: Võ Hiệp -> chọn mục -> chọn tướng -> màn này (trước ➜ sau). Tăng sao chỉ cần MẢNH của chính tướng. */
 
     let upgId = 0;
-    // icon bạc / gạo giống thanh tài nguyên trên cùng (vat-pham-game/bang/thoi-bac.png, gao.png)
+    // icon bạc / gạo giống thanh tài nguyên trên cùng (vat-pham-game/bang/thoi-bac.webp, gao.webp)
     const UPG_RES_ICO = f => (f === 'gao' ? IC_RICE : IC_SILVER);
     const UPG_TITLE = { sao: 'Tăng Sao', boiduong: 'Thăng Cấp', kynang: 'Nâng Kỹ Năng', phamchat: 'Nâng Phẩm Chất' };
     (function () {
@@ -3554,7 +3554,7 @@ function addAccExp(n) {
     // nằm gọn trong sàn, không chạm tường/lan can phía sau và không đè hàng nút Ulti/Hết lượt phía dưới).
     // Cột x (đội ta ở nửa trái; đội địch tự lấy đối xứng 100-x): SAU = 9–13 • GIỮA = 22–24 • TRƯỚC = 34–36.
     // Mọi đội hình 1–5 chỉ lấy điểm trên đúng 3 hàng × 3 cột này (kiểu mặt xúc xắc) → số tướng nào cũng cùng 1 mặt nền,
-    // thêm ảnh nền mới (nen-dau15.png…) vẫn đứng đúng như nhau. Muốn nâng/hạ cả đội hình: sửa GROUND_FAR / GROUND_MID / GROUND_NEAR.
+    // thêm ảnh nền mới (nen-dau15.webp…) vẫn đứng đúng như nhau. Muốn nâng/hạ cả đội hình: sửa GROUND_FAR / GROUND_MID / GROUND_NEAR.
     const GROUND_FAR = 60, GROUND_MID = 74, GROUND_NEAR = 89;   // giãn hàng dọc: hàng xa nâng nhẹ, hàng gần hạ xuống dùng phần sân trống phía dưới
     const HERO_POS = {
       1: [[24, GROUND_MID]],
@@ -3658,6 +3658,32 @@ function addAccExp(n) {
         if (had) floatText(a, '✨ GIẢI HIỆU ỨNG');
       });
     }
+    // ---- TỐI ƯU HIỂN THỊ (không đổi cách tính sát thương) ----
+    // Mỗi tướng bị đánh chỉ có 1 con số cộng dồn (thay vì 3 loại x nhiều tia x nhiều tướng); tối đa POP_MAX số cùng lúc.
+    let _popLive = 0; const POP_MAX = 12;
+    function dmgPop(u, total, isCrit, wait) {
+      const run = () => {
+        if (!u.el || !u.el.isConnected) return;
+        const now = performance.now(); let p = u._pop;
+        if (p && p.el.isConnected && now - p.t < 550) {   // còn số đang bay: cộng dồn vào đó
+          p.sum += total; p.t = now; p.el.textContent = formatNumber(p.sum);
+          if (isCrit && !p.crit) { p.crit = true; p.el.classList.remove('bf-d-main'); p.el.classList.add('bf-d-crit'); }
+          try { p.el.getAnimations().forEach(a => { a.currentTime = 0; }); } catch (e) {}
+          clearTimeout(p.tm); p.tm = setTimeout(() => { p.el.remove(); _popLive--; }, 900);
+          return;
+        }
+        if (_popLive >= POP_MAX) return;
+        const e = document.createElement('div'); e.className = 'bf-dmg ' + (isCrit ? 'bf-d-crit' : 'bf-d-main'); e.textContent = formatNumber(total);
+        e.style.top = '-20px';
+        u.el.appendChild(e); _popLive++;
+        p = u._pop = { el: e, sum: total, t: now, crit: isCrit, tm: 0 };
+        p.tm = setTimeout(() => { e.remove(); _popLive--; }, 900);
+      };
+      if (wait > 0) setTimeout(run, wait); else run();
+    }
+    // Gộp nhiều lần cập nhật bảng tướng (innerHTML) trong 1 loạt đòn thành 1 lần
+    let _rpT = 0;
+    function refreshPanelSoon() { if (_rpT) return; _rpT = setTimeout(() => { _rpT = 0; try { refreshPanel(); } catch (e) {} }, 120); }
     function hit(u, dmg, noRage, src, noRefl, parts, ray) {   // parts = {main, crit, pierce}: 3 loại sát thương của 1 tia (xem strike) • ray = {i, wait}: tia thứ i (i>0 không cộng thêm nộ, chữ sát thương hiện trễ)
       if (!u.alive) return;
       dmg = Math.round(dmg); const dmg0 = dmg;
@@ -3683,25 +3709,18 @@ function addAccExp(n) {
       u.hp = Math.max(0, u.hp - dmg);
       if (pvp) pvpDmg[u.side === 'hero' ? 'enemy' : 'hero'] += hpBefore - u.hp;   // Tỷ Võ: cộng sát thương cho bên gây ra
       setHpBar(u);
-      if (parts) {   // hiện riêng 3 loại: Công-Thủ (trắng) • Bạo (vàng) • Phá giáp (tím)
+      if (parts) {   // 1 số cộng dồn = tổng 3 loại (Công-Thủ + Bạo + Phá giáp); vàng nếu có phần Bạo
         const k = dmg0 > 0 ? dmg / dmg0 : 1;
-        [['main', '', 'bf-d-main', -10, -28], ['crit', '💥 ', 'bf-d-crit', -34, 0], ['pierce', '🗡️ ', 'bf-d-pierce', -58, 28]].forEach(([n, ic, cl, top, dx]) => {
-          if (!(parts[n] > 0)) return; const e = document.createElement('div'); e.className = 'bf-dmg ' + cl; e.textContent = ic + formatNumber(Math.max(1, Math.round(parts[n] * k)));
-          e.style.top = top + 'px'; e.style.marginLeft = dx + 'px';
-          const wait = (ray && ray.wait) || 0;   // nhiều tia: chữ sát thương của từng tia hiện lần lượt, không chồng lên nhau
-          if (wait > 0) setTimeout(() => { if (u.el.isConnected) { u.el.appendChild(e); setTimeout(() => e.remove(), 900); } }, wait);
-          else { u.el.appendChild(e); setTimeout(() => e.remove(), 900); }
-        });
+        let tot = 0; ['main', 'crit', 'pierce'].forEach(n => { if (parts[n] > 0) tot += Math.max(1, Math.round(parts[n] * k)); });
+        if (tot > 0) dmgPop(u, tot, parts.crit > 0, (ray && ray.wait) || 0);
       } else {
-        const d = document.createElement('div'); d.className = 'bf-dmg'; d.textContent = formatNumber(dmg);
-        u.el.appendChild(d); setTimeout(() => d.remove(), 800);
+        dmgPop(u, dmg, false, 0);
       }
-      const fx = document.createElement('div'); fx.className = 'bf-fx'; fx.textContent = u.side === 'enemy' ? '⚔️' : '💥';
-      u.el.appendChild(fx); setTimeout(() => fx.remove(), 350);
+      if (!u._fx || !u._fx.isConnected) { const fx = document.createElement('div'); fx.className = 'bf-fx'; fx.textContent = u.side === 'enemy' ? '⚔️' : '💥'; u._fx = fx; u.el.appendChild(fx); setTimeout(() => fx.remove(), 350); }
       u.el.classList.add('hurt'); setTimeout(() => u.el.classList.remove('hurt'), 180);
       if (u.hp <= 0) { u.alive = false; u.el.classList.add('dead'); u.stun = 0; if (u.moon) removeMoon(u); const ic = u.el.querySelector('.bf-stun'); if (ic) ic.remove(); }
       // Bị đánh KHÔNG nhận nộ (nộ chỉ đến từ đánh thường / chiêu gây sát thương / lượt PvP)
-      refreshPanel();
+      refreshPanelSoon();
       if (refl > 0) {
         const tgt = (src && src.alive && src.side !== u.side) ? src : rand(foesOf(u).filter(x => x.alive));
         if (tgt) { floatText(u, '🌙 PHẢN'); hit(tgt, refl, true, null, true); }
@@ -3781,9 +3800,25 @@ function addAccExp(n) {
       hit(t, p.main + p.crit + p.pierce, false, u, false, p);
       return true;
     }
+    // Chữ hiệu ứng (BẠO +300%, GIẢM BỀN, CHOÁNG...): các dòng của CÙNG 1 tướng gộp vào 1 khối xếp dọc (tối đa 4 dòng), tối đa 10 khối cùng lúc
+    var _ftLive = 0;
     function floatText(u, t) {
-      const d = document.createElement('div'); d.className = 'bf-dmg'; d.style.fontSize = '16px'; d.textContent = t;
-      u.el.appendChild(d); setTimeout(() => d.remove(), 800);
+      if (!u || !u.el || !u.el.isConnected) return;
+      const now = performance.now(); let p = u._ft;
+      if (p && p.el.isConnected && now - p.t < 700) {
+        if (p.n < 4) { const l = document.createElement('div'); l.textContent = t; p.el.appendChild(l); p.n++; }
+        else if (p.more) { p.more.textContent = '…+' + (++p.m); }
+        else { p.m = 1; p.more = document.createElement('div'); p.more.textContent = '…+1'; p.el.appendChild(p.more); }
+        p.t = now; try { p.el.getAnimations().forEach(a => { a.currentTime = 0; }); } catch (e) {}
+        clearTimeout(p.tm); p.tm = setTimeout(() => { p.el.remove(); _ftLive--; }, 1000);
+        return;
+      }
+      if (_ftLive >= 10) return;
+      const d = document.createElement('div'); d.className = 'bf-dmg bf-stack';
+      const l = document.createElement('div'); l.textContent = t; d.appendChild(l);
+      u.el.appendChild(d); _ftLive++;
+      p = u._ft = { el: d, t: now, n: 1, m: 0, more: null, tm: 0 };
+      p.tm = setTimeout(() => { d.remove(); _ftLive--; }, 1000);
     }
     // ---- Helper 2 phe: tướng địch (Trận 4) dùng lại đúng skill của tướng ta ----
     const foesOf   = u => u.charm ? (u.side === 'hero' ? waveUnits.heroes : waveUnits.enemies).filter(x => x !== u) : (u.side === 'hero' ? waveUnits.enemies : waveUnits.heroes);   // u.charm (Bạch Cốt Tinh thôi miên): đảo phe, đánh chính đồng đội
@@ -3865,7 +3900,7 @@ function addAccExp(n) {
         // 1. Mưa cánh hoa sen từ trời rơi xuống chỗ từng tướng đã gục
         sfxRocket();
         targets.forEach((t, ti) => {
-          for (let i = 0; i < 18; i++) {
+          for (let i = 0; i < 9; i++) {
             const sx = t.x + (Math.random() - 0.5) * 26;
             const p = mk('bf-petal', '🪷', sx, -4); p.style.fontSize = (11 + Math.random() * 11) + 'px'; p.style.opacity = '0';
             const dx = (t.x - sx) * W / 100 + (Math.random() - 0.5) * 26, dy = (t.y + 3) * H / 100, sw = (Math.random() - 0.5) * 50;
@@ -3876,7 +3911,7 @@ function addAccExp(n) {
               { transform: T(dx * 0.65 - sw, dy * 0.65, 260), opacity: 1, offset: 0.65 },
               { transform: T(dx, dy, 400), opacity: 0.9, offset: 0.92 },
               { transform: T(dx, dy, 420), opacity: 0 }
-            ], { duration: 950 + Math.random() * 450, delay: ti * 350 + i * 55, easing: 'ease-in', fill: 'forwards' });
+            ], { duration: 950 + Math.random() * 450, delay: ti * 350 + i * 110, easing: 'ease-in', fill: 'forwards' });
           }
         });
         await sleep(2000 + (targets.length - 1) * 350); if (tok !== battleToken) return;
@@ -3946,7 +3981,11 @@ function addAccExp(n) {
       u.mods.push({ k, d: delta, t: turns + ((u.side === 'hero' || pvp) ? 1 : 0), kind, tag }); u[k] = (u[k] || 0) + delta; refreshMods(u);
       if (k === 'block' && delta > 0 && kind === 'buff') blockUpFx(u);   // hiện icon tăng Đỡ đòn
     }
-    function refreshMods(u) {
+    function refreshMods(u) {   // gộp nhiều lần cộng/trừ chỉ số liên tiếp của 1 tướng thành 1 lần vẽ lại icon ▲▼
+      if (u._rmQ) return; u._rmQ = 1;
+      Promise.resolve().then(() => { u._rmQ = 0; try { refreshModsNow(u); } catch (e) {} });
+    }
+    function refreshModsNow(u) {
       let ic = u.el.querySelector('.bf-mods'); const m = u.mods || [];
       if (!m.length) { if (ic) ic.remove(); return; }
       if (!ic) { ic = document.createElement('div'); ic.className = 'bf-mods'; u.el.appendChild(ic); }
@@ -4068,7 +4107,7 @@ function addAccExp(n) {
     if (!keys.length) { if (box) box.remove(); return; }
     if (!box) { box = document.createElement('div'); box.className = 'bf-st'; u.el.appendChild(box); }
     box.innerHTML = keys.map(function (k) {
-      return '<span class="bf-st-i"><img src="' + DIR + k + '.png" alt="" draggable="false">' + (m[k] ? '<b>' + m[k] + '</b>' : '') + '</span>';
+      return '<span class="bf-st-i"><img src="' + DIR + k + '.webp" alt="" draggable="false">' + (m[k] ? '<b>' + m[k] + '</b>' : '') + '</span>';
     }).join('');
   }
 
@@ -4456,7 +4495,7 @@ async function taDeUlt(u, tok) {
     ring(landX, landY);
     if (!(await play(7, 17, 45))) return;
     // 2. Dồn lực: hào quang tím + đội ta +Phá giáp
-    u.el.animate([{ filter: 'brightness(1) drop-shadow(0 0 0 #a855f7)' }, { filter: 'brightness(1.5) drop-shadow(0 0 22px #c084fc)' }], { duration: 300, fill: 'forwards' });
+    u.el.animate([{ filter: 'brightness(1) drop-shadow(0 0 0 #a855f7)' }, { filter: 'brightness(1.5) drop-shadow(0 0 9px #c084fc)' }], { duration: 300, fill: 'forwards' });
     alliesOf(u).filter(a => a.alive).forEach(a => { if (!noBuff(a)) { addMod(a, 'pierce', TADE_PIERCE, TADE_PIERCE_TURNS, 'buff', 'tade'); floatText(a, '🗡️ +' + TADE_PIERCE + ' Phá giáp'); } });
     refreshPanel();
     // 3. Các nhát chém (mỗi nhát: toàn địch trúng, -Tốc, xuyên bất tử)
@@ -4588,7 +4627,7 @@ async function taDeUlt(u, tok) {
           const beam = document.createElement('div'); beam.className = 'bf-moonbeam';
           beam.style.left = (ux - bw / 2) + 'px'; beam.style.width = bw + 'px'; beam.style.top = top + 'px'; beam.style.height = Math.max(40, H * 0.96 - top) + 'px';
           beam.style.clipPath = 'polygon(44% 0,56% 0,100% 100%,0 100%)'; box.appendChild(beam); made.push(beam);
-          for (let i = 0; i < 34; i++) {                                                // hạt ánh sáng lấp lánh rơi xuống
+          for (let i = 0; i < 16; i++) {                                                // hạt ánh sáng lấp lánh rơi xuống
             const sp = document.createElement('div'); sp.className = 'bf-spark'; sp.textContent = rand(['✨', '✦', '✧', '⭐']);
             sp.style.left = (ux - bw / 2 + bw * (0.12 + Math.random() * 0.76)) + 'px'; sp.style.top = (top + (H - top) * (0.05 + Math.random() * 0.2)) + 'px';
             sp.style.fontSize = (10 + Math.random() * 12) + 'px';
@@ -5823,11 +5862,11 @@ GP.add('heros/tay-doc/tay-doc-toad3d.webp', 2);
         toad.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 220, fill: 'forwards' });
         for (let i = 0; i < SEQ.tdToad.n; i++) timers.push(setTimeout(() => { if (tok === battleToken) sc.show(i); }, seqT(i * FR)));
         g.ring(tx0, ty0, '#84cc16'); await sleep(SPIT * FR); if (tok !== battleToken) return;
-        for (let i = 0; i < 26; i++) {   // luồng độc phun qua đội hình địch
+        for (let i = 0; i < 13; i++) {   // luồng độc phun qua đội hình địch
           const p = g.mk('bf-venom', '', mx0, my0), ex = b.minX + Math.random() * (b.maxX - b.minX + 8) - 2, ey = b.minY + Math.random() * (b.maxY - b.minY + 10) - 3;
           const dx = (ex - mx0) * W / 100, dy = (ey - my0) * H / 100, s = 0.7 + Math.random() * 1.1;
           p.animate([{ transform: 'translate(-50%,-50%) scale(.3)', opacity: 0 }, { transform: `translate(calc(-50% + ${dx * 0.5}px),calc(-50% + ${dy * 0.5 - 40}px)) scale(${s})`, opacity: 1, offset: .5 },
-                     { transform: `translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px)) scale(${s * 1.6})`, opacity: 0 }], { duration: 650 + Math.random() * 250, delay: i * 20, easing: 'ease-out', fill: 'forwards' });
+                     { transform: `translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px)) scale(${s * 1.6})`, opacity: 0 }], { duration: 650 + Math.random() * 250, delay: i * 40, easing: 'ease-out', fill: 'forwards' });
         }
         await sleep(900); if (tok !== battleToken) return;
         g.es().forEach(e => {
@@ -5848,7 +5887,7 @@ GP.add('heros/tay-doc/tay-doc-toad3d.webp', 2);
       const b = g.box0(es0);
       const upPx = Math.round((100 - b.cy) / 100 * H + 170);   // quãng từ tâm đội địch xuống dưới đáy sân (+ chữ Vạn ló khỏi màn hình)
       try {
-        u.el.animate([{ filter: 'drop-shadow(0 0 0 #fde047)' }, { filter: 'drop-shadow(0 0 18px #fde047)' }, { filter: 'drop-shadow(0 0 0 #fde047)' }], { duration: 700 });
+        u.el.animate([{ filter: 'drop-shadow(0 0 0 #fde047)' }, { filter: 'drop-shadow(0 0 7px #fde047)' }, { filter: 'drop-shadow(0 0 0 #fde047)' }], { duration: 700 });
         const halo = g.mk('bf-wan-halo', '', b.cx, b.cy); halo.animate([{ opacity: 0, transform: 'translate(-50%,-50%) scale(.3)' }, { opacity: 1, transform: 'translate(-50%,-50%) scale(1)' }], { duration: 700, fill: 'forwards' });
         const DUR = 1050;
         // chữ Vạn trên trời: vừa xoáy vừa lao xuống
@@ -5934,7 +5973,7 @@ GP.add('heros/vuong-trung-duong/vuong-trung-duong-taiji-vortex.webp', 2);
       };
       try {
         u.el.style.zIndex = 95;
-        u.el.animate([{ filter: 'drop-shadow(0 0 0 #a855f7)' }, { filter: 'drop-shadow(0 0 20px #a855f7)' }, { filter: 'drop-shadow(0 0 0 #a855f7)' }], { duration: 900 });
+        u.el.animate([{ filter: 'drop-shadow(0 0 0 #a855f7)' }, { filter: 'drop-shadow(0 0 8px #a855f7)' }, { filter: 'drop-shadow(0 0 0 #a855f7)' }], { duration: 900 });
         // 1. Cổng triệu hồi hiện ra che đội ta (chạy 24 khung: mở → ổn định → tan biến)
         const px = Math.max(PS / 2 / W * 100, Math.min(100 - PS / 2 / W * 100, bs.cx)), py = Math.max(PS / 2 / H * 100, Math.min(100 - PS / 2 / H * 100, bs.cy - 2));
         const wallX = (u.side === 'hero' ? -1 : 1) * PS * 0.05 / W * 100;   // dịch cổng sát tường phía mình (muốn sát hơn/xa hơn: đổi 0.05)
@@ -6003,7 +6042,7 @@ GP.add('heros/vuong-trung-duong/vuong-trung-duong-taiji-vortex.webp', 2);
       };
       try {
         u.el.style.zIndex = 99;
-        u.el.animate([{ filter: 'drop-shadow(0 0 0 #ef4444)' }, { filter: 'drop-shadow(0 0 20px #ef4444)' }, { filter: 'drop-shadow(0 0 0 #ef4444)' }], { duration: 900 });
+        u.el.animate([{ filter: 'drop-shadow(0 0 0 #ef4444)' }, { filter: 'drop-shadow(0 0 8px #ef4444)' }, { filter: 'drop-shadow(0 0 0 #ef4444)' }], { duration: 900 });
         setFace(false); cast.show(0);
         // 1. Trước khi ra đòn: đội ta +Né, địch -Né
         at(150, () => {
@@ -6056,7 +6095,7 @@ GP.add('heros/vuong-trung-duong/vuong-trung-duong-taiji-vortex.webp', 2);
       const tgts = pool.slice(0, nTgt);
       try {
         u.el.style.zIndex = 99;
-        u.el.animate([{ filter: 'drop-shadow(0 0 0 #22c55e)' }, { filter: 'drop-shadow(0 0 20px #22c55e)' }, { filter: 'drop-shadow(0 0 0 #22c55e)' }], { duration: 900 });
+        u.el.animate([{ filter: 'drop-shadow(0 0 0 #22c55e)' }, { filter: 'drop-shadow(0 0 8px #22c55e)' }, { filter: 'drop-shadow(0 0 0 #22c55e)' }], { duration: 900 });
         cast.show(0);
         // 1. TRƯỚC khi bắn: bản thân +Bạo, +Bạo Sát, +Chuẩn
         at(150, () => {
@@ -6128,7 +6167,7 @@ GP.add('heros/vuong-trung-duong/vuong-trung-duong-taiji-vortex.webp', 2);
       const tgts = pool.slice(0, nCl), clones = [];
       try {
         u.el.style.zIndex = 99;
-        u.el.animate([{ filter: 'drop-shadow(0 0 0 #93c5fd)' }, { filter: 'drop-shadow(0 0 20px #93c5fd)' }, { filter: 'drop-shadow(0 0 0 #93c5fd)' }], { duration: 900 });
+        u.el.animate([{ filter: 'drop-shadow(0 0 0 #93c5fd)' }, { filter: 'drop-shadow(0 0 8px #93c5fd)' }, { filter: 'drop-shadow(0 0 0 #93c5fd)' }], { duration: 900 });
         cast.show(0);
         // 1. TRƯỚC khi ra đòn: bản thân +Bạo
         at(150, () => {
@@ -6214,7 +6253,7 @@ GP.add(TM_SWORD_IMG, 2);
       };
       try {
         u.el.style.zIndex = 99;
-        u.el.animate([{ filter: 'drop-shadow(0 0 0 #c084fc)' }, { filter: 'drop-shadow(0 0 20px #c084fc)' }, { filter: 'drop-shadow(0 0 0 #c084fc)' }], { duration: 900 });
+        u.el.animate([{ filter: 'drop-shadow(0 0 0 #c084fc)' }, { filter: 'drop-shadow(0 0 8px #c084fc)' }, { filter: 'drop-shadow(0 0 0 #c084fc)' }], { duration: 900 });
         setFace(false);
         // 1. Lấy đà tại chỗ (khung 0-6)
         for (let i = 0; i < 7; i++) at(i * (WIND / 7), () => cast.show(i));
@@ -6285,7 +6324,7 @@ GP.add(TM_SWORD_IMG, 2);
       const te = seqEl(TN, tw); tor.appendChild(te);
       try {
         u.el.style.zIndex = 99;
-        u.el.animate([{ filter: 'drop-shadow(0 0 0 #7dd3fc)' }, { filter: 'drop-shadow(0 0 20px #7dd3fc)' }, { filter: 'drop-shadow(0 0 0 #7dd3fc)' }], { duration: 900 });
+        u.el.animate([{ filter: 'drop-shadow(0 0 0 #7dd3fc)' }, { filter: 'drop-shadow(0 0 8px #7dd3fc)' }, { filter: 'drop-shadow(0 0 0 #7dd3fc)' }], { duration: 900 });
         // 1. Nhảy lên (khung 0-7) rồi xoay tròn tung quạt (khung 8-19)
         for (let i = 0; i < 8; i++) at(i * F1, () => cast.show(i));
         for (let i = 8; i < S.n; i++) at(8 * F1 + (i - 8) * F2, () => cast.show(i));
@@ -6339,7 +6378,7 @@ GP.add(TM_SWORD_IMG, 2);
       const hitFr = Array.from({ length: nHit }, (_, k) => nHit === 1 ? 18 : Math.round(6 + 12 * k / (nHit - 1)));   // khung xảy ra từng nhát (6…18)
       try {
         u.el.style.zIndex = 99;
-        u.el.animate([{ filter: 'drop-shadow(0 0 0 #60a5fa)' }, { filter: 'drop-shadow(0 0 20px #60a5fa)' }, { filter: 'drop-shadow(0 0 0 #60a5fa)' }], { duration: 900 });
+        u.el.animate([{ filter: 'drop-shadow(0 0 0 #60a5fa)' }, { filter: 'drop-shadow(0 0 8px #60a5fa)' }, { filter: 'drop-shadow(0 0 0 #60a5fa)' }], { duration: 900 });
         // 1. Trước khi ra đòn: bản thân +Phá giáp, toàn địch -Đỡ đòn
         if (noBuff(u)) floatText(u, '🚫 KHÓA TĂNG PHÚC'); else { addMod(u, 'pierce', DY_PIERCE, DY_PIERCE_TURNS, 'buff', 'dy:pierce'); floatText(u, '🗡️ +' + fmtN(DY_PIERCE) + ' Phá giáp'); }
         es0.forEach(e => { if (!e.alive) return; blockMod(e, -DY_BLOCK_DOWN, DY_TURNS, 'debuff', 'dy:blk'); sayLater(e, '🛡️ ĐỠ ĐÒN -' + Math.round(DY_BLOCK_DOWN * 100) + '%', 250); });
@@ -6391,7 +6430,7 @@ GP.add(TM_SWORD_IMG, 2);
       const wheels = [];
       try {
         u.el.style.zIndex = 99;
-        u.el.animate([{ filter: 'drop-shadow(0 0 0 #fb923c)' }, { filter: 'drop-shadow(0 0 22px #fb923c)' }, { filter: 'drop-shadow(0 0 0 #fb923c)' }], { duration: 900 });
+        u.el.animate([{ filter: 'drop-shadow(0 0 0 #fb923c)' }, { filter: 'drop-shadow(0 0 9px #fb923c)' }, { filter: 'drop-shadow(0 0 0 #fb923c)' }], { duration: 900 });
         // 1. TRƯỚC khi ra đòn: toàn đội ta +Công, toàn địch -Né
         g.as().forEach(a => { if (noBuff(a)) { floatText(a, '🚫 KHÓA TĂNG PHÚC'); return; } pctMod(a, 'atk', NT_ATK_UP, NT_ATK_TURNS, 'buff', 'nt:atk'); sayLater(a, '⚔️ CÔNG +' + Math.round(NT_ATK_UP * 100) + '%'); });
         es0.forEach(e => { if (!e.alive) return; pctMod(e, 'dodge', -NT_DODGE_DOWN, NT_DODGE_TURNS, 'debuff', 'nt:dodge'); sayLater(e, '💨 NÉ -' + Math.round(NT_DODGE_DOWN * 100) + '%', 250); });
@@ -6495,7 +6534,7 @@ async function saTangUlt(u, tok) {
   const flash = (x, y, c) => { const fl = document.createElement('div'); fl.className = 'bf-bflash'; fl.style.left = x + '%'; fl.style.top = y + '%'; fl.style.setProperty('--fc', c || COL); g.box.appendChild(fl); made.push(fl); setTimeout(() => fl.remove(), 450); };
   try {
     u.el.style.zIndex = 120;
-    u.el.animate([{ filter: 'drop-shadow(0 0 0 #60a5fa)' }, { filter: 'drop-shadow(0 0 24px #60a5fa)' }, { filter: 'drop-shadow(0 0 0 #60a5fa)' }], { duration: 900 });
+    u.el.animate([{ filter: 'drop-shadow(0 0 0 #60a5fa)' }, { filter: 'drop-shadow(0 0 10px #60a5fa)' }, { filter: 'drop-shadow(0 0 0 #60a5fa)' }], { duration: 900 });
     // 1. TRƯỚC khi ra đòn: cộng thêm (đội ta +Bền) rồi giảm (địch -Bền)
     g.as().forEach(a => { if (noBuff(a)) { floatText(a, '🚫 KHÓA TĂNG PHÚC'); return; } addMod(a, 'tough', SB_TOUGH_UP, SB_TURNS, 'buff', 'sb:tough'); sayLater(a, '🛡️ BỀN +' + SB_TOUGH_UP); });
     es0.forEach(e => { if (!e.alive) return; addMod(e, 'tough', -SB_TOUGH_DOWN, SB_TURNS, 'debuff', 'sb:tough'); sayLater(e, '💔 BỀN -' + SB_TOUGH_DOWN, 250); });
@@ -6534,7 +6573,7 @@ async function batGioiUlt(u, tok) {
   try {
     u.el.style.zIndex = 99;
     for (let i = 0; i < S.n; i++) at(i * FR, () => cast.show(i));
-    u.el.animate([{ filter: 'drop-shadow(0 0 0 #fbbf24)' }, { filter: 'drop-shadow(0 0 22px #fbbf24)' }, { filter: 'drop-shadow(0 0 0 #fbbf24)' }], { duration: seqT(T_END) || 1 });
+    u.el.animate([{ filter: 'drop-shadow(0 0 0 #fbbf24)' }, { filter: 'drop-shadow(0 0 9px #fbbf24)' }, { filter: 'drop-shadow(0 0 0 #fbbf24)' }], { duration: seqT(T_END) || 1 });
     // 1. Nện xuống: +Thủ bản thân (cộng thêm làm TRƯỚC)
     at(9 * FR, () => {
       g.shake(); g.ring(u.x, u.y, GOLD); flash(GOLD);
@@ -6627,7 +6666,7 @@ async function thaiThuongUlt(u, tok) {
   let ding = null;
   try {
     u.el.style.zIndex = 120;
-    u.el.animate([{ filter: 'drop-shadow(0 0 0 #fbbf24)' }, { filter: 'drop-shadow(0 0 22px #fbbf24)' }, { filter: 'drop-shadow(0 0 0 #fbbf24)' }], { duration: seqT(900) || 1 });
+    u.el.animate([{ filter: 'drop-shadow(0 0 0 #fbbf24)' }, { filter: 'drop-shadow(0 0 9px #fbbf24)' }, { filter: 'drop-shadow(0 0 0 #fbbf24)' }], { duration: seqT(900) || 1 });
     // 1. TRƯỚC khi ra đòn: cộng thêm (đội ta x2 hồi máu) rồi giảm (địch cấm hồi máu)
     at(4 * FR, () => {
       g.as().forEach(a => { if (noBuff(a)) { floatText(a, '🚫 KHÓA TĂNG PHÚC'); return; } addMod(a, 'healMul', LQ_HEAL_UP, LQ_HEAL_TURNS, 'buff', 'lq:heal'); sayLater(a, '💚 HỒI MÁU x' + (1 + LQ_HEAL_UP)); });
@@ -6642,7 +6681,7 @@ async function thaiThuongUlt(u, tok) {
     ], { duration: seqT(T_END + 120) || 1, easing: 'ease-in-out' });
     // 3. ĐỈNH KHỔNG LỒ: hiện trên đầu lúc tay giơ cao (khung 5), phình to (5-9), ném xuống (9→11), chạm đất đúng lúc nổ (khung 11)
     ding = g.mk('bf-seq-fx', '', be.cx, skyY); ding.style.zIndex = 105; ding.style.opacity = '0'; ding.style.width = dW + 'px'; ding.style.height = dH + 'px';
-    const im = document.createElement('img'); im.src = LQ_DING_IMG; im.alt = '☯️'; im.style.cssText = 'width:100%;height:100%;display:block;pointer-events:none;filter:drop-shadow(0 0 18px #fbbf24);'; ding.appendChild(im);
+    const im = document.createElement('img'); im.src = LQ_DING_IMG; im.alt = '☯️'; im.style.cssText = 'width:100%;height:100%;display:block;pointer-events:none;filter:drop-shadow(0 0 7px #fbbf24);'; ding.appendChild(im);
     ding.style.transform = 'translate(-50%,-60%) scale(.3)';
     at(5 * FR, () => ding.animate([
       { opacity: 0, transform: 'translate(-50%,-60%) scale(.3)' }, { opacity: 1, transform: 'translate(-50%,-60%) scale(.62)', offset: .35 }, { opacity: 1, transform: 'translate(-50%,-60%) scale(.8)' }
@@ -6693,7 +6732,7 @@ async function diemLaVuongUlt(u, tok) {
   const hitT = Array.from({ length: nHit }, (_, i) => (F_LAND + (nHit === 1 ? 0 : 4 * i / (nHit - 1))) * FR);   // khung 10 → 14
   const flash = (x, y, c) => { const fl = document.createElement('div'); fl.className = 'bf-bflash'; fl.style.left = x + '%'; fl.style.top = y + '%'; fl.style.setProperty('--fc', c || PUR); g.box.appendChild(fl); made.push(fl); setTimeout(() => fl.remove(), 450); };
   try {
-    u.el.animate([{ filter: 'drop-shadow(0 0 0 #a855f7)' }, { filter: 'drop-shadow(0 0 22px #a855f7)' }, { filter: 'drop-shadow(0 0 0 #a855f7)' }], { duration: seqT(900) || 1 });
+    u.el.animate([{ filter: 'drop-shadow(0 0 0 #a855f7)' }, { filter: 'drop-shadow(0 0 9px #a855f7)' }, { filter: 'drop-shadow(0 0 0 #a855f7)' }], { duration: seqT(900) || 1 });
     // 1. TRƯỚC khi ra đòn: toàn đội ta +300% Bạo, +250% Bạo Sát (2 hiệp)
     at(3 * FR, () => {
       g.as().forEach(a => {
@@ -6708,7 +6747,7 @@ async function diemLaVuongUlt(u, tok) {
     at(S.n * FR, () => cast.end());
     // 3. LỆNH BÀI rơi từ trên trời xuống giữa đội địch (khung 5 → 10), vừa rơi vừa xoay; chạm đất thì nhường cho chuỗi nổ
     const tk = g.mk('bf-seq-fx', '', be.cx, skyY); tk.style.zIndex = 106; tk.style.opacity = '0'; tk.style.width = tW + 'px'; tk.style.height = tH + 'px';
-    const ti = document.createElement('img'); ti.src = DL_TOKEN_IMG; ti.alt = '📜'; ti.style.cssText = 'width:100%;height:100%;display:block;pointer-events:none;filter:drop-shadow(0 0 12px #a855f7) drop-shadow(0 0 22px #7c3aed);'; tk.appendChild(ti);
+    const ti = document.createElement('img'); ti.src = DL_TOKEN_IMG; ti.alt = '📜'; ti.style.cssText = 'width:100%;height:100%;display:block;pointer-events:none;filter:drop-shadow(0 0 12px #a855f7) drop-shadow(0 0 9px #7c3aed);'; tk.appendChild(ti);
     tk.style.transform = 'translate(-50%,-50%) rotate(-25deg)';
     at(F_FALL * FR, () => tk.animate([
       { top: skyY + '%', opacity: 0, transform: 'translate(-50%,-50%) rotate(-25deg) scale(.7)' },
@@ -6765,7 +6804,7 @@ async function lindaUlt(u, tok) {
   const hitT = Array.from({ length: nHit }, (_, k) => lands[cl(Math.floor((k + 1) * nBrick / nHit) - 1, 0, nBrick - 1)]);   // nhát k trùng viên chạm thứ (k+1)·N/nHit
   const T_END = Math.max(S.n * FR, lands[nBrick - 1] + 320);
   try {
-    u.el.animate([{ filter: 'drop-shadow(0 0 0 #fb923c)' }, { filter: 'drop-shadow(0 0 20px #fb923c)' }, { filter: 'drop-shadow(0 0 0 #fb923c)' }], { duration: seqT(900) || 1 });
+    u.el.animate([{ filter: 'drop-shadow(0 0 0 #fb923c)' }, { filter: 'drop-shadow(0 0 8px #fb923c)' }, { filter: 'drop-shadow(0 0 0 #fb923c)' }], { duration: seqT(900) || 1 });
     // 1. TRƯỚC khi ra đòn: cộng thêm (bản thân +300% Bạo, +300% Bạo Sát) rồi giảm (toàn địch -50 Bền)
     at(3 * FR, () => {
       if (noBuff(u)) floatText(u, '🚫 KHÓA TĂNG PHÚC');
@@ -6872,7 +6911,7 @@ async function linhDanhThueUlt(u, tok) {
     setTimeout(() => d.remove(), seqT(700) + 60);
   };
   try {
-    u.el.animate([{ filter: 'drop-shadow(0 0 0 #fb923c)' }, { filter: 'drop-shadow(0 0 20px #fb923c)' }, { filter: 'drop-shadow(0 0 0 #fb923c)' }], { duration: seqT(900) || 1 });
+    u.el.animate([{ filter: 'drop-shadow(0 0 0 #fb923c)' }, { filter: 'drop-shadow(0 0 8px #fb923c)' }, { filter: 'drop-shadow(0 0 0 #fb923c)' }], { duration: seqT(900) || 1 });
     // 1. Tướng QUỲ GỐI nạp đạn cối ngay từ đầu, giữ dáng đến hết ulti
     cast.show(0);
     cast.el.animate([{ filter: 'brightness(1.8)' }, { filter: 'brightness(1)' }], { duration: seqT(300) || 1 });
@@ -6961,7 +7000,7 @@ const NK_STAFF_ROT = 0;   // độ xoay thêm cho ảnh gậy (0 = giữ nguyên
       const hid = Array.from(u.el.querySelectorAll('.hero-body, .hero-img, .bf-emo, .bf-sprite .hero-seq'));
       try {
         u.el.style.zIndex = 99;
-        u.el.animate([{ filter: 'drop-shadow(0 0 0 #fbbf24)' }, { filter: 'drop-shadow(0 0 22px #fbbf24)' }, { filter: 'drop-shadow(0 0 0 #fbbf24)' }], { duration: 1000 });
+        u.el.animate([{ filter: 'drop-shadow(0 0 0 #fbbf24)' }, { filter: 'drop-shadow(0 0 9px #fbbf24)' }, { filter: 'drop-shadow(0 0 0 #fbbf24)' }], { duration: 1000 });
         // 1. TRƯỚC khi ra đòn: bản thân +300% Công
         if (noBuff(u)) floatText(u, '🚫 KHÓA TĂNG PHÚC');
         else { pctMod(u, 'atk', NK_ATK_UP, NK_ATK_TURNS, 'buff', 'nk:atk'); floatText(u, '⚔️ CÔNG +' + Math.round(NK_ATK_UP * 100) + '%'); }
@@ -6984,7 +7023,7 @@ const NK_STAFF_ROT = 0;   // độ xoay thêm cho ảnh gậy (0 = giữ nguyên
           const L = Math.min(W * 1.05, Math.abs(t.x - baseX) * W / 100 + 70);   // đủ dài để quét qua địch (+ chút thừa phía sau)
           const d = g.mk('bf-seq-fx', '', baseX, y); d.style.zIndex = 110 + i; d.style.height = Math.round(L) + 'px'; d.style.width = 'auto'; d.style.transformOrigin = '50% 100%';
           const im = document.createElement('img'); im.src = NK_STAFF_IMG; im.alt = ''; im.draggable = false;
-          im.style.cssText = 'height:100%;width:auto;display:block;pointer-events:none;transform-origin:50% 100%;filter:drop-shadow(0 0 14px #fbbf24)' + (NK_STAFF_ROT ? ';transform:rotate(' + NK_STAFF_ROT + 'deg)' : '');   // NK_STAFF_ROT: xoay thêm nếu ảnh gậy gốc không thẳng đứng
+          im.style.cssText = 'height:100%;width:auto;display:block;pointer-events:none;transform-origin:50% 100%;filter:drop-shadow(0 0 6px #fbbf24)' + (NK_STAFF_ROT ? ';transform:rotate(' + NK_STAFF_ROT + 'deg)' : '');   // NK_STAFF_ROT: xoay thêm nếu ảnh gậy gốc không thẳng đứng
           d.appendChild(im);
           const T = a => `translate(-50%,-100%) rotate(${a}deg)`, ang = 90 * dirS;
           d.animate([{ transform: T(0), opacity: 0, offset: 0 }, { transform: T(0), opacity: 1, offset: .15 }, { transform: T(0), opacity: 1, offset: Math.max(.16, (DASH - ROT) / DASH) }, { transform: T(ang), opacity: 1, offset: 1 }],
@@ -7103,7 +7142,7 @@ const NK_STAFF_ROT = 0;   // độ xoay thêm cho ảnh gậy (0 = giữ nguyên
       const sky = mkForm(true, be.cx, Math.max(8, be.cy - fh * 0.9 / H * 100), 106);               // 1 cái trên trời, úp ngược xuống
       try {
         u.el.style.zIndex = 110;
-        u.el.animate([{ filter: 'drop-shadow(0 0 0 #fbbf24)' }, { filter: 'drop-shadow(0 0 20px #fbbf24)' }, { filter: 'drop-shadow(0 0 0 #fbbf24)' }], { duration: 900 });
+        u.el.animate([{ filter: 'drop-shadow(0 0 0 #fbbf24)' }, { filter: 'drop-shadow(0 0 8px #fbbf24)' }, { filter: 'drop-shadow(0 0 0 #fbbf24)' }], { duration: 900 });
         // 1. Chạy qua đội địch, đứng giữa đội hình (khung 0-3 lặp)
         u.el.animate([{ transform: base }, { transform: go }], { duration: seqT(DASH) || 1, easing: 'ease-in-out', fill: 'forwards' });
         for (let k = 0; k < 4; k++) at(k * (DASH / 4), () => cast.show(k));
@@ -7171,7 +7210,7 @@ const NK_STAFF_ROT = 0;   // độ xoay thêm cho ảnh gậy (0 = giữ nguyên
         setTimeout(() => s.remove(), d + dl + 60); } };
       try {
         u.el.style.zIndex = 99;
-        u.el.animate([{ filter: 'drop-shadow(0 0 0 #fde68a)' }, { filter: 'drop-shadow(0 0 18px #fde68a)' }, { filter: 'drop-shadow(0 0 0 #fde68a)' }], { duration: 1000 });
+        u.el.animate([{ filter: 'drop-shadow(0 0 0 #fde68a)' }, { filter: 'drop-shadow(0 0 7px #fde68a)' }, { filter: 'drop-shadow(0 0 0 #fde68a)' }], { duration: 1000 });
         // 1. Đứng yên triệu hồi (20 khung)
         for (let i = 0; i < S.n; i++) at(i * FR, () => cast.show(i));
         // 2. Bảo tháp hiện trên đầu địch + cột sáng chiếu xuống
@@ -7406,7 +7445,13 @@ cfgOnApply(() => {
         } catch (e) {}
       });
     }
-    function refreshPanel() {
+    var _rpLast = 0, _rpTm = 0;
+    function refreshPanel() {   // nhiều lệnh gọi dồn dập (ulti đa hit, buff cả đội) chỉ vẽ lại bảng tướng tối đa ~10 lần/giây
+      const now = performance.now();
+      if (!(now - _rpLast < 100)) { _rpLast = now; clearTimeout(_rpTm); _rpTm = 0; refreshPanelNow(); return; }
+      if (!_rpTm) _rpTm = setTimeout(() => { _rpTm = 0; _rpLast = performance.now(); try { refreshPanelNow(); } catch (e) {} }, 100);
+    }
+    function refreshPanelNow() {
       if (pvp) { renderPvpPanel(); return; }
       setTimeout(placeEnemyBars, 60); setTimeout(placeEnemyBars, 500);
       if (bossB) bbtBossBar();
@@ -8207,7 +8252,7 @@ cfgOnApply(() => {
     }
 
     // ===== Ảnh nền trận đấu: random mỗi trận (ải thường & Tỷ Võ), không lặp liền nhau =====
-    const BATTLE_BGS = [1, 2, 3, 4, 5, 6,7,8,9,10,11,12,13,14].map(n => 'giao-dien/nen-dau/nen-dau' + n + '.png');   // 6 nền, random mỗi trận
+    const BATTLE_BGS = [1, 2, 3, 4, 5, 6,7,8,9,10,11,12,13,14].map(n => 'giao-dien/nen-dau/nen-dau' + n + '.webp');   // 6 nền, random mỗi trận
     let lastBgIdx = -1;
     function setBattleBg() {
       try {
@@ -9551,8 +9596,8 @@ const GD_SKILL_UNLOCK = GD_UNLOCK_DEF.slice(), GD_SKILL_MAX = [Infinity, Infinit
 const GD_ICO = { 'Thú Noãn': 'thu-noan', 'Thú Hồn': 'thu-hon', 'Thú Linh': 'thu-linh', 'Đá Nữ Oa': 'da-nu-oa', 'Dị Linh': 'di-linh', 'Đào Tiên': 'dao-tien', 'Đào Tiên Vương': 'dao-tien', 'Tử Linh Thạch': 'tu-linh-thach' };
 const GD_ICO2 = { 'Đá Xanh Lá': 'vat-pham-game/da-linh/da-xanh-la', 'Đá Tím': 'vat-pham-game/da-linh/da-tim', 'Đá Đen': 'vat-pham-game/da-linh/da-den', 'Đá Vàng': 'vat-pham-game/da-linh/da-vang', 'Đá Cam': 'vat-pham-game/da-linh/da-cam', 'Đá Đỏ': 'vat-pham-game/da-linh/da-do', 'Đá Trắng': 'vat-pham-game/da-linh/da-trang',
   'Hỏa Thạch': 'vat-pham-game/trang-bi/hoa-thach', 'Linh Phách': 'vat-pham-game/phach/linh_phach', 'Tiên Phách': 'vat-pham-game/phach/tien_phach', 'Thần Phách': 'vat-pham-game/phach/than_phach', 'Bí Kíp': 'vat-pham-game/ky-nang/bi-kip', 'Yếu Quyết': 'vat-pham-game/ky-nang/yeu-quyet', 'Vô Tự Thiên Thư': 'vat-pham-game/ky-nang/vo-tu-thien-thu' };   // ảnh ngoài thư mục bang-hoi (Hang Tụ Linh, kỹ năng)
-const GD_ICO_FULL = { 'Thẻ Chiêu Mộ Sơ Cấp': 'vat-pham-game/the-chieu-mo/so-cap.png', 'Thẻ Chiêu Mộ Cao Cấp': 'vat-pham-game/the-chieu-mo/cao-cap.png' };   // ảnh có đường dẫn đầy đủ (kể cả đuôi file)
-function gdIco(name, ico) { if (GD_ICO_FULL[name]) return `<img class="gi" src="${GD_ICO_FULL[name]}" alt="${name}">`; if (typeof DAN_IMG !== 'undefined' && DAN_IMG[name]) return DAN_IMG[name]; if (String(name).indexOf('Đào Tiên') === 0) return IC_PEACH; if (GD_ICO2[name]) return `<img class="gi" src="${GD_ICO2[name]}.webp" alt="${name}">`; const f = GD_ICO[name] || (String(name).indexOf('Châu ') === 0 ? 'chau' : ''); return f ? `<img class="gi" src="${f === 'dao-tien' ? 'vat-pham-game/bang/dao-tien.png' : 'vat-pham-game/bang/' + f + '.webp'}" alt="${name}">` : ico; }
+const GD_ICO_FULL = { 'Thẻ Chiêu Mộ Sơ Cấp': 'vat-pham-game/the-chieu-mo/so-cap.webp', 'Thẻ Chiêu Mộ Cao Cấp': 'vat-pham-game/the-chieu-mo/cao-cap.webp' };   // ảnh có đường dẫn đầy đủ (kể cả đuôi file)
+function gdIco(name, ico) { if (GD_ICO_FULL[name]) return `<img class="gi" src="${GD_ICO_FULL[name]}" alt="${name}">`; if (typeof DAN_IMG !== 'undefined' && DAN_IMG[name]) return DAN_IMG[name]; if (String(name).indexOf('Đào Tiên') === 0) return IC_PEACH; if (GD_ICO2[name]) return `<img class="gi" src="${GD_ICO2[name]}.webp" alt="${name}">`; const f = GD_ICO[name] || (String(name).indexOf('Châu ') === 0 ? 'chau' : ''); return f ? `<img class="gi" src="${f === 'dao-tien' ? 'vat-pham-game/bang/dao-tien.webp' : 'vat-pham-game/bang/' + f + '.webp'}" alt="${name}">` : ico; }
 function gdSt() {
   const s = loadJSON('guild_state');
   s.kho = s.kho || {}; [['Quỷ Linh', 'Dị Linh'], ['Hỏa Tinh', 'Thú Noãn']].forEach(p => { if (s.kho[p[0]]) { s.kho[p[1]] = s.kho[p[1]] || { ico: s.kho[p[0]].ico, qty: 0 }; s.kho[p[1]].qty += s.kho[p[0]].qty; delete s.kho[p[0]]; } });
@@ -9866,7 +9911,7 @@ const TT_QPCT = () => [TT_P.pct1, TT_P.pct2, TT_P.pct3, TT_P.pct4, TT_P.pct5, TT
 const TT_PT = ['Huyết Bạo', 'Ngự Thuẫn', 'Hoạt Khí', 'Cường Công', 'Sát Lục', 'Thần Huyết', 'Tái Sinh', 'Thần Thuẫn', 'Chiến Thuẫn', 'Bá Thuẫn', 'Bạo Nộ', 'Bạo Tức', 'Tinh Chuẩn', 'Cấp Tốc', 'Ẩn Thân', 'Kích Sát', 'Kích Phá', 'Đẩy Lui', 'Trợ Thuẫn', 'Tàn Ảnh', 'Kỳ Thuẫn', 'Thần Tốc', 'Trợ Tốc', 'Hộ Tốc', 'Gia Tốc', 'Hộ Thuẫn'];
 const TT_PT_ICO = ['🩸', '🛡️', '💠', '⚔️', '🗡️', '❤️‍🔥', '💚', '🔰', '🧱', '🐯', '💪', '⚡', '🎯', '🏃', '🌫️', '🔪', '👹', '💨', '🛡️', '👤', '☯️', '👢', '👟', '👞', '🥾', '🛡️'];
 const TT_QC = ['#22c55e', '#3b82f6', '#a855f7', '#f59e0b', '#ef4444', '#cbd5e1', '#facc15'], TT_FEED = { 'Thú Hồn': 100, 'Thú Linh': 500 };
-/* ===== PHỤ THỂ MỚI: 8 loại × 7 bậc = 56 phụ thể (ảnh: giao-dien/icon-phuthe/<slug>-<bậc>.png) =====
+/* ===== PHỤ THỂ MỚI: 8 loại × 7 bậc = 56 phụ thể (ảnh: giao-dien/icon-phuthe/<slug>-<bậc>.webp) =====
    Bậc 1..7 = viền xanh lá, xanh dương, tím, cam, đỏ, bạc, vàng.
    • 5 loại TỐC (+5%…+35% Tốc, admin: pct1..pct7): Thần Tốc → Kỹ năng • Hộ Tốc → Thủ • Cấp Tốc → Công kích • Trợ Tốc → Hỗ trợ • Gia Tốc → Trị liệu.
    • 3 loại THUẪN (+30%…+300% HP, admin: hpct1..hpct7): Thần Thuẫn → TẤT CẢ • Hộ Thuẫn → Thủ • Trợ Thuẫn → Hỗ trợ.
@@ -9888,7 +9933,7 @@ function ttPtImg(n, q, em) {
   const m = TT_PT_META[n];
   if (!m) return TT_PT_ICO[TT_PT.indexOf(n)] || '✨';
   const b = Math.min(7, Math.max(1, Math.round(Number(q)) || 1)), z = (em || 1.5) + 'em';
-  return `<img src="giao-dien/icon-phuthe/${m.slug}-${b}.png" alt="${n}" style="width:${z};height:${z};object-fit:contain;vertical-align:middle;pointer-events:none">`;
+  return `<img src="giao-dien/icon-phuthe/${m.slug}-${b}.webp" alt="${n}" style="width:${z};height:${z};object-fit:contain;vertical-align:middle;pointer-events:none">`;
 }
 const TT_FEED_DEF = Object.assign({}, TT_FEED);
 cfgOnApply(() => { Object.assign(TT_FEED, TT_FEED_DEF); const o = cfgGet('misc.ttFeed', {}) || {}; Object.keys(TT_FEED_DEF).forEach(k => { const v = Number(o[k]); if (isFinite(v) && v >= 0) TT_FEED[k] = v; }); });   // EXP mỗi món cho thần thú ăn — admin chỉnh: misc.ttFeed
@@ -11460,7 +11505,7 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
             <div class="dp-arrow">➡</div>
             <div class="dp-pct">${maxed ? 'Đã tối đa' : 'Thuộc tính +' + DP_ATTR_PCT + '%'}</div>
             <div class="dp-vl">Vật Liệu</div>
-            <div class="dp-orb"><span style="display:flex;width:100%;height:100%;align-items:center;justify-content:center;font-size:44px;line-height:1"><img src="vat-pham-game/bang/than-dan.png" alt="Thần Đan" style="height:1em;width:auto"></span></div>
+            <div class="dp-orb"><span style="display:flex;width:100%;height:100%;align-items:center;justify-content:center;font-size:44px;line-height:1"><img src="vat-pham-game/bang/than-dan.webp" alt="Thần Đan" style="height:1em;width:auto"></span></div>
             <div>${DP_GOD}</div>
             <div class="${ok || maxed ? '' : 'dp-bad'}">${fmtN(have)} / ${maxed ? '-' : fmtN(need)}</div>
           </div>
@@ -11760,7 +11805,7 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
    Trước đây icon/khung chỉ tải khi mở màn → mạng chậm thì chỗ hiện chỗ trống, ảnh nhảy vị trí. Giờ sau khi trang hiện xong, game tải ngầm icon/khung/ảnh tướng
    (tối đa 4 ảnh cùng lúc, lúc rảnh, không chặn trò chơi) để lúc mở màn đã có sẵn trong cache. Ảnh nặng (bản đồ Ải, sprite chiêu) vẫn tải khi cần. === */
 (function () {
-  const LIST = ["giao-dien/icon-home/thoi-bac.webp","giao-dien/icon-home/bang-hoi.webp","giao-dien/icon-home/bao-li-xi.webp","giao-dien/icon-home/bao-vat.webp","giao-dien/icon-home/cai-dat.webp","giao-dien/icon-home/chieu-mo.webp","giao-dien/icon-home/de-mo.webp","giao-dien/icon-home/cua-tiem.webp","giao-dien/icon-home/doi-ngu.webp","giao-dien/icon-home/gao.webp","giao-dien/icon-home/giang-ho.webp","giao-dien/icon-home/gift-code.webp","giao-dien/icon-home/hop-thu.webp","giao-dien/icon-home/ky-ngo.webp","giao-dien/icon-home/luyen-hoa.webp","giao-dien/icon-home/nhiem-vu.webp","giao-dien/icon-home/pve.webp","giao-dien/icon-home/pvp.webp","giao-dien/icon-home/su-kien.webp","giao-dien/icon-home/tang-cap.webp","giao-dien/icon-home/the-thang.webp","giao-dien/icon-home/thoi-vang.webp","giao-dien/icon-home/trang-bi.webp","giao-dien/icon-home/trang-chu.webp","giao-dien/icon-home/tui-do.webp","giao-dien/icon-home/vo-hiep.webp","giao-dien/icon-kihieu/bat_tu.png","giao-dien/icon-kihieu/cam_lang.png","giao-dien/icon-kihieu/chay_mau.png","giao-dien/icon-kihieu/chay_nhanh.png","giao-dien/icon-kihieu/choang.png","giao-dien/icon-kihieu/do_don.png","giao-dien/icon-kihieu/giam_bao.png","giao-dien/icon-kihieu/giam_bao_sat.png","giao-dien/icon-kihieu/giam_chinh_xac.png","giao-dien/icon-kihieu/giam_cong.png","giao-dien/icon-kihieu/giam_hoi.png","giao-dien/icon-kihieu/giam_hp.png","giao-dien/icon-kihieu/giam_ne.png","giao-dien/icon-kihieu/giam_no.png","giao-dien/icon-kihieu/giam_pha_giap.png","giao-dien/icon-kihieu/giam_thu.png","giao-dien/icon-kihieu/giam_toc.png","giao-dien/icon-kihieu/khang.png","giao-dien/icon-kihieu/khoa_tang_phuc.png","giao-dien/icon-kihieu/me_hoac.png","giao-dien/icon-kihieu/phong_an.png","giao-dien/icon-kihieu/tang_bao.png","giao-dien/icon-kihieu/tang_bao_sat.png","giao-dien/icon-kihieu/tang_chinh_xac.png","giao-dien/icon-kihieu/tang_cong.png","giao-dien/icon-kihieu/tang_hoi.png","giao-dien/icon-kihieu/tang_hp.png","giao-dien/icon-kihieu/tang_ne.png","giao-dien/icon-kihieu/tang_no.png","giao-dien/icon-kihieu/tang_pha_giap.png","giao-dien/icon-kihieu/tang_thu.png","giao-dien/icon-kihieu/tang_toc.png","giao-dien/icon-kihieu/thieu_dot.png","giao-dien/icon-kihieu/trung_doc.png","giao-dien/icon-home/linh-thu.webp","giao-dien/linh-thu/linh-thu.webp","giao-dien/linh-thu/manh-thu.webp","giao-dien/bao-vat/bao-vat.webp","giao-dien/bao-vat/manh-bao-vat.webp","giao-dien/tuong/boi_duong.webp","giao-dien/tuong/dot_pha.webp","giao-dien/tuong/ghep_manh.webp","giao-dien/tuong/giang_ho_ky.webp","giao-dien/tuong/kinh_mach.webp","giao-dien/tuong/ky_nang.webp","giao-dien/tuong/manh_vo_hiep.webp","giao-dien/tuong/tang_sao.webp","vat-pham-game/trang-bi/equipment-hat.webp?v=24","vat-pham-game/trang-bi/equipment-armor.webp?v=24","vat-pham-game/trang-bi/equipment-sword.webp?v=24","vat-pham-game/trang-bi/equipment-boots.webp?v=24","vat-pham-game/thoi-vang.webp","vat-pham-game/than-dan.webp","vat-pham-game/tien-dan.webp","vat-pham-game/vien-the-luc.webp","giao-dien/buc-may.webp","giao-dien/thong-bao/khung-thong-bao.webp?v=5","giao-dien/thong-bao/khung-thua.webp","giao-dien/thong-bao/khung-thang.webp","giao-dien/thong-bao/khung-chat.webp?v=1","giao-dien/icon-phuthe/cap-toc-1.png","giao-dien/icon-phuthe/cap-toc-2.png","giao-dien/icon-phuthe/cap-toc-3.png","giao-dien/icon-phuthe/cap-toc-4.png","giao-dien/icon-phuthe/cap-toc-5.png","giao-dien/icon-phuthe/cap-toc-6.png","giao-dien/icon-phuthe/cap-toc-7.png","giao-dien/icon-phuthe/gia-toc-1.png","giao-dien/icon-phuthe/gia-toc-2.png","giao-dien/icon-phuthe/gia-toc-3.png","giao-dien/icon-phuthe/gia-toc-4.png","giao-dien/icon-phuthe/gia-toc-5.png","giao-dien/icon-phuthe/gia-toc-6.png","giao-dien/icon-phuthe/gia-toc-7.png","giao-dien/icon-phuthe/ho-thuan-1.png","giao-dien/icon-phuthe/ho-thuan-2.png","giao-dien/icon-phuthe/ho-thuan-3.png","giao-dien/icon-phuthe/ho-thuan-4.png","giao-dien/icon-phuthe/ho-thuan-5.png","giao-dien/icon-phuthe/ho-thuan-6.png","giao-dien/icon-phuthe/ho-thuan-7.png","giao-dien/icon-phuthe/ho-toc-1.png","giao-dien/icon-phuthe/ho-toc-2.png","giao-dien/icon-phuthe/ho-toc-3.png","giao-dien/icon-phuthe/ho-toc-4.png","giao-dien/icon-phuthe/ho-toc-5.png","giao-dien/icon-phuthe/ho-toc-6.png","giao-dien/icon-phuthe/ho-toc-7.png","giao-dien/icon-phuthe/than-thuan-1.png","giao-dien/icon-phuthe/than-thuan-2.png","giao-dien/icon-phuthe/than-thuan-3.png","giao-dien/icon-phuthe/than-thuan-4.png","giao-dien/icon-phuthe/than-thuan-5.png","giao-dien/icon-phuthe/than-thuan-6.png","giao-dien/icon-phuthe/than-thuan-7.png","giao-dien/icon-phuthe/than-toc-1.png","giao-dien/icon-phuthe/than-toc-2.png","giao-dien/icon-phuthe/than-toc-3.png","giao-dien/icon-phuthe/than-toc-4.png","giao-dien/icon-phuthe/than-toc-5.png","giao-dien/icon-phuthe/than-toc-6.png","giao-dien/icon-phuthe/than-toc-7.png","giao-dien/icon-phuthe/tro-thuan-1.png","giao-dien/icon-phuthe/tro-thuan-2.png","giao-dien/icon-phuthe/tro-thuan-3.png","giao-dien/icon-phuthe/tro-thuan-4.png","giao-dien/icon-phuthe/tro-thuan-5.png","giao-dien/icon-phuthe/tro-thuan-6.png","giao-dien/icon-phuthe/tro-thuan-7.png","giao-dien/icon-phuthe/tro-toc-1.png","giao-dien/icon-phuthe/tro-toc-2.png","giao-dien/icon-phuthe/tro-toc-3.png","giao-dien/icon-phuthe/tro-toc-4.png","giao-dien/icon-phuthe/tro-toc-5.png","giao-dien/icon-phuthe/tro-toc-6.png","giao-dien/icon-phuthe/tro-toc-7.png","vat-pham-game/bao-vat/ton-su-ki.webp?v=25","vat-pham-game/bao-vat/ba-vuong-kiem.webp?v=25","vat-pham-game/bao-vat/treasure-09.webp","vat-pham-game/bao-vat/treasure-10.webp","vat-pham-game/bao-vat/treasure-11.webp","vat-pham-game/bao-vat/treasure-12.webp","vat-pham-game/bao-vat/treasure-13.webp","vat-pham-game/bao-vat/treasure-14.webp","vat-pham-game/bao-vat/treasure-15.webp","vat-pham-game/bao-vat/treasure-16.webp","vat-pham-game/bao-vat/treasure-17.webp","vat-pham-game/bao-vat/treasure-18.webp","vat-pham-game/bao-vat/treasure-19.webp","vat-pham-game/bao-vat/treasure-20.webp","vat-pham-game/bao-vat/treasure-21.webp","vat-pham-game/ky-nang/bi-kip.webp","vat-pham-game/ky-nang/vo-tu-thien-thu.webp","vat-pham-game/ky-nang/yeu-quyet.webp","vat-pham-game/bang/thoi-bac.png","vat-pham-game/bang/thoi-vang.png","vat-pham-game/bang/gao.png","vat-pham-game/bang/than-dan.png","vat-pham-game/bang/tien-dan.png","vat-pham-game/bang/vien-the-luc.png","vat-pham-game/bang/dao-tien.png"];
+  const LIST = ["giao-dien/icon-home/thoi-bac.webp","giao-dien/icon-home/bang-hoi.webp","giao-dien/icon-home/bao-li-xi.webp","giao-dien/icon-home/bao-vat.webp","giao-dien/icon-home/cai-dat.webp","giao-dien/icon-home/chieu-mo.webp","giao-dien/icon-home/de-mo.webp","giao-dien/icon-home/cua-tiem.webp","giao-dien/icon-home/doi-ngu.webp","giao-dien/icon-home/gao.webp","giao-dien/icon-home/giang-ho.webp","giao-dien/icon-home/gift-code.webp","giao-dien/icon-home/hop-thu.webp","giao-dien/icon-home/ky-ngo.webp","giao-dien/icon-home/luyen-hoa.webp","giao-dien/icon-home/nhiem-vu.webp","giao-dien/icon-home/pve.webp","giao-dien/icon-home/pvp.webp","giao-dien/icon-home/su-kien.webp","giao-dien/icon-home/tang-cap.webp","giao-dien/icon-home/the-thang.webp","giao-dien/icon-home/thoi-vang.webp","giao-dien/icon-home/trang-bi.webp","giao-dien/icon-home/trang-chu.webp","giao-dien/icon-home/tui-do.webp","giao-dien/icon-home/vo-hiep.webp","giao-dien/icon-kihieu/bat_tu.webp","giao-dien/icon-kihieu/cam_lang.webp","giao-dien/icon-kihieu/chay_mau.webp","giao-dien/icon-kihieu/chay_nhanh.webp","giao-dien/icon-kihieu/choang.webp","giao-dien/icon-kihieu/do_don.webp","giao-dien/icon-kihieu/giam_bao.webp","giao-dien/icon-kihieu/giam_bao_sat.webp","giao-dien/icon-kihieu/giam_chinh_xac.webp","giao-dien/icon-kihieu/giam_cong.webp","giao-dien/icon-kihieu/giam_hoi.webp","giao-dien/icon-kihieu/giam_hp.webp","giao-dien/icon-kihieu/giam_ne.webp","giao-dien/icon-kihieu/giam_no.webp","giao-dien/icon-kihieu/giam_pha_giap.webp","giao-dien/icon-kihieu/giam_thu.webp","giao-dien/icon-kihieu/giam_toc.webp","giao-dien/icon-kihieu/khang.webp","giao-dien/icon-kihieu/khoa_tang_phuc.webp","giao-dien/icon-kihieu/me_hoac.webp","giao-dien/icon-kihieu/phong_an.webp","giao-dien/icon-kihieu/tang_bao.webp","giao-dien/icon-kihieu/tang_bao_sat.webp","giao-dien/icon-kihieu/tang_chinh_xac.webp","giao-dien/icon-kihieu/tang_cong.webp","giao-dien/icon-kihieu/tang_hoi.webp","giao-dien/icon-kihieu/tang_hp.webp","giao-dien/icon-kihieu/tang_ne.webp","giao-dien/icon-kihieu/tang_no.webp","giao-dien/icon-kihieu/tang_pha_giap.webp","giao-dien/icon-kihieu/tang_thu.webp","giao-dien/icon-kihieu/tang_toc.webp","giao-dien/icon-kihieu/thieu_dot.webp","giao-dien/icon-kihieu/trung_doc.webp","giao-dien/icon-home/linh-thu.webp","giao-dien/linh-thu/linh-thu.webp","giao-dien/linh-thu/manh-thu.webp","giao-dien/bao-vat/bao-vat.webp","giao-dien/bao-vat/manh-bao-vat.webp","giao-dien/tuong/boi_duong.webp","giao-dien/tuong/dot_pha.webp","giao-dien/tuong/ghep_manh.webp","giao-dien/tuong/giang_ho_ky.webp","giao-dien/tuong/kinh_mach.webp","giao-dien/tuong/ky_nang.webp","giao-dien/tuong/manh_vo_hiep.webp","giao-dien/tuong/tang_sao.webp","vat-pham-game/trang-bi/equipment-hat.webp?v=24","vat-pham-game/trang-bi/equipment-armor.webp?v=24","vat-pham-game/trang-bi/equipment-sword.webp?v=24","vat-pham-game/trang-bi/equipment-boots.webp?v=24","vat-pham-game/thoi-vang.webp","vat-pham-game/than-dan.webp","vat-pham-game/tien-dan.webp","vat-pham-game/vien-the-luc.webp","giao-dien/buc-may.webp","giao-dien/thong-bao/khung-thong-bao.webp?v=5","giao-dien/thong-bao/khung-thua.webp","giao-dien/thong-bao/khung-thang.webp","giao-dien/thong-bao/khung-chat.webp?v=1","giao-dien/icon-phuthe/cap-toc-1.webp","giao-dien/icon-phuthe/cap-toc-2.webp","giao-dien/icon-phuthe/cap-toc-3.webp","giao-dien/icon-phuthe/cap-toc-4.webp","giao-dien/icon-phuthe/cap-toc-5.webp","giao-dien/icon-phuthe/cap-toc-6.webp","giao-dien/icon-phuthe/cap-toc-7.webp","giao-dien/icon-phuthe/gia-toc-1.webp","giao-dien/icon-phuthe/gia-toc-2.webp","giao-dien/icon-phuthe/gia-toc-3.webp","giao-dien/icon-phuthe/gia-toc-4.webp","giao-dien/icon-phuthe/gia-toc-5.webp","giao-dien/icon-phuthe/gia-toc-6.webp","giao-dien/icon-phuthe/gia-toc-7.webp","giao-dien/icon-phuthe/ho-thuan-1.webp","giao-dien/icon-phuthe/ho-thuan-2.webp","giao-dien/icon-phuthe/ho-thuan-3.webp","giao-dien/icon-phuthe/ho-thuan-4.webp","giao-dien/icon-phuthe/ho-thuan-5.webp","giao-dien/icon-phuthe/ho-thuan-6.webp","giao-dien/icon-phuthe/ho-thuan-7.webp","giao-dien/icon-phuthe/ho-toc-1.webp","giao-dien/icon-phuthe/ho-toc-2.webp","giao-dien/icon-phuthe/ho-toc-3.webp","giao-dien/icon-phuthe/ho-toc-4.webp","giao-dien/icon-phuthe/ho-toc-5.webp","giao-dien/icon-phuthe/ho-toc-6.webp","giao-dien/icon-phuthe/ho-toc-7.webp","giao-dien/icon-phuthe/than-thuan-1.webp","giao-dien/icon-phuthe/than-thuan-2.webp","giao-dien/icon-phuthe/than-thuan-3.webp","giao-dien/icon-phuthe/than-thuan-4.webp","giao-dien/icon-phuthe/than-thuan-5.webp","giao-dien/icon-phuthe/than-thuan-6.webp","giao-dien/icon-phuthe/than-thuan-7.webp","giao-dien/icon-phuthe/than-toc-1.webp","giao-dien/icon-phuthe/than-toc-2.webp","giao-dien/icon-phuthe/than-toc-3.webp","giao-dien/icon-phuthe/than-toc-4.webp","giao-dien/icon-phuthe/than-toc-5.webp","giao-dien/icon-phuthe/than-toc-6.webp","giao-dien/icon-phuthe/than-toc-7.webp","giao-dien/icon-phuthe/tro-thuan-1.webp","giao-dien/icon-phuthe/tro-thuan-2.webp","giao-dien/icon-phuthe/tro-thuan-3.webp","giao-dien/icon-phuthe/tro-thuan-4.webp","giao-dien/icon-phuthe/tro-thuan-5.webp","giao-dien/icon-phuthe/tro-thuan-6.webp","giao-dien/icon-phuthe/tro-thuan-7.webp","giao-dien/icon-phuthe/tro-toc-1.webp","giao-dien/icon-phuthe/tro-toc-2.webp","giao-dien/icon-phuthe/tro-toc-3.webp","giao-dien/icon-phuthe/tro-toc-4.webp","giao-dien/icon-phuthe/tro-toc-5.webp","giao-dien/icon-phuthe/tro-toc-6.webp","giao-dien/icon-phuthe/tro-toc-7.webp","vat-pham-game/bao-vat/ton-su-ki.webp?v=25","vat-pham-game/bao-vat/ba-vuong-kiem.webp?v=25","vat-pham-game/bao-vat/treasure-09.webp","vat-pham-game/bao-vat/treasure-10.webp","vat-pham-game/bao-vat/treasure-11.webp","vat-pham-game/bao-vat/treasure-12.webp","vat-pham-game/bao-vat/treasure-13.webp","vat-pham-game/bao-vat/treasure-14.webp","vat-pham-game/bao-vat/treasure-15.webp","vat-pham-game/bao-vat/treasure-16.webp","vat-pham-game/bao-vat/treasure-17.webp","vat-pham-game/bao-vat/treasure-18.webp","vat-pham-game/bao-vat/treasure-19.webp","vat-pham-game/bao-vat/treasure-20.webp","vat-pham-game/bao-vat/treasure-21.webp","vat-pham-game/ky-nang/bi-kip.webp","vat-pham-game/ky-nang/vo-tu-thien-thu.webp","vat-pham-game/ky-nang/yeu-quyet.webp","vat-pham-game/bang/thoi-bac.webp","vat-pham-game/bang/thoi-vang.webp","vat-pham-game/bang/gao.webp","vat-pham-game/bang/than-dan.webp","vat-pham-game/bang/tien-dan.webp","vat-pham-game/bang/vien-the-luc.webp","vat-pham-game/bang/dao-tien.webp"];
   try { (window.HEROES || []).forEach(h => { if (h.img) LIST.unshift(h.img); if (h.body) LIST.push(h.body); }); } catch (e) {}
   // Phân ưu tiên theo thư mục: giao diện màn chính + ảnh đại diện tướng nạp ngay (prio 0); nhóm nặng của màn khác (phụ thể 5,9 MB, bảo vật 2 MB, thân tướng) chạy ngầm sau cùng (prio 2)
   const NOW = /^(icon-home|icon-kihieu|icons|trang-bi|vat-pham-game|ky-nang)\//;
@@ -11780,7 +11825,7 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
      → tướng đứng ở khung đó ra trận có hào quang phù đó dưới chân + nhận chỉ số phù (PHU_STATS → window.phuLinhBonus).
    • Ngọc / phù là vật phẩm trong Kho (tên: 'Ngọc HP','Ngọc Công','Ngọc Thủ','Ngọc Tốc','Tiên Phù','Tôn Phù','Vương Phù','Ma Phù','Thánh Phù','Hoàng Phù','Đế Phù')
      → admin cho thưởng loại "Vật phẩm" đúng tên đó. Ngọc trong kho tự chuyển vào kho ngọc (cấp 1) khi mở màn Khảm Ngọc.
-   • Ảnh: vat-pham-game/ngoc/*.png • vat-pham-game/phu-linh/*.png • giao-dien/trang-bi/kham-ngoc.png, linh-phu.png */
+   • Ảnh: vat-pham-game/ngoc/*.webp • vat-pham-game/phu-linh/*.webp • giao-dien/trang-bi/kham-ngoc.webp, linh-phu.webp */
 (function () {
   const GEM_DIR = 'vat-pham-game/ngoc/', PHU_DIR = 'vat-pham-game/phu-linh/', UI_DIR = 'giao-dien/trang-bi/';
   const GEM_TYPES = [
@@ -11809,8 +11854,8 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
   const toast = t => { try { scToast(t); } catch (e) { alert(t); } };
 
   /* ---------- icon trong Kho / Túi đồ (gdIco đọc DAN_IMG trước) ---------- */
-  const gemImgHtml = (t, w) => `<img class="gp-i" ${w ? `style="width:${w}px;height:${w}px"` : ''} src="${GEM_DIR}${t.img}.png" alt="${t.name}" onerror="this.onerror=null;this.src='${GEM_DIR}${t.alt || t.img}.png'">`;
-  const phuImgHtml = (t, w) => `<img class="gp-i" ${w ? `style="width:${w}px;height:${w}px"` : ''} src="${PHU_DIR}${t.img}.png" alt="${t.name}">`;
+  const gemImgHtml = (t, w) => `<img class="gp-i" ${w ? `style="width:${w}px;height:${w}px"` : ''} src="${GEM_DIR}${t.img}.webp" alt="${t.name}" onerror="this.onerror=null;this.src='${GEM_DIR}${t.alt || t.img}.webp'">`;
+  const phuImgHtml = (t, w) => `<img class="gp-i" ${w ? `style="width:${w}px;height:${w}px"` : ''} src="${PHU_DIR}${t.img}.webp" alt="${t.name}">`;
   try {
     GEM_TYPES.forEach(t => { DAN_IMG[t.name] = gemImgHtml(t).replace('class="gp-i"', 'class="gi"'); });
     PHU_TYPES.forEach(t => { DAN_IMG[t.name] = phuImgHtml(t).replace('class="gp-i"', 'class="gi"'); });
@@ -11955,7 +12000,7 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
   function gemRender() {
     const s = gemSync(), body = $('eg-body'); if (!body) return;
     const tab = window._egTab === 'kho' ? 'kho' : 'gem';
-    const head = tabsHtml([['gem', 'ngoc.png', 'Ngọc', '💎'], ['kho', 'kho-ngoc.png', 'Kho Ngọc', '🧰']], tab, 'egTab');
+    const head = tabsHtml([['gem', 'ngoc.webp', 'Ngọc', '💎'], ['kho', 'kho-ngoc.webp', 'Kho Ngọc', '🧰']], tab, 'egTab');
     if (tab === 'kho') {
       const cards = GEM_TYPES.map(t => {
         const lvs = Object.keys(s.stock[t.k]).map(Number).filter(l => stockN(s, t.k, l) > 0).sort((a, b) => a - b);
@@ -12037,7 +12082,7 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
   function phuRender() {
     const body = $('ep-body'); if (!body) return;
     const tab = (window._epTab === 'kho' || window._epTab === 'fx') ? window._epTab : 'phu';
-    const head = tabsHtml([['phu', 'phu-linh.png', 'Phù Linh', '📜'], ['kho', 'kho-phu.png', 'Kho Phù', '🗃️'], ['fx', 'hieu-ung.png', 'Hiệu Ứng', '✨']], tab, 'epTab');
+    const head = tabsHtml([['phu', 'phu-linh.webp', 'Phù Linh', '📜'], ['kho', 'kho-phu.webp', 'Kho Phù', '🗃️'], ['fx', 'hieu-ung.webp', 'Hiệu Ứng', '✨']], tab, 'epTab');
     if (tab === 'kho') {
       const sel = window._epSel && pT(window._epSel);
       const chips = PHU_TYPES.map(p => `<div class="gp-card ${sel && sel.k === p.k ? 'cur' : ''}" style="cursor:pointer" onclick="epPick('${p.k}')">${phuImgHtml(p, 56)}<b style="color:${p.col}">${p.name}</b><small>×${num(skbQty(p.name))}</small></div>`).join('');
@@ -12119,7 +12164,7 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
     const add = (id, title, bodyId) => { if ($('screen-' + id)) return; const d = document.createElement('div'); d.className = 'screen'; d.id = 'screen-' + id; d.innerHTML = `<div class="pve-header"><button class="btn-back" onclick="openEqhub()">Trở về</button><h2 class="pve-title">${title}</h2></div><div class="gp-body" id="${bodyId}"></div>`; mc.appendChild(d); };
     add('eqgem', 'Khảm Ngọc', 'eg-body'); add('eqphu', 'Linh Phù', 'ep-body');
     const hub = $('screen-eqhub'); if (!hub || hub.dataset.gp) return; hub.dataset.gp = '1';
-    const ref = hub.querySelector('img'), defs = [[UI_DIR + 'kham-ngoc.png', 'Khảm Ngọc', 'openEqGem()', '💎'], [UI_DIR + 'linh-phu.png', 'Linh Phù', 'openEqPhu()', '📜']];
+    const ref = hub.querySelector('img'), defs = [[UI_DIR + 'kham-ngoc.webp', 'Khảm Ngọc', 'openEqGem()', '💎'], [UI_DIR + 'linh-phu.webp', 'Linh Phù', 'openEqPhu()', '📜']];
     let host = null;
     defs.forEach(([src, label, fn, emoji]) => {
       let el;
@@ -12361,7 +12406,7 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
   const dkHours = () => Math.max(0.001, cfgNum('kyngo.daokiem.hours', 3));   // mỗi 3 giờ chơi 1 lần (admin chỉnh: kyngo.daokiem.hours)
   const dkLeft = () => st.dk.last ? Math.max(0, st.dk.last + dkHours() * 3600e3 - Date.now()) : 0;
   const dkWait = () => `<div class="ky-note" style="font-weight:700">Lượt kế tiếp sau <span data-end="${st.dk.last + dkHours() * 3600e3}">${clock(dkLeft())}</span></div>`;
-  const wpn = (k, cls) => `<img class="ky-wpn ${cls || ''}" src="giao-dien/icon-home/${k}.png" alt="${k}" onerror="this.outerHTML='${k === 'kiem' ? '🗡️' : '🔪'}'">`;
+  const wpn = (k, cls) => `<img class="ky-wpn ${cls || ''}" src="giao-dien/icon-home/${k}.webp" alt="${k}" onerror="this.outerHTML='${k === 'kiem' ? '🗡️' : '🔪'}'">`;
   function renderDK() {
     const W = Math.floor(cfgNum('kyngo.daokiem.win', 500)), Ls = Math.floor(cfgNum('kyngo.daokiem.lose', 50));
     $('ky-body').innerHTML = `<div class="ky-dkwrap"><div class="ky-ttl">Đao hay Kiếm?</div><div class="ky-note">Đồ Long Đao, Ỷ Thiên Kiếm, đao kiếm tranh phong, ai thắng ai bại? Chọn đúng nhận <b>${f(W)}</b> vàng, chọn sai mất <b>${f(Ls)}</b> vàng. Tỷ lệ 50/50. Mỗi ${dkHours()} giờ chơi 1 lần.</div>
@@ -12417,7 +12462,7 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
   function renderRU() {
     ruouSync(); const S = Math.floor(cfgNum('kyngo.ruou.sta', 100)), i = ruouNow();
     $('ky-body').innerHTML = `<div class="ky-ttl">Uống Rượu</div><div class="ky-note">Rượu ngon dành tặng bạn hiền, uống vào được <b>+${f(S)} thể lực</b>. Mỗi khung giờ uống 1 lần.</div>
-      <div class="ky-ctr"><img src="giao-dien/icon-home/ruou.png" alt="Rượu" style="height:96px;width:auto" onerror="this.outerHTML='<div class=&quot;ky-big&quot;>🍶</div>'"><button class="ky-btn" ${ruouCan() ? '' : 'disabled'} onclick="kyRU()">${ruouCan() ? 'Uống' : (i >= 0 ? 'Đã uống khung giờ này' : 'Chưa tới giờ')}</button></div>
+      <div class="ky-ctr"><img src="giao-dien/icon-home/ruou.webp" alt="Rượu" style="height:96px;width:auto" onerror="this.outerHTML='<div class=&quot;ky-big&quot;>🍶</div>'"><button class="ky-btn" ${ruouCan() ? '' : 'disabled'} onclick="kyRU()">${ruouCan() ? 'Uống' : (i >= 0 ? 'Đã uống khung giờ này' : 'Chưa tới giờ')}</button></div>
       <div class="ky-note" style="font-weight:700">Thời gian uống rượu:${WIN.map((w, k) => `<br>${pad(w[0])}:00:00 - ${pad(w[1] - 1)}:59:59 ${st.ruou.done[k] ? '✔' : ''}`).join('')}</div>`;
   }
   window.kyRU = function () {
@@ -12427,7 +12472,7 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
   };
 
   /* ---------- Phái Võ Hiệp ---------- */
-  const BUC = '<img class="ky-buc" src="giao-dien/icon-home/buc-phai-vo-hiep.png" alt="" onerror="this.parentNode.classList.add(\'nobuc\');this.remove()">';   // bục dưới chân võ hiệp được phái đi
+  const BUC = '<img class="ky-buc" src="giao-dien/icon-home/buc-phai-vo-hiep.webp" alt="" onerror="this.parentNode.classList.add(\'nobuc\');this.remove()">';   // bục dưới chân võ hiệp được phái đi
   const phHours = () => Math.max(0.001, cfgNum('kyngo.phai.hours', 6));
   const randHero = skip => { const pool = HEROES.filter(h => !skip.includes(h.id)); return (pool[Math.floor(Math.random() * pool.length)] || HEROES[0]).id; };
   /* Đo CHÂN từng tướng từ chính ảnh chuỗi khung (khung đầu): hàng điểm ảnh thấp nhất của thân + tâm ngang của chân,
