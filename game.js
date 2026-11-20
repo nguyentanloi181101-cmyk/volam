@@ -1835,7 +1835,7 @@ const DAN_IMG = { 'Thần Đan': icoImg('than'), 'Tiên Đan': icoImg('tien') };
 const danIcoHTML = (name, h) => { const k = name === 'Thần Đan' ? 'than' : name === 'Tiên Đan' ? 'tien' : ''; return k ? icoImg(k, h) : (DAN_IMG[name] || ''); };
     let thanDan = _numLS('thandan_val', 0), tienDan = _numLS('tiendan_val', 0);
     // Thay icon cũ (emoji / ảnh cũ) ở thanh tài nguyên trên cùng bằng ảnh mới; chạy 1 lần cho mỗi ô, gọi lại vô hại
-    const hudIcons = () => { [['silver-val', 'silver'], ['rice-val', 'rice'], ['gold-val', 'gold']].forEach(([id, key]) => { try {
+    const hudIcons = () => { [['silver-val', 'silver'], ['rice-val', 'rice'], ['gold-val', 'gold'], ['rc-gold', 'gold']].forEach(([id, key]) => { try {
       const el = document.getElementById(id), p = el && el.parentElement; if (!p || p.dataset.icoDone === key) return;
       [].slice.call(p.childNodes).forEach(n => { if (n === el || (n.contains && n.contains(el))) return; if (n.nodeType === 3) { if (/[^\s]/.test(n.textContent) && !/\d/.test(n.textContent)) n.remove(); return; } if (n.nodeType === 1 && (n.tagName === 'IMG' || n.tagName === 'I' || n.tagName === 'SVG' || (n.tagName === 'SPAN' && !n.querySelector('[id]') && !/\d/.test(n.textContent) ))) n.remove(); });
       p.style.backgroundImage = 'none'; p.insertAdjacentHTML('afterbegin', icoImg(key, '1.5em') + ' '); p.dataset.icoDone = key; } catch (e) {} }); };
@@ -2935,9 +2935,9 @@ function addAccExp(n) {
         if (hh.alwaysUlt) { if (!free.test(ult)) ult = 'KHÔNG TỐN NỘ – lượt nào cũng ulti được. ' + ult.replace(/Cần đầy 100 nộ[,.]?\s*/g, ''); }
         else if (free.test(ult)) ult = ult.replace(free, 'Cần đầy 100 nộ mới ulti được. '); }
       return [
-        { tag:'Đánh thường', name:'Đòn Thường', desc:`Lao vào 1 địch ngẫu nhiên, gây ${fmtN(st.atk)} sát thương (100% Công). Mỗi lần đánh thường +${RAGE_ATK} nộ; mỗi lần tuyệt kỹ gây sát thương trúng +${RAGE_HIT} nộ; bị đánh không nhận nộ (PvP: +${RAGE_PVP} nộ mỗi lượt).` },
+        { tag:'Đánh thường', name:'Đòn Thường', desc:`Lao vào 1 địch ngẫu nhiên, gây ${fmtN(st.atk)} sát thương (100% Công). Mỗi lượt đánh thường +${RAGE_ATK} nộ (mọi ải và PvP đều giống nhau); tuyệt kỹ trúng đích và bị đánh đều không nhận thêm nộ.` },
         { tag:'Tuyệt kỹ', name:HERO_ULT_NAME[id] || 'Tuyệt Kỹ', lv:p.sk, desc:ult },
-        { tag:'Nội tại', name:'Nộ Khí', desc:`Mỗi lần bị đánh trúng +20 nộ (đủ 100 nộ để ulti). Né ${tsFmt(st.dodge)} điểm; kẻ tấn công cần Chuẩn ≥ Né + ${HIT_GAP} mới đánh trúng (VD Né ${tsFmt(st.dodge)} → Chuẩn ${tsFmt(st.dodge + HIT_GAP)}).${st.rage ? ` Vào trận với sẵn ${st.rage} nộ.` : ''}` },
+        { tag:'Nội tại', name:'Nộ Khí', desc:`Đủ 100 nộ để ulti (mỗi lượt đánh thường +50 nộ). Né ${tsFmt(st.dodge)} điểm; kẻ tấn công cần Chuẩn ≥ Né + ${HIT_GAP} mới đánh trúng (VD Né ${tsFmt(st.dodge)} → Chuẩn ${tsFmt(st.dodge + HIT_GAP)}).${st.rage ? ` Vào trận với sẵn ${st.rage} nộ.` : ''}` },
         ...(id === 1 ? [{ tag:'Nội tại', name:'Thanh Liên Bất Tử', desc:`Vào trận KHÔNG có nộ. BẤT TỬ trong ${IMMORTAL_TURNS} hiệp đầu mỗi trận: nhận sát thương nhưng máu không thể xuống dưới 1.` }] : []),
         ...(heroById(id).taunt ? [{ tag:'Nội tại', name:(id === 8 ? 'Thiên Long Hộ Thể' : 'Tướng Thủ'), desc:'Là tướng thủ: địch luôn đánh vào tướng này TRƯỚC. Chỉ khi tướng này gục ngã, địch mới đánh sang các tướng khác.' }] : []),
         ...(heroById(id).prio2 ? [{ tag:'Nội tại', name:(HERO_ROLE[id] === 'heal' ? 'Tướng Trị Liệu' : 'Tướng Hỗ Trợ'), desc:(HERO_ROLE[id] === 'heal' ? 'Địch ưu tiên đánh THỨ 2: khi tướng thủ (nếu có) đã gục, địch sẽ đánh tướng này trước các tướng còn lại.' : 'Địch ưu tiên đánh THỨ 3: sau tướng thủ và tướng trị liệu, địch sẽ đánh tướng này trước tướng công kích và kỹ năng.') }] : [])
@@ -3774,7 +3774,7 @@ function addAccExp(n) {
     const tiaOf = () => 1;   // ĐÃ BỎ cơ chế tia: mọi nhịp đánh chỉ gây 1 lần sát thương
     const rayWait = i => (battleFast ? 0 : i * 170 * ultTimeScale * battleSlow);
     // PvE: mỗi lần chiêu gây sát thương trúng đích thì người đánh +RAGE_HIT nộ (PvP không có; trượt không có; đánh thường đã có +RAGE_ATK riêng)
-    function rageOnHit(u) { if (!pvp && u && u.rage != null && u.alive) gainRage(u, RAGE_HIT); }
+    function rageOnHit(u) { /* mọi ải giống PvP: chiêu trúng đích không cộng nộ */ }
     function strike(u, t, raw) {   // false = trượt (trượt thì cả nhịp trượt)
       if (missed(u, t)) return false;
       const p = calcDmg(u, t, raw);
@@ -7332,8 +7332,8 @@ const SKILL_SHARED = {
   ULT_HITS: 3,
   ULT_MULT: 1.2,
   HEAL_MULT: 1.5,
-  RAGE_ATK: 25,   // PvE: mỗi lần đánh thường +25 nộ
-  RAGE_HIT: 25,   // PvE: mỗi lần chiêu (tuyệt kỹ) gây sát thương trúng +25 nộ (VD Trương Tam Phong 4 lần = +100 nộ)
+  RAGE_ATK: 50,   // MỌI trận (ải PvE, Thần Đàn, Giang Hồ... giống PvP): mỗi lượt đánh thường +50 nộ
+  RAGE_HIT: 0,    // đã bỏ: ulti gây sát thương KHÔNG cộng nộ nữa (giống PvP)
   TL_BUBBLES: 36,        // Thủy Long: số bong bóng trong cơn mưa (hiệu ứng hình ảnh)
   TL_HITS: 5,            // số lần sát thương lên MỖI địch
   TL_MULT: 1,          // tổng hệ số Công lên mỗi địch (chia đều cho các lần)
@@ -7343,7 +7343,7 @@ const SKILL_SHARED = {
   DUCO_SLOW: 0.20,       // địch giảm Tốc
   DUCO_HASTE: 0.20,      // đội ta tăng Tốc
   DUCO_BUFF_TURNS: 2,    // số hiệp giảm/tăng Tốc
-  RAGE_PVP: 50    // PvP (Tỷ Võ/Luận Kiếm): mỗi lượt đánh thường +50 nộ, không nhận nộ theo sát thương
+  RAGE_PVP: 50    // PvP và mọi ải: mỗi lượt đánh thường +50 nộ, không nhận nộ theo sát thương
 };
 
 /* ===== Admin chỉnh được: skill.<TÊN> (admin.html → tab "Chiêu thức"). Mỗi tên là 1 hằng số; để trống = giữ số mặc định. ===== */
