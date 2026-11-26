@@ -229,22 +229,16 @@ window.HERO_DATA = {
     "stats": { "hp": 2000, "atk": 500, "spd": 77, "startRage": 100, "alwaysUlt": true },
     "combat": { "def": 60, "dodge": 50, "acc": 300, "crit": 40, "critDmg": 4, "tough": 10, "pierce": 30, "block": 0 },
     "tia": 1,
-    "constants": { "lv": 70, "star": 5, "border": "purple", "ultName": "Hồ Điệp Kim Cầu" },
+    "constants": { "lv": 70, "star": 5, "border": "purple", "ultName": "Tam Phiến Lạc Thiên" },
     "audio": "06-hoa-man-lau.mp3?v=2",
     "sprites": {
-      "hmlIdle": { "src": "hoa-man-lau-idle.webp?v=40", "cw": 320, "ch": 250, "n": 16, "drop": 0.04 },
-      "hmlCast": { "src": "hoa-man-lau-ult.webp?v=40", "cw": 560, "ch": 300, "n": 16, "drop": 0.033 },
-      "hmlRed": { "src": "hoa-man-lau-buom-red.webp?v=42", "cw": 384, "ch": 256, "n": 16 },
-      "hmlOrange": { "src": "hoa-man-lau-buom-orange.webp?v=42", "cw": 384, "ch": 256, "n": 16 },
-      "hmlYellow": { "src": "hoa-man-lau-buom-yellow.webp?v=42", "cw": 384, "ch": 256, "n": 16 },
-      "hmlGreen": { "src": "hoa-man-lau-buom-green.webp?v=42", "cw": 384, "ch": 256, "n": 16 },
-      "hmlBlue": { "src": "hoa-man-lau-buom-blue.webp?v=42", "cw": 384, "ch": 256, "n": 16 },
-      "hmlIndigo": { "src": "hoa-man-lau-buom-indigo.webp?v=42", "cw": 384, "ch": 256, "n": 16 },
-      "hmlPurple": { "src": "hoa-man-lau-buom-purple.webp?v=42", "cw": 384, "ch": 256, "n": 16 }
+      "hmlIdle": { "src": "hoa-man-lau-idle.webp?v=40", "cw": 320, "ch": 250, "n": 20, "drop": 0.04,"face":"R" },
+      "hmlCast": { "src": "hoa-man-lau-ult.webp?v=40", "cw": 560, "ch": 300, "n": 20, "drop": 0.033,"face":"R" },
+      "hmlFan": { "src": "hoa-man-lau-quat.webp?v=1", "cw": 512, "ch": 288, "n": 1 }
     },
     "idle": { "sheet": "hmlIdle", "h": 140, "ms": 1600 },
-    "ultFn": "butterflyUlt",
-    "skillConfig": { "BFLY_HITS": 3, "BFLY_MULT": 1, "BFLY_ATK_BUFF": 0.5, "BF_PCT": 0.25, "BF_TURNS": 2, "BF_STUN_TURNS": 1, "BF_STUN_TARGETS": 2, "BF_SILENCE_TARGETS": 2, "BF_POISON_PCT": 0.25 }
+    "ultFn": "fanUlt",
+    "skillConfig": { "HML_FAN_HITS": 3, "HML_FAN_CRIT": 0.3, "HML_FAN_SLOW": 0.2, "HML_FAN_TURNS": 2, "BF_PCT": 0.25, "BF_TURNS": 2, "BF_POISON_PCT": 0.25 }
   },
 
   // ===== 7 · Phạm Dao =====

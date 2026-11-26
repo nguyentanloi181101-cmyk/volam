@@ -1,0 +1,1558 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Admin · Mộng Huyễn Giang Hồ</title>
+<style>
+  :root{--bg:#0f1220;--card:#1a1f36;--line:#2d3556;--gold:#fde047;--txt:#e5e7f0;--mut:#8b93b3;--ok:#4ade80;--bad:#f87171;--warn:#fbbf24}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);font:14px/1.5 system-ui,Segoe UI,Roboto,sans-serif;padding:16px 16px 90px}
+  .wrap{max-width:1000px;margin:0 auto}
+  h1{font-size:20px;color:var(--gold);margin:0 0 4px}
+  h2{font-size:15px;margin:0 0 8px;color:var(--gold)}
+  h3{font-size:13px;margin:14px 0 6px;color:var(--txt)}
+  .sub{color:var(--mut);margin-bottom:14px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:14px}
+  label{display:block;font-size:12px;color:var(--mut);margin:8px 0 3px}
+  input,select,textarea{width:100%;background:#0f1220;color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:7px 9px;font:inherit}
+  textarea{resize:vertical;min-height:60px}
+  input::placeholder,textarea::placeholder{color:#59617f}
+  input.ov,select.ov,textarea.ov{border-color:var(--gold);background:#231f0b}
+  input:focus,select:focus,textarea:focus{outline:1px solid var(--gold)}
+  input[type=checkbox]{width:auto}
+  .row{display:flex;gap:6px;align-items:center;flex-wrap:wrap}.row>*{flex:1 1 130px;min-width:0}
+  .row>.fix{flex:0 0 auto}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+  .grid label{margin:0 0 3px}
+  button{background:#334;color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:8px 12px;font:inherit;cursor:pointer}
+  button:hover{border-color:var(--gold)}
+  button.pri{background:var(--gold);color:#1a1300;border-color:var(--gold);font-weight:700}
+  button.dng{color:var(--bad)}
+  button:disabled{opacity:.5;cursor:default}
+  button.sm{padding:4px 8px;font-size:12px}
+  .tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+  .tabs button.on{background:var(--gold);color:#1a1300;border-color:var(--gold);font-weight:700}
+  .tabs.main button{font-size:15px;padding:9px 14px}
+  .tabs.subt button{font-size:13px;padding:6px 10px;background:#232948}
+  .tabs.subt button.on{background:#fde04733;color:var(--gold);border-color:var(--gold)}
+  .hide{display:none!important}
+  .msg{min-height:20px;margin-top:8px}
+  .note{color:var(--mut);font-size:12px;margin:4px 0 10px}
+  .warn{color:var(--warn);font-size:12px}
+  .bar{position:fixed;left:0;right:0;bottom:0;background:#12162b;border-top:1px solid var(--line);padding:10px 16px;display:flex;gap:10px;align-items:center;justify-content:center;z-index:5}
+  .bar .m{flex:1;max-width:520px;font-size:13px}
+  table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:6px;border-bottom:1px solid var(--line);vertical-align:middle}th{color:var(--mut);font-size:12px;font-weight:600}
+  td input{padding:4px 8px}
+  .uid{user-select:all;background:#0f1220;padding:2px 6px;border-radius:6px;word-break:break-all;font-size:12px}
+  code{background:#0f1220;border:1px solid var(--line);border-radius:6px;padding:2px 6px;color:var(--gold)}
+  .line3{display:grid;grid-template-columns:110px 1fr 1fr;gap:8px;align-items:end;margin-bottom:6px}
+  @media(max-width:520px){.line3{grid-template-columns:1fr 1fr}.line3 .nm{grid-column:1/-1}}
+  .tag{display:inline-block;font-size:11px;padding:1px 7px;border-radius:99px;border:1px solid var(--line)}
+  .on{color:var(--ok);border-color:var(--ok)}.off{color:var(--bad);border-color:var(--bad)}
+  .scroll{overflow-x:auto;max-height:340px;overflow-y:auto}
+  .rwrow{display:flex;gap:6px;align-items:center;margin-bottom:6px;flex-wrap:wrap}
+  .rwrow select{flex:2 1 140px;min-width:130px}.rwrow input{flex:1 1 90px;min-width:80px}.rwrow .x{flex:0 0 auto;width:auto}
+  .item{border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:10px;background:#151a2e}
+  .item .hd{display:flex;gap:8px;align-items:center;margin-bottom:6px}
+  .item .hd b{flex:1}
+  .chk{display:flex;gap:6px;align-items:center;margin:0;color:var(--txt);font-size:13px}
+  .scroll2{overflow-x:auto}
+  #raw{min-height:420px;font:12px/1.45 ui-monospace,Consolas,monospace}
+  .fprev{position:relative;width:260px;max-width:100%;aspect-ratio:9/13;background:#1b2a33;border:1px solid var(--line);border-radius:10px;overflow:hidden;flex:0 0 auto}
+  .fprev::after{content:"";position:absolute;left:50%;top:0;bottom:0;border-left:1px dashed #ffffff33}
+  .fd{position:absolute;transform:translate(-50%,-50%);width:26px;height:26px;border-radius:50%;background:#fde047;color:#1a1300;font:700 13px/26px system-ui;text-align:center;font-style:normal;z-index:2}
+  .fd.e{background:#f87171;color:#fff}
+  .pad{display:grid;grid-template-columns:repeat(3,34px);grid-template-rows:repeat(3,30px);gap:3px}
+  .pad button{padding:0;font-size:14px}
+  .pad .u{grid-column:2;grid-row:1}.pad .l{grid-column:1;grid-row:2}.pad .r{grid-column:3;grid-row:2}.pad .d{grid-column:2;grid-row:3}
+  .frow{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:6px 0;border-bottom:1px solid var(--line)}
+  .frow b{flex:1 1 140px}
+  .frow input{width:72px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🛠️ Admin · Mộng Huyễn Giang Hồ</h1>
+  <div class="sub">Một trang duy nhất để chỉnh toàn bộ game: thông số, Hộp Thư, Nhiệm Vụ, Sự Kiện, Gift Code và người chơi. Ô <b style="color:var(--gold)">viền vàng</b> = đang ghi đè; ô trống = dùng số mặc định (chữ mờ). Game của người chơi tự tải số mới khi mở / tải lại.</div>
+
+  <div id="v-login" class="card">
+    <h2>Đăng nhập admin</h2>
+    <label>Tên tài khoản (tài khoản đã đăng ký trong game)</label><input id="lg-user" autocapitalize="none" autocomplete="username">
+    <label>Mật khẩu</label><input id="lg-pass" type="password" autocomplete="current-password" onkeydown="if(event.key==='Enter')login()">
+    <div style="margin-top:10px"><button class="pri" onclick="login()">Đăng nhập</button></div>
+    <div id="lg-msg" class="msg"></div>
+  </div>
+
+  <div id="v-noadmin" class="card hide">
+    <h2>⚠️ Tài khoản này chưa có quyền admin</h2>
+    <p>Vào <b>Firebase Console → Firestore Database</b>, tạo collection <code>admins</code>, thêm 1 document có <b>Document ID</b> đúng bằng UID bên dưới (nội dung tuỳ ý, ví dụ trường <code>ok</code> = true). Rồi tải lại trang.</p>
+    <p>UID của bạn: <span id="my-uid" class="uid"></span></p>
+    <button onclick="auth.signOut()">Đăng xuất</button>
+  </div>
+
+  <div id="v-panel" class="hide">
+    <div class="card row" style="align-items:center">
+      <div>Đang đăng nhập: <b id="who"></b></div>
+      <div class="fix" style="margin-left:auto"><button onclick="auth.signOut()">Đăng xuất</button></div>
+    </div>
+    <div class="tabs main" id="tabs-main"></div>
+    <div class="tabs subt" id="tabs-sub"></div>
+
+    <!-- CẤU HÌNH (chung 1 nút Lưu ở thanh dưới) -->
+    <div id="s-cfg">
+      <div id="t-hero" class="card"></div><div id="t-prog" class="card hide"></div><div id="t-ts" class="card hide"></div><div id="t-eq" class="card hide"></div>
+      <div id="t-boss" class="card hide"></div><div id="t-foe" class="card hide"></div><div id="t-exp" class="card hide"></div><div id="t-pve" class="card hide"></div>
+      <div id="t-sta" class="card hide"></div><div id="t-rec" class="card hide"></div><div id="t-pvp" class="card hide"></div><div id="t-luan" class="card hide"></div><div id="t-hang" class="card hide"></div><div id="t-bd" class="card hide"></div><div id="t-ql" class="card hide"></div><div id="t-tower" class="card hide"></div><div id="t-misc" class="card hide"></div><div id="t-skill" class="card hide"></div><div id="t-tt" class="card hide"></div><div id="t-g2" class="card hide"></div><div id="t-ky" class="card hide"></div><div id="t-gp" class="card hide"></div>
+    </div>
+    <div id="s-mail" class="hide"><div id="t-mail" class="card"></div></div>
+    <div id="s-quest" class="hide"><div id="t-quest" class="card"></div></div>
+    <div id="s-event" class="hide"><div id="t-event" class="card"></div></div>
+    <div id="s-adv" class="hide"><div id="t-adv" class="card"></div></div>
+
+    <!-- GIFT CODE -->
+    <div id="s-gift" class="hide">
+      <div class="card">
+        <h2>Tạo mã mới</h2>
+        <div class="note">Muốn tặng riêng 1 người: đặt "Số lượt tối đa" = 1 rồi gửi mã cho họ. Mã lưu trên Firestore, người chơi nhập trong Túi Đồ → Gift Code.</div>
+        <div class="row">
+          <div><label>Mã (A-Z, 0-9, _ -, 4–32 ký tự)</label>
+            <div style="display:flex;gap:6px"><input id="gc-code" maxlength="32" placeholder="vd: TETMOI2026" style="text-transform:uppercase"><button onclick="gcGen()" style="flex:0 0 auto">🎲 Ngẫu nhiên</button></div></div>
+          <div><label>Số lượt dùng tối đa (0 = không giới hạn)</label><input id="gc-max" type="number" min="0" value="0"></div>
+          <div><label>Hết hạn (bỏ trống = vô thời hạn)</label><input id="gc-exp" type="datetime-local"></div>
+        </div>
+        <label>Ghi chú (chỉ admin thấy)</label><input id="gc-note" maxlength="100" placeholder="vd: Quà bù bảo trì 02/11">
+        <label style="margin-top:14px">Chế độ phần thưởng</label>
+        <select id="gc-mode" onchange="gcMode()">
+          <option value="custom">Tuỳ chọn — tự chọn từng phần thưởng</option>
+          <option value="full">🎁 Tặng FULL vật phẩm — tự thêm toàn bộ vật phẩm trong game</option>
+        </select>
+        <div id="gc-full" class="hide item" style="margin-top:10px">
+          <div class="note" style="margin-top:0">Mã sẽ tặng <b>toàn bộ</b> các nhóm được tích bên dưới (mỗi vật phẩm / mảnh / bảo vật / thần thú trong game 1 dòng quà). Danh sách lấy theo dữ liệu trong trang admin nên tự cập nhật khi bạn thêm vật phẩm mới vào <code>ITEMS</code>, <code>DEF.heroes</code>, <code>DEF.ts</code>, <code>BEASTS</code>.</div>
+          <div class="grid" style="margin-bottom:10px">
+            <div><label>Số lượng mỗi loại Tiền tệ</label><input id="gcf-nc" type="number" min="1" value="100000" oninput="gcFullInfo()"></div>
+            <div><label>Số lượng mỗi Vật phẩm</label><input id="gcf-ni" type="number" min="1" value="10" oninput="gcFullInfo()"></div>
+            <div><label>Số lượng mỗi loại Mảnh</label><input id="gcf-ns" type="number" min="1" value="10" oninput="gcFullInfo()"></div>
+          </div>
+          <div class="grid">
+            <label class="chk"><input type="checkbox" id="gcf-cur" checked onchange="gcFullInfo()"> Tiền tệ (Bạc, Gạo, Thần Đan, Tiên Đan, Thể Lực, Búa)</label>
+            <label class="chk"><input type="checkbox" id="gcf-gold" onchange="gcFullInfo()"> Vàng</label>
+            <label class="chk"><input type="checkbox" id="gcf-item" checked onchange="gcFullInfo()"> Toàn bộ Vật phẩm (Túi Đồ)</label>
+            <label class="chk"><input type="checkbox" id="gcf-shard" checked onchange="gcFullInfo()"> Mảnh toàn bộ tướng</label>
+            <label class="chk"><input type="checkbox" id="gcf-ts" checked onchange="gcFullInfo()"> Toàn bộ Bảo Vật (×1)</label>
+            <label class="chk"><input type="checkbox" id="gcf-tss" checked onchange="gcFullInfo()"> Mảnh toàn bộ Bảo Vật</label>
+            <label class="chk"><input type="checkbox" id="gcf-beast" checked onchange="gcFullInfo()"> Toàn bộ Thần thú (×1)</label>
+            <label class="chk"><input type="checkbox" id="gcf-tsh" checked onchange="gcFullInfo()"> Mảnh toàn bộ Thần thú (Châu)</label>
+          </div>
+          <div id="gcf-info" class="note" style="margin-top:10px"></div>
+        </div>
+        <div id="gc-cust">
+          <label style="margin-top:14px">Phần thưởng</label>
+          <div id="gc-rw"></div>
+        </div>
+        <div style="margin-top:14px"><button class="pri" id="gc-create" onclick="gcCreate()">Tạo Gift Code</button></div>
+        <div id="gc-msg" class="msg"></div>
+      </div>
+      <div class="card">
+        <div class="row" style="align-items:center"><h2 style="margin:0">Danh sách mã</h2><div class="fix" style="margin-left:auto"><button onclick="gcLoad()">↻ Tải lại</button></div></div>
+        <div class="scroll2"><table><thead><tr><th>Mã</th><th>Quà</th><th>Đã dùng</th><th>Hết hạn</th><th>Trạng thái</th><th></th></tr></thead><tbody id="gc-tb"></tbody></table></div>
+      </div>
+    </div>
+
+    <!-- NGƯỜI CHƠI -->
+    <div id="s-players" class="hide">
+      <div class="card">
+        <h2>Danh sách người chơi</h2>
+        <div class="note">Khóa tài khoản • Thu hồi / chỉnh vật phẩm • Reset tài khoản • Reset riêng BANG • Khôi phục về khung giờ trước (game tự lưu ảnh chụp mỗi giờ, giữ 72 giờ).</div>
+        <div class="row"><input id="pl-q" placeholder="Tìm theo tên hoặc UID…" oninput="plRender()"><button class="fix" onclick="plLoad()">🔄 Tải danh sách</button></div>
+        <div class="scroll" style="margin-top:8px"><table><thead><tr><th>Tên</th><th>Cấp acc</th><th>Vàng</th><th>Bạc</th><th>Lưu lần cuối</th><th>Trạng thái</th><th></th></tr></thead><tbody id="pl-list"></tbody></table></div>
+        <div id="pl-msg" class="msg"></div>
+      </div>
+      <div class="card">
+        <h2>⚠️ Reset TẤT CẢ tài khoản</h2>
+        <div class="warn">Xóa sạch dữ liệu của MỌI người chơi (họ chơi lại từ đầu). Ảnh chụp theo giờ vẫn còn nên vẫn khôi phục được từng người trong 72 giờ.</div>
+        <div class="note">Reset = <b>tất cả về 1</b>: tướng cấp 1 ★1, cấp acc 1 (EXP 0), bang cấp 1, vàng/bạc/gạo = 0, chưa có tướng nào — phải Chiêu Mộ rồi Ghép Mảnh.</div>
+        <div class="row"><input id="pl-ra-conf" placeholder="Gõ đúng: RESET TAT CA"><button class="dng fix" onclick="plResetAll()">Reset tất cả</button></div>
+        <div id="pl-ra-msg" class="msg"></div>
+      </div>
+      <div class="card">
+        <h2>🏰 Reset BANG riêng (tất cả tài khoản)</h2>
+        <div class="warn">Chỉ xóa dữ liệu Bang Hội của mọi người chơi: bang về cấp 1, Uy Tín = 0, Lò Luyện Hỏa về 0, Thần Thú / kho bang / điểm BOSS / quyên góp xóa sạch. Tướng, bạc, vàng, trang bị… GIỮ NGUYÊN.</div>
+        <div class="row" style="margin-top:8px"><input id="pl-rg-conf" placeholder="Gõ đúng: RESET BANG"><button class="dng fix" onclick="plResetGuildAll()">Reset bang tất cả</button></div>
+        <div id="pl-rg-msg" class="msg"></div>
+      </div>
+      <div id="pl-detail" class="hide">
+        <div class="card">
+          <h2>Người chơi: <span id="pl-d-name"></span></h2>
+          <div>UID: <span id="pl-d-uid" class="uid"></span></div>
+          <div id="pl-d-state" style="margin:6px 0"></div>
+          <label>Lý do khóa (người chơi sẽ thấy)</label>
+          <div class="row"><input id="pl-d-reason" placeholder="vd: Gian lận"><button class="dng fix" onclick="plSetLock(true)">🔒 Khóa acc</button><button class="fix" onclick="plSetLock(false)">🔓 Mở khóa</button></div>
+          <div class="row" style="margin-top:10px"><button class="dng fix" onclick="plResetOne()">🗑️ Reset tài khoản này về mới tinh</button><button class="dng fix" onclick="plResetGuildOne()">🏰 Reset BANG của người này</button></div>
+          <div id="pl-d-msg" class="msg"></div>
+        </div>
+        <div class="card">
+          <h2>🕒 Khôi phục về khung giờ trước</h2>
+          <div class="note">Chọn mốc rồi bấm Khôi phục — tài khoản trở về đúng trạng thái lúc đó. Trạng thái hiện tại được lưu thành mốc "trước khi admin chỉnh" để hoàn tác.</div>
+          <button onclick="plLoadSnaps()">Tải các mốc giờ</button>
+          <div class="scroll" style="margin-top:8px"><table><thead><tr><th>Mốc</th><th>Lực chiến</th><th>Cấp acc</th><th>Vàng</th><th>Bạc</th><th></th></tr></thead><tbody id="pl-snaps"></tbody></table></div>
+          <div id="pl-sn-msg" class="msg"></div>
+        </div>
+        <div class="card">
+          <h2>🎒 Thu hồi / chỉnh vật phẩm</h2>
+          <div class="warn">Sửa số rồi bấm "Lưu thay đổi". Đặt 0 (hoặc bấm Xóa) để thu hồi hoàn toàn. Máy người chơi sẽ tự tải lại dữ liệu mới (tối đa ~1 phút khi đang mở game).</div>
+          <h3>Tài nguyên</h3><div class="grid" id="pl-e-res"></div>
+          <h3>Vật phẩm Bang Hội (kho)</h3><div class="grid" id="pl-e-kho"></div>
+          <h3>Tướng sở hữu</h3><div class="warn" id="pl-e-own-note"></div><div class="grid" id="pl-e-own"></div>
+          <h3>Mảnh tướng</h3><div class="grid" id="pl-e-shard"></div>
+          <h3>Bảo Vật</h3><div class="scroll"><table><tbody id="pl-e-ts"></tbody></table></div>
+          <h3>Trang bị</h3><div class="scroll"><table><tbody id="pl-e-eq"></tbody></table></div>
+          <h3>Thần thú sở hữu</h3><div class="grid" id="pl-e-beast"></div>
+          <div style="margin-top:12px"><button class="pri" onclick="plSaveEdits()">💾 Lưu thay đổi</button></div>
+          <div id="pl-e-msg" class="msg"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="bar hide" id="bar">
+  <div class="m" id="bar-msg"></div>
+  <button onclick="reloadCfg()">↻ Tải lại từ máy chủ</button>
+  <button class="pri" id="btn-save" onclick="save()">💾 Lưu cấu hình lên máy chủ</button>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<style>
+.gi{height:1.3em;width:auto;vertical-align:-.3em;margin-right:.2em;object-fit:contain}
+.gi-pv{height:30px;width:30px;flex:0 0 30px;object-fit:contain;align-self:center}
+.gi-pe{flex:0 0 30px;width:30px;text-align:center;font-size:22px;line-height:30px;align-self:center}
+</style>
+<script>
+/* ===== ICON ẢNH giống trong game (ảnh lỗi/chưa có thì tự về emoji) =====
+   Nếu admin.html KHÔNG nằm cùng thư mục với index.html của game, đặt IMG_BASE = '../' (hoặc đường dẫn gốc game). */
+const IMG_BASE = '';
+const GI = { silver:'giao-dien/icon-home/thoi-bac.webp', rice:'giao-dien/icon-home/gao.webp', gold:'giao-dien/icon-home/thoi-vang.webp',
+  than:'vat-pham-game/than-dan.webp', tien:'vat-pham-game/tien-dan.webp', pill:'vat-pham-game/vien-the-luc.webp',
+  hammer:'vat-pham-game/trang-bi/icon_hao_thien_chuy_khong_ten.webp', peach:'vat-pham-game/dao-tien.webp', hoathach:'vat-pham-game/trang-bi/hoa-thach.webp' };
+const GI_EMO = { silver:'🥈', rice:'🌾', gold:'🪙', than:'🔮', tien:'🔴', pill:'💊', hammer:'🔨', peach:'🍑', hoathach:'☄️' };
+const GI_NAME = {};
+[['Thú Noãn','thu-noan'],['Thú Hồn','thu-hon'],['Thú Linh','thu-linh'],['Đá Nữ Oa','da-nu-oa'],['Dị Linh','di-linh'],['Tử Linh Thạch','tu-linh-thach']].forEach(p => GI_NAME[p[0]] = 'vat-pham-game/bang/' + p[1] + '.webp');
+[['Đá Xanh Lá','da-linh/da-xanh-la'],['Đá Tím','da-linh/da-tim'],['Đá Đen','da-linh/da-den'],['Đá Vàng','da-linh/da-vang'],['Đá Cam','da-linh/da-cam'],['Đá Đỏ','da-linh/da-do'],['Đá Trắng','da-linh/da-trang'],
+ ['Hỏa Thạch','trang-bi/hoa-thach'],['Linh Phách','phach/linh_phach'],['Tiên Phách','phach/tien_phach'],['Thần Phách','phach/than_phach'],
+ ['Bí Kíp','ky-nang/bi-kip'],['Yếu Quyết','ky-nang/yeu-quyet'],['Vô Tự Thiên Thư','ky-nang/vo-tu-thien-thu']].forEach(p => GI_NAME[p[0]] = 'vat-pham-game/' + p[1] + '.webp');
+GI_NAME['Thẻ Chiêu Mộ Sơ Cấp'] = 'vat-pham-game/the-chieu-mo/so-cap.png';
+GI_NAME['Thẻ Chiêu Mộ Cao Cấp'] = 'vat-pham-game/the-chieu-mo/cao-cap.png';
+[['Ngọc HP','ngo-hp'],['Ngọc Công','ngoc-cong'],['Ngọc Thủ','ngoc-thu'],['Ngọc Tốc','ngoc-toc']].forEach(p => GI_NAME[p[0]] = 'vat-pham-game/ngoc/' + p[1] + '.webp');
+const GI_ALT = { 'Ngọc HP': 'vat-pham-game/ngoc/ngoc-hp.webp' };   // game dự phòng tên file ngoc-hp khi không có ngo-hp
+[['Tiên Phù','tien-phu'],['Tôn Phù','ton-phu'],['Vương Phù','vuong-phu'],['Ma Phù','ma-phu'],['Thánh Phù','thanh-phu'],['Hoàng Phù','hoang-phu'],['Đế Phù','de-phu']].forEach(p => GI_NAME[p[0]] = 'vat-pham-game/phu-linh/' + p[1] + '.webp');
+GI_NAME['Thần Đan'] = GI.than; GI_NAME['Tiên Đan'] = GI.tien; GI_NAME['Viên Thể Lực'] = GI.pill; GI_NAME['Búa'] = GI.hammer;
+GI_NAME['Bạc'] = GI.silver; GI_NAME['Gạo'] = GI.rice; GI_NAME['Vàng'] = GI.gold;
+const giSrc = name => { name = String(name || ''); if (GI_NAME[name]) return IMG_BASE + GI_NAME[name]; if (name.indexOf('Đào Tiên') === 0) return IMG_BASE + GI.peach; if (name.indexOf('Châu ') === 0) return IMG_BASE + 'vat-pham-game/bang/chau.webp'; return ''; };
+const giTag = (src, emo, cls, alt) => src ? `<img class="${cls || 'gi'}" src="${src}" alt="${emo}" ${alt ? `data-alt="${alt}"` : ''} onerror="if(this.dataset.alt){var a=this.dataset.alt;delete this.dataset.alt;this.src=a;return}var e=document.createElement('span');e.className='gi-pe';e.textContent='${emo}';this.replaceWith(e)">` : `<span class="gi-pe">${emo}</span>`;
+const giKey = k => giTag(IMG_BASE + GI[k], GI_EMO[k]);
+/* ô xem trước ảnh cạnh ô chọn (vì <option> không chứa ảnh được) */
+const giPvType = t => GI[t] ? giTag(IMG_BASE + GI[t], GI_EMO[t], 'gi-pv') : '';
+const giPvItem = n => { const s = giSrc(n); return s ? giTag(s, (typeof ITEMS !== 'undefined' && ITEMS[n]) || '🎁', 'gi-pv', GI_ALT[n] ? IMG_BASE + GI_ALT[n] : '') : ''; };
+const giItemImg = n => { const s = giSrc(n); return s ? giTag(s, (typeof ITEMS !== 'undefined' && ITEMS[n]) || '🎁', 'gi', GI_ALT[n] ? IMG_BASE + GI_ALT[n] : '') : ''; };
+/* đổi emoji tiền tệ / vật phẩm trong mọi chữ hiển thị thành ảnh */
+(function () {
+  const RULES = [[/🥈/g, 'silver'], [/🌾|🍚/g, 'rice'], [/🪙|💰/g, 'gold'], [/🔨/g, 'hammer'], [/☄️?/g, 'hoathach'], [/💊/g, 'pill'], [/🍑/g, 'peach'],
+    [/(?:🔮|🔴|🟣)(?=\s?Thần Đan)/g, 'than'], [/(?:🔴|🔮)(?=\s?Tiên Đan)/g, 'tien']];
+  const SKIP = { INPUT: 1, SELECT: 1, OPTION: 1, TEXTAREA: 1, SCRIPT: 1, STYLE: 1, BUTTON: 0 };
+  const ALL = new RegExp(RULES.map(r => r[0].source).join('|'), 'g');
+  function keyOf(tok) { for (const r of RULES) { r[0].lastIndex = 0; if (r[0].test(tok)) return r[1]; } return ''; }
+  function walk(root) {
+    if (!root || root.nodeType !== 1 && root.nodeType !== 11) return;
+    const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, { acceptNode: n => (n.parentNode && !SKIP[n.parentNode.nodeName] && !(n.parentNode.classList && n.parentNode.classList.contains('gi-pe')) && ALL.test(n.nodeValue) ? (ALL.lastIndex = 0, NodeFilter.FILTER_ACCEPT) : (ALL.lastIndex = 0, NodeFilter.FILTER_REJECT)) });
+    const list = []; while (w.nextNode()) list.push(w.currentNode);
+    list.forEach(n => {
+      const t = n.nodeValue, frag = document.createDocumentFragment(); let last = 0, m; ALL.lastIndex = 0;
+      while ((m = ALL.exec(t))) { const k = keyOf(m[0]); if (!k) continue; if (m.index > last) frag.appendChild(document.createTextNode(t.slice(last, m.index))); const d = document.createElement('span'); d.innerHTML = giKey(k); frag.appendChild(d.firstChild); last = m.index + m[0].length; }
+      frag.appendChild(document.createTextNode(t.slice(last))); n.parentNode.replaceChild(frag, n);
+    });
+  }
+  let busy = false, queued = false, obs = null;
+  function run() { if (busy) return; busy = true; try { walk(document.body); } finally { busy = false; if (obs) obs.takeRecords(); } }
+  function sched() { if (queued) return; queued = true; requestAnimationFrame(() => { queued = false; run(); }); }
+  document.addEventListener('DOMContentLoaded', () => { run(); obs = new MutationObserver(() => { if (!busy) sched(); }); obs.observe(document.body, { childList: true, subtree: true }); });
+})();
+</script>
+<script>
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyDOWlrfsWTx0HNWQAYvPHw7fWHlFP3UNu4", authDomain: "game-118e8.firebaseapp.com", projectId: "game-118e8",
+  storageBucket: "game-118e8.firebasestorage.app", messagingSenderId: "612432319937", appId: "1:612432319937:web:0e2ba2a7ecc032d8150b40"
+};
+const CL_DOMAIN = '@mhgh-game.app';
+const fbApp = firebase.initializeApp(FIREBASE_CONFIG, 'admin');   // app riêng: không đè phiên đăng nhập game
+const auth = fbApp.auth(), db = fbApp.firestore();
+
+/* Số MẶC ĐỊNH trong code game (chỉ làm chữ mờ gợi ý + để biết ô nào đang ghi đè).
+   Nếu bạn sửa số mặc định trong code game, cập nhật khối này cho khớp. */
+const DEF = {"heroes": [{"id": 0, "name": "Tà Đế", "role": "atk", "s": {"hp": 2800, "atk": 340, "def": 30, "dodge": 10, "acc": 300, "crit": 40, "critDmg": 4, "tough": 5, "pierce": 30, "block": 0, "heal": 0, "spd": 60, "startRage": 0}, "uid": 73848, "key": "tade"}, {"id": 2, "name": "Hằng Nga", "role": "sup", "s": {"hp": 3000, "atk": 300, "def": 40, "dodge": 8, "acc": 300, "crit": 15, "critDmg": 3, "tough": 15, "pierce": 15, "block": 10, "heal": 0, "spd": 55, "startRage": 100}, "uid": 14464, "key": "hangnga"}, {"id": 3, "name": "Độc Cô Cầu Bại", "role": "atk", "s": {"hp": 2900, "atk": 360, "def": 35, "dodge": 10, "acc": 300, "crit": 50, "critDmg": 5, "tough": 5, "pierce": 40, "block": 0, "heal": 0, "spd": 50, "startRage": 0}, "uid": 96683, "key": "doccocaubai"}, {"id": 4, "name": "Trương Tam Phong", "role": "skill", "s": {"hp": 3500, "atk": 290, "def": 60, "dodge": 5, "acc": 300, "crit": 10, "critDmg": 2, "tough": 20, "pierce": 20, "block": 15, "heal": 0, "spd": 40, "startRage": 100}, "uid": 72698, "key": "truongtamphong"}, {"id": 5, "name": "Âu Cơ", "role": "heal", "s": {"hp": 3000, "atk": 300, "def": 50, "dodge": 10, "acc": 300, "crit": 10, "critDmg": 2, "tough": 10, "pierce": 10, "block": 5, "heal": 0, "spd": 50, "startRage": 50}, "uid": 42076, "key": "auco"}, {"id": 6, "name": "Hoa Mãn Lâu", "role": "skill", "s": {"hp": 2000, "atk": 500, "def": 60, "dodge": 50, "acc": 300, "crit": 40, "critDmg": 4, "tough": 10, "pierce": 30, "block": 0, "heal": 0, "spd": 77, "startRage": 100}, "uid": 59664, "key": "hoamanlau"}, {"id": 7, "name": "Phạm Dao", "role": "atk", "s": {"hp": 1000, "atk": 2500, "def": 100, "dodge": 2, "acc": 300, "crit": 30, "critDmg": 3, "tough": 5, "pierce": 100, "block": 0, "heal": 0, "spd": 65, "startRage": 0}, "uid": 31835, "key": "phamdao"}, {"id": 8, "name": "Thủy Long", "role": "tank", "s": {"hp": 5000, "atk": 300, "def": 120, "dodge": 70, "acc": 300, "crit": 10, "critDmg": 2, "tough": 30, "pierce": 10, "block": 30, "heal": 0, "spd": 1000, "startRage": 100}, "uid": 19257, "key": "thuylong"}, {"id": 9, "name": "Đông Phương Cô Nương", "role": "atk", "s": {"hp": 3000, "atk": 300, "def": 80, "dodge": 20, "acc": 300, "crit": 30, "critDmg": 3, "tough": 10, "pierce": 50, "block": 5, "heal": 0, "spd": 50, "startRage": 100}, "uid": 60649, "key": "dongphuongconuong"}, {"id": 10, "name": "Tiểu Yêu", "role": "skill", "s": {"hp": 3600, "atk": 320, "def": 50, "dodge": 8, "acc": 300, "crit": 30, "critDmg": 3, "tough": 10, "pierce": 25, "block": 5, "heal": 0, "spd": 58, "startRage": 100}, "uid": 82425, "key": "tieuyeu"}, {"id": 11, "name": "Vô Nhai Tử", "role": "sup", "s": {"hp": 3200, "atk": 260, "def": 45, "dodge": 12, "acc": 300, "crit": 15, "critDmg": 2, "tough": 10, "pierce": 15, "block": 5, "heal": 0, "spd": 62, "startRage": 100}, "uid": 77377, "key": "vonhaitu"}, {"id": 12, "name": "Đoàn Dự", "role": "sup", "s": {"hp": 3000, "atk": 300, "def": 40, "dodge": 30, "acc": 300, "crit": 20, "critDmg": 3, "tough": 10, "pierce": 20, "block": 5, "heal": 0, "spd": 70, "startRage": 100}, "uid": 79292, "key": "doandu"}, {"id": 13, "name": "Bắc Cái", "role": "skill", "s": {"hp": 3000, "atk": 330, "def": 40, "dodge": 15, "acc": 300, "crit": 30, "critDmg": 3, "tough": 10, "pierce": 30, "block": 5, "heal": 0, "spd": 56, "startRage": 0}, "uid": 79950, "key": "baccai"}, {"id": 14, "name": "Đông Tà", "role": "skill", "s": {"hp": 2800, "atk": 350, "def": 35, "dodge": 20, "acc": 300, "crit": 40, "critDmg": 4, "tough": 10, "pierce": 30, "block": 0, "heal": 0, "spd": 60, "startRage": 0}, "uid": 73519, "key": "dongta"}, {"id": 15, "name": "Tây Độc", "role": "tank", "s": {"hp": 4200, "atk": 280, "def": 80, "dodge": 10, "acc": 300, "crit": 15, "critDmg": 2, "tough": 25, "pierce": 20, "block": 25, "heal": 0, "spd": 48, "startRage": 0}, "uid": 80716, "key": "taydoc"}, {"id": 16, "name": "Nam Đế", "role": "sup", "s": {"hp": 3300, "atk": 270, "def": 50, "dodge": 15, "acc": 300, "crit": 15, "critDmg": 2, "tough": 15, "pierce": 15, "block": 10, "heal": 0, "spd": 52, "startRage": 0}, "uid": 38245, "key": "namde"}, {"id": 17, "name": "Vương Trùng Dương", "role": "sup", "s": {"hp": 3200, "atk": 280, "def": 45, "dodge": 12, "acc": 300, "crit": 20, "critDmg": 3, "tough": 10, "pierce": 20, "block": 10, "heal": 0, "spd": 54, "startRage": 0}, "uid": 36549, "key": "vuongtrungduong"}, {"id": 18, "name": "Ma Tôn", "role": "atk", "s": {"hp": "", "atk": "", "def": "", "dodge": "", "acc": "", "crit": "", "critDmg": "", "tough": "", "pierce": "", "block": "", "heal": "", "spd": "", "startRage": ""}, "uid": 28776, "key": "maton"}, {"id": 19, "name": "Triệu Mẫn", "role": "atk", "s": {"hp": "", "atk": "", "def": "", "dodge": "", "acc": "", "crit": "", "critDmg": "", "tough": "", "pierce": "", "block": "", "heal": "", "spd": "", "startRage": ""}, "uid": 95044, "key": "trieuman"}, {"id": 20, "name": "Mộc Quế Anh", "role": "sup", "s": {"hp": "", "atk": "", "def": "", "dodge": "", "acc": "", "crit": "", "critDmg": "", "tough": "", "pierce": "", "block": "", "heal": "", "spd": "", "startRage": ""}, "uid": 98362, "key": "mocqueanh"}, {"id": 21, "name": "Thần Hộ Rừng", "role": "atk", "s": {"hp": "", "atk": "", "def": "", "dodge": "", "acc": "", "crit": "", "critDmg": "", "tough": "", "pierce": "", "block": "", "heal": "", "spd": "", "startRage": ""}, "uid": 25039, "key": "thanhorung"}, {"id": 22, "name": "Bạch Cầm", "role": "skill", "s": {"hp": "", "atk": "", "def": "", "dodge": "", "acc": "", "crit": "", "critDmg": "", "tough": "", "pierce": "", "block": "", "heal": "", "spd": "", "startRage": ""}, "uid": 85750, "key": "bachcam"}, {"id": 23, "name": "Thiết Phiến", "role": "skill", "s": {"hp": 6000, "atk": 700, "def": 300, "dodge": 60, "acc": 300, "crit": 0, "critDmg": 0, "tough": 0, "pierce": 0, "block": 0, "heal": 0, "spd": 120, "startRage": 0}, "uid": 99822, "key": "thietphien"}, {"id": 24, "name": "Dương Tiễn", "role": "atk", "s": {"hp": 6000, "atk": 800, "def": 300, "dodge": 60, "acc": 300, "crit": 0, "critDmg": 0, "tough": 0, "pierce": 0, "block": 0, "heal": 0, "spd": 125, "startRage": 0}, "uid": 82275, "key": "duongtien"}, {"id": 25, "name": "Quan Âm", "role": "sup", "s": {"hp": 6000, "atk": 500, "def": 300, "dodge": 60, "acc": 300, "crit": 0, "critDmg": 0, "tough": 0, "pierce": 0, "block": 0, "heal": 0, "spd": 1000, "startRage": 0}, "uid": 16748, "key": "quanam"}, {"id": 26, "name": "Đường Tăng", "role": "sup", "s": {"hp": 6000, "atk": 500, "def": 300, "dodge": 60, "acc": 300, "crit": 0, "critDmg": 0, "tough": 0, "pierce": 0, "block": 0, "heal": 0, "spd": 110, "startRage": 0}, "uid": 94985, "key": "duongtang"}, {"id": 27, "name": "Linh Lung", "role": "sup", "s": {"hp": 6000, "atk": 500, "def": 300, "dodge": 60, "acc": 300, "crit": 0, "critDmg": 0, "tough": 0, "pierce": 0, "block": 0, "heal": 0, "spd": 115, "startRage": 0}, "uid": 19990, "key": "linhlung"}, {"id": 28, "name": "Tôn Ngộ Không", "role": "skill", "s": {"hp": 6500, "atk": 750, "def": 300, "dodge": 60, "acc": 300, "crit": 0, "critDmg": 0, "tough": 0, "pierce": 0, "block": 0, "heal": 0, "spd": 125, "startRage": 0}, "uid": 71522, "key": "tonngokhong"}, {"id": 29, "name": "Na Tra", "role": "atk", "s": {"hp": 6000, "atk": 800, "def": 300, "dodge": 60, "acc": 300, "crit": 0, "critDmg": 0, "tough": 0, "pierce": 0, "block": 0, "heal": 0, "spd": 125, "startRage": 0}, "uid": 52824, "key": "natra"}, {"id": 30, "name": "Sa Tăng", "role": "atk", "s": {"hp": 6500, "atk": 780, "def": 320, "dodge": 60, "acc": 300, "crit": 0, "critDmg": 0, "tough": 0, "pierce": 0, "block": 0, "heal": 0, "spd": 118, "startRage": 0}, "uid": 89044, "key": "satang"}, {"id": 31, "name": "Bát Giới", "role": "tank", "s": {"hp": 8500, "atk": 600, "def": 450, "dodge": 40, "acc": 300, "crit": 0, "critDmg": 0, "tough": 0, "pierce": 0, "block": 0, "heal": 0, "spd": 105, "startRage": 0}, "uid": 60472, "key": "batgioi"}, {"id": 32, "name": "Bạch Cốt Tinh", "role": "atk", "s": {"hp": 6000, "atk": 820, "def": 300, "dodge": 60, "acc": 300, "crit": 0, "critDmg": 0, "tough": 0, "pierce": 0, "block": 0, "heal": 0, "spd": 122, "startRage": 0}, "uid": 70174, "key": "bachcottinh"}, {"id": 33, "name": "Thái Thượng Lão Quân", "role": "sup", "s": {"hp": 7500, "atk": 700, "def": 380, "dodge": 50, "acc": 300, "crit": 0, "critDmg": 0, "tough": 0, "pierce": 0, "block": 0, "heal": 0, "spd": 112, "startRage": 0}, "uid": 42290, "key": "thaithuonglaoquan"}, {"id": 34, "name": "Diêm La Vương", "role": "atk", "s": {"hp": 6500, "atk": 850, "def": 320, "dodge": 50, "acc": 300, "crit": 25, "critDmg": 20, "tough": 0, "pierce": 0, "block": 0, "heal": 0, "spd": 118, "startRage": 100}, "uid": 45132, "key": "diemlavuong"}, {"id": 58316, "name": "Linda", "role": "atk", "s": {"hp": 6200, "atk": 830, "def": 300, "dodge": 55, "acc": 300, "crit": 25, "critDmg": 20, "tough": 0, "pierce": 0, "block": 0, "heal": 0, "spd": 120, "startRage": 0}, "uid": 58316, "key": "linda"}], "ts": [{"k": 1, "name": "Tôn Sư Ký", "lines": [{"t": "dodge", "label": "Né", "base": 30, "per": 0.03}, {"t": "atkFlat", "label": "Công", "base": 1000, "per": 0.15}, {"t": "hpFlat", "label": "HP", "base": 5000, "per": 0.2}]}, {"k": 6, "name": "Bá Vương Kiếm", "lines": [{"t": "acc", "label": "Chuẩn", "base": 15, "per": 0.03}, {"t": "crit", "label": "Bạo", "base": 50, "per": 0.15}, {"t": "critDmg", "label": "Bạo Sát", "base": 30, "per": 0.15}]}, {"k": 7, "name": "Thủy Hoàng Đăng", "lines": [{"t": "tough", "label": "Bền", "base": 25, "per": 0.05}, {"t": "crit", "label": "Bạo", "base": 25, "per": 0.15}, {"t": "critDmg", "label": "Bạo Sát", "base": 25, "per": 0.15}]}, {"k": 8, "name": "Trống Lôi Âm", "lines": [{"t": "crit", "label": "Bạo", "base": 50, "per": 0.05}, {"t": "atkFlat", "label": "Công", "base": 2000, "per": 0.15}, {"t": "atkFlat", "label": "Công", "base": 1500, "per": 0.15}]}, {"k": 9, "name": "Kim Giao Tiễn", "lines": [{"t": "spd", "label": "Tốc", "base": 20, "per": 0.02}, {"t": "critDmg", "label": "Bạo Sát", "base": 500, "per": 0.15}, {"t": "pierce", "label": "Phá giáp", "base": 10000, "per": 0.15}]}, {"k": 10, "name": "Tử Long Đao", "lines": [{"t": "atkFlat", "label": "Công", "base": 1000, "per": 0.15}, {"t": "crit", "label": "Bạo", "base": 30, "per": 0.1}, {"t": "critDmg", "label": "Bạo Sát", "base": 30, "per": 0.15}]}, {"k": 11, "name": "Xích Hỏa Thương", "lines": [{"t": "atkFlat", "label": "Công", "base": 1000, "per": 0.15}, {"t": "pierce", "label": "Phá giáp", "base": 5000, "per": 0.15}, {"t": "crit", "label": "Bạo", "base": 30, "per": 0.1}]}, {"k": 12, "name": "Liệt Hỏa Luân", "lines": [{"t": "atkFlat", "label": "Công", "base": 800, "per": 0.15}, {"t": "critDmg", "label": "Bạo Sát", "base": 20, "per": 0.15}, {"t": "spd", "label": "Tốc", "base": 10, "per": 0.02}]}, {"k": 13, "name": "Tử Ngọc Địch", "lines": [{"t": "hpFlat", "label": "HP", "base": 4000, "per": 0.2}, {"t": "dodge", "label": "Né", "base": 20, "per": 0.03}, {"t": "heal", "label": "Hồi", "base": 500, "per": 0.15}]}, {"k": 14, "name": "Thúy Trúc Trượng", "lines": [{"t": "hpFlat", "label": "HP", "base": 4000, "per": 0.2}, {"t": "tough", "label": "Bền", "base": 20, "per": 0.05}, {"t": "heal", "label": "Hồi", "base": 500, "per": 0.15}]}, {"k": 15, "name": "Vô Tự Thiên Thư", "lines": [{"t": "acc", "label": "Chuẩn", "base": 15, "per": 0.03}, {"t": "critDmg", "label": "Bạo Sát", "base": 20, "per": 0.15}, {"t": "spd", "label": "Tốc", "base": 10, "per": 0.02}]}, {"k": 16, "name": "Thất Sắc Liên Hoa", "lines": [{"t": "atkFlat", "label": "Công", "base": 1500, "per": 0.15}, {"t": "hpFlat", "label": "HP", "base": 6000, "per": 0.2}, {"t": "crit", "label": "Bạo", "base": 40, "per": 0.1}]}, {"k": 17, "name": "Hắc Long Châu", "lines": [{"t": "tough", "label": "Bền", "base": 30, "per": 0.05}, {"t": "pierce", "label": "Phá giáp", "base": 8000, "per": 0.15}, {"t": "hpFlat", "label": "HP", "base": 6000, "per": 0.2}]}, {"k": 18, "name": "Thanh Long Cung", "lines": [{"t": "acc", "label": "Chuẩn", "base": 20, "per": 0.03}, {"t": "crit", "label": "Bạo", "base": 40, "per": 0.1}, {"t": "pierce", "label": "Phá giáp", "base": 6000, "per": 0.15}]}, {"k": 19, "name": "Đào Hoa Phiến", "lines": [{"t": "dodge", "label": "Né", "base": 30, "per": 0.03}, {"t": "spd", "label": "Tốc", "base": 15, "per": 0.02}, {"t": "critDmg", "label": "Bạo Sát", "base": 25, "per": 0.15}]}, {"k": 20, "name": "Hỏa Phụng Cầm", "lines": [{"t": "atkFlat", "label": "Công", "base": 1000, "per": 0.15}, {"t": "heal", "label": "Hồi", "base": 600, "per": 0.15}, {"t": "spd", "label": "Tốc", "base": 10, "per": 0.02}]}, {"k": 21, "name": "Kim Quang Kiếm", "lines": [{"t": "atkFlat", "label": "Công", "base": 1200, "per": 0.15}, {"t": "crit", "label": "Bạo", "base": 35, "per": 0.1}, {"t": "critDmg", "label": "Bạo Sát", "base": 30, "per": 0.15}]}], "tsGlobal": {"starAdd": 0.5, "maxLv": 100, "maxStar": 10}, "equip": {"items": [{"k": "hat", "name": "Mũ", "label": "HP", "per": 1000}, {"k": "armor", "name": "Áo", "label": "Thủ", "per": 50}, {"k": "sword", "name": "Kiếm", "label": "Công", "per": 300}, {"k": "boots", "name": "Giày", "label": "Tốc", "per": 1}], "maxLv": 1000, "rewardEach": 4, "rewardStartLv": 1, "rewardStage": 1, "rewardBattle": 3, "rewardOnce": 1}, "pve": {"silverBase": 3000, "riceBase": 2500, "growth": 1.005, "thanBase": 2, "tienBase": 100, "expBase": 100, "pillBase": 10}, "exp": {"base": 3000, "growth": 10}, "foe": {"hp": 1000, "atk": 200, "def": 30, "dodge": 0, "growth": 1.32, "bossMult": 1.2, "counts": [2, 3, 4, 5]}, "boss": {"daily": 2, "bossRage": 100, "ultMult": 1, "baseHp": 2000000, "hpMult": 2, "ctMult": 2, "atkDiv": 4000, "heroDmgMult": 3, "maxRounds": 30, "ptsPerDmg": 20000, "killPts": 100}, "guild": {"hp1": 3000, "def1": 500, "atk": 1000, "hp2": 6000, "def2": 1000, "pierce": 1000, "heal": 1000, "spd": 2, "critDmg": 20, "boss": 10000}, "guildSkills": ["Cường Tráng", "Hộ Thuẫn", "Lợi Kiếm", "Cường Thân", "Kiên Cố", "Phá Giáp", "Hồi Phục", "Thần Tốc", "Bạo Kích", "Chí Tôn"], "roleRage": {"skill": 100, "atk": 50, "sup": 100, "heal": 50, "tank": 100}};
+Object.assign(DEF, {
+  progress: { lvPerStar: 10, maxStar: 15, starNeedsLv: 1, accLimitsLv: 1, lvGrowthPct: 3, starGrowthPct: 10, skillGrowthPct: 10, skillMax: 10, costSilver: 100, costRice: 200, costGrowthPct: 10, hexpBase: 20, hexpGrowth: 30, taoExp: 300, phachFrom: 6, phachLinh: 10, phachTien: 5, phachThan: 2, phachGrowthPct: 50, skillBaseSkill: 60, skillBaseAtk: 150, skillBaseOther: 100, skillStepBi: 5, skillStepYeu: 10, skillStepVo: 15 },
+  stamina: { max: 200, regenSec: 60, perWave: 1, waves: 4, pill: 30 },
+  recruit: { lam: { cdMin: 5, n: 1, cost: 0 }, tim: { cdMin: 300, n: 10, cost: 0 }, ten: { cdMin: 1440, n: 100, cost: 300 }, mergeCost: 10, shardPerStar: 10 },
+  luan: { on: 1, resetHour: 5, bossMin: 3, bossMax: 5, growth: 15, hp: 100000, atk: 8000, def: 3000, shardCount: 3 },
+  pvp: { rounds: 10, flameWin: 2, flameLose: 1, flameCost: 10, shopShards: 5 },
+  misc: { sweepN: 10, bossBeastRage: 20, ttFeed: { 'Thú Hồn': 100, 'Thú Linh': 500 },
+    bagPrice: { 'Viên Thể Lực': 10, 'Thú Noãn': 50, 'Thú Hồn': 100, 'Thú Linh': 500, 'Đá Nữ Oa': 100, 'Dị Linh': 300, 'Đào Tiên': 200, 'Đào Tiên Vương': 1000, 'Tử Linh Thạch': 400, 'Lá Linh': 50, 'Hộp Linh': 200, 'Hộp Tinh': 400, 'Ngọc Tím': 300 } },
+  mail: { days: 7, gifts: [{ t: 'gold', n: 10000 }] },
+  quest: {
+    tasks: [['gh', 'Vượt 10 phó bản Giang Hồ', 10, 10], ['rec', 'Chiêu mộ võ hiệp 1 lần', 1, 10], ['rec2', 'Chiêu Mộ Cao Cấp 1 lần', 1, 15], ['eq', 'Cường hóa trang bị 2 lần', 2, 10], ['pvp', 'Tỷ võ 3 lần', 3, 15],
+      ['dtl', 'Vượt ải Danh Tướng Lầu 1 lần', 1, 10], ['bd', 'Bồi dưỡng 10 lần', 10, 10], ['bd2', 'Bồi dưỡng cao cấp 1 lần', 1, 10], ['lk', 'Tham gia Luận Kiếm 1 lần', 1, 10]],
+    chests: [
+      { pts: 25, gifts: [{ t: 'item', name: 'Vải Xanh', ico: '🧵', n: 2 }, { t: 'item', name: 'Túi Xanh', ico: '👝', n: 2 }, { t: 'item', name: 'Thú Hồn', ico: '🟠', n: 100 }] },
+      { pts: 50, gifts: [{ t: 'item', name: 'Vải Xanh', ico: '🧵', n: 2 }, { t: 'item', name: 'Túi Xanh', ico: '👝', n: 2 }, { t: 'item', name: 'Ngọc Tím', ico: '🟣', n: 5 }] },
+      { pts: 75, gifts: [{ t: 'gold', n: 200 }, { t: 'item', name: 'Vải Xanh', ico: '🧵', n: 2 }, { t: 'item', name: 'Túi Lam', ico: '👜', n: 1 }] },
+      { pts: 100, gifts: [{ t: 'gold', n: 1000 }, { t: 'item', name: 'Vải Xanh', ico: '🧵', n: 2 }, { t: 'item', name: 'Túi Lam', ico: '👜', n: 1 }] }] },
+  events: [{ id: 'free', name: 'Quà Free', ico: '🎁', kind: 'login', rows: [{ gifts: [] }, { gifts: [] }, { gifts: [] }, { gifts: [] }, { gifts: [] }, { gifts: [] }, { gifts: [] }] }, { id: 'e2', name: 'Đổi', ico: '🔁', kind: 'soon' }, { id: 'e3', name: 'Đập Rượu', ico: '🏺', kind: 'soon' },
+    { id: 'e4', name: 'Rút Thẻ', ico: '🎴', kind: 'soon' }, { id: 'e5', name: 'Quà Online', ico: '🎀', kind: 'soon' }, { id: 'e6', name: 'Dã Tẩu', ico: '📜', kind: 'soon' }, { id: 'e7', name: 'Tụ Linh Đàn', ico: '🏅', kind: 'soon' },
+    { id: 'e8', name: 'Kỳ Cuộc', ico: '🪷', kind: 'soon' }, { id: 'e9', name: 'Thiên Cơ', ico: '🔮', kind: 'soon' }]
+});
+
+
+/* ----- Mặc định bổ sung: chiêu thức, thần thú, bang hội ----- */
+Object.assign(DEF, {
+  skill: {"B4_HERO_HP": 1000, "B4_HERO_ATK": 200, "B4_HERO_DEF": 30, "B4_HERO_DODGE": 0, "GO_STONES": 5, "GO_STONE_PCT": 0.06, "SKEL_PCT": 0.5, "EXEC_PCT": 0.1, "MOON_TURNS": 2, "MOON_REFLECT": 0.5, "MOON_TAKE": 0.3, "ULT_HITS": 3, "ULT_MULT": 1.2, "TAICHI_MULT": 1.5, "HEAL_MULT": 1.5, "RAGE_ATK": 34, "HTT_FLAT": 33333, "HTT_LINES": 18, "HTT_HP_PCT": 0.5, "BFLY_HITS": 3, "BFLY_MULT": 1.0, "BFLY_ATK_BUFF": 0.5, "REVIVE_COUNT": 2, "REVIVE_HP_PCT": 0.5, "IMMORTAL_TURNS": 3, "BF_PCT": 0.25, "BF_TURNS": 2, "BF_STUN_TURNS": 1, "BF_STUN_TARGETS": 2, "BF_SILENCE_TARGETS": 2, "BF_POISON_PCT": 0.25, "DUCO_TWISTERS": 3, "DUCO_MULT": 3.6, "DUCO_NOBUFF": 2, "TADE_HITS": 5, "TADE_MULT": 1, "TADE_SLOW": 0.3, "TADE_SLOW_TURNS": 2, "TADE_PIERCE": 5000, "TADE_PIERCE_TURNS": 2, "DRAGON_MULT": 3.5, "DRAGON_TIERS": 3, "BLEED_TURNS": 3, "BLEED_PCT": 0.2, "TAICHI_BLEED_TURNS": 2, "TAICHI_BLEED_PCT": 0.4, "LB_TURNS": 3, "LB_DODGE_MULT": 3.0, "LB_SPD_MULT": 1.5, "LB_HEAL_MULT": 3.0, "LB_GHOSTS": 18, "LLQ_RAGE": 50, "LLQ_DEF_MULT": 3.0, "LLQ_TARGETS": 2, "BC_HITS": 18, "BC_MULT": 3.6, "BC_DEF_DOWN": 0.3, "BC_ATK_UP": 0.3, "BC_TURNS": 1, "DT_HITS": 4, "DT_MULT": 3.6, "DT_CRIT": 0.3, "DT_TURNS": 2, "TD_DEF_DOWN": 0.7, "TD_HP_DOWN": 0.5, "TD_SPD_DOWN": 0.2, "TD_TURNS": 3, "ND_ALL_DOWN": 0.5, "ND_TURNS": 2, "VTD_ALL_UP": 3.0, "VTD_TURNS": 2, "HIT_GAP": 200, "MIN_DMG_PCT": 0.1, "TP_MULT": 2.4, "TP_HITS": 4, "TP_SLOW": 0.15, "TP_SLOW_TURNS": 3, "TP_SILENCE_TARGETS": 3, "TP_SILENCE_TURNS": 1, "DY_MULT": 3, "DY_HITS": 7, "DY_PIERCE": 15000, "DY_PIERCE_TURNS": 2, "DY_BLOCK_DOWN": 0.2, "DY_TURNS": 2, "QA_BLOCK_UP": 1, "QA_HEAL": 3, "QA_PIERCE_DOWN": 0.5, "QY_TURNS": 2, "DTA_MULT": 1.8, "DTA_HITS": 3, "DTA_ACC_DOWN": 0.5, "DTA_DODGE_DOWN": 0.3, "DTA_TURNS": 2, "LLG_MULT": 1.8, "LLG_HITS": 3, "LLG_TURNS": 1, "NK_ATK_UP": 3, "NK_ATK_TURNS": 1, "NK_CLONES": 3, "NK_HITS": 2, "NK_MULT": 1.5, "NK_STAFFS": 3, "NK_STAFF_MULT": 2.5, "NT_HITS": 3, "NT_WHEELS": 2, "NT_BURN_PCT": 0.2, "NT_BURN_TURNS": 2, "NT_DODGE_DOWN": 0.3, "NT_DODGE_TURNS": 2, "NT_ATK_UP": 0.2, "NT_ATK_TURNS": 2, "SB_HITS": 3, "SB_TOUGH_UP": 30, "SB_TOUGH_DOWN": 30, "SB_TURNS": 2, "SB_GIANT": 3.2, "BG_DEF_UP": 1, "BG_DEF_TURNS": 3, "BG_HEAL": 1, "BCT_HITS": 3, "BCT_SCALE": 1.25, "LQ_HITS": 5, "LQ_NOHEAL_TURNS": 3, "LQ_HEAL_UP": 1, "LQ_HEAL_TURNS": 3, "LQ_DING_W": 0.5, "DL_HITS": 4, "DL_CRIT_UP": 3, "DL_CDMG_UP": 2.5, "DL_TURNS": 2, "LD_HITS": 4, "LD_BRICKS": 32, "LD_CRIT_UP": 3, "LD_CDMG_UP": 3, "LD_TURNS": 2, "LD_TOUGH_DOWN": 50},
+  ttBeasts: [["Kỳ Lân", "A+", 0, "🦄", [["Bạo Tức", 10], ["Cường Công", 5]]], ["Xích Vũ", "A+", 30, "🦅", [["Kích Phá", 2000, 1], ["Cường Công", 8], ["Đẩy Lui", 10]]], ["Tiên Lộc", "A+", 40, "🦌", [["Kích Sát", 10], ["Bạo Tức", 10], ["Cấp Tốc", 5]]], ["Long Quy", "A+", 50, "🐢", [["Chiến Thuẫn", 15], ["Thần Thuẫn", 15], ["Kích Phá", 3000, 1]]], ["Báo Tuyết", "A+", 100, "🐆", [["Thần Tốc", 4], ["Cấp Tốc", 8], ["Bạo Tức", 12], ["Tinh Chuẩn", 15]]], ["Hắc Điêu", "A+", 150, "🦅", [["Thần Tốc", 8], ["Sát Lục", 12], ["Ẩn Thân", 12], ["Tàn Ảnh", 10]]], ["Cuồng Ngưu", "A+", 150, "🐂", [["Trợ Tốc", 8], ["Cường Công", 12], ["Thần Thuẫn", 10], ["Kích Phá", 5000, 1]]], ["Lân Sư", "A+", 200, "🦁", [["Thần Tốc", 11], ["Trợ Tốc", 11], ["Cấp Tốc", 11], ["Gia Tốc", 11]]], ["Thiên Lân", "S", 250, "🦄", [["Tàn Ảnh", 25], ["Cường Công", 10], ["Bạo Tức", 15], ["Trợ Tốc", 5]]], ["Xích Tinh", "S", 250, "🦩", [["Kích Phá", 10000, 1], ["Cường Công", 12], ["Đẩy Lui", 20], ["Trợ Tốc", 5]]], ["Kim Quy", "S", 250, "🐢", [["Thần Thuẫn", 25], ["Chiến Thuẫn", 25], ["Tàn Ảnh", 25], ["Ngự Thuẫn", 20]]], ["Thiên Lộc", "S", 250, "🦌", [["Kích Sát", 20], ["Bạo Tức", 30], ["Kích Phá", 20000, 1], ["Cấp Tốc", 10]]], ["Mai Hoa Báo", "S", 250, "🐆", [["Thần Tốc", 10], ["Cấp Tốc", 12], ["Bạo Tức", 22], ["Tinh Chuẩn", 30]]], ["Tử Sắc Điêu", "S", 250, "🦅", [["Cấp Tốc", 14], ["Kích Phá", 40000, 1], ["Bạo Tức", 24], ["Tàn Ảnh", 30]]], ["Nham Ngưu", "S", 250, "🐂", [["Chiến Thuẫn", 30], ["Thần Tốc", 12], ["Bạo Tức", 25], ["Kích Sát", 25]]], ["Thiên Niên Thú", "S", 250, "🦁", [["Thần Tốc", 13], ["Cấp Tốc", 13], ["Bạo Tức", 20], ["Cường Công", 25]]], ["Địa Niên Thú", "S", 250, "👹", [["Trợ Tốc", 13], ["Gia Tốc", 13], ["Kích Phá", 20000, 1], ["Tàn Ảnh", 22]]], ["Kim Sư", "S", 250, "🦁", [["Trợ Tốc", 12], ["Tàn Ảnh", 25], ["Kích Phá", 40000, 1], ["Cường Công", 20]]], ["Tản Viên Thần", "S", 250, "🗿", [["Thần Thuẫn", 20], ["Thần Tốc", 11], ["Ngự Thuẫn", 25], ["Kỳ Thuẫn", 25]]], ["Giáp Thìn", "S", 250, "🐉", [["Cấp Tốc", 12], ["Kích Sát", 25], ["Bạo Tức", 23], ["Cường Công", 23]]], ["Cửu Vỹ Hồ", "S", 250, "🦊", [["Thần Tốc", 12], ["Tàn Ảnh", 24], ["Kỳ Thuẫn", 25], ["Cường Công", 20]]], ["Hỏa Kỳ Lân", "S", 250, "🔥", []], ["Khổng Tước", "S", 250, "🦚", [["Thần Tốc", 17], ["Cấp Tốc", 17], ["Trợ Tốc", 14], ["Cường Công", 30]]]],
+  tt: { capBase: 20, capPer: 20, needMul: 2.7, needAdd: 100, hpPer: 963.5, starGrow: 0.15, sMul: 1.5, ptsMul: 0.4008, healDiv: 5, phaPer: 800, dodgePer: 10, maxStar: 5, sSlots: 5, starLinh: 10, starDa: 400, freeMin: 2, rerollCost: 500, histMax: 30, pct1: 5, pct2: 10, pct3: 15, pct4: 20, pct5: 25, pct6: 30, pct7: 35, rate7: 1, rate6: 3, rate5: 5, rate4: 10, rate3: 50, rate2: 90, rate1: 100, hpct1: 30, hpct2: 50, hpct3: 100, hpct4: 150, hpct5: 200, hpct6: 250, hpct7: 300 },
+  g2: { uyBase: 300, uyGrow: 1.02, silverBase: 50000, silverGrow: 1.05, ctCost: 5000, buyPer: 99999, bidMax: 6, dropQ1: 5, dropQ2: 10, lotMin: 4, lotExtra: 2, endHour: 12, resetHour: 3, expBase: 5000, expMult: 2 },
+  unlock: [1, 1, 1, 1, 1, 7, 8, 9, 10, 10],
+  bossLv: { 'Kỳ Lân': 2, 'Xích Vũ': 3, 'Tiên Lộc': 4, 'Long Quy': 5, 'Báo Tuyết': 7, 'Hắc Điêu': 8, 'Cuồng Ngưu': 9 },
+  donate: [{ n: 100000, uy: 40, exp: 10000 }, { n: 100000, uy: 40, exp: 10000 }, { n: 100, uy: 150, exp: 50000 }],
+  basin: { full: 1000, silverCost: 100000, silverAdd: 50, goldCost: 50, goldAdd: 300 },
+  basinRew: [{ name: 'Thú Hồn', ico: '🟠', n: 20 }, { name: 'Thú Linh', ico: '🔥', n: 5 }, { name: 'Dị Linh', ico: '🎭', n: 1 }, { name: 'Đá Nữ Oa', ico: '🔻', n: 20 }],
+  basinFull: [{ t: 'item', name: 'Thú Linh', ico: '🔥', n: 50 }, { t: 'gold', n: 100 }],
+  dropsLow: ['Thú Hồn', 'Thú Linh', 'Thú Noãn', 'Đá Nữ Oa', 'Dị Linh', 'Châu {boss}', 'Đào Tiên', 'Tử Linh Thạch'],
+  dropsHigh: ['Đào Tiên Vương', 'Đá Nữ Oa', 'Châu {boss}', 'Dị Linh', 'Lá Linh', 'Hộp Linh', 'Hộp Tinh', 'Ngọc Tím']
+});
+
+DEF.formation = { 1: [[27, 62]], 2: [[30, 49], [24, 75]], 3: [[33, 62], [21, 46], [21, 78]], 4: [[35, 62], [26, 45], [26, 79], [17, 62]], 5: [[26.5, 62], [36, 44], [36, 80], [17, 44], [17, 80]] };   /* = HERO_POS trong js/battle/engine.js */
+/* Mặc định Hang Tụ Linh / Danh Tướng Lầu (khớp HANG_DEF / TOWER_DEF trong giang-ho/giangho.js) */
+Object.assign(DEF, {
+  hang: { on: 1, lockMode: 'open', sta: 10, gemMin: 3, gemMax: 5, exp: 900, sweepPerDay: 3, sweepNeedClear: 1, levels: [1, 5, 10, 15, 20, 25, 30], bans: [10, 20, 30, 40, 50, 60, 70], counts: [3, 4, 5] },
+  tower: { on: 1, lockMode: 'open', levels: [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29], skillMin: 3, skillMax: 5 }
+});
+/* Mặc định Bảo Khố / Đào Tiên (khớp BD_DEF trong giang-ho/giangho.js) */
+Object.assign(DEF, {
+  bk: { on: 1, sta: 10, sweepPerDay: 3, reward: 20000, rewardMul: 5 },
+  dt: { on: 1, sta: 10, sweepPerDay: 3, reward: 25, rewardMul: 5 },
+  tr: { on: 1, sta: 10, sweepPerDay: 3, reward: 3, rewardMul: 5, hp: 7000, atk: 5000, def: 1500, heal: 500, statPct: 50, bossMin: 3, bossMax: 5 }
+});
+const HERO_ULT = { 0:'Tà Đế Ngũ Trảm', 2:'Nguyệt Quang Hộ Thể', 3:'Độc Cô Cửu Kiếm', 4:'Thái Cực Quyền', 5:'Liên Hoa Hồi Xuân', 6:'Hồ Điệp Kim Cầu', 7:'Huyết Kiếm Toàn Phong', 8:'Thủy Thần Hộ Thể', 9:'Thiên Hỏa Chu Võng', 10:'Bạch Cốt Đoạt Mệnh', 11:'Hổ Khẩu Thôn Thiên', 12:'Lăng Ba Vi Bộ', 13:'Thiên Địa Trúc Vũ', 14:'Bích Hải Triều Sinh', 15:'Hà Mô Công', 16:'Nhất Dương Vạn Ấn', 17:'Cửu Chuyển Thái Cực', 23:'Cuồng Phong Thiết Phiến', 24:'Thiên Thương Xuyên Trận', 25:'Cam Lộ Tán Hoa', 26:'Tích Trượng Trấn Pháp Trận', 27:'Bảo Tháp Chiếu Quang', 28:'Đại Náo Thiên Cung', 29:'Hỏa Luân Liên Hoàn Cước', 30:'Nguyệt Nha Giáng Thế', 31:'Thiết Bảo Hộ Thể', 32:'Bạch Cốt Hóa Thân', 33:'Bát Quái Đỉnh Trấn Thiên', 34:'Sinh Tử Bạc Phán Quyết' };
+const STAT_FIELDS = [['hp','HP (Máu)'],['atk','Công'],['def','Thủ'],['dodge','Né'],['acc','Chuẩn'],['crit','Bạo'],['critDmg','Bạo Sát'],['tough','Bền'],['pierce','Phá giáp'],['block','Đỡ đòn (%)'],['heal','Hồi máu / hiệp'],['spd','Tốc'],['startRage','Nộ khởi đầu']];
+const ROLES = { skill:'✨ Kỹ năng (ulti liên tục)', atk:'⚔️ Công kích', sup:'🌟 Hỗ trợ', heal:'💚 Trị liệu', tank:'🛡️ Thủ (bị đánh đầu tiên)' };
+const GUILD_KEYS = ['hp1','def1','atk','hp2','def2','pierce','heal','spd','critDmg','boss'];
+const GUILD_LABEL = { hp1:'HP tối đa / cấp (Cường Tráng)', def1:'Thủ / cấp (Hộ Thuẫn)', atk:'Công / cấp (Lợi Kiếm)', hp2:'HP tối đa / cấp (Cường Thân)', def2:'Thủ / cấp (Kiên Cố)', pierce:'Phá giáp / cấp', heal:'Hồi máu / cấp (cuối hiệp)', spd:'Tốc / cấp', critDmg:'Bạo sát / cấp', boss:'Sát thương lên boss bang / cấp (Chí Tôn)' };
+const BOSS_LABEL = { bossRage:'Nộ đầu trận của boss (100 = ulti ngay hiệp 1)', ultMult:'Hệ số sát thương ulti của boss (1 = như tướng thường)', daily:'Số lượt đánh boss mỗi ngày (0 = khóa)', baseHp:'HP boss đầu tiên', hpMult:'Boss sau nhân HP (×)', ctMult:'Boss Chí Tôn: nhân HP & sát thương (×)', atkDiv:'Sát thương đòn boss = HP ÷ số này', heroDmgMult:'Hệ số sát thương tướng đánh boss (× Công)', maxRounds:'Số hiệp tối đa mỗi lần khiêu chiến', ptsPerDmg:'Cứ bao nhiêu sát thương = 1 Điểm BOSS', killPts:'Điểm BOSS thưởng khi hạ boss' };
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt = n => Number(n || 0).toLocaleString('vi-VN');
+const pj = (s, d) => { try { const v = JSON.parse(s); return v == null ? d : v; } catch (e) { return d; } };
+const pnum = (s, d) => { const v = parseFloat(s); return isNaN(v) ? d : v; };
+const clone = o => JSON.parse(JSON.stringify(o));
+let cfg = {};
+
+function say(id, t, ok) { const e = $(id); if (!e) return; e.style.color = ok === false ? 'var(--bad)' : 'var(--ok)'; e.textContent = t || ''; }
+function show(v) { ['v-login', 'v-noadmin', 'v-panel'].forEach(x => $(x).classList.toggle('hide', x !== v)); if (v !== 'v-panel') $('bar').classList.add('hide'); }
+
+/* ---------- đăng nhập ---------- */
+async function login() {
+  const u = ($('lg-user').value || '').trim().toLowerCase(), p = $('lg-pass').value || '';
+  if (!/^[a-z0-9_]{3,20}$/.test(u) || p.length < 6) return say('lg-msg', 'Tên tài khoản hoặc mật khẩu không hợp lệ.', false);
+  say('lg-msg', 'Đang đăng nhập…');
+  try { await auth.signInWithEmailAndPassword(u + CL_DOMAIN, p); say('lg-msg', ''); } catch (e) { say('lg-msg', 'Sai tên tài khoản hoặc mật khẩu.', false); }
+}
+auth.onAuthStateChanged(async u => {
+  if (!u) return show('v-login');
+  try { const a = await db.collection('admins').doc(u.uid).get(); if (!a.exists) { $('my-uid').textContent = u.uid; return show('v-noadmin'); } }
+  catch (e) { $('my-uid').textContent = u.uid; return show('v-noadmin'); }
+  $('who').textContent = (u.email || '').replace(CL_DOMAIN, '');
+  show('v-panel'); await reloadCfg(); goMain(mainTab);
+});
+
+/* ---------- đọc / ghi cấu hình ---------- */
+async function reloadCfg() {
+  say('bar-msg', 'Đang tải…');
+  try {
+    const d = await db.collection('game_config').doc('main').get();
+    cfg = d.exists ? JSON.parse(d.data().json || '{}') : {};
+    say('bar-msg', d.exists ? '✔ Đã tải cấu hình hiện tại.' : 'Chưa có cấu hình trên máy chủ (đang dùng toàn bộ số mặc định).');
+  } catch (e) { cfg = {}; say('bar-msg', 'Không tải được: ' + (e.code || e.message), false); }
+  renderCur();
+}
+function prune(o) {   // bỏ trường rỗng / object rỗng
+  if (Array.isArray(o)) { const a = o.map(prune); return a.every(x => x == null) ? undefined : a; }
+  if (o && typeof o === 'object') { const r = {}; Object.keys(o).forEach(k => { const v = prune(o[k]); if (v !== undefined) r[k] = v; }); return Object.keys(r).length ? r : undefined; }
+  return (o === '' || o === null || o === undefined || (typeof o === 'number' && !isFinite(o))) ? undefined : o;
+}
+async function save() {
+  if (mainTab === 'adv' && !advApply(true)) return;
+  const out = prune(cfg) || {};
+  out.pvp = out.pvp || {}; PVP_ZERO.forEach(k => { out.pvp[k] = 0; });   // Tỷ Võ không còn cộng chỉ số
+  $('btn-save').disabled = true; say('bar-msg', 'Đang lưu…');
+  try {
+    await db.collection('game_config').doc('main').set({ json: JSON.stringify(out), t: Date.now(), by: auth.currentUser.uid });
+    cfg = out; say('bar-msg', '✔ Đã lưu lúc ' + new Date().toLocaleTimeString('vi-VN') + '. Người chơi sẽ nhận số mới khi mở/tải lại game.'); renderCur();
+  } catch (e) { say('bar-msg', 'Lỗi: ' + (e.code || e.message) + (e.code === 'permission-denied' ? ' (kiểm tra quy tắc Firestore game_config + document admins/UID)' : ''), false); }
+  finally { $('btn-save').disabled = false; }
+}
+
+/* ---------- helpers form ---------- */
+function getp(path) { let o = cfg; for (const k of path) { if (o == null) return undefined; o = o[k]; } return o; }
+function setp(path, v) {
+  let o = cfg; for (let i = 0; i < path.length - 1; i++) { if (o[path[i]] == null || typeof o[path[i]] !== 'object') o[path[i]] = (typeof path[i + 1] === 'number') ? [] : {}; o = o[path[i]]; }
+  o[path[path.length - 1]] = v;
+}
+// ô số: path = đường dẫn trong cfg, def = số mặc định (chữ mờ)
+function num(path, def, extra) {
+  const v = getp(path), has = v !== undefined && v !== null && v !== '';
+  return `<input type="number" step="any" class="${has ? 'ov' : ''}" placeholder="${esc(def)}" value="${has ? esc(v) : ''}" data-p='${JSON.stringify(path)}' onchange="onNum(this)" ${extra || ''}>`;
+}
+function onNum(el) {
+  const path = JSON.parse(el.dataset.p), s = el.value.trim();
+  if (s === '' || !isFinite(Number(s))) { setp(path, ''); el.value = ''; el.classList.remove('ov'); } else { setp(path, Number(s)); el.classList.add('ov'); }
+}
+// ô chọn Mặc định / Bật (1) / Tắt (0)
+function tri(path, defOn, labelOn, labelOff) {
+  const v = getp(path);
+  return `<select class="${v === 0 || v === 1 ? 'ov' : ''}" data-p='${JSON.stringify(path)}' onchange="onTri(this)"><option value="">Mặc định: ${defOn ? labelOn : labelOff}</option><option value="1" ${v === 1 ? 'selected' : ''}>${labelOn}</option><option value="0" ${v === 0 ? 'selected' : ''}>${labelOff}</option></select>`;
+}
+function onTri(el) { setp(JSON.parse(el.dataset.p), el.value === '' ? '' : Number(el.value)); el.classList.toggle('ov', el.value !== ''); }
+// ô chữ
+function txt(path, def, extra) {
+  const v = getp(path), has = v !== undefined && v !== null && v !== '';
+  return `<input type="text" class="${has ? 'ov' : ''}" placeholder="${esc(def)}" value="${has ? esc(v) : ''}" data-p='${JSON.stringify(path)}' onchange="onTxt(this)" ${extra || ''}>`;
+}
+function onTxt(el) { const s = el.value; setp(JSON.parse(el.dataset.p), s.trim() === '' ? '' : s); el.classList.toggle('ov', s.trim() !== ''); }
+const numGrid = (sec, labels, defs, extra) => `<div class="grid">${Object.keys(labels).map(k => `<div><label>${labels[k]}</label>${num([sec, k], defs[k], extra || 'min="0"')}</div>`).join('')}</div>`;
+
+/* ---------- ngày giờ (ms <-> ô datetime-local) ---------- */
+function dtVal(ms) { if (!ms) return ''; const d = new Date(ms), p = n => String(n).padStart(2, '0'); return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + 'T' + p(d.getHours()) + ':' + p(d.getMinutes()); }
+function dtMs(s) { if (!s) return 0; const t = new Date(s).getTime(); return isFinite(t) ? t : 0; }
+
+/* ---------- Trình sửa danh sách PHẦN THƯỞNG dùng chung (khớp gcGrant của game) ---------- */
+const HEROES = DEF.heroes.map(h => [h.id, h.name]);
+const TREASURES = DEF.ts.map(t => [t.k, t.name]);
+const ITEMS = { 'Thú Noãn':'🥚','Thú Hồn':'👻','Thú Linh':'🔥','Đá Nữ Oa':'💎','Dị Linh':'✨','Đào Tiên':'🍑','Đào Tiên Vương':'🍑','Tử Linh Thạch':'🪨','Lá Linh':'🍃','Hộp Linh':'📦','Hộp Tinh':'🎁','Ngọc Tím':'🟣','Vải Xanh':'🧵','Túi Xanh':'👝','Túi Lam':'👜', 'Linh Phách':'🔮', 'Tiên Phách':'🌸', 'Thần Phách':'⚡', 'Hỏa Thạch':'☄️' };
+const BEASTS = ['Kỳ Lân','Xích Vũ','Tiên Lộc','Long Quy','Báo Tuyết','Hắc Điêu','Cuồng Ngưu','Lân Sư','Thiên Lân','Xích Tinh','Kim Quy','Thiên Lộc','Mai Hoa Báo','Tử Sắc Điêu','Nham Ngưu','Thiên Niên Thú','Địa Niên Thú','Kim Sư','Tản Viên Thần','Giáp Thìn','Cửu Vỹ Hồ','Hỏa Kỳ Lân','Khổng Tước'].map(x => [x, x]);
+Object.assign(ITEMS, { 'Đá Xanh Lá':'💚','Đá Tím':'💜','Đá Đen':'⚫','Đá Vàng':'💛','Đá Cam':'🧡','Đá Đỏ':'❤️','Đá Trắng':'🤍','Bí Kíp':'📗','Yếu Quyết':'📘','Vô Tự Thiên Thư':'📙' });
+Object.assign(ITEMS, { 'Ngọc HP':'❤️','Ngọc Công':'⚔️','Ngọc Thủ':'🛡️','Ngọc Tốc':'👟','Tiên Phù':'📜','Tôn Phù':'📜','Vương Phù':'📜','Ma Phù':'📜','Thánh Phù':'📜','Hoàng Phù':'📜','Đế Phù':'📜' });   // Ngọc + Linh Phù (game: js/items/gem-phu.js) — thưởng loại "Vật phẩm" đúng tên này
+ITEMS['Thẻ Chiêu Mộ Sơ Cấp'] = '🎴'; ITEMS['Thẻ Chiêu Mộ Cao Cấp'] = '🎴';   // thẻ nằm trong Túi Đồ, game nhận qua { t:'item', name:'Thẻ Chiêu Mộ ...' }   // quà tặng được Đá Tụ Linh / sách kỹ năng
+const CUSTOM = '__custom';
+const RW_TYPES = [['silver','Bạc'],['rice','Gạo'],['gold','Vàng'],['than','Thần Đan'],['tien','Tiên Đan'],['pill','Viên Thể Lực'],['hammer','Búa'],['exp','✨ EXP tài khoản'],['shard','🧩 Mảnh tướng'],['treasure','🏺 Bảo Vật (bản mới Lv0 ★0)'],['tsshard','🧩 Mảnh Bảo Vật'],['beast','🦄 Thần thú (tặng luôn con)'],['tshard','🧩 Mảnh thần thú (Châu)'],...Object.keys(ITEMS).sort((a, b) => (b.indexOf('Thẻ') === 0) - (a.indexOf('Thẻ') === 0)).map(k => ['item:' + k, (giSrc(k) ? '' : ITEMS[k] + ' ') + k]), ['item', '✏️ Vật phẩm khác (nhập tên)']];
+const opts = (list, cur) => list.map(x => `<option value="${esc(x[0])}" ${String(x[0]) === String(cur) ? 'selected' : ''}>${esc(x[1])}</option>`).join('');
+function rwText(r) {
+  const n = fmt(r.n);
+  switch (r.t) {
+    case 'pill': return n + ' Viên Thể Lực'; case 'silver': return n + ' bạc'; case 'rice': return n + ' gạo'; case 'gold': return n + ' vàng';
+    case 'than': return n + ' Thần Đan'; case 'tien': return n + ' Tiên Đan'; case 'hammer': return n + ' Búa'; case 'exp': return n + ' EXP';
+    case 'beast': return 'Thần thú ' + r.name; case 'tshard': return n + ' mảnh ' + r.name;
+    case 'shard': return n + ' mảnh ' + ((HEROES.find(h => h[0] === Number(r.id)) || [0, 'tướng #' + r.id])[1]);
+    case 'treasure': return n + ' ' + ((TREASURES.find(h => h[0] === Number(r.id)) || [0, 'Bảo Vật'])[1]);
+    case 'tsshard': return n + ' mảnh ' + ((TREASURES.find(h => h[0] === Number(r.id)) || [0, 'Bảo Vật'])[1]);
+    case 'item': return n + ' ' + r.name;
+  }
+  return '?';
+}
+function rwClean(L) {   // làm sạch danh sách quà trước khi lưu
+  return (L || []).filter(r => Number(r.n) >= 1).map(r => { const o = Object.assign({}, r, { n: Math.floor(r.n) }); delete o.custom; if (o.t === 'item') { o.name = String(o.name || '').trim().slice(0, 30); o.ico = String(o.ico || '🎁').slice(0, 4); } return o; });
+}
+
+/* Mỗi danh sách quà có 1 "id" (chuỗi) → RL[id] = { get(): mảng sẽ sửa (tự tạo nếu chưa có), peek(): mảng đang hiển thị, redraw() }.
+   Các hàm rl* chạy từ onclick/onchange trong HTML. */
+const RL = {};
+function rlEditor(id, ref) {   // ref = { get, peek, redraw }
+  RL[id] = ref;
+  const L = ref.peek();
+  return `<div id="rl-${id}">${L.map((r, i) => rlRow(id, r, i)).join('') || '<div class="note">Chưa có phần thưởng.</div>'}</div><button class="sm" onclick="rlAdd('${id}')" style="margin-top:4px">＋ Thêm phần thưởng</button>`;
+}
+function rlRow(id, r, i) {
+  let mid = '';
+  if (r.t === 'shard') mid = `<select onchange="rlSet('${id}',${i},'id',this.value)">${opts(HEROES, r.id)}</select>`;
+  else if (r.t === 'treasure' || r.t === 'tsshard') mid = `<select onchange="rlSet('${id}',${i},'id',this.value)">${opts(TREASURES, r.id)}</select>`;
+  else if (r.t === 'beast' || r.t === 'tshard') mid = `<select onchange="rlSet('${id}',${i},'name',this.value)">${opts(BEASTS, r.name)}</select>`;
+  const known = r.t === 'item' && Object.prototype.hasOwnProperty.call(ITEMS, r.name) && !r.custom;
+  if (r.t === 'item' && !known) {
+    mid = `<input type="text" maxlength="30" value="${esc(r.name)}" placeholder="Tên vật phẩm" onchange="rlSet('${id}',${i},'name',this.value)"><input type="text" maxlength="4" value="${esc(r.ico || '🎁')}" style="max-width:60px;flex:0 0 60px" onchange="rlSet('${id}',${i},'ico',this.value)" title="Icon dự phòng (emoji) – game ưu tiên hiện ảnh theo tên vật phẩm">`;
+  }
+  const cur = r.t === 'item' ? (known ? 'item:' + r.name : 'item') : r.t;
+  return `<div class="rwrow">${known ? giPvItem(r.name) : giPvType(r.t)}<select onchange="rlSet('${id}',${i},'t',this.value)">${opts(RW_TYPES, cur)}</select>${mid}<input type="number" min="1" value="${esc(r.n)}" onchange="rlSet('${id}',${i},'n',this.value)" placeholder="Số lượng"><button class="x dng sm" onclick="rlDel('${id}',${i})">✕</button></div>`;
+}
+function rlAdd(id) { RL[id].get().push({ t: 'silver', n: 1000 }); RL[id].redraw(); }
+function rlDel(id, i) { RL[id].get().splice(i, 1); RL[id].redraw(); }
+function rlSet(id, i, k, v) {
+  const L = RL[id].get(), r = L[i];
+  if (k === 't') {
+    const o = { t: v, n: r.n || 1 };
+    if (v === 'shard') o.id = 0; if (v === 'treasure' || v === 'tsshard') o.id = 1; if (v === 'beast' || v === 'tshard') o.name = BEASTS[0][0]; if (v === 'beast') o.n = 1;
+    if (v === 'item') { o.name = ''; o.ico = '🎁'; o.custom = true; }
+    if (String(v).indexOf('item:') === 0) { o.t = 'item'; o.name = String(v).slice(5); o.ico = ITEMS[o.name] || '🎁'; }
+    L[i] = o; RL[id].redraw(); return;
+  }
+  if (k === 'pick') { if (v === CUSTOM) { r.name = ''; r.ico = '🎁'; r.custom = true; } else { r.name = v; r.ico = ITEMS[v] || '🎁'; delete r.custom; } RL[id].redraw(); return; }
+  r[k] = (k === 'n' || k === 'id') ? Math.max(0, Math.floor(Number(v)) || 0) : v;
+  if (k === 'n' && r.n < 1) r.n = 1;
+}
+// Danh sách quà nằm trong cfg tại `path`; nếu chưa có thì hiển thị `def` và chỉ tạo bản sao khi bắt đầu sửa.
+function rlCfg(id, path, def, redraw) {
+  return rlEditor(id, {
+    peek: () => { const v = getp(path); return Array.isArray(v) ? v : (def || []); },
+    get: () => { let v = getp(path); if (!Array.isArray(v)) { v = clone(def || []); setp(path, v); } return v; },
+    redraw
+  });
+}
+
+/* ================= ĐIỀU HƯỚNG ================= */
+const MAIN = [['cfg', '⚙️ Thông số game'], ['mail', '📬 Hộp Thư'], ['quest', '🎯 Nhiệm Vụ'], ['event', '🎪 Sự Kiện'], ['gift', '🎁 Gift Code'], ['players', '👥 Người chơi'], ['adv', '🧰 Nâng cao (JSON)']];
+const SUB = [['hero', '🧙 Tướng'], ['prog', '📈 Cấp / Sao tướng'], ['ts', '🏺 Bảo Vật'], ['eq', '🛡️ Trang bị'], ['boss', '🐲 Boss & Lò Luyện Hỏa'], ['foe', '👹 Địch PVE'], ['exp', '✨ Cấp & EXP'], ['pve', '🎁 Thưởng PVE'], ['sta', '⚡ Thể lực'], ['rec', '🎴 Chiêu Mộ'], ['pvp', '🥊 Tỷ Võ'], ['luan', '⚔️ Luận Kiếm'], ['hang', '💎 Hang Tụ Linh'], ['bd', '💰 Bảo Khố, Đào Tiên & Trốn'], ['ql', '💎 Phẩm chất tướng'], ['tower', '🗼 Danh Tướng Lầu'], ['skill', '⚔️ Chiêu thức & chiến đấu'], ['tt', '🦄 Thần Thú'], ['g2', '🏰 Bang Hội & Đại Sảnh'], ['misc', '🧩 Khác'], ['ky', '🌟 Kỳ Ngộ'], ['gp', '🛠️ Ngọc, Phù, Trang bị & Bang']];
+const CFG_TABS = ['cfg', 'mail', 'quest', 'event', 'adv'];   // các mục dùng chung nút "Lưu cấu hình"
+let mainTab = 'cfg', subTab = 'hero', heroSel = 0, loaded = {};
+function renderNav() {
+  $('tabs-main').innerHTML = MAIN.map(t => `<button class="${mainTab === t[0] ? 'on' : ''}" onclick="goMain('${t[0]}')">${t[1]}</button>`).join('');
+  $('tabs-sub').classList.toggle('hide', mainTab !== 'cfg');
+  $('tabs-sub').innerHTML = SUB.map(t => `<button class="${subTab === t[0] ? 'on' : ''}" onclick="goSub('${t[0]}')">${t[1]}</button>`).join('');
+  SUB.forEach(t => $('t-' + t[0]).classList.toggle('hide', t[0] !== subTab));
+}
+function goMain(t) {
+  if (mainTab === 'adv' && t !== 'adv') advApply(true);
+  mainTab = t;
+  MAIN.forEach(m => $('s-' + m[0]).classList.toggle('hide', m[0] !== t));
+  $('bar').classList.toggle('hide', !CFG_TABS.includes(t));
+  if (t === 'gift' && !loaded.gift) { loaded.gift = 1; gcLoad(); }
+  if (t === 'players' && !loaded.players) { loaded.players = 1; plLoad(); }
+  renderNav(); renderCur();
+}
+function goSub(t) { subTab = t; renderNav(); renderCur(); }
+const RENDER = { hero: () => renderHero(), prog: () => renderProg(), ts: () => renderTs(), eq: () => renderEq(), boss: () => renderBoss(), foe: () => renderFoe(), exp: () => renderExp(), pve: () => renderPve(), sta: () => renderSta(), rec: () => renderRec(), pvp: () => renderPvp(), luan: () => renderLuan(), hang: () => renderHang(), bd: () => renderBd(), ql: () => renderQl(), tower: () => renderTower(), misc: () => renderMisc(), skill: () => renderSkill(), tt: () => renderTT(), g2: () => renderG2(), ky: () => renderKy(), gp: () => renderGp() };
+function renderCur() {
+  if (mainTab === 'cfg') RENDER[subTab]();
+  else if (mainTab === 'mail') renderMail();
+  else if (mainTab === 'quest') renderQuest();
+  else if (mainTab === 'event') renderEvent();
+  else if (mainTab === 'adv') renderAdv();
+  else if (mainTab === 'gift') gcRenderRw();
+}
+
+/* ===== HAI ID MỖI TƯỚNG (bắt buộc đúng CẢ HAI): ID số = 5 chữ số ngẫu nhiên không trùng • ID chữ = tên tướng viết liền (không dấu, không cách).
+   Bảng này PHẢI giống hệt bảng HERO_UID trong game.js (bộ nạp tướng ở đầu file). id cũ (0-34) vẫn là khóa lưu cấu hình, không đổi. ===== */
+const joinName = s => String(s || '').replace(/Đ/g, 'D').replace(/đ/g, 'd').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]/g, '');
+function heroIdErrors(h) {
+  const e = [];
+  if (!/^[1-9]\d{4}$/.test(String(h.uid))) e.push('ID số phải đủ 5 chữ số');
+  if (h.key !== joinName(h.name)) e.push('ID chữ "' + h.key + '" không khớp tên "' + h.name + '" (phải là "' + joinName(h.name) + '")');
+  if (DEF.heroes.some(x => x !== h && (x.uid === h.uid || x.key === h.key))) e.push('trùng ID với tướng khác');
+  return e;
+}
+function heroIdBox(h) {
+  const e = heroIdErrors(h);
+  return `<div class="note" style="margin-top:8px;${e.length ? 'border-color:#f87171;color:#fca5a5' : ''}">🆔 ID số: <b>${esc(h.uid)}</b> &nbsp;•&nbsp; ID chữ: <b>${esc(h.key)}</b> &nbsp;(bắt buộc khớp cả hai; đổi tên hiển thị không đổi ID)${e.length ? '<br>⚠️ ' + e.map(esc).join('; ') : ''}</div>`;
+}
+/* ================= THÔNG SỐ GAME ================= */
+function renderHero() {
+  const h = DEF.heroes.find(x => x.id === heroSel), id = String(heroSel), cur = (cfg.heroes && cfg.heroes[id]) || {};
+  const role = cur.role || '';
+  const ovCount = hid => Object.keys((cfg.heroes && cfg.heroes[hid]) || {}).length;
+  $('t-hero').innerHTML = `<h2>Thông số cơ bản của tướng</h2>
+    <div class="note">Đây là chỉ số GỐC (trước khi nhân cấp / sao / trang bị / bảo vật…). Áp dụng cho PvE, Giang Hồ và Tỷ Võ.</div>
+    <label>Chọn tướng</label>
+    <div class="tabs subt" style="margin-bottom:10px">${DEF.heroes.map(x => { const c = (cfg.heroes && cfg.heroes[x.id]) || {}; return `<button class="${x.id === heroSel ? 'on' : ''}" title="${ovCount(x.id) ? ovCount(x.id) + ' ô đã sửa' : ''}" onclick="heroSel=${x.id};renderHero()">${esc(c.name || x.name)}${ovCount(x.id) ? ' ✏️' : ''}</button>`; }).join('')}</div>
+    ${heroIdBox(h)}
+    <label>Chất tướng (quyết định nộ đầu trận, ulti liên tục, thứ tự bị đánh)</label>
+    <select onchange="setp(['heroes','${id}','role'],this.value);renderHero()"><option value="">Mặc định: ${esc(ROLES[h.role])}</option>${Object.keys(ROLES).map(r => `<option value="${r}" ${role === r ? 'selected' : ''}>${esc(ROLES[r])}</option>`).join('')}</select>
+    <div class="grid" style="margin-top:10px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))"><div><label>Tên tướng (đổi tên hiển thị)</label>${txt(['heroes', id, 'name'], h.name, 'maxlength="40"')}</div><div><label>Tên tuyệt kỹ</label>${txt(['heroes', id, 'ultName'], HERO_ULT[id] || '', 'maxlength="40"')}</div></div>
+    <div class="grid" style="margin-top:10px">${STAT_FIELDS.map(f => {
+      const def = f[0] === 'startRage' ? ((!role || role === h.role) && h.s.startRage > 0 ? h.s.startRage : DEF.roleRage[role || h.role]) : h.s[f[0]];
+      return `<div><label>${f[1]}</label>${num(['heroes', id, f[0]], f[0] === 'startRage' ? def + ' (theo chất tướng)' : def, 'min="0"')}</div>`;
+    }).join('')}</div>
+    <div style="margin-top:12px"><button class="dng" onclick="if(confirm('Khôi phục tất cả số của tướng này về mặc định?')){delete (cfg.heroes||{})['${id}'];renderHero()}">Khôi phục tướng này</button></div>`;
+}
+
+const PROG_LABEL = { lvPerStar: '📶 Số cấp tướng cần cho mỗi sao (10 → ★2 cần cấp 20…)', maxStar: '⭐ Sao tối đa (≤ 15)', lvGrowthPct: '% chỉ số cơ bản tăng mỗi CẤP (cộng dồn)', starGrowthPct: '% tăng mỗi SAO', skillGrowthPct: '(ĐÃ BỎ – không còn tác dụng) % tăng mỗi cấp KỸ NĂNG', skillBaseSkill: '✨ Hiệu lực tuyệt kỹ cấp 1 – tướng KỸ NĂNG (%)', skillBaseAtk: '⚔️ Hiệu lực tuyệt kỹ cấp 1 – tướng CÔNG KÍCH (%)', skillBaseOther: '🛡️ Hiệu lực tuyệt kỹ cấp 1 – Thủ / Hỗ trợ / Trị liệu (%)', skillStepBi: '📗 Mỗi cấp kỹ năng lên bằng Bí Kíp (+%, cấp 2 miễn phí cũng tính loại này)', skillStepYeu: '📘 Mỗi cấp kỹ năng lên bằng Yếu Quyết (+%)', skillStepVo: '📙 Mỗi cấp kỹ năng lên bằng Vô Tự Thiên Thư (+%)', skillMax: '🎯 Cấp kỹ năng tối đa', costSilver: '🥈 Bạc để lên cấp 2', costRice: '🌾 Gạo để lên cấp 2', costGrowthPct: '% chi phí đắt thêm mỗi cấp', hexpBase: '✨ EXP tướng để lên cấp 2', hexpGrowth: '% EXP tướng đắt thêm mỗi cấp', taoExp: '🍑 EXP của 1 Đào Tiên', phachFrom: '🔮 Sao ĐẦU TIÊN tốn phách (6 = lên ★6 trở đi mới tốn phách)', phachLinh: '🔮 Linh Phách cần ở sao đầu tiên', phachTien: '🌸 Tiên Phách cần ở sao đầu tiên', phachThan: '⚡ Thần Phách cần ở sao đầu tiên', phachGrowthPct: '% phách đắt thêm mỗi sao tiếp theo (50 → ★7 gấp 1.5 lần, ★8 gấp 2 lần…, tính trên số gốc, làm tròn lên)' };
+function renderProg() {
+  $('t-prog').innerHTML = `<h2>Luật tăng trưởng của tướng</h2>
+    <div class="note">Cấp / sao / kỹ năng và chi phí lên cấp bằng bạc + gạo. Để trống = dùng số mặc định (chữ mờ).</div>
+    <div class="grid">${Object.keys(PROG_LABEL).map(k => `<div><label>${PROG_LABEL[k]}</label>${num(['progress', k], DEF.progress[k], 'min="0"')}</div>`).join('')}
+      <div><label>Tăng sao đòi đủ cấp tướng?</label>${tri(['progress', 'starNeedsLv'], true, 'Bật (cấp 20 mới lên ★2…)', 'Tắt (không đòi cấp)')}</div>
+      <div><label>Cấp tướng bị giới hạn bởi cấp tài khoản?</label>${tri(['progress', 'accLimitsLv'], true, 'Bật', 'Tắt')}</div></div>`;
+}
+
+
+/* Loại chỉ số Bảo Vật (khớp TS_LABEL trong game). "Mặc định" = giữ loại gốc của dòng */
+const TS_TYPES = [['dodge','Né'],['acc','Chuẩn'],['crit','Bạo'],['critDmg','Bạo Sát'],['tough','Bền'],['heal','Hồi'],['atkFlat','Công (số)'],['hpFlat','HP (số)'],['pierce','Phá giáp'],['spd','Tốc'],['atk','Công %'],['hp','HP %']];
+function tsTypeSel(k, i, def) {
+  const v = getp(['treasure', 'kinds', String(k), i, 't']);
+  const dn = (TS_TYPES.find(x => x[0] === def) || [0, def])[1];
+  return `<select class="${v ? 'ov' : ''}" data-p='${JSON.stringify(['treasure', 'kinds', String(k), i, 't'])}' onchange="onTxt(this)"><option value="">Mặc định: ${esc(dn)}</option>${TS_TYPES.map(x => `<option value="${x[0]}" ${v === x[0] ? 'selected' : ''}>${x[1]}</option>`).join('')}</select>`;
+}
+
+/* ---------- Phẩm chất Bảo Vật (khớp TS_GRADES / tsPct / grantTsDrop trong game.js) ---------- */
+const TS_GRADES = ['A', 'A+', 'S', 'S+', 'SS', 'SS+', 'SSS'];
+const TS_TIER_INFO = [['Xanh lá', '#22c55e', 'A', 10, 5], ['Xanh dương', '#3b82f6', 'A+', 20, 10], ['Tím', '#a855f7', 'S', 30, 15], ['Cam', '#f97316', 'S+ và SS', 60, 30], ['Đỏ', '#ef4444', 'SS+ và SSS', 80, 40]];
+const TS_GRADE_DEF = { 1: 'A', 6: 'S', 7: 'S+', 8: 'S+', 9: 'SS', 10: 'A+', 11: 'A+', 12: 'A', 13: 'A', 14: 'A', 15: 'S', 16: 'SS+', 17: 'S+', 18: 'S', 19: 'A+', 20: 'S+', 21: 'SS' };
+const TS_DROP_DEF = { 'A': 90, 'A+': 90, 'S': 50, 'S+': 10, 'SS': 10, 'SS+': 1, 'SSS': 1 };
+const TS_GRADE_TIER_IDX = { 'A': 0, 'A+': 1, 'S': 2, 'S+': 3, 'SS': 3, 'SS+': 4, 'SSS': 4 };
+function tsGradeNow(k) { const v = getp(['treasure', 'grades', String(k)]); return TS_GRADES.includes(v) ? v : (TS_GRADE_DEF[k] || 'A'); }   // phẩm chất hiện tại (admin đã chỉnh hoặc mặc định)
+function tsGradeBadge(k) { const g = tsGradeNow(k), t = TS_TIER_INFO[TS_GRADE_TIER_IDX[g]]; return `<span style="display:inline-block;min-width:30px;text-align:center;padding:1px 7px;border-radius:6px;border:1px solid ${t[1]};color:${t[1]};font-weight:900;font-size:12px">${g}</span> <span class="sub" style="color:${t[1]}">${t[0]}</span>`; }
+function tsGradeSel(k) {
+  const v = getp(['treasure', 'grades', String(k)]), def = TS_GRADE_DEF[k] || 'A';
+  return `<select class="${v ? 'ov' : ''}" data-p='${JSON.stringify(['treasure', 'grades', String(k)])}' onchange="onTxt(this)"><option value="">Mặc định: ${def}</option>${TS_GRADES.map(g => `<option value="${g}" ${v === g ? 'selected' : ''}>${g}</option>`).join('')}</select>`;
+}
+function renderTs() {
+  const g = DEF.tsGlobal;
+  $('t-ts').innerHTML = `<h2>Thông số Bảo Vật</h2>
+    <div class="note">Công thức: chỉ số cuối = <b>Gốc</b> × (1 + <b>số★</b> × <b>%sao</b> + <b>cấp</b> × <b>%cấp</b>). % sao / % cấp lấy theo <b>phẩm chất</b> của Bảo Vật (bảng bên dưới). Ví dụ phẩm chất Tím (S): sao 30%, cấp 15% → Gốc × (1 + sao × 0,3 + cấp × 0,15). Màu viền khung khi gắn Bảo Vật cũng theo phẩm chất. Ô <b>Điểm mỗi cấp</b> và <b>Mỗi ★ cộng thêm</b> cũ <b>không còn tác dụng</b>.</div>
+    <div class="grid">
+      <div><label>Mỗi ★ cộng thêm (không còn dùng – xem bảng phẩm chất)</label>${num(['treasure', 'starAdd'], g.starAdd, 'min="0"')}</div>
+      <div><label>Cấp tối đa</label>${num(['treasure', 'maxLv'], g.maxLv, 'min="1"')}</div>
+      <div><label>Sao tối đa</label>${num(['treasure', 'maxStar'], g.maxStar, 'min="0"')}</div>
+      <div><label>Số mảnh ghép 1 Bảo Vật</label>${num(['treasure', 'mergeCost'], g.mergeCost ?? 25, 'min="1"')}</div>
+      <div><label>🔨 EXP Bảo Vật mỗi Búa</label>${num(['treasure', 'hammerExp'], 300, 'min="1"')}</div>
+      <div><label>✨ EXP Bảo Vật cần để lên cấp 1</label>${num(['treasure', 'expBase'], 300, 'min="1"')}</div>
+      <div><label>📈 % EXP tăng thêm mỗi cấp Bảo Vật (30 = +30%)</label>${num(['treasure', 'expGrow'], 30, 'min="0"')}</div>
+    </div>
+    <h3 style="margin-top:14px">🎨 % tăng theo màu / phẩm chất</h3>
+    <table style="width:100%;border-collapse:collapse"><tr><th align="left">Màu viền khung</th><th align="left">Phẩm chất</th><th>Mỗi ★ (%)</th><th>Mỗi cấp (%)</th></tr>
+    ${TS_TIER_INFO.map((t, i) => `<tr><td><b style="color:${t[1]}">■ ${t[0]}</b></td><td>${t[2]}</td><td>${num(['treasure', 'tier', String(i), 'star'], t[3], 'min="0"')}</td><td>${num(['treasure', 'tier', String(i), 'lv'], t[4], 'min="0"')}</td></tr>`).join('')}</table>
+    <div class="note" style="margin-top:14px">🏺 Bảo Vật <b>không còn rơi ở Ải</b>. Mảnh Bảo Vật chỉ rơi ở <b>Luận Kiếm</b> (tỉ lệ theo bậc chỉnh ở tab Luận Kiếm).</div>
+    ${DEF.ts.map(t => `<h2 style="margin-top:16px">${esc(getp(['treasure', 'names', String(t.k)]) || t.name)} <span class="sub">(id ${t.k})</span></h2>
+      <div class="grid"><div><label>Tên Bảo Vật (để trống = "${esc(t.name)}")</label>${txt(['treasure', 'names', String(t.k)], t.name)}</div><div><label>Phẩm chất (quyết định màu viền, % sao / cấp, bậc rơi ở Luận Kiếm)</label>${tsGradeSel(t.k)}</div></div>` + t.lines.map((l, i) => `<div class="line3"><div class="nm"><label>Dòng ${i + 1}</label>${tsTypeSel(t.k, i, l.t)}</div>
+      <div><label>Chỉ số gốc</label>${num(['treasure', 'kinds', String(t.k), i, 'base'], l.base, 'min="0"')}</div>
+      <div><label>Điểm mỗi cấp (không còn dùng)</label>${num(['treasure', 'kinds', String(t.k), i, 'per'], l.per, 'min="0"')}</div></div>`).join('')).join('')}`;
+}
+
+/* ---------- Đá nâng cấp trang bị (khớp equipment-ui.js: eqStoneCost) ---------- */
+const EQ_ST_NAMES = ['Đá Xanh Lá (cấp 1→10)', 'Đá Tím (cấp 11→20)', 'Đá Đen (cấp 21→30)', 'Đá Vàng (cấp 31→40)', 'Đá Cam (cấp 41→50)', 'Đá Đỏ (cấp 51→60)', 'Đá Trắng (cấp 61→70)'];
+const EQ_ST_DEF = { maxLv: 100, base: [1, 1, 1, 1, 1, 1, 1], mode: [1, 1, 1, 1, 1, 1, 1], step: [2, 3, 4, 5, 6, 7, 8], allBase: 5, allMode: 1, allStep: 2 };
+function eqStoneAdmin() {
+  const D = EQ_ST_DEF, P = ['equip', 'stone'];
+  const row = (name, pb, db, pm, dm, ps, ds) => `<tr><td>${esc(name)}</td><td>${num(pb, db, 'min="0"')}</td><td>${tri(pm, dm, 'Nhân', 'Cộng')}</td><td>${num(ps, ds, 'min="0"')}</td></tr>`;
+  return `<h2 style="margin-top:22px">Đá nâng cấp trang bị</h2>
+    <div class="note">Mỗi hạng đá có: <b>Số viên cấp đầu</b> (cấp đầu tiên của hạng đó), <b>Kiểu tăng</b> và <b>Hệ số</b>.<br>
+    • <b>Nhân</b>: số viên cấp sau = số viên cấp trước × hệ số (vd 1, 2, 4, 8… khi hệ số = 2).<br>
+    • <b>Cộng</b>: số viên cấp sau = số viên cấp trước + hệ số (vd 1, 3, 5, 7… khi hệ số = 2).<br>
+    Từ cấp 71 mỗi cấp tốn đủ 7 loại đá, mỗi loại số viên như hàng cuối. Để trống = dùng mặc định (chữ mờ).</div>
+    <div class="grid"><div><label>Cấp tối đa của trang bị khi dùng đá</label>${num([...P, 'maxLv'], D.maxLv, 'min="1"')}</div></div>
+    <table style="margin-top:10px;width:100%;border-collapse:collapse"><tr><th align="left">Hạng đá</th><th>Số viên cấp đầu</th><th>Kiểu tăng</th><th>Hệ số</th></tr>
+    ${EQ_ST_NAMES.map((n, i) => row(n, [...P, 'base', String(i)], D.base[i], [...P, 'mode', String(i)], D.mode[i], [...P, 'step', String(i)], D.step[i])).join('')}
+    ${row('Cấp 71 trở đi (mỗi loại đá)', [...P, 'allBase'], D.allBase, [...P, 'allMode'], D.allMode, [...P, 'allStep'], D.allStep)}</table>
+    <div style="margin-top:10px"><button type="button" onclick="eqStonePreview()">Xem thử số đá cần</button></div><div id="eq-st-prev"></div>`;
+}
+function eqStonePreview() {
+  const D = EQ_ST_DEF, g = (p, d) => { const v = getp(['equip', 'stone', ...p]); return (v === undefined || v === null || v === '') ? d : Number(v); };
+  const N = (b, m, s, k) => Math.max(0, Math.round(m === 0 ? b + s * k : b * Math.pow(s, k)));
+  const cost = lv => lv <= 70 ? (t => ({ it: EQ_ST_NAMES[t].split(' (')[0], n: N(g(['base', String(t)], D.base[t]), g(['mode', String(t)], D.mode[t]), g(['step', String(t)], D.step[t]), lv - 1 - t * 10) }))(Math.floor((lv - 1) / 10))
+    : { it: '7 loại đá, mỗi loại', n: N(g(['allBase'], D.allBase), g(['allMode'], D.allMode), g(['allStep'], D.allStep), lv - 71) };
+  const mx = Math.min(100, g(['maxLv'], D.maxLv)), rows = [];
+  for (let lv = 1; lv < mx; lv++) { if (lv <= 12 || lv % 10 === 0 || lv % 10 === 1 || lv === mx - 1) { const c = cost(lv); rows.push(`<tr><td>${lv} → ${lv + 1}</td><td>${esc(c.it)}</td><td>${fmt(c.n)}</td></tr>`); } }
+  $('eq-st-prev').innerHTML = `<table style="margin-top:8px;width:100%;border-collapse:collapse"><tr><th align="left">Lên cấp</th><th align="left">Loại đá</th><th align="left">Số viên</th></tr>${rows.join('')}</table>`;
+}
+
+function eqStarAuto(n) {   // số Hỏa Thạch game tự tính cho sao thứ n theo ô đang nhập
+  const b = Number(getp(['equip', 'starBase'])), g = Number(getp(['equip', 'starGrow']));
+  const base = getp(['equip', 'starBase']) === '' || getp(['equip', 'starBase']) == null || !isFinite(b) || b < 0 ? 10 : b;
+  const gr = getp(['equip', 'starGrow']) === '' || getp(['equip', 'starGrow']) == null || !isFinite(g) || g < 0 ? 40 : g;
+  return Math.ceil(base * Math.pow(1 + gr / 100, n - 1) - 1e-9);
+}
+function eqStarAdmin() {
+  const mx = Math.max(1, Math.min(30, Math.floor(Number(getp(['equip', 'maxStar'])) || 10)));
+  return `<h3 style="margin-top:16px">☄️ Hỏa Thạch để tăng sao trang bị</h3>
+    <div class="note">Tăng sao tốn <b>Hỏa Thạch</b> (vật phẩm trong Túi Đồ). Mặc định ★1 = 10, mỗi sao sau đắt thêm 40% (cộng dồn). Muốn cho người chơi nhận Hỏa Thạch: ở <b>Thưởng PVE</b> (ải sau) hoặc <b>Hộp Thư</b> (quà hằng ngày) thêm quà loại "Vật phẩm" → chọn <b>Hỏa Thạch</b>. Có thể nhập thẳng số cho từng sao ở bảng (ô trống = tự tính, chữ mờ là số tự tính hiện tại; đổi 2 ô trên xong bấm tab khác rồi quay lại để số mờ cập nhật).</div>
+    <div style="overflow-x:auto"><table><thead><tr><th>Sao</th><th>☄️ Hỏa Thạch</th></tr></thead><tbody>${Array.from({ length: mx }, (_, i) => `<tr><td>★${i + 1}</td><td>${num(['equip', 'starArr', i], eqStarAuto(i + 1), 'min="0"')}</td></tr>`).join('')}</tbody></table></div>`;
+}
+function renderEq() {
+  const e = DEF.equip;
+  $('t-eq').innerHTML = `<h2>Thông số trang bị</h2>
+    <div class="note">Công thức: chỉ số cuối = <b>Chỉ số gốc</b> × (1 + <b>số★</b> × <b>%sao</b> + <b>cấp</b> × <b>%cấp</b>). Mặc định mỗi ★ +25%, mỗi cấp +5% chỉ số gốc. Tăng sao: tiêu Hỏa Thạch (xem bảng bên dưới). Lưu ý: công thức mới cộng theo % của chỉ số gốc nên yếu hơn kiểu cũ (cộng thẳng gốc × cấp) — muốn mạnh hơn thì tăng Chỉ số gốc.</div>
+    <div class="grid">${e.items.map(i => `<div><label>${esc(i.name)}: Chỉ số gốc ${esc(i.label)}</label>${num(['equip', 'per', i.k], i.per, 'min="0"')}</div>`).join('')}</div>
+    <div class="grid" style="margin-top:10px">
+      <div><label>Mỗi ★ cộng thêm (% chỉ số gốc)</label>${num(['equip', 'starAdd'], 25, 'min="0"')}</div>
+      <div><label>Mỗi cấp cộng thêm (% chỉ số gốc)</label>${num(['equip', 'lvAdd'], 5, 'min="0"')}</div>
+      <div><label>Sao tối đa của trang bị</label>${num(['equip', 'maxStar'], 10, 'min="0"')}</div>
+      <div><label>☄️ Hỏa Thạch cho ★1 (mặc định 10)</label>${num(['equip', 'starBase'], 10, 'min="0"')}</div>
+      <div><label>☄️ % Hỏa Thạch đắt thêm mỗi sao sau (mặc định 40)</label>${num(['equip', 'starGrow'], 40, 'min="0"')}</div>
+      <div><label>Cấp tối đa của trang bị</label>${num(['equip', 'maxLv'], e.maxLv, 'min="1"')}</div>
+      <div><label>🎁 Thưởng trang bị: nhận khi thắng Ải số</label>${num(['equip', 'rewardStage'], e.rewardStage, 'min="1"')}</div>
+      <div><label>🎁 Thưởng trang bị: nhận khi thắng Bàn số (1-10)</label>${num(['equip', 'rewardBattle'], e.rewardBattle, 'min="1" max="10"')}</div>
+      <div><label>🎁 Chỉ nhận lần đầu thắng?</label>${tri(['equip', 'rewardOnce'], !!e.rewardOnce, 'Có (chỉ 1 lần)', 'Không (thắng/quét lần nào cũng nhận)')}</div>
+      <div><label>Thưởng trang bị: số món mỗi loại</label>${num(['equip', 'rewardEach'], e.rewardEach, 'min="0"')}</div>
+      <div><label>Cấp ban đầu của món thưởng</label>${num(['equip', 'rewardStartLv'], e.rewardStartLv, 'min="1"')}</div></div>` + eqStarAdmin() + eqStoneAdmin();
+}
+
+function bossRows() {
+  const b = Object.assign({}, DEF.boss, cfg.boss || {}), r = [];
+  for (let k = 0; k < 10; k++) r.push(`<tr><td>Boss ${k + 1}</td><td>${fmt(b.baseHp * Math.pow(b.hpMult, k))}</td><td>${fmt(b.baseHp * Math.pow(b.hpMult, k) * b.ctMult)}</td><td>${fmt(Math.round(b.baseHp * Math.pow(b.hpMult, k) / b.atkDiv))}</td></tr>`);
+  return r.join('');
+}
+function renderBoss() {
+  $('t-boss').innerHTML = `<h2>Boss bang</h2>
+    <div class="note">HP boss k = HP đầu × (hệ số)^k. Chí Tôn nhân HP và sát thương. Bảng dưới tính theo số bạn đang nhập (lưu rồi mới áp dụng cho người chơi).</div>
+    <div class="grid">${Object.keys(BOSS_LABEL).map(k => `<div><label>${BOSS_LABEL[k]}</label>${num(['boss', k], DEF.boss[k], 'min="0"')}</div>`).join('')}</div>
+    <div style="overflow-x:auto;margin-top:10px"><table><thead><tr><th>Boss</th><th>HP thường</th><th>HP Chí Tôn</th><th>Sát thương 1 đòn (thường)</th></tr></thead><tbody id="boss-rows">${bossRows()}</tbody></table></div>
+    <h2 style="margin-top:20px">Lò Luyện Hỏa (kỹ năng bang)</h2>
+    <div class="note">Mỗi cấp kỹ năng cộng cho tướng số bên dưới. Cấp kỹ năng không giới hạn.</div>
+    <div class="grid">${GUILD_KEYS.map((k, i) => `<div><label>${esc(DEF.guildSkills[i])} — ${GUILD_LABEL[k]}</label>${num(['guild', k], DEF.guild[k], 'min="0"')}</div>`).join('')}</div>`;
+}
+document.addEventListener('change', e => { if (e.target.closest && e.target.closest('#t-boss')) setTimeout(() => { const t = $('boss-rows'); if (t) t.innerHTML = bossRows(); }, 0); });
+
+/* ---------- Địch PVE ---------- */
+const FOE_LABEL = { hp: '❤️ HP nền của tướng địch', atk: '⚔️ Công nền', def: '🛡️ Thủ nền', dodge: '💨 Né nền', growth: '📈 Hệ số nhân HP & Công mỗi Bàn (1.32 = +32%/Bàn)', bossMult: '👑 Nhân thêm cho Trận 4 (boss)' };
+function foeRules() { cfg.foe = cfg.foe || {}; if (!Array.isArray(cfg.foe.rules)) cfg.foe.rules = []; return cfg.foe.rules; }
+function foeAdd() { foeRules().push({ from: 1, to: 10, c: [null, null, null, 5] }); renderFoe(); }
+function foeDel(i) { foeRules().splice(i, 1); renderFoe(); }
+function foeSet(i, k, v) {
+  const r = foeRules()[i], n = Math.floor(Number(v));
+  if (k === 'from' || k === 'to') r[k] = (isFinite(n) && n >= 1) ? n : 1;
+  else { const w = Number(k.slice(1)) - 1; r.c[w] = (v === '' || !isFinite(n) || n < 1) ? null : Math.min(5, n); }
+  renderFoe();
+}
+const banLabel = b => 'Ải ' + (Math.floor((b - 1) / 10) + 1) + ' Bàn ' + (((b - 1) % 10) + 1);
+function foeRows() {
+  const L = foeRules();
+  if (!L.length) return '<div class="note">Chưa có luật riêng — mọi Bàn dùng số tướng mặc định ở trên.</div>';
+  return L.map((r, i) => `<div class="row" style="margin-bottom:6px;align-items:flex-end">
+    <div><label>Từ Bàn số <small>(${banLabel(r.from)})</small></label><input type="number" min="1" value="${esc(r.from)}" onchange="foeSet(${i},'from',this.value)"></div>
+    <div><label>Đến Bàn số <small>(${banLabel(r.to)})</small></label><input type="number" min="1" value="${esc(r.to)}" onchange="foeSet(${i},'to',this.value)"></div>
+    ${[1, 2, 3, 4].map(w => `<div><label>Trận ${w}${w === 4 ? ' (boss)' : ''}</label><input type="number" min="1" max="5" placeholder="mặc định" value="${r.c[w - 1] == null ? '' : esc(r.c[w - 1])}" onchange="foeSet(${i},'t${w}',this.value)"></div>`).join('')}
+    <button class="dng fix" onclick="foeDel(${i})">✕</button></div>`).join('');
+}
+function renderFoe() {
+  $('t-foe').innerHTML = `<h2>Địch trong ải PVE</h2>
+    <div class="note">Chỉ số địch Bàn k: HP và Công = số nền × (hệ số)^(k−1); Thủ và Né giữ nguyên. Trận 4 (boss) nhân thêm hệ số boss. Bàn đếm liên tục: Ải 1 Bàn 1 = Bàn 1, Ải 2 Bàn 1 = Bàn 11…</div>
+    <div class="grid">${Object.keys(FOE_LABEL).map(k => `<div><label>${FOE_LABEL[k]}</label>${num(['foe', k], DEF.foe[k], 'min="0"')}</div>`).join('')}</div>
+    <h2 style="margin-top:20px">Số tướng địch mỗi trận (mặc định cho mọi Bàn)</h2>
+    <div class="note">Tối thiểu 1, tối đa 5 (đội hình chỉ có 5 vị trí). Địch là tướng ngẫu nhiên không trùng nhau trong 1 trận.</div>
+    <div class="grid">${[0, 1, 2, 3].map(w => `<div><label>Trận ${w + 1}${w === 3 ? ' (boss)' : ''}</label>${num(['foe', 'counts', w], DEF.foe.counts[w], 'min="1" max="5"')}</div>`).join('')}</div>
+    <h2 style="margin-top:20px">Luật riêng theo Bàn (ghi đè số tướng)</h2>
+    <div class="note">Ví dụ: từ Bàn 1 đến Bàn 10, Trận 1 = 1 tướng, Trận 4 = 3 tướng. Ô trống = giữ số mặc định ở trên. Nếu nhiều luật trùng Bàn thì luật nằm dưới thắng.</div>
+    <div id="foe-rules">${foeRows()}</div>
+    <button onclick="foeAdd()" style="margin-top:6px">＋ Thêm luật</button>`;
+}
+
+/* ---------- Cấp & EXP ---------- */
+const EXP_LABEL = { base: '📈 EXP cần để lên cấp 2 (cấp 1 → 2)', growth: '➕ % EXP tăng thêm mỗi cấp (10 = +10%/cấp)' };
+function expNeedAt(lv) { const b = Number(getp(['exp', 'base']) ?? DEF.exp.base), g = Number(getp(['exp', 'growth']) ?? DEF.exp.growth); return Math.round(b * Math.pow(1 + g / 100, lv - 1)); }
+function expPreview() {
+  const rows = [1, 2, 3, 4, 5, 10, 20, 50, 100].map(lv => `<tr><td>Cấp ${lv} → ${lv + 1}</td><td>${fmt(expNeedAt(lv))}</td></tr>`).join('');
+  return `<div id="exp-prev" style="overflow-x:auto;margin-top:10px"><table><thead><tr><th>Lên cấp</th><th>EXP cần</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+}
+function renderExp() {
+  $('t-exp').innerHTML = `<h2>Cấp tài khoản & EXP</h2>
+    <div class="note">EXP nhận khi thắng mỗi Bàn chỉnh ở tab <b>🎁 Thưởng PVE</b>. Ở đây chỉnh lượng EXP để lên cấp: cấp 1 → 2 cần <b>EXP cấp 2</b>; mỗi cấp sau cần nhiều hơn <b>x%</b> so với cấp trước. Cấp acc là giới hạn cấp của mọi tướng và trang bị.</div>
+    <div class="grid">${Object.keys(EXP_LABEL).map(k => `<div><label>${EXP_LABEL[k]}</label>${num(['exp', k], DEF.exp[k], 'min="0"')}</div>`).join('')}</div>${expPreview()}`;
+}
+document.addEventListener('change', e => { if (e.target.closest && e.target.closest('#t-exp')) setTimeout(() => { const t = $('exp-prev'); if (t) t.outerHTML = expPreview(); }, 0); });
+
+/* ---------- Thưởng PVE ---------- */
+const PVE_LABEL = { silverBase: '🥈 Bạc ở Bàn 1', expBase: '✨ EXP tài khoản ở Bàn 1', pillBase: '💊 Viên Thể Lực mỗi Bàn (cố định, không tăng theo Bàn)', riceBase: '🌾 Gạo ở Bàn 1', thanBase: '🔮 Thần Đan ở Bàn 1', tienBase: '🔴 Tiên Đan ở Bàn 1', growth: 'Hệ số tăng mỗi Bàn (1.005 = +0,5%/Bàn)' };
+function renderPve() {
+  $('t-pve').innerHTML = `<h2>Thưởng khi thắng PVE (mỗi Bàn)</h2>
+    <div class="note">Thưởng Bàn k = số ở Bàn 1 × (hệ số)^(k−1) (cả bạc, gạo, Thần Đan, Tiên Đan và EXP). Áp dụng cả khi quét Ải. Để trống = dùng số mặc định (chữ mờ).</div>
+    <div class="grid">${Object.keys(PVE_LABEL).map(k => `<div><label>${PVE_LABEL[k]}</label>${num(['pve', k], DEF.pve[k], 'min="0"')}</div>`).join('')}</div>
+    <h2 style="margin-top:20px">➕ Thưởng thêm mỗi trận</h2>
+    <div class="note">Mỗi lần người chơi thắng 1 Bàn sẽ nhận thêm các phần thưởng bên dưới (cố định, không tăng theo Bàn). Quét ×N thì nhận ×N. Nhớ bấm <b>Lưu</b> ở thanh dưới.</div>
+    ${rlCfg('pveExtra', ['pve', 'extra'], [], renderPve)}`;
+}
+
+/* ---------- Hang Tụ Linh & Danh Tướng Lầu ---------- */
+const LOCK_MODES = [['open', 'Mở hết (không khóa)'], ['clear', 'Khóa: thắng hạng/tầng trước mới mở hạng/tầng sau'], ['level', 'Khóa theo cấp tài khoản']];
+const lockSel = sec => { const v = getp([sec, 'lockMode']) || ''; return `<select class="${v ? 'ov' : ''}" onchange="setp(['${sec}','lockMode'],this.value);render${sec === 'hang' ? 'Hang' : 'Tower'}()"><option value="">Mặc định: ${LOCK_MODES[0][1]}</option>${LOCK_MODES.map(m => `<option value="${m[0]}" ${v === m[0] ? 'selected' : ''}>${m[1]}</option>`).join('')}</select>`; };
+const lockEff = sec => getp([sec, 'lockMode']) || DEF[sec].lockMode;
+const HANG_ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII'], HANG_GEM = ['Đá Xanh Lá', 'Đá Tím', 'Đá Đen', 'Đá Vàng', 'Đá Cam', 'Đá Đỏ', 'Đá Trắng'];
+function renderHang() {
+  const lv = lockEff('hang') === 'level';
+  $('t-hang').innerHTML = `<h2>💎 Hang Tụ Linh</h2>
+    <div class="note">7 hạng, mỗi lần đánh = 3 trận địch là tướng ngẫu nhiên. Thắng đủ 3 trận nhận Đá đúng màu của hạng + EXP. Có Quét giới hạn mỗi ngày. Để trống = dùng số mặc định (chữ mờ). Nhớ bấm <b>Lưu</b> ở thanh dưới.</div>
+    <div class="grid"><div><label>Trạng thái Hang</label>${tri(['hang', 'on'], true, 'Bật', 'Tắt (đóng cả Hang)')}</div>
+    <div><label>🔒 Chế độ khóa hạng</label>${lockSel('hang')}</div></div>
+    <div class="grid" style="margin-top:10px">
+      <div><label>⚡ Thể lực mỗi lần đánh (3 trận)</label>${num(['hang', 'sta'], DEF.hang.sta, 'min="0"')}</div>
+      <div><label>💎 Số Đá rơi tối thiểu</label>${num(['hang', 'gemMin'], DEF.hang.gemMin, 'min="0"')}</div>
+      <div><label>💎 Số Đá rơi tối đa</label>${num(['hang', 'gemMax'], DEF.hang.gemMax, 'min="0"')}</div>
+      <div><label>✨ EXP tài khoản mỗi lần thắng</label>${num(['hang', 'exp'], DEF.hang.exp, 'min="0"')}</div>
+      <div><label>🧹 Số lần Quét mỗi ngày (cả Hang)</label>${num(['hang', 'sweepPerDay'], DEF.hang.sweepPerDay, 'min="0"')}</div>
+      <div><label>🧹 Quét cần thắng hạng đó trước</label>${tri(['hang', 'sweepNeedClear'], true, 'Có (phải thắng 1 lần)', 'Không (quét luôn)')}</div></div>
+    <h3 style="margin-top:16px">Từng hạng</h3>
+    <div class="note">“Mạnh như Bàn” = độ mạnh địch giống Bàn thứ mấy của PVE (đếm liên tục: Ải 1 Bàn 1 = Bàn 1, Ải 2 Bàn 1 = Bàn 11…). ${lv ? 'Cột <b>Cấp mở</b> là cấp tài khoản tối thiểu để vào hạng.' : 'Cột <b>Cấp mở</b> chỉ dùng khi chọn chế độ “Khóa theo cấp tài khoản”.'}</div>
+    <div style="overflow-x:auto"><table><thead><tr><th>Hạng</th><th>Đá rơi</th><th>Mạnh như Bàn</th><th>Cấp mở</th></tr></thead><tbody>
+    ${HANG_ROMAN.map((r, i) => `<tr><td>Hạng ${r}</td><td>${HANG_GEM[i]}</td><td>${num(['hang', 'bans', i], DEF.hang.bans[i], 'min="1"')}</td><td>${num(['hang', 'levels', i], DEF.hang.levels[i], 'min="1"')}</td></tr>`).join('')}</tbody></table></div>
+    <h3 style="margin-top:16px">Số tướng địch mỗi trận</h3>
+    <div class="note">Tối thiểu 1, tối đa 5. Trận 3 là boss (nhân thêm hệ số boss ở tab 👹 Địch PVE).</div>
+    <div class="grid">${[0, 1, 2].map(w => `<div><label>Trận ${w + 1}${w === 2 ? ' (boss)' : ''}</label>${num(['hang', 'counts', w], DEF.hang.counts[w], 'min="1" max="5"')}</div>`).join('')}</div>`;
+}
+/* ---------- Bảo Khố & Đào Tiên ---------- */
+const BD_ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'];
+function bdEff(m, k) { const v = getp([m, k]), n = Number(v); return v === '' || v == null || !isFinite(n) || n < 0 ? DEF[m][k] : n; }
+function bdDefReward(m, ai, rice) {   // số game sẽ tự tính nếu ô của ải đó để trống
+  let b = bdEff(m, 'reward'); const rr = getp([m, 'riceReward']);
+  if (rice && rr !== '' && rr != null && isFinite(Number(rr)) && Number(rr) >= 0) b = Number(rr);
+  return Math.round(b * Math.pow(bdEff(m, 'rewardMul'), ai - 1));
+}
+function renderBd() {
+  const sec = (m, title, ico, hasRice) => `<h3 style="margin-top:16px">${title}</h3>
+    <div class="grid">
+      <div><label>Trạng thái</label>${tri([m, 'on'], true, 'Mở', 'Đóng (không vào được)')}</div>
+      <div><label>⚡ Thể lực mỗi lần đánh / quét</label>${num([m, 'sta'], DEF[m].sta, 'min="0"')}</div>
+      <div><label>🧹 Số lần Quét mỗi ngày</label>${num([m, 'sweepPerDay'], DEF[m].sweepPerDay, 'min="0"')}</div>
+      <div><label>${hasRice ? '💰 Bạc ải I' : ico + ' Đào Tiên ải I'}</label>${num([m, 'reward'], DEF[m].reward, 'min="0"')}</div>
+      ${hasRice ? `<div><label>🌾 Gạo ải I (trống = bằng Bạc)</label>${num([m, 'riceReward'], bdDefReward(m, 1), 'min="0"')}</div>` : ''}
+      <div><label>✖️ Hệ số nhân mỗi ải sau</label>${num([m, 'rewardMul'], DEF[m].rewardMul, 'min="0"')}</div></div>
+    <div style="overflow-x:auto;margin-top:8px"><table><thead><tr><th>Ải</th>${hasRice ? '<th>💰 Bạc</th><th>🌾 Gạo</th>' : '<th>🍑 Đào Tiên</th>'}</tr></thead><tbody>
+    ${BD_ROMAN.map((r, i) => `<tr><td>Ải ${r}</td>${hasRice
+      ? `<td>${num([m, 'rewardArr', i], bdDefReward(m, i + 1), 'min="0"')}</td><td>${num([m, 'riceArr', i], bdDefReward(m, i + 1, true), 'min="0"')}</td>`
+      : `<td>${num([m, 'rewardArr', i], bdDefReward(m, i + 1), 'min="0"')}</td>`}</tr>`).join('')}</tbody></table></div>`;
+  $('t-bd').innerHTML = `<h2>💰 Bảo Khố, 🍑 Đào Tiên & 🔨 Trốn</h2>
+    <div class="note">Mỗi chế độ có 10 ải (I–X). Thưởng nhận khi thắng hoặc Quét ải đó. <b>Cách 1:</b> chỉ đặt thưởng ải I + hệ số nhân, các ải sau tự nhân lên. <b>Cách 2:</b> nhập thẳng số cho từng ải ở bảng (ô nào nhập thì ưu tiên ô đó, ô trống = tự tính, chữ mờ là số tự tính hiện tại). Nhớ bấm <b>Lưu</b> ở thanh dưới.</div>
+    ${sec('bk', '💰 Bảo Khố (Bạc + Gạo)', '💰', true)}
+    ${sec('dt', '🍑 Đào Tiên', '🍑', false)}
+    ${secTr()}`;
+}
+/* Trốn: 7 ải, thưởng Búa, chỉnh được chỉ số boss + thưởng từng ải (khớp BD_DEFS.tr trong game.js) */
+function secTr() {
+  const m = 'tr', N = 7, f = (l, k, t) => `<div><label>${l}</label>${num([m, k], DEF[m][k], t || 'min="0"')}</div>`;
+  const rw = i => Math.round(bdEff(m, 'reward') * Math.pow(bdEff(m, 'rewardMul'), i));
+  const st = (k, i) => Math.round(bdEff(m, k) * Math.pow(1 + bdEff(m, 'statPct') / 100, i));
+  return `<h3 style="margin-top:16px">🔨 Trốn (thưởng Búa — 7 ải)</h3>
+    <div class="grid">
+      <div><label>Trạng thái</label>${tri([m, 'on'], true, 'Mở', 'Đóng (không vào được)')}</div>
+      ${f('⚡ Thể lực mỗi lần đánh / quét', 'sta')}${f('🧹 Số lần Quét mỗi ngày', 'sweepPerDay')}
+      ${f('🔨 Búa ải I', 'reward')}${f('✖️ Hệ số nhân thưởng mỗi ải sau', 'rewardMul')}
+      ${f('👹 Số boss tối thiểu mỗi trận', 'bossMin', 'min="1"')}${f('👹 Số boss tối đa mỗi trận', 'bossMax', 'min="1"')}
+      ${f('❤️ HP boss ải I', 'hp')}${f('⚔️ Công boss ải I', 'atk')}${f('🛡️ Thủ boss ải I', 'def')}${f('💚 Hồi máu boss ải I', 'heal')}
+      ${f('📈 % chỉ số boss tăng mỗi ải sau', 'statPct')}</div>
+    <div style="overflow-x:auto;margin-top:8px"><table><thead><tr><th>Ải</th><th>🔨 Búa (trống = tự tính)</th><th>Boss tự tính (HP / Công / Thủ / Hồi)</th></tr></thead><tbody>
+    ${BD_ROMAN.slice(0, N).map((r, i) => `<tr><td>Ải ${r}</td><td>${num([m, 'rewardArr', i], rw(i), 'min="0"')}</td><td class="sub">${st('hp', i).toLocaleString('vi-VN')} / ${st('atk', i).toLocaleString('vi-VN')} / ${st('def', i).toLocaleString('vi-VN')} / ${st('heal', i).toLocaleString('vi-VN')}</td></tr>`).join('')}</tbody></table></div>
+    <div class="note">Boss ải I dùng 4 chỉ số ở trên; mỗi ải sau nhân thêm (1 + %/100). Ô trống = dùng số mặc định (chữ mờ). Nhớ bấm <b>Lưu</b> ở thanh dưới.</div>`;
+}
+/* ---------- Phẩm chất tướng: nguyên liệu nâng (khớp QL_COST_BASE trong game.js) ---------- */
+const QL_ITEMS = [['Linh Phách', 1000], ['Thần Phách', 100], ['Tiên Phách', 10], ['Mảnh tướng', 250], ['Thần Đan', 500], ['Tiên Đan', 1000], ['Yếu Quyết', 200], ['Bí Kíp', 100], ['Vô Tự Thiên Thư', 50], ['Bạc', 2000000], ['Gạo', 2000000], ['Vàng', 5000]];
+const QL_STEPS = ['A → A+', 'A+ → S', 'S → S+', 'S+ → SS', 'SS → SS+', 'SS+ → SSS'];
+function qlAuto(i, s) {   // số game tự tính cho nguyên liệu i ở bậc s (0–5)
+  const b = Number(getp(['quality', 'base', i])), base = (getp(['quality', 'base', i]) !== '' && getp(['quality', 'base', i]) != null && isFinite(b) && b >= 0) ? b : QL_ITEMS[i][1];
+  const g = Number(getp(['quality', 'grow'])), grow = (getp(['quality', 'grow']) !== '' && getp(['quality', 'grow']) != null && isFinite(g) && g >= 0) ? g : 30;
+  return Math.ceil(base * Math.pow(1 + grow / 100, s) - 1e-9);
+}
+function renderQl() {
+  $('t-ql').innerHTML = `<h2>💎 Nâng phẩm chất tướng</h2>
+    <div class="note">Nguyên liệu để nâng mỗi bậc phẩm chất (A → A+ → S → S+ → SS → SS+ → SSS). <b>Cách 1:</b> đặt số lượng bậc đầu (A → A+) và % đắt thêm mỗi bậc, các bậc sau tự nhân lên. <b>Cách 2:</b> nhập thẳng số cho từng bậc ở bảng dưới (ô nhập thì ưu tiên, ô trống = tự tính, chữ mờ là số tự tính hiện tại). Sau khi đổi cách 1, bấm tab khác rồi quay lại để bảng cập nhật số mờ. Nhớ bấm <b>Lưu</b>.</div>
+    <div class="grid"><div><label>📈 % đắt thêm mỗi bậc (mặc định 30)</label>${num(['quality', 'grow'], 30, 'min="0"')}</div><div><label>⭐ Sao tối thiểu của tướng để được nâng phẩm chất (mặc định 6)</label>${num(['quality', 'minStar'], 6, 'min="1"')}</div></div>
+    <h3 style="margin-top:12px">Số lượng bậc đầu (A → A+)</h3>
+    <div class="grid">${QL_ITEMS.map((x, i) => `<div><label>${esc(x[0])}</label>${num(['quality', 'base', i], x[1], 'min="0"')}</div>`).join('')}</div>
+    <h3 style="margin-top:12px">Số riêng từng bậc (tuỳ chọn)</h3>
+    <div style="overflow-x:auto"><table><thead><tr><th>Bậc</th>${QL_ITEMS.map(x => `<th>${esc(x[0])}</th>`).join('')}</tr></thead><tbody>
+    ${QL_STEPS.map((n, s) => `<tr><td style="white-space:nowrap">${n}</td>${QL_ITEMS.map((x, i) => `<td>${num(['quality', 'arr', s, i], qlAuto(i, s), 'min="0" style="min-width:90px"')}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+}
+function renderTower() {
+  const lv = lockEff('tower') === 'level';
+  $('t-tower').innerHTML = `<h2>🗼 Danh Tướng Lầu</h2>
+    <div class="note">15 tầng, bấm tầng nào đánh tầng đó với 1 tài khoản Tỷ Võ ngẫu nhiên, chỉ 1 trận. Thắng thì tầng được đánh dấu và nhận vật phẩm kỹ năng ngẫu nhiên (Bí Kíp / Yếu Quyết / Vô Tự Thiên Thư), mỗi tầng nhận 1 lần. Nhớ bấm <b>Lưu</b> ở thanh dưới.</div>
+    <div class="grid"><div><label>Trạng thái Tháp</label>${tri(['tower', 'on'], true, 'Bật', 'Tắt (đóng cả Tháp)')}</div>
+    <div><label>🔒 Chế độ khóa tầng</label>${lockSel('tower')}</div></div>
+    ${lv ? `<h3 style="margin-top:16px">Cấp tài khoản tối thiểu của từng tầng</h3><div class="grid">${Array.from({ length: 15 }, (_, i) => `<div><label>Tầng ${i + 1}</label>${num(['tower', 'levels', i], DEF.tower.levels[i], 'min="1"')}</div>`).join('')}</div>` : ''}
+    <h3 style="margin-top:16px">📘 Thưởng vật phẩm kỹ năng mỗi tầng thắng</h3>
+    <div class="grid">
+      <div><label>📘 Số lượt rơi tối thiểu</label>${num(['tower', 'skillMin'], DEF.tower.skillMin, 'min="1"')}</div>
+      <div><label>📘 Số lượt rơi tối đa</label>${num(['tower', 'skillMax'], DEF.tower.skillMax, 'min="1"')}</div></div>
+    <div class="note">Mỗi lượt rơi chọn ngẫu nhiên 1 trong 3 loại: Bí Kíp, Yếu Quyết, Vô Tự Thiên Thư (trùng thì cộng dồn). Thưởng chung / thưởng riêng từng tầng kiểu cũ không còn dùng.</div>`;
+}
+
+/* ---------- Thể lực ---------- */
+function renderSta() {
+  const L = { max: '⚡ Thể lực tối đa', regenSec: '⏱️ Số giây hồi 1 điểm thể lực', perWave: '💢 Thể lực tốn mỗi TRẬN', waves: '🔢 Số trận trong 1 Bàn', pill: '💊 Mỗi Viên Thể Lực cộng bao nhiêu thể lực' };
+  $('t-sta').innerHTML = `<h2>Thể lực</h2>
+    <div class="note">1 Bàn tốn = (số trận) × (thể lực mỗi trận). Quét ×N tốn N lần. Số Viên Thể Lực nhận mỗi Bàn chỉnh ở tab <b>🎁 Thưởng PVE</b>.</div>${numGrid('stamina', L, DEF.stamina, 'min="0"')}`;
+}
+
+/* ---------- Kỳ Ngộ ---------- */
+let kyLvShow = 100;
+function renderKy() {
+  const step = Math.max(1, Math.floor(Number(getp(['kyngo', 'thangcap', 'step'])) || 5)), max = Math.max(1, Math.floor(Number(getp(['kyngo', 'thangcap', 'max'])) || 200));
+  const lvs = []; for (let lv = step; lv <= Math.min(max, kyLvShow); lv += step) lvs.push(lv);
+  $('t-ky').innerHTML = `<h2>🌟 Kỳ Ngộ</h2>
+    <div class="note">Phần thưởng dùng chung định dạng với Gift Code. Ô nào để trống thì trong game là ô trống. Nhớ bấm <b>Lưu cấu hình</b> ở thanh dưới.</div>
+    <h3>📅 Báo Danh — quà 15 ngày (làm mới 05h00 mỗi ngày)</h3>
+    ${Array.from({ length: 15 }, (_, i) => `<div class="item"><b>📅 Ngày ${i + 1}</b>${rlCfg('kyDd' + i, ['kyngo', 'diemdanh', i], [], renderKy)}</div>`).join('')}
+    <h3>📈 Thăng Cấp (Bảng Vàng)</h3>
+    <div class="note">Mỗi mốc cấp là 1 hàng, mỗi hàng hiện tối đa <b>3 quà</b> (lấy 3 quà đầu). Hàng nhận rồi sẽ ẩn trong game.</div>
+    <div class="grid">
+      <div><label>Mỗi bao nhiêu cấp có 1 hàng quà</label>${num(['kyngo', 'thangcap', 'step'], 5, 'min="1"')}</div>
+      <div><label>Mốc cấp cuối cùng</label>${num(['kyngo', 'thangcap', 'max'], 200, 'min="1"')}</div>
+      <div><label>Chỉ hiển thị bảng quà tới cấp (để sửa cho nhẹ)</label><input type="number" min="1" value="${kyLvShow}" onchange="kyLvShow=Math.max(1,Number(this.value)||100);renderKy()"></div></div>
+    ${lvs.map(lv => `<div class="item"><b>📈 Cấp ${lv} nhận</b>${rlCfg('kyLv' + lv, ['kyngo', 'thangcap', 'rows', String(lv)], [], renderKy)}</div>`).join('')}
+    <h3>⚔️ Đao Kiếm (tỷ lệ 50/50)</h3><div class="grid">
+      <div><label>🪙 Vàng thưởng khi chọn đúng</label>${num(['kyngo', 'daokiem', 'win'], 500, 'min="0"')}</div>
+      <div><label>🪙 Vàng mất khi chọn sai</label>${num(['kyngo', 'daokiem', 'lose'], 50, 'min="0"')}</div></div>
+    <h3>🍶 Uống Rượu (12h–14h, 18h–20h, 21h–23h)</h3><div class="grid">
+      <div><label>⚡ Thể lực cộng mỗi lần uống</label>${num(['kyngo', 'ruou', 'sta'], 100, 'min="0"')}</div></div>
+    <h3>🏯 Phái Võ Hiệp</h3><div class="grid">
+      <div><label>⏳ Thời gian mỗi lần phái (giờ)</label>${num(['kyngo', 'phai', 'hours'], 6, 'min="0.001"')}</div></div>
+    <label>🎁 Thưởng hoàn thành</label>${rlCfg('kyPhai', ['kyngo', 'phai', 'reward'], [], renderKy)}
+    <h3>🎲 Đổ Thần (cá cược)</h3><div class="grid">
+      <div><label>✖️ Hệ số thưởng khi đoán đúng (nhận ×N số đã cược)</label>${num(['kyngo', 'dothan', 'mult'], 3, 'min="2"')}</div></div>`;
+}
+
+/* ---------- Ngọc, Phù Linh, Trang bị, Bang (các thông số còn thiếu) ---------- */
+const GP_GEMS = [['hp', 'Ngọc HP', 1000], ['atk', 'Ngọc Công', 300], ['def', 'Ngọc Thủ', 250], ['spd', 'Ngọc Tốc', 2]];
+const GP_EQ = [['hat', 'Mũ (HP)', 1000], ['armor', 'Áo (Thủ)', 50], ['sword', 'Kiếm (Công)', 300], ['boots', 'Giày (Tốc)', 1]];
+const GP_PHU_LBL = { hp: 'HP', atk: 'Công', def: 'Thủ', spd: 'Tốc', dodge: 'Né', acc: 'Chuẩn', crit: 'Bạo', critDmg: 'Bạo sát', tough: 'Bền', pierce: 'Phá giáp', heal: 'Hồi', block: 'Đỡ đòn' };
+const GP_PHU = {
+  ton: ['Tôn Phù', { atk: 15000, acc: 300, crit: 300 }], ma: ['Ma Phù', { dodge: 300, acc: 300, spd: 120 }],
+  tien: ['Tiên Phù', { pierce: 50000, tough: 300, spd: 50 }], vuong: ['Vương Phù', { hp: 100000, atk: 20000, def: 10000 }],
+  thanh: ['Thánh Phù', { acc: 500, dodge: 500, block: 100 }], hoang: ['Hoàng Phù', { critDmg: 300, crit: 300, heal: 60000 }],
+  de: ['Đế Phù', { hp: 100000, atk: 100000, def: 100000, spd: 200, dodge: 500, acc: 500, crit: 500, critDmg: 5000, tough: 300, pierce: 50000, heal: 60000, block: 50 }]
+};
+function renderGp() {
+  $('t-gp').innerHTML = `<h2>🛠️ Ngọc, Phù Linh, Trang bị & Bang</h2>
+    <div class="note">Ô để trống = dùng số mặc định (chữ mờ). Nhớ bấm <b>Lưu cấu hình</b>.</div>
+    <h3>🛡️ Trang bị: chỉ số cộng thêm mỗi cấp</h3><div class="grid">${GP_EQ.map(([k, n, d]) => `<div><label>${n}</label>${num(['equip', 'per', k], d, 'min="0" step="any"')}</div>`).join('')}</div>
+    <h3>💎 Ngọc</h3><div class="grid">
+      <div><label>Cấp ngọc tối đa</label>${num(['gem', 'max'], 10, 'min="1"')}</div>
+      ${GP_GEMS.map(([k, n, d]) => `<div><label>${giItemImg(n)}${n}: chỉ số gốc (cấp n = n × số này)</label>${num(['gem', 'base', k], d, 'min="0" step="any"')}</div>`).join('')}</div>
+    <h3>📜 Chỉ số Phù Linh (đủ 4 ô cùng loại phù)</h3>
+    ${Object.keys(GP_PHU).map(k => `<h4 style="margin:10px 0 4px;color:var(--gold)">${giItemImg(GP_PHU[k][0])}${GP_PHU[k][0]}</h4><div class="grid">${Object.keys(GP_PHU[k][1]).map(st => `<div><label>${GP_PHU_LBL[st]}</label>${num(['phu', k, st], GP_PHU[k][1][st], 'min="0" step="any"')}</div>`).join('')}</div>`).join('')}
+    <h3>🏰 Bang Hội</h3><div class="grid">
+      <div><label>🪙 Vàng lập bang</label>${num(['guild2', 'createCost'], 300, 'min="0"')}</div>
+      <div><label>⏳ Giờ chờ sau khi rời bang</label>${num(['guild2', 'leaveCdH'], 6, 'min="0" step="any"')}</div></div>`;
+}
+
+/* ---------- Chiêu Mộ ---------- */
+function renderRec() {
+  const names = { lam: 'Phổ Thông', tim: 'Cao Cấp', ten: '10 Lần' };
+  $('t-rec').innerHTML = `<h2>Chiêu Mộ</h2>
+    <div class="note">Mỗi loại có 1 lượt miễn phí sau thời gian chờ; quay tiếp khi chưa hết chờ thì tốn vàng (nếu đặt giá &gt; 0; đặt 0 = phải chờ miễn phí). Không cộng dồn lượt.</div>
+    ${['lam', 'tim', 'ten'].map(k => `<h3>${names[k]}</h3><div class="grid">
+      <div><label>⏳ Thời gian chờ (phút)</label>${num(['recruit', k, 'cdMin'], DEF.recruit[k].cdMin, 'min="0"')}</div>
+      <div><label>🧩 Số mảnh mỗi lần quay</label>${num(['recruit', k, 'n'], DEF.recruit[k].n, 'min="1"')}</div>
+      <div><label>🪙 Vàng khi quay tiếp (0 = không)</label>${num(['recruit', k, 'cost'], DEF.recruit[k].cost, 'min="0"')}</div></div>`).join('')}
+    <h3>Ghép mảnh & tăng sao</h3><div class="grid">
+      <div><label>🧩 Số mảnh để ghép thành 1 tướng</label>${num(['recruit', 'mergeCost'], DEF.recruit.mergeCost, 'min="1"')}</div>
+      <div><label>🧩 Mảnh mỗi ★ (★N cần N × số này)</label>${num(['recruit', 'shardPerStar'], DEF.recruit.shardPerStar, 'min="1"')}</div>
+      <div><label>🧩 Mảnh nhận khi quay trúng tướng ĐÃ CÓ</label>${num(['recruit', 'dupShards'], 8, 'min="1"')}</div></div>
+    <h3>Tỷ lệ rơi từng tướng (trọng số)</h3>
+    <div class="note">Mỗi mảnh rơi ngẫu nhiên theo trọng số. Mặc định mọi tướng = 1 (bằng nhau). Đặt 0 = tướng đó không bao giờ rơi mảnh từ Chiêu Mộ; đặt 3 = dễ ra gấp 3 lần.</div>
+    <div class="grid">${DEF.heroes.map(h => `<div><label>${esc(h.name)}</label>${num(['recruit', 'weights', String(h.id)], 1, 'min="0"')}</div>`).join('')}</div>`;
+}
+
+/* ---------- Giang Hồ: Luận Kiếm ---------- */
+const LUAN_GRADE_W_DEF = { 'A': 30, 'A+': 25, 'S': 20, 'S+': 12, 'SS': 8, 'SS+': 4, 'SSS': 1 };   // khớp LUAN_GRADE_W_DEF trong game.js
+function renderLuan() {
+  const D = DEF.luan;
+  $('t-luan').innerHTML = `<h2>⚔️ Luận Kiếm (Giang Hồ)</h2>
+    <div class="note">Đánh Boss máy không giới hạn trận. Mỗi trận có 3–5 Boss ngẫu nhiên. Thắng 1 trận: nhận Mảnh Bảo Vật ngẫu nhiên (mỗi mảnh 1 loại Bảo Vật bất kỳ), trận sau <b>mọi thông số Boss</b> tăng thêm % (cộng dồn). Độ khó (số trận đã qua) tự làm mới mỗi ngày vào giờ làm mới. Để trống = dùng số mặc định (chữ mờ). Nhớ bấm <b>Lưu</b> ở thanh dưới.</div>
+    <div class="grid">
+      <div><label>Trạng thái</label>${tri(['luan', 'on'], true, 'Mở', 'Đóng (không vào được)')}</div>
+      <div><label>🕔 Giờ làm mới độ khó (0–23)</label>${num(['luan', 'resetHour'], D.resetHour, 'min="0" max="23"')}</div>
+      <div><label>👹 Số Boss tối thiểu mỗi trận (1–5)</label>${num(['luan', 'bossMin'], D.bossMin, 'min="1" max="5"')}</div>
+      <div><label>👹 Số Boss tối đa mỗi trận (1–5)</label>${num(['luan', 'bossMax'], D.bossMax, 'min="1" max="5"')}</div>
+      <div><label>📈 % thông số Boss tăng mỗi trận thắng</label>${num(['luan', 'growth'], D.growth, 'min="0"')}</div>
+      <div><label>❤️ HP mỗi Boss (trận 1)</label>${num(['luan', 'hp'], D.hp, 'min="1"')}</div>
+      <div><label>🗡️ Công mỗi Boss (trận 1)</label>${num(['luan', 'atk'], D.atk, 'min="1"')}</div>
+      <div><label>🛡️ Thủ mỗi Boss (trận 1)</label>${num(['luan', 'def'], D.def, 'min="0"')}</div>
+      <div><label>🧩 Số Mảnh Bảo Vật ngẫu nhiên mỗi trận thắng</label>${num(['luan', 'shardCount'], D.shardCount, 'min="1"')}</div>
+    </div>
+    <div class="note" style="margin-top:12px">Mỗi mảnh rơi: bốc 1 BẬC Bảo Vật theo trọng số bên dưới, rồi bốc ngẫu nhiên 1 Bảo Vật trong bậc đó (trùng loại thì cộng dồn). Đủ số mảnh cùng loại (xem <b>Bảo Vật → số mảnh ghép</b>) sẽ ghép được 1 Bảo Vật. Vật phẩm kỹ năng (Bí Kíp / Yếu Quyết / Vô Tự Thiên Thư) nay rơi ở <b>Danh Tướng Lầu</b>.</div>
+    <h3 style="margin-top:16px">🎲 Tỷ lệ rơi theo bậc Bảo Vật</h3>
+    <div class="note">Mỗi mảnh: bốc 1 bậc theo trọng số, rồi bốc ngẫu nhiên 1 Bảo Vật trong bậc đó. Để trống = số mặc định (chữ mờ). Đặt <b>0</b> = bậc đó không bao giờ rơi. Tỷ lệ % = trọng số ÷ tổng trọng số của các bậc đang có Bảo Vật. Bậc của từng Bảo Vật chỉnh ở tab <b>Bảo Vật</b>.</div>
+    ${(() => { const W = {}; TS_GRADES.forEach(gr => { const v = getp(['luan', 'gradeWeights', gr]); W[gr] = v === '' || v == null || !isFinite(Number(v)) || Number(v) < 0 ? LUAN_GRADE_W_DEF[gr] : Number(v); }); const cnt = gr => DEF.ts.filter(t => tsGradeNow(t.k) === gr).length; const tot = TS_GRADES.reduce((s, gr) => s + (cnt(gr) ? W[gr] : 0), 0); return `<div class="grid">${TS_GRADES.map(gr => `<div><label>Bậc ${gr} <span class="sub">(${cnt(gr)} Bảo Vật${cnt(gr) && tot ? ' • ≈ ' + (Math.round(W[gr] / tot * 1000) / 10) + '%' : ''})</span></label>${num(['luan', 'gradeWeights', gr], LUAN_GRADE_W_DEF[gr], 'min="0"')}</div>`).join('')}</div>`; })()}`;
+}
+
+/* ---------- Tỷ Võ ---------- */
+const PVP_ZERO = ['power', 'hp', 'atk', 'def', 'hpMax', 'atkMax', 'defMax'];   // điểm cộng cũ: luôn ép = 0 khi lưu
+const tsNameOf = k => getp(['treasure', 'names', String(k)]) || (DEF.ts.find(t => String(t.k) === String(k)) || {}).name || ('Bảo Vật ' + k);
+// danh sách vật phẩm đổi: chưa chỉnh = tất cả Bảo Vật (mặc định)
+function pvpShopGet() {
+  const v = getp(['pvp', 'shop']);
+  return Array.isArray(v) && v.length ? v.filter(x => x && x.id != null) : DEF.ts.map(t => ({ id: t.k }));
+}
+const pvpShopIsOv = () => Array.isArray(getp(['pvp', 'shop'])) && getp(['pvp', 'shop']).length > 0;
+function pvpShopSet(a) { setp(['pvp', 'shop'], a); renderPvp(); }
+function pvpShopAdd() {
+  const id = $('pvp-shop-add').value; if (id === '') return;
+  const a = clone(pvpShopGet()); if (a.some(x => String(x.id) === id)) return;
+  const t = DEF.ts.find(t => String(t.k) === id); a.push({ id: t ? t.k : Number(id) }); pvpShopSet(a);
+}
+function pvpShopDel(i) {
+  const a = clone(pvpShopGet());
+  if (a.length <= 1) { alert('Phải còn ít nhất 1 vật phẩm. Muốn đóng cửa hàng đổi thì đặt giá đốm lửa rất cao.'); return; }
+  a.splice(i, 1); pvpShopSet(a);
+}
+function pvpShopCost(i, el) {
+  const a = clone(pvpShopGet()), s = el.value.trim();
+  if (s === '' || !isFinite(Number(s))) delete a[i].cost; else a[i].cost = Math.max(0, Math.round(Number(s)));
+  setp(['pvp', 'shop'], a); el.classList.toggle('ov', a[i].cost != null);
+}
+function pvpShopReset() { setp(['pvp', 'shop'], ''); renderPvp(); }
+function renderPvp() {
+  const L = { rounds: '🔁 Số hiệp tối đa mỗi trận', flameWin: '🔥 Đốm lửa khi thắng', flameLose: '🔥 Đốm lửa mất khi thua', flameCost: '🔥 Đốm lửa mỗi lần đổi (mặc định chung)', shopShards: '🧩 Mảnh Bảo Vật nhận mỗi lần đổi' };
+  const shop = pvpShopGet(), inShop = new Set(shop.map(x => String(x.id)));
+  const rest = DEF.ts.filter(t => !inShop.has(String(t.k)));
+  $('t-pvp').innerHTML = `<h2>Tỷ Võ (PVP)</h2>
+    <div class="note">Tỷ Võ chỉ còn <b>đốm lửa</b> và <b>đổi vật phẩm</b> (không còn cộng Lực chiến / HP / Công / Thủ). Thắng nhận đốm lửa, thua bị trừ; dùng đốm lửa đổi vật phẩm trong danh sách bên dưới.</div>
+    ${numGrid('pvp', L, DEF.pvp, 'min="0"')}
+    <h3 style="margin-top:16px">🎁 Vật phẩm đổi bằng đốm lửa ${pvpShopIsOv() ? '' : '<span class="sub">(mặc định: tất cả Bảo Vật)</span>'}</h3>
+    <div class="note">Thêm / bớt vật phẩm người chơi được đổi. Bên cạnh tên là <b>phẩm chất</b> và màu viền của Bảo Vật (chỉnh ở tab Bảo Vật). Ô giá để trống = dùng giá chung ở trên. Nhớ bấm <b>Lưu</b> ở thanh dưới.</div>
+    ${shop.map((x, i) => `<div class="row" style="margin-bottom:6px">
+      <div style="flex:2 1 170px"><b>${esc(tsNameOf(x.id))}</b> <span class="sub">(id ${esc(x.id)})</span> ${tsGradeBadge(x.id)}</div>
+      <input type="number" min="0" step="1" class="${x.cost != null ? 'ov' : ''}" placeholder="Giá: ${esc(getp(['pvp', 'flameCost']) ?? DEF.pvp.flameCost)} 🔥" value="${x.cost != null ? esc(x.cost) : ''}" onchange="pvpShopCost(${i},this)">
+      <button class="sm x" style="flex:0 0 auto" onclick="pvpShopDel(${i})">🗑 Xóa</button></div>`).join('')}
+    <div class="row" style="margin-top:10px">
+      <select id="pvp-shop-add" style="flex:2 1 200px"><option value="">— Chọn Bảo Vật để thêm —</option>${rest.map(t => `<option value="${esc(t.k)}">[${tsGradeNow(t.k)}] ${esc(tsNameOf(t.k))} (id ${esc(t.k)})</option>`).join('')}</select>
+      <button class="sm" style="flex:0 0 auto" onclick="pvpShopAdd()" ${rest.length ? '' : 'disabled'}>➕ Thêm</button>
+      <button class="sm" style="flex:0 0 auto" onclick="pvpShopReset()">↩ Về mặc định (tất cả)</button></div>`;
+}
+
+/* ---------- Khác ---------- */
+function renderMisc() {
+  $('t-misc').innerHTML = `<h2>Thông số khác</h2>
+    <div class="grid">
+      <div><label>🧹 Số Bàn quét mỗi lần (Quét ×N)</label>${num(['misc', 'sweepN'], DEF.misc.sweepN, 'min="1" max="100"')}</div>
+      <div><label>🦄 Nộ thần thú nhận mỗi hiệp (đánh boss bang)</label>${num(['misc', 'bossBeastRage'], DEF.misc.bossBeastRage, 'min="0"')}</div>
+      <div><label>👻 EXP thần thú: mỗi Thú Hồn</label>${num(['misc', 'ttFeed', 'Thú Hồn'], DEF.misc.ttFeed['Thú Hồn'], 'min="0"')}</div>
+      <div><label>🔥 EXP thần thú: mỗi Thú Linh</label>${num(['misc', 'ttFeed', 'Thú Linh'], DEF.misc.ttFeed['Thú Linh'], 'min="0"')}</div></div>
+    <h3>🗡️ Lính bù cho địch (khi địch chỉ có 2 tướng ở PVE)</h3>
+    <div class="grid">
+      <div><label>Bật lính bù</label>${tri(['lcc', 'on'], true, 'Bật', 'Tắt')}</div>
+      <div><label>Số lính bù (1-3)</label>${num(['lcc', 'count'], 3, 'min="1" max="3"')}</div>
+      <div><label>% sức mạnh lính so với tướng địch (33 = 33% HP / Công / Thủ)</label>${num(['lcc', 'pct'], 33, 'min="1"')}</div></div>
+    <h3>🎒 Giá bán vật phẩm trong Túi Đồ (bạc / 1 cái)</h3>
+    <div class="grid">${Object.keys(DEF.misc.bagPrice).map(k => `<div><label>${esc(k)}</label>${num(['misc', 'bagPrice', k], DEF.misc.bagPrice[k], 'min="0"')}</div>`).join('')}</div>`;
+}
+
+/* ================= CHIÊU THỨC & CHIẾN ĐẤU ================= */
+const SKILL_GROUPS = [
+  ['⚔️ Chung cho mọi trận', [['HIT_GAP', 'Trúng khi Chuẩn − Né ≥ số này (mặc định 200)'], ['MIN_DMG_PCT', 'Sát thương Công tối thiểu (0.1 = 10% Công)'], ['RAGE_ATK', 'Nộ nhận mỗi lần đánh thường'], ['ULT_HITS', 'Tuyệt kỹ thường: số đòn'], ['ULT_MULT', 'Tuyệt kỹ thường: hệ số mỗi đòn (× Công)']]],
+  ['Tà Đế', [['TADE_HITS', 'Số nhát chém (số lần sát thương)'], ['TADE_MULT', 'Tổng hệ số Công lên toàn địch'], ['TADE_SLOW', 'Giảm Tốc địch mỗi nhát (0.3 = 30%)'], ['TADE_SLOW_TURNS', 'Số hiệp giảm Tốc'], ['TADE_PIERCE', 'Phá giáp cộng cho toàn đội ta'], ['TADE_PIERCE_TURNS', 'Số hiệp tăng Phá giáp']]],
+  ['Hằng Nga', [['MOON_TURNS', 'Khiên kéo dài (hiệp)'], ['MOON_REFLECT', 'Phản sát thương (0.5 = 50%)'], ['MOON_TAKE', 'Đồng đội chỉ nhận (0.3 = 30%)']]],
+  ['Độc Cô Cầu Bại', [['DUCO_SWORDS', 'Số kiếm trong mưa kiếm (hiệu ứng)'], ['DUCO_HIT_COUNT', 'Số lần sát thương lên mỗi địch'], ['DUCO_MULT', 'Tổng hệ số Công lên mỗi địch'], ['DUCO_SLOW', 'Địch giảm Tốc (0.2 = 20%)'], ['DUCO_HASTE', 'Đội ta tăng Tốc (0.2 = 20%)'], ['DUCO_BUFF_TURNS', 'Số hiệp giảm/tăng Tốc']]],
+  ['Trương Tam Phong & Phạm Dao', [['TAICHI_MULT', 'Trương Tam Phong: hệ số Công'], ['TAICHI_BLEED_TURNS', 'Trương Tam Phong: chảy máu (hiệp)'], ['TAICHI_BLEED_PCT', 'Trương Tam Phong: chảy máu (% HP)'], ['DRAGON_MULT', 'Phạm Dao: hệ số Công'], ['DRAGON_TIERS', 'Phạm Dao: số lần sát thương'], ['BLEED_TURNS', 'Phạm Dao: chảy máu (hiệp)'], ['BLEED_PCT', 'Phạm Dao: chảy máu (% HP)']]],
+  ['Âu Cơ', [['HEAL_MULT', 'Hệ số hồi máu (× (Công + Thủ))']]],
+  ['Hoa Mãn Lâu', [['BFLY_HITS', 'Số bướm'], ['BFLY_MULT', 'Hệ số Công mỗi bướm'], ['BFLY_ATK_BUFF', 'Tăng Công toàn đội (0.5 = +50%)'], ['BF_PCT', 'Hiệu ứng bướm (0.25 = 25%)'], ['BF_TURNS', 'Hiệu ứng kéo dài (hiệp)'], ['BF_STUN_TURNS', 'Choáng (hiệp)'], ['BF_STUN_TARGETS', 'Choáng bao nhiêu địch'], ['BF_SILENCE_TARGETS', 'Câm lặng bao nhiêu địch'], ['BF_POISON_PCT', 'Độc (% HP)']]],
+  ['Đông Phương Cô Nương', [['HTT_FLAT', 'Đông Phương: sát thương chuẩn cố định'], ['HTT_LINES', 'Đông Phương: số đường lửa'], ['HTT_HP_PCT', 'Đông Phương: giảm HP hiện tại địch (0.5 = 50%)']]],
+  ['Tiểu Yêu', [['SKEL_PCT', 'Mỗi địch mất % HP hiện tại (0.5 = 50%)'], ['EXEC_PCT', 'Ngưỡng TẤT SÁT (0.1 = ≤10% HP tối đa)']]],
+  ['Vô Nhai Tử', [['GO_STONES', 'Số quân cờ'], ['GO_STONE_PCT', 'Mỗi quân gây % HP hiện tại (0.06 = 6%)']]],
+  ['Đoàn Dự', [['LB_TURNS', 'Số hiệp hiệu lực'], ['LB_DODGE_MULT', 'Né tăng (× , 3 = +300%)'], ['LB_SPD_MULT', 'Tốc tăng (× , 1.5 = +150%)'], ['LB_HEAL_MULT', 'Hồi máu (×)'], ['LB_GHOSTS', 'Số tàn ảnh']]],
+  ['Thủy Long', [['TL_BUBBLES', 'Số bong bóng (hiệu ứng)'], ['TL_HITS', 'Số lần sát thương lên mỗi địch'], ['TL_MULT', 'Tổng hệ số Công lên mỗi địch'], ['TL_RAGE', 'Nộ cộng cho cả đội']]],
+  ['Bắc Cái', [['BC_HITS', 'Số cây tre'], ['BC_MULT', 'Tổng hệ số Công'], ['BC_DEF_DOWN', 'Giảm Thủ địch (0.3 = 30%)'], ['BC_ATK_UP', 'Tăng Công đội (0.3 = 30%)'], ['BC_TURNS', 'Số hiệp']]],
+  ['Đông Tà', [['DT_HITS', 'Số sóng âm'], ['DT_MULT', 'Tổng hệ số Công'], ['DT_CRIT', 'Giảm Bạo địch / tăng Bạo đội (0.3 = 30%)'], ['DT_TURNS', 'Số hiệp']]],
+  ['Tây Độc', [['TD_DEF_DOWN', 'Giảm Thủ (0.7 = 70%)'], ['TD_HP_DOWN', 'Giảm máu hiện tại (0.5 = 50%)'], ['TD_SPD_DOWN', 'Giảm Tốc (0.2 = 20%)'], ['TD_TURNS', 'Số hiệp']]],
+  ['Nam Đế', [['ND_ALL_DOWN', 'Địch giảm mọi thuộc tính (0.5 = 50%)'], ['ND_TURNS', 'Số hiệp']]],
+  ['Vương Trùng Dương', [['VTD_ALL_UP', 'Đội tăng mọi thuộc tính (3 = +300%)'], ['VTD_TURNS', 'Số hiệp']]],
+  ['Ma Tôn', [['MT_HANDS', 'Số bàn tay ma (hiệu ứng)'], ['MT_HITS', 'Số lần sát thương lên toàn địch'], ['MT_ACC_UP', 'Đội ta tăng Chuẩn'], ['MT_ACC_DOWN', 'Toàn địch giảm Chuẩn'], ['MT_TURNS', 'Số hiệp']]],
+  ['Triệu Mẫn', [['TM_SWORDS', 'Số thanh kiếm bay (hiệu ứng)'], ['TM_ROWS', 'Số hàng kiếm (hiệu ứng)'], ['TM_HITS', 'Số lần sát thương lên toàn địch'], ['TM_BLOCK_DOWN', 'Địch giảm Đỡ đòn'], ['TM_BLOCK_UP', 'Đội ta tăng Đỡ đòn'], ['TM_TURNS', 'Số hiệp']]],
+  ['Mộc Quế Anh', [['QA_DODGE_UP', 'Đội ta tăng Né'], ['QA_DODGE_DOWN', 'Toàn địch giảm Né'], ['QA_TURNS', 'Số hiệp tăng/giảm Né'], ['QA_HITS_UP', 'Số lần hất thương từ dưới lên'], ['QA_HITS_DOWN', 'Số lần bổ từ trên xuống']]],
+  ['Thần Hộ Rừng', [['HR_CRIT_UP', 'Bản thân tăng Bạo'], ['HR_CDMG_UP', 'Bản thân tăng Bạo Sát'], ['HR_ACC_UP', 'Bản thân tăng Chuẩn'], ['HR_TURNS', 'Số hiệp tăng'], ['HR_ARROWS', 'Số mũi tên (hiệu ứng)'], ['HR_HITS', 'Số lần sát thương'], ['HR_TARGETS', 'Số tướng địch bị trúng']]],
+  ['Bạch Cầm', [['BQ_CRIT_UP', 'Bản thân tăng Bạo'], ['BQ_TURNS', 'Số hiệp tăng Bạo / cấm hồi máu'], ['BQ_CLONES', 'Số phân thân (= số địch bị đánh)'], ['BQ_HITS', 'Số lần mỗi địch bị đánh'], ['BQ_STUN', 'Số hiệp địch bị choáng']]],
+  ['Thiết Phiến', [['TP_MULT', 'Tổng hệ số Công lên toàn địch'], ['TP_HITS', 'Số lần sát thương'], ['TP_SLOW', 'Giảm Tốc địch (0.15 = 15%)'], ['TP_SLOW_TURNS', 'Số hiệp giảm Tốc'], ['TP_SILENCE_TARGETS', 'Câm bao nhiêu địch'], ['TP_SILENCE_TURNS', 'Số hiệp câm']]],
+  ['Dương Tiễn', [['DY_MULT', 'Tổng hệ số Công'], ['DY_HITS', 'Số lần đánh địch Công cao nhất'], ['DY_PIERCE', 'Phá giáp cộng cho bản thân'], ['DY_PIERCE_TURNS', 'Số hiệp tăng Phá giáp'], ['DY_BLOCK_DOWN', 'Địch giảm Đỡ đòn (0.2 = 20%)'], ['DY_TURNS', 'Số hiệp giảm Đỡ đòn']]],
+  ['Quan Âm', [['QA_BLOCK_UP', 'Đội ta tăng Đỡ đòn (1 = +100%)'], ['QA_HEAL', 'Hồi máu mỗi hiệp (× Công Quan Âm)'], ['QA_PIERCE_DOWN', 'Địch giảm Phá giáp (0.5 = 50%)'], ['QY_TURNS', 'Số hiệp hiệu lực']]],
+  ['Đường Tăng', [['DTA_MULT', 'Tổng hệ số Công lên toàn địch'], ['DTA_HITS', 'Số lần sát thương'], ['DTA_ACC_DOWN', 'Địch giảm Chuẩn (0.5 = 50%)'], ['DTA_DODGE_DOWN', 'Địch giảm Né (0.3 = 30%)'], ['DTA_TURNS', 'Số hiệp']]],
+  ['Linh Lung', [['LLG_MULT', 'Tổng hệ số Công lên toàn địch'], ['LLG_HITS', 'Số lần sát thương'], ['LLG_TURNS', 'Số hiệp địch bị cầm chân (Tốc về 0)']]],
+  ['Tôn Ngộ Không', [['NK_ATK_UP', 'Bản thân tăng Công (3 = +300%)'], ['NK_ATK_TURNS', 'Số hiệp tăng Công'], ['NK_CLONES', 'Số phân thân (= số địch bị đánh)'], ['NK_HITS', 'Số lần mỗi phân thân đánh'], ['NK_MULT', 'Hệ số Công của phân thân'], ['NK_STAFFS', 'Số cây gậy nện xuống'], ['NK_STAFF_MULT', 'Hệ số Công mỗi cây gậy']]],
+  ['Na Tra', [['NT_HITS', 'Số lần sát thương lên toàn địch'], ['NT_WHEELS', 'Số Hỏa Luân (hiệu ứng)'], ['NT_BURN_PCT', 'Thiêu đốt mỗi hiệp (0.2 = 20% HP hiện tại)'], ['NT_BURN_TURNS', 'Số hiệp thiêu đốt'], ['NT_DODGE_DOWN', 'Địch giảm Né (0.3 = 30%)'], ['NT_DODGE_TURNS', 'Số hiệp giảm Né'], ['NT_ATK_UP', 'Đội ta tăng Công (0.2 = 20%)'], ['NT_ATK_TURNS', 'Số hiệp tăng Công']]],
+  ['Sa Tăng', [['SB_HITS', 'Số lần sát thương lên toàn địch'], ['SB_TOUGH_UP', 'Đội ta tăng Bền (điểm)'], ['SB_TOUGH_DOWN', 'Địch giảm Bền (điểm)'], ['SB_TURNS', 'Số hiệp'], ['SB_GIANT', 'Độ phóng to khi hóa khổng lồ (hiệu ứng)']]],
+  ['Bát Giới', [['BG_DEF_UP', 'Tăng Thủ bản thân (1 = +100%)'], ['BG_DEF_TURNS', 'Số hiệp tăng Thủ'], ['BG_HEAL', 'Hồi % HP tối đa (1 = 100%)']]],
+  ['Bạch Cốt Tinh', [['BCT_HITS', 'Số lần sát thương lên toàn địch'], ['BCT_SCALE', 'Độ phóng to khi hóa Bạch Cốt (hiệu ứng)']]],
+  ['Thái Thượng Lão Quân', [['LQ_HITS', 'Số lần sát thương lên toàn địch'], ['LQ_HEAL_UP', 'Đội ta tăng hiệu quả hồi máu (1 = +100%)'], ['LQ_HEAL_TURNS', 'Số hiệp tăng hồi máu'], ['LQ_NOHEAL_TURNS', 'Số hiệp địch bị cấm hồi máu'], ['LQ_DING_W', 'Độ rộng đỉnh khổng lồ (hiệu ứng)']]],
+  ['Diêm La Vương', [['DL_HITS', 'Số lần sát thương lên toàn địch'], ['DL_CRIT_UP', 'Đội ta tăng Bạo (3 = +300%)'], ['DL_CDMG_UP', 'Đội ta tăng Bạo Sát (2.5 = +250%)'], ['DL_TURNS', 'Số hiệp']]],
+['Linda', [['LD_HITS', 'Số lần sát thương lên toàn địch'], ['LD_BRICKS', 'Số viên gạch chọi (hiệu ứng)'], ['LD_CRIT_UP', 'Bản thân tăng Bạo (3 = +300%)'], ['LD_CDMG_UP', 'Bản thân tăng Bạo Sát (3 = +300%)'], ['LD_TURNS', 'Số hiệp (tăng Bạo/Bạo Sát và giảm Bền)'], ['LD_TOUGH_DOWN', 'Toàn địch giảm Bền (50 = -50%)']]]
+];
+function renderSkill() {
+  $('t-skill').innerHTML = `<h2>Chiêu thức & chiến đấu</h2>
+    <div class="note">Các hệ số cân bằng của tuyệt kỹ từng tướng và luật trúng / sát thương chung. Áp dụng cho PvE, Giang Hồ, Tỷ Võ, boss bang. Số lần / số đòn nên là số nguyên. Để trống = mặc định (chữ mờ). Mô tả kỹ năng trong màn tướng tự cập nhật theo số mới.</div>
+    ${SKILL_GROUPS.map(g => `<h3>${g[0]}</h3><div class="grid">${g[1].map(([k, l]) => `<div><label>${l} <code>${k}</code></label>${num(['skill', k], DEF.skill[k] ?? '', 'min="0"')}</div>`).join('')}</div>`).join('')}`;
+}
+
+/* ================= THẦN THÚ ================= */
+const TT_LABEL = { capBase: 'Cấp tối đa = (số này) + (mỗi sao) × sao — phần cố định', capPer: 'Cấp tối đa: cộng thêm mỗi sao', needMul: 'EXP lên cấp = hệ số × cấp³ + …', needAdd: '… + số cố định này', maxStar: 'Sao tối đa', starLinh: 'Tăng sao: Dị Linh × sao hiện tại', starDa: 'Tăng sao: Đá Nữ Oa × sao hiện tại', hpPer: 'HP gốc mỗi cấp', starGrow: 'HP tăng mỗi sao (0.15 = 15%)', sMul: 'Hạng S nhân HP (×)', ptsMul: 'Điểm = HP × số này', healDiv: 'Hồi máu = HP ÷ số này', phaPer: 'Phá giáp mỗi sao', dodgePer: 'Đỡ đòn (%) mỗi sao', sSlots: 'Hạng S mở sẵn thêm ô phụ thể (0–5)', freeMin: 'Tẩy miễn phí: chờ (phút)', rerollCost: 'Tẩy 10 lần: giá vàng', histMax: 'Số kết quả tẩy lưu lại', pct1: 'Phụ thể bậc 1 (xanh lá): tăng Tốc (%)', pct2: 'Bậc 2 (xanh dương) (%)', pct3: 'Bậc 3 (tím) (%)', pct4: 'Bậc 4 (cam) (%)', pct5: 'Bậc 5 (đỏ) (%)', pct6: 'Bậc 6 (bạc) (%)', pct7: 'Bậc 7 (vàng) (%)', hpct1: 'Phụ thể THUẪN bậc 1 (xanh lá): tăng HP (%)', hpct2: 'Thuẫn bậc 2 (xanh dương) (%)', hpct3: 'Thuẫn bậc 3 (tím) (%)', hpct4: 'Thuẫn bậc 4 (cam) (%)', hpct5: 'Thuẫn bậc 5 (đỏ) (%)', hpct6: 'Thuẫn bậc 6 (bạc) (%)', hpct7: 'Thuẫn bậc 7 (vàng) (%)', rate7: '🎲 Tẩy phụ thể: tỉ lệ ra bậc 7 (%)', rate6: '🎲 Tỉ lệ ra bậc 6 (%) — xét sau khi không ra bậc 7', rate5: '🎲 Tỉ lệ ra bậc 5 (%)', rate4: '🎲 Tỉ lệ ra bậc 4 (%)', rate3: '🎲 Tỉ lệ ra bậc 3 (%)', rate2: '🎲 Tỉ lệ ra bậc 2 (%)', rate1: '🎲 Bậc 1 (%) — để 100 = chốt bậc 1 khi không trúng bậc nào ở trên' };
+const TT_PT_NAMES = ['Huyết Bạo','Ngự Thuẫn','Hoạt Khí','Cường Công','Sát Lục','Thần Huyết','Tái Sinh','Thần Thuẫn','Chiến Thuẫn','Bá Thuẫn','Bạo Nộ','Bạo Tức','Tinh Chuẩn','Cấp Tốc','Ẩn Thân','Kích Sát','Kích Phá','Đẩy Lui','Trợ Thuẫn','Tàn Ảnh','Kỳ Thuẫn','Thần Tốc','Trợ Tốc','Hộ Tốc','Gia Tốc'];
+/* ghi đè từng thần thú: cfg.tt.beasts[tên] = { rank, shards, fx: [{n,v,p}] } */
+function ttBeastCfg(name) { cfg.tt = cfg.tt || {}; cfg.tt.beasts = cfg.tt.beasts || {}; return (cfg.tt.beasts[name] = cfg.tt.beasts[name] || {}); }
+function ttFxOf(i) { const b = DEF.ttBeasts[i], o = (getp(['tt', 'beasts', b[0]]) || {}); return Array.isArray(o.fx) ? o.fx : b[4].map(f => ({ n: f[0], v: f[1], p: f[2] ? 1 : 0 })); }
+function ttSetRank(i, v) { const o = ttBeastCfg(DEF.ttBeasts[i][0]); o.rank = v; renderTT(); }
+function ttSetShards(i, v) { const o = ttBeastCfg(DEF.ttBeasts[i][0]); o.shards = v === '' ? '' : Math.max(0, Math.floor(Number(v)) || 0); }
+function ttFxMat(i) { const o = ttBeastCfg(DEF.ttBeasts[i][0]); if (!Array.isArray(o.fx)) o.fx = ttFxOf(i).map(f => Object.assign({}, f)); return o.fx; }
+function ttFxAdd(i) { ttFxMat(i).push({ n: TT_PT_NAMES[0], v: 10, p: 0 }); renderTT(); }
+function ttFxDel(i, j) { ttFxMat(i).splice(j, 1); renderTT(); }
+function ttFxSet(i, j, k, v) { const f = ttFxMat(i)[j]; f[k] = k === 'v' ? (Number(v) || 0) : k === 'p' ? (v ? 1 : 0) : v; }
+function ttFxReset(i) { const o = ttBeastCfg(DEF.ttBeasts[i][0]); delete o.fx; renderTT(); }
+function renderTT() {
+  $('t-tt').innerHTML = `<h2>🦄 Công thức Thần Thú</h2>
+    <div class="note">Cấp, sao, chỉ số, tẩy phụ thể. Để trống = mặc định.</div>
+    <div class="grid">${Object.keys(TT_LABEL).map(k => `<div><label>${TT_LABEL[k]}</label>${num(['tt', k], DEF.tt[k], 'min="0" step="any"')}</div>`).join('')}</div>
+    <h2 style="margin-top:22px">Từng thần thú</h2>
+    <div class="note">Hạng (A+ / S), số mảnh cần để nhận, và các hiệu quả phụ thể (tên + giá trị; tick "điểm" nếu là điểm cộng thẳng thay vì %). Thần thú chưa có hiệu quả hiện "Coming soon". Tên hiệu quả nên chọn trong danh sách sẵn có để game tính đúng chỉ số.</div>
+    ${DEF.ttBeasts.map((b, i) => { const o = getp(['tt', 'beasts', b[0]]) || {}, fx = ttFxOf(i), cus = Array.isArray(o.fx);
+      return `<div class="item"><div class="hd"><b>${esc(b[3])} ${esc(b[0])}</b></div>
+      <div class="row"><div><label>Hạng</label><select class="${o.rank ? 'ov' : ''}" onchange="ttSetRank(${i},this.value)"><option value="">Mặc định: ${b[1]}</option><option value="A+" ${o.rank === 'A+' ? 'selected' : ''}>A+</option><option value="S" ${o.rank === 'S' ? 'selected' : ''}>S</option></select></div>
+        <div><label>Mảnh cần để nhận</label><input type="number" min="0" class="${o.shards !== undefined && o.shards !== '' ? 'ov' : ''}" placeholder="${b[2]}" value="${o.shards === undefined ? '' : esc(o.shards)}" onchange="ttSetShards(${i},this.value);this.classList.toggle('ov',this.value!=='')"></div></div>
+      <label>Hiệu quả phụ thể ${cus ? '<b style="color:var(--gold)">(đang tuỳ chỉnh)</b>' : ''}</label>
+      ${fx.map((f, j) => `<div class="rwrow"><select onchange="ttFxSet(${i},${j},'n',this.value)">${TT_PT_NAMES.map(n => `<option ${n === f.n ? 'selected' : ''}>${n}</option>`).join('')}</select><input type="number" step="any" value="${esc(f.v)}" onchange="ttFxSet(${i},${j},'v',this.value)"><label class="chk"><input type="checkbox" ${f.p ? 'checked' : ''} onchange="ttFxSet(${i},${j},'p',this.checked)"> điểm</label><button class="x dng sm" onclick="ttFxDel(${i},${j})">✕</button></div>`).join('') || '<div class="note">Chưa có hiệu quả.</div>'}
+      <div class="row"><button class="sm fix" onclick="ttFxAdd(${i})">＋ Thêm hiệu quả</button>${cus ? `<button class="sm fix dng" onclick="ttFxReset(${i})">Khôi phục mặc định</button>` : ''}</div></div>`; }).join('')}`;
+}
+
+/* ================= BANG HỘI & ĐẠI SẢNH ================= */
+const G2_LABEL = { expBase: '🏰 EXP bang cần ở cấp 1', expMult: '🏰 EXP bang: nhân mỗi cấp (×)', uyBase: '🏅 Lò Luyện Hỏa: Uy Tín cấp 0', uyGrow: '🏅 Uy Tín: nhân mỗi cấp (1.02 = +2%)', silverBase: '🥈 Lò Luyện Hỏa: bạc cấp 0', silverGrow: '🥈 Bạc: nhân mỗi cấp (1.05 = +5%)', ctCost: '👑 Vàng mở Boss Chí Tôn', buyPer: '🪙 Giá mua vật phẩm boss: vàng / 1 cái', bidMax: '🔨 Giá đấu khởi điểm: ngẫu nhiên tối đa × số lượng', dropQ1: '📦 Số lượng mỗi lô (mức 1)', dropQ2: '📦 Số lượng mỗi lô (mức 2)', lotMin: '📦 Số lô rơi tối thiểu', lotExtra: '📦 Số lô rơi thêm ngẫu nhiên (0 → …)', endHour: '⏰ Giờ chốt đấu giá (0–23)', resetHour: '⏰ Giờ boss hồi đầy (0–23, mặc định 3h sáng)' };
+const DS_NAMES = ['🥈 Bạc', '🌾 Gạo', '🪙 Vàng'];
+const WD = [[1, 'Thứ 2'], [2, 'Thứ 3'], [3, 'Thứ 4'], [4, 'Thứ 5'], [5, 'Thứ 6'], [6, 'Thứ 7'], [0, 'Chủ nhật']];
+function g2Day(d, on) { const cur = new Set(g2List(['guild2', 'resetDays'], [1, 4]).map(Number)); on ? cur.add(d) : cur.delete(d); setp(['guild2', 'resetDays'], cur.size ? [...cur].sort() : ''); }
+function g2List(path, def) { const v = getp(path); return Array.isArray(v) ? v : def; }
+function g2Drops(key, ta) { const L = ta.value.split('\n').map(x => x.trim()).filter(Boolean); setp(['guild2', key], L.length ? L : ''); }
+function g2Rew() { cfg.guild2 = cfg.guild2 || {}; cfg.guild2.basin = cfg.guild2.basin || {}; if (!Array.isArray(cfg.guild2.basin.rewards)) cfg.guild2.basin.rewards = clone(DEF.basinRew); return cfg.guild2.basin.rewards; }
+function g2RewAdd() { g2Rew().push({ name: 'Thú Hồn', ico: '🟠', n: 10 }); renderG2(); }
+function g2RewDel(i) { g2Rew().splice(i, 1); renderG2(); }
+function g2RewSet(i, k, v) { const r = g2Rew()[i]; r[k] = k === 'n' ? Math.max(1, Math.floor(Number(v)) || 1) : v; }
+function renderG2() {
+  const br = g2List(['guild2', 'basin', 'rewards'], DEF.basinRew), bossNames = Object.keys(DEF.bossLv);
+  $('t-g2').innerHTML = `<h2>🏰 Bang Hội, Lò Luyện Hỏa, đổi vật phẩm boss</h2>
+    <div class="grid">${Object.keys(G2_LABEL).map(k => `<div><label>${G2_LABEL[k]}</label>${num(['guild2', k], DEF.g2[k], 'min="0" step="any"')}</div>`).join('')}</div>
+    <h3>Ngày boss hồi đầy HP (reset lượt boss)</h3>
+    <div class="note">Vào giờ đã chọn ở ô "Giờ boss hồi đầy" của các ngày được tick, mọi boss trở lại đầy máu. Mặc định thứ 2 và thứ 5. Bỏ tick hết = dùng mặc định. Số lượt đánh mỗi ngày chỉnh ở tab Boss & Lò Luyện Hỏa.</div>
+    <div class="row">${WD.map(([d, n]) => `<label class="chk fix"><input type="checkbox" ${g2List(['guild2', 'resetDays'], [1, 4]).map(Number).includes(d) ? 'checked' : ''} onchange="g2Day(${d},this.checked)"> ${n}</label>`).join('')}</div>
+    <h3>Bang cấp cần để mở từng kỹ năng Lò Luyện Hỏa</h3>
+    <div class="grid">${DEF.guildSkills.map((n, i) => `<div><label>${esc(n)}</label>${num(['guild2', 'unlock', i], DEF.unlock[i], 'min="1"')}</div>`).join('')}</div>
+    <h3>Bang cấp cần để đánh từng boss thường</h3>
+    <div class="grid">${bossNames.map(n => `<div><label>${esc(n)}</label>${num(['guild2', 'bossLv', n], DEF.bossLv[n], 'min="1"')}</div>`).join('')}</div>
+    <h3>Vật phẩm rơi khi hạ boss</h3>
+    <div class="note">Mỗi dòng 1 vật phẩm. Dùng <code>Châu {boss}</code> cho Châu của đúng boss đó. Vật phẩm lạ hiện icon 🎁. Để trống = mặc định.</div>
+    <div class="row"><div><label>4 boss đầu (Kỳ Lân → Long Quy)</label><textarea class="${Array.isArray(getp(['guild2','dropsLow'])) ? 'ov' : ''}" placeholder="${esc(DEF.dropsLow.join('\n'))}" onchange="g2Drops('dropsLow',this);this.classList.toggle('ov',this.value.trim()!=='')">${esc((getp(['guild2', 'dropsLow']) || []).join('\n'))}</textarea></div>
+      <div><label>3 boss sau (Báo Tuyết → Cuồng Ngưu)</label><textarea class="${Array.isArray(getp(['guild2','dropsHigh'])) ? 'ov' : ''}" placeholder="${esc(DEF.dropsHigh.join('\n'))}" onchange="g2Drops('dropsHigh',this);this.classList.toggle('ov',this.value.trim()!=='')">${esc((getp(['guild2', 'dropsHigh']) || []).join('\n'))}</textarea></div></div>
+    <h2 style="margin-top:22px">🏅 Quyên Góp (Đại Sảnh)</h2>
+    <div class="note">Mỗi lần góp: trừ số tài nguyên bên dưới, nhận Uy Tín và EXP bang.</div>
+    ${DS_NAMES.map((n, i) => `<h3>${n}</h3><div class="grid"><div><label>Số lượng / 1 lần góp</label>${num(['guild2', 'donate', i, 'n'], DEF.donate[i].n, 'min="1"')}</div><div><label>Uy Tín / lần</label>${num(['guild2', 'donate', i, 'uy'], DEF.donate[i].uy, 'min="0"')}</div><div><label>EXP bang / lần</label>${num(['guild2', 'donate', i, 'exp'], DEF.donate[i].exp, 'min="0"')}</div></div>`).join('')}
+    <h2 style="margin-top:22px">💰 Tụ Bảo Bồn</h2>
+    <div class="grid">${[['full', 'Bồn đầy khi đạt'], ['silverCost', 'Góp bạc: số bạc'], ['silverAdd', 'Góp bạc: +bồn'], ['goldCost', 'Góp vàng: số vàng'], ['goldAdd', 'Góp vàng: +bồn']].map(([k, l]) => `<div><label>${l}</label>${num(['guild2', 'basin', k], DEF.basin[k], 'min="1"')}</div>`).join('')}</div>
+    <h3>Phần thưởng ngẫu nhiên mỗi lần góp (rơi vào Kho bang, chọn 1 trong danh sách)</h3>
+    ${br.map((r, i) => `<div class="rwrow"><input type="text" maxlength="30" value="${esc(r.name)}" placeholder="Tên vật phẩm" onchange="g2RewSet(${i},'name',this.value)"><input type="text" maxlength="4" style="max-width:60px;flex:0 0 60px" value="${esc(r.ico || '🎁')}" onchange="g2RewSet(${i},'ico',this.value)"><input type="number" min="1" value="${esc(r.n)}" onchange="g2RewSet(${i},'n',this.value)"><button class="x dng sm" onclick="g2RewDel(${i})">✕</button></div>`).join('')}
+    <button class="sm" onclick="g2RewAdd()">＋ Thêm phần thưởng ngẫu nhiên</button>
+    <h3>Quà khi bồn đầy</h3>
+    ${rlCfg('basinFull', ['guild2', 'basin', 'fullGifts'], DEF.basinFull, renderG2)}`;
+}
+
+/* ================= HỘP THƯ ================= */
+function letters() { cfg.mail = cfg.mail || {}; if (!Array.isArray(cfg.mail.letters)) cfg.mail.letters = []; return cfg.mail.letters; }
+function lAdd() { letters().push({ id: 'L' + Date.now().toString(36), title: '', body: '', gifts: [{ t: 'gold', n: 1000 }], from: 0, to: 0 }); renderMail(); }
+function lDel(i) { if (!confirm('Xóa thư này? (người chơi chưa nhận sẽ không còn thấy)')) return; letters().splice(i, 1); renderMail(); }
+function lMove(i, d) { const L = letters(), j = i + d; if (j < 0 || j >= L.length) return; [L[i], L[j]] = [L[j], L[i]]; renderMail(); }
+function lSet(i, k, v) { const l = letters()[i]; if (!l) return; if (k === 'from' || k === 'to') l[k] = dtMs(v); else l[k] = v; }
+function renderMail() {
+  const L = (getp(['mail', 'letters']) || []);
+  $('t-mail').innerHTML = `<h2>📬 Quà hằng ngày trong Hộp Thư</h2>
+    <div class="note">Mỗi ngày người chơi có 1 thư quà. Thư chưa nhận được giữ lại một số ngày. Mặc định: 10.000 vàng mỗi ngày, giữ 7 ngày.</div>
+    <div class="grid"><div><label>Quà hằng ngày</label>${tri(['mail', 'daily'], true, 'Bật', 'Tắt (không có quà hằng ngày)')}</div>
+      <div><label>Giữ thư chưa nhận bao nhiêu ngày (1–60)</label>${num(['mail', 'days'], DEF.mail.days, 'min="1" max="60"')}</div></div>
+    <label style="margin-top:12px">Phần thưởng mỗi ngày</label>
+    ${rlCfg('mailGifts', ['mail', 'gifts'], DEF.mail.gifts, renderMail)}
+    <div class="note">Xóa hết phần thưởng rồi lưu = trở về mặc định (10.000 vàng). Muốn tắt hẳn hãy chọn "Tắt" ở ô trên.</div>
+    <h2 style="margin-top:22px">✉️ Thư riêng gửi cho người chơi</h2>
+    <div class="note">Mỗi thư nhận được 1 lần / tài khoản và hiện cho mọi người chơi (kể cả tài khoản mới tạo sau này, trừ khi bạn đặt thời gian). Muốn gửi quà mới: thêm thư mới. Thư quá hạn tự biến mất. Để trống "Từ / Đến" = không giới hạn thời gian.</div>
+    ${L.map((l, i) => `<div class="item"><div class="hd"><b>Thư ${i + 1}</b><button class="sm" onclick="lMove(${i},-1)">▲</button><button class="sm" onclick="lMove(${i},1)">▼</button><button class="sm dng" onclick="lDel(${i})">✕ Xóa</button></div>
+      <label>Tiêu đề</label><input type="text" maxlength="60" value="${esc(l.title)}" onchange="lSet(${i},'title',this.value)" placeholder="vd: Quà bù bảo trì">
+      <label>Nội dung (tuỳ chọn)</label><textarea maxlength="300" onchange="lSet(${i},'body',this.value)" placeholder="Lời nhắn hiện dưới tiêu đề">${esc(l.body)}</textarea>
+      <div class="row"><div><label>Hiện từ (tuỳ chọn)</label><input type="datetime-local" value="${dtVal(l.from)}" onchange="lSet(${i},'from',this.value)"></div><div><label>Hết hạn (tuỳ chọn)</label><input type="datetime-local" value="${dtVal(l.to)}" onchange="lSet(${i},'to',this.value)"></div></div>
+      <label>Quà đính kèm</label>
+      ${rlEditor('letter' + i, { peek: () => (letters()[i] || {}).gifts || [], get: () => { const x = letters()[i]; x.gifts = x.gifts || []; return x.gifts; }, redraw: renderMail })}</div>`).join('') || '<div class="note">Chưa có thư riêng.</div>'}
+    <button onclick="lAdd()">＋ Thêm thư</button>`;
+}
+
+/* ================= NHIỆM VỤ ================= */
+function chests() { cfg.quest = cfg.quest || {}; if (!Array.isArray(cfg.quest.chests)) cfg.quest.chests = clone(DEF.quest.chests); return cfg.quest.chests; }
+const chestsPeek = () => { const v = getp(['quest', 'chests']); return Array.isArray(v) && v.length ? v : DEF.quest.chests; };
+function chAdd() { const c = chests(); c.push({ pts: ((c[c.length - 1] || {}).pts || 0) + 25, gifts: [{ t: 'gold', n: 1000 }] }); renderQuest(); }
+function chDel(i) { chests().splice(i, 1); renderQuest(); }
+function chPts(i, v) { chests()[i].pts = Math.max(1, Math.floor(Number(v)) || 1); }
+function chReset() { if (confirm('Khôi phục rương mặc định?')) { if (cfg.quest) delete cfg.quest.chests; renderQuest(); } }
+function qTaskOff(id, on) { setp(['quest', 'tasks', id, 'off'], on ? 1 : ''); }
+const QS_TRIG_LABEL = [['pve', 'Thắng 1 Bàn PVE (kể cả quét)'], ['pvp', 'Đánh 1 trận Tỷ Võ'], ['rec', 'Chiêu Mộ (nhận được mảnh)'], ['eq', 'Cường hóa trang bị thành công'], ['bd', 'Bồi dưỡng tướng (lên cấp)'], ['boss', 'Khiêu chiến Boss bang'], ['tt', 'Cho thần thú ăn'], ['mail', 'Nhận quà Hộp Thư'], ['donate', 'Quyên góp bang'], ['basin', 'Góp Tụ Bảo Bồn'], ['skill', 'Học kỹ năng Lò Luyện Hỏa'], ['login', 'Đăng nhập / mở game trong ngày']];
+function cust() { cfg.quest = cfg.quest || {}; if (!Array.isArray(cfg.quest.custom)) cfg.quest.custom = []; return cfg.quest.custom; }
+function cuAdd() { cust().push({ id: 'n' + Date.now().toString(36), name: 'Nhiệm vụ mới', n: 1, pts: 10, trigger: 'pve' }); renderQuest(); }
+function cuDel(i) { cust().splice(i, 1); renderQuest(); }
+function cuSet(i, k, v) { const c = cust()[i]; c[k] = (k === 'n' || k === 'pts') ? Math.max(0, Number(v) || 0) : (k === 'off' ? (v ? 1 : 0) : v); }
+function renderQuest() {
+  const cs = chestsPeek(), custom = Array.isArray(getp(['quest', 'chests']));
+  $('t-quest').innerHTML = `<h2>🎯 Nhiệm vụ ngày (Tích Cực)</h2>
+    <div class="note">Sửa tên, số lần cần làm và điểm Tích Cực của từng nhiệm vụ (ô trống = mặc định). Tích ✔ "Ẩn" để tắt nhiệm vụ đó. Mỗi nhiệm vụ gắn với 1 hành động trong game nên không thể thêm loại hành động mới ở đây. Nhiệm vụ reset mỗi ngày.</div>
+    <div class="scroll2"><table><thead><tr><th>Mã</th><th>Tên nhiệm vụ</th><th>Số lần</th><th>Điểm</th><th>Ẩn</th></tr></thead><tbody>${DEF.quest.tasks.map(t => `<tr><td><code>${t[0]}</code></td><td>${txt(['quest', 'tasks', t[0], 'name'], t[1])}</td><td style="width:90px">${num(['quest', 'tasks', t[0], 'n'], t[2], 'min="1"')}</td><td style="width:90px">${num(['quest', 'tasks', t[0], 'pts'], t[3], 'min="0"')}</td>
+      <td style="width:50px"><input type="checkbox" ${getp(['quest', 'tasks', t[0], 'off']) === 1 ? 'checked' : ''} onchange="qTaskOff('${t[0]}',this.checked)"></td></tr>`).join('')}</tbody></table></div>
+    <h3>➕ Nhiệm vụ tự thêm</h3>
+    <div class="note">Tạo nhiệm vụ mới gắn với 1 hành động có sẵn trong game (mỗi lần thực hiện hành động được tính 1). Hiện cùng danh sách nhiệm vụ ngày và cộng vào điểm Tích Cực.</div>
+    ${(getp(['quest', 'custom']) || []).map((c, i) => `<div class="item"><div class="row"><div><label>Tên</label><input type="text" maxlength="60" value="${esc(c.name)}" onchange="cuSet(${i},'name',this.value)"></div><div style="flex:0 1 90px"><label>Số lần</label><input type="number" min="1" value="${esc(c.n)}" onchange="cuSet(${i},'n',this.value)"></div><div style="flex:0 1 90px"><label>Điểm</label><input type="number" min="0" value="${esc(c.pts)}" onchange="cuSet(${i},'pts',this.value)"></div>
+      <div><label>Hành động được tính</label><select onchange="cuSet(${i},'trigger',this.value)">${opts(QS_TRIG_LABEL, c.trigger)}</select></div><div class="fix"><label>&nbsp;</label><label class="chk"><input type="checkbox" ${Number(c.off) === 1 ? 'checked' : ''} onchange="cuSet(${i},'off',this.checked)"> Ẩn</label></div><div class="fix"><label>&nbsp;</label><button class="sm dng" onclick="cuDel(${i})">✕</button></div></div></div>`).join('')}
+    <button class="sm" onclick="cuAdd()">＋ Thêm nhiệm vụ</button>
+    <h2 style="margin-top:22px">🎁 Rương Tích Cực</h2>
+    <div class="note">Mỗi rương mở khi đạt đủ điểm. Thanh tiến độ tính theo mốc điểm lớn nhất. ${custom ? '<b style="color:var(--gold)">Đang dùng rương tuỳ chỉnh.</b>' : 'Đang dùng rương mặc định (sửa bất kỳ ô nào sẽ chuyển sang tuỳ chỉnh).'}</div>
+    ${cs.map((c, i) => `<div class="item"><div class="hd"><b>Rương ${i + 1}</b><button class="sm dng" onclick="chDel(${i})">✕ Xóa</button></div>
+      <div class="grid"><div><label>Mốc điểm để mở</label><input type="number" min="1" value="${esc(c.pts)}" onchange="chPts(${i},this.value)"></div></div>
+      <label>Quà</label>${rlEditor('chest' + i, { peek: () => (chestsPeek()[i] || {}).gifts || [], get: () => { const x = chests()[i]; x.gifts = x.gifts || []; return x.gifts; }, redraw: renderQuest })}</div>`).join('')}
+    <div class="row"><button class="fix" onclick="chAdd()">＋ Thêm rương</button><button class="fix dng" onclick="chReset()">Khôi phục rương mặc định</button></div>`;
+}
+
+/* ================= SỰ KIỆN ================= */
+const KINDS = [['login', '📅 Đăng nhập tích lũy (nhiều mốc, mỗi mốc 5 ô quà)'], ['daily', '🎁 Quà nhận mỗi ngày'], ['once', '🎉 Quà nhận 1 lần'], ['soon', '⏳ Sắp ra mắt (chỉ hiện chữ)']];
+function evs() { cfg.event = cfg.event || {}; if (!Array.isArray(cfg.event.list)) cfg.event.list = clone(DEF.events); return cfg.event.list; }
+const evsPeek = () => { const v = getp(['event', 'list']); return Array.isArray(v) && v.length ? v : DEF.events; };
+function evAdd() { evs().push({ id: 'ev' + Date.now().toString(36), name: 'Sự kiện mới', ico: '🎊', kind: 'once', gifts: [{ t: 'gold', n: 1000 }], from: 0, to: 0 }); renderEvent(); }
+function evDel(i) { if (!confirm('Xóa sự kiện này?')) return; evs().splice(i, 1); renderEvent(); }
+function evMove(i, d) { const L = evs(), j = i + d; if (j < 0 || j >= L.length) return; [L[i], L[j]] = [L[j], L[i]]; renderEvent(); }
+function evSet(i, k, v) { const e = evs()[i]; if (!e) return; if (k === 'from' || k === 'to') e[k] = dtMs(v); else if (k === 'off') e.off = v ? 1 : 0; else e[k] = v; if (k === 'kind') renderEvent(); }
+const EVL_DEF_N = 7;
+const evIsLogin = e => e.kind === 'login' || (e.id === 'free' && e.kind !== 'soon');
+function evRowsGet(i) { const x = evs()[i]; if (!Array.isArray(x.rows) || !x.rows.length) x.rows = Array.from({ length: EVL_DEF_N }, () => ({ gifts: [] })); return x.rows; }
+const evRowsPeek = i => { const r = (evsPeek()[i] || {}).rows; return Array.isArray(r) && r.length ? r : Array.from({ length: EVL_DEF_N }, () => ({ gifts: [] })); };
+function evRowAdd(i) { evRowsGet(i).push({ gifts: [] }); renderEvent(); }
+function evRowDel(i) { const R = evRowsGet(i); if (R.length <= 1) return alert('Phải còn ít nhất 1 mốc.'); R.pop(); renderEvent(); }
+function evReset() { if (confirm('Khôi phục danh sách sự kiện mặc định? (mọi sự kiện bạn đã thêm/sửa sẽ mất)')) { if (cfg.event) delete cfg.event.list; renderEvent(); } }
+function renderEvent() {
+  const L = evsPeek(), custom = Array.isArray(getp(['event', 'list']));
+  $('t-event').innerHTML = `<h2>🎪 Sự Kiện</h2>
+    <div class="note">Danh sách nút trong cửa sổ Sự Kiện của game. Sự kiện loại <b>quà</b> cho người chơi nhận 1 lần (hoặc mỗi ngày) các phần thưởng bạn chọn, có thể giới hạn thời gian. Loại <b>sắp ra mắt</b> chỉ hiện thông báo. ${custom ? '<b style="color:var(--gold)">Đang dùng danh sách tuỳ chỉnh.</b>' : 'Đang dùng danh sách mặc định (sửa bất kỳ ô nào sẽ chuyển sang tuỳ chỉnh).'} Sự kiện "Quà Free" (mã <code>free</code>) là bảng <b>Đăng nhập tích lũy</b>: 7 mốc, mỗi mốc 5 ô quà, mặc định tất cả ô trống — bạn thêm quà vào mốc nào thì mốc đó có quà.</div>
+    ${L.map((e, i) => `<div class="item"><div class="hd"><b>${esc(e.ico || '🎁')} ${esc(e.name)}</b><button class="sm" onclick="evMove(${i},-1)">▲</button><button class="sm" onclick="evMove(${i},1)">▼</button><button class="sm dng" onclick="evDel(${i})">✕ Xóa</button></div>
+      <div class="row"><div><label>Tên</label><input type="text" maxlength="30" value="${esc(e.name)}" onchange="evSet(${i},'name',this.value);renderEvent()"></div>
+        <div style="flex:0 1 90px"><label>Icon (emoji)</label><input type="text" maxlength="4" value="${esc(e.ico || '')}" onchange="evSet(${i},'ico',this.value)"></div>
+        <div><label>Loại</label><select onchange="evSet(${i},'kind',this.value)">${opts(KINDS, e.kind || 'soon')}</select></div>
+        <div class="fix"><label>&nbsp;</label><label class="chk"><input type="checkbox" ${Number(e.off) === 1 ? 'checked' : ''} onchange="evSet(${i},'off',this.checked)"> Ẩn</label></div></div>
+      ${evIsLogin(e) ? `<div class="row"><div><label>Bắt đầu (tuỳ chọn — đổi mốc này = mọi người chơi tích lũy lại từ đầu)</label><input type="datetime-local" value="${dtVal(e.from)}" onchange="evSet(${i},'from',this.value)"></div><div><label>Kết thúc (tuỳ chọn)</label><input type="datetime-local" value="${dtVal(e.to)}" onchange="evSet(${i},'to',this.value)"></div></div>
+      <div class="note">Mỗi mốc "Tích lũy N ngày" có <b>5 ô quà</b>: quà thứ 1–5 xếp vào ô 1–5 theo thứ tự, ô nào không có quà thì để <b>trống</b>. Người chơi đủ N ngày đăng nhập thì bấm Nhận (mỗi mốc nhận 1 lần). Mốc để trống hết = chưa có quà.</div>
+      ${evRowsPeek(i).map((r, j) => `<div class="item" style="margin:6px 0"><b>📅 Tích lũy ${j + 1} ngày</b>${((r || {}).gifts || []).length > 5 ? ' <span style="color:#f87171">⚠ chỉ 5 quà đầu được hiện / nhận</span>' : ''}${rlEditor('evr' + i + '_' + j, { peek: () => ((evRowsPeek(i)[j] || {}).gifts) || [], get: () => { const R = evRowsGet(i); R[j] = R[j] || {}; R[j].gifts = R[j].gifts || []; return R[j].gifts; }, redraw: renderEvent })}</div>`).join('')}
+      <div class="row"><button class="sm" onclick="evRowAdd(${i})">＋ Thêm mốc ngày</button><button class="sm dng" onclick="evRowDel(${i})">✕ Xóa mốc cuối</button></div>` : (e.kind === 'daily' || e.kind === 'once') ? `<div class="row"><div><label>Bắt đầu (tuỳ chọn)</label><input type="datetime-local" value="${dtVal(e.from)}" onchange="evSet(${i},'from',this.value)"></div><div><label>Kết thúc (tuỳ chọn)</label><input type="datetime-local" value="${dtVal(e.to)}" onchange="evSet(${i},'to',this.value)"></div></div>
+      <label>Quà</label>${rlEditor('ev' + i, { peek: () => (evsPeek()[i] || {}).gifts || [], get: () => { const x = evs()[i]; x.gifts = x.gifts || []; return x.gifts; }, redraw: renderEvent })}` : ''}</div>`).join('')}
+    <div class="row"><button class="fix" onclick="evAdd()">＋ Thêm sự kiện</button><button class="fix dng" onclick="evReset()">Khôi phục danh sách mặc định</button></div>`;
+}
+
+/* ================= NÂNG CAO (JSON) ================= */
+function renderAdv() {
+  $('t-adv').innerHTML = `<h2>🧰 Cấu hình dạng JSON</h2>
+    <div class="note">Xem / sửa toàn bộ cấu hình (<code>game_config/main</code>) dưới dạng JSON — dùng để sao lưu, chép sang máy khác hoặc sửa nhanh hàng loạt. Chỉ cần có trường nào khác mặc định. Bấm <b>Áp dụng</b> để nạp vào các form, rồi <b>Lưu cấu hình lên máy chủ</b>. Sai tên trường thì game bỏ qua.</div>
+    <textarea id="raw" spellcheck="false">${esc(JSON.stringify(prune(cfg) || {}, null, 2))}</textarea>
+    <div class="row" style="margin-top:8px"><button class="fix" onclick="advApply(false)">✔ Áp dụng vào form</button><button class="fix" onclick="navigator.clipboard.writeText($('raw').value).then(()=>say('adv-msg','Đã copy.'))">📋 Copy</button><button class="fix dng" onclick="if(confirm('Xóa TOÀN BỘ cấu hình (về số mặc định)? Cần bấm Lưu để áp dụng.')){cfg={};renderAdv()}">Xóa hết về mặc định</button></div>
+    <div id="adv-msg" class="msg"></div>`;
+}
+function advApply(silent) {
+  const el = $('raw'); if (!el) return true;
+  try { const o = JSON.parse(el.value || '{}'); if (!o || typeof o !== 'object' || Array.isArray(o)) throw new Error('Phải là một đối tượng { ... }'); cfg = o; if (!silent) say('adv-msg', '✔ Đã áp dụng. Nhớ bấm Lưu cấu hình.'); return true; }
+  catch (e) { say(silent ? 'bar-msg' : 'adv-msg', 'JSON không hợp lệ: ' + e.message, false); return false; }
+}
+
+/* ================= GIFT CODE ================= */
+let gcRw = [{ t: 'silver', n: 100000 }];
+function gcRenderRw() {
+  $('gc-rw').innerHTML = rlEditor('gc', { peek: () => gcRw, get: () => gcRw, redraw: gcRenderRw });
+}
+/* ----- Chế độ FULL vật phẩm: dựng danh sách quà từ toàn bộ dữ liệu game ----- */
+const gcChk = id => { const e = $(id); return !!(e && e.checked); };
+const gcQty = id => Math.max(1, Math.floor(Number($(id).value) || 1));
+function gcBuildFull() {
+  const nc = gcQty('gcf-nc'), ni = gcQty('gcf-ni'), ns = gcQty('gcf-ns'), L = [];
+  if (gcChk('gcf-cur')) ['silver', 'rice', 'than', 'tien', 'pill', 'hammer'].forEach(t => L.push({ t, n: nc }));
+  if (gcChk('gcf-gold')) L.push({ t: 'gold', n: nc });
+  if (gcChk('gcf-item')) Object.keys(ITEMS).forEach(k => L.push({ t: 'item', name: k, ico: ITEMS[k] || '🎁', n: ni }));
+  if (gcChk('gcf-shard')) HEROES.forEach(h => L.push({ t: 'shard', id: h[0], n: ns }));
+  if (gcChk('gcf-ts')) TREASURES.forEach(h => L.push({ t: 'treasure', id: h[0], n: 1 }));
+  if (gcChk('gcf-tss')) TREASURES.forEach(h => L.push({ t: 'tsshard', id: h[0], n: ns }));
+  if (gcChk('gcf-beast')) BEASTS.forEach(b => L.push({ t: 'beast', name: b[0], n: 1 }));
+  if (gcChk('gcf-tsh')) BEASTS.forEach(b => L.push({ t: 'tshard', name: b[0], n: ns }));
+  return L;
+}
+function gcFullInfo() { const e = $('gcf-info'); if (e) e.textContent = 'Sẽ tặng tổng cộng ' + fmt(gcBuildFull().length) + ' dòng phần thưởng.'; }
+function gcMode() {
+  const full = $('gc-mode').value === 'full';
+  $('gc-full').classList.toggle('hide', !full); $('gc-cust').classList.toggle('hide', full);
+  if (full) gcFullInfo(); else gcRenderRw();
+}
+function gcGen() { const A = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789', b = new Uint32Array(10); crypto.getRandomValues(b); $('gc-code').value = Array.from(b, x => A[x % A.length]).join(''); }
+async function gcCreate() {
+  const code = ($('gc-code').value || '').replace(/\s+/g, '').toUpperCase();
+  if (!/^[A-Z0-9_-]{4,32}$/.test(code)) return say('gc-msg', 'Mã chỉ gồm A-Z, 0-9, _ - và dài 4–32 ký tự.', false);
+  const full = $('gc-mode').value === 'full';
+  const rewards = rwClean(full ? gcBuildFull() : gcRw);
+  if (rewards.some(r => r.t === 'item' && !r.name)) return say('gc-msg', 'Vật phẩm "Tên khác" chưa có tên.', false);
+  if (!rewards.length) return say('gc-msg', 'Hãy thêm ít nhất 1 phần thưởng (số lượng ≥ 1).', false);
+  const max = Math.max(0, Math.floor(Number($('gc-max').value) || 0));
+  const expV = $('gc-exp').value, exp = expV ? new Date(expV).getTime() : 0;
+  if (expV && !(exp > Date.now())) return say('gc-msg', 'Ngày hết hạn phải ở tương lai.', false);
+  const ref = db.collection('gift_codes').doc(code);
+  $('gc-create').disabled = true;
+  try {
+    if ((await ref.get()).exists) { say('gc-msg', 'Mã này đã tồn tại. Hãy chọn mã khác.', false); return; }
+    await ref.set({ rewards, mode: full ? 'full' : 'custom', max, used: 0, exp, enabled: true, note: ($('gc-note').value || '').trim(), created: Date.now(), by: auth.currentUser.uid });
+    say('gc-msg', '✔ Đã tạo mã ' + code + ' — ' + (full ? 'FULL vật phẩm (' + fmt(rewards.length) + ' dòng quà)' : rewards.map(rwText).join(', ')));
+    $('gc-code').value = ''; $('gc-note').value = ''; gcLoad();
+  } catch (e) { say('gc-msg', 'Lỗi: ' + (e.code || e.message) + (e.code === 'permission-denied' ? ' (kiểm tra quy tắc Firestore + document admins/UID)' : ''), false); }
+  finally { $('gc-create').disabled = false; }
+}
+let gcCache = {};
+async function gcLoad() {
+  $('gc-tb').innerHTML = '<tr><td colspan="6" style="color:var(--mut)">Đang tải…</td></tr>';
+  try {
+    const s = await db.collection('gift_codes').orderBy('created', 'desc').get();
+    gcCache = {}; s.forEach(d => gcCache[d.id] = d.data());
+    const ids = Object.keys(gcCache);
+    if (!ids.length) { $('gc-tb').innerHTML = '<tr><td colspan="6" style="color:var(--mut)">Chưa có mã nào.</td></tr>'; return; }
+    $('gc-tb').innerHTML = ids.map(id => {
+      const d = gcCache[id], expired = d.exp && Date.now() > d.exp, full = d.max && d.used >= d.max;
+      const st = !d.enabled ? '<span class="tag off">Đã tắt</span>' : expired ? '<span class="tag off">Hết hạn</span>' : full ? '<span class="tag off">Hết lượt</span>' : '<span class="tag on">Đang hoạt động</span>';
+      return `<tr><td><code>${esc(id)}</code>${d.note ? `<div style="color:var(--mut);font-size:12px">${esc(d.note)}</div>` : ''}</td>
+        <td>${(d.rewards || []).length > 10 ? `<details><summary>${d.mode === 'full' ? '🎁 FULL vật phẩm' : 'Nhiều quà'} (${fmt(d.rewards.length)} dòng)</summary><div style="color:var(--mut);font-size:12px;max-width:420px">${esc(d.rewards.map(rwText).join(', '))}</div></details>` : esc((d.rewards || []).map(rwText).join(', '))}</td><td>${fmt(d.used || 0)}${d.max ? ' / ' + fmt(d.max) : ' / ∞'}</td>
+        <td>${d.exp ? esc(new Date(d.exp).toLocaleString('vi-VN')) : '—'}</td><td>${st}</td>
+        <td><div class="row"><button class="sm fix" data-a="copy" data-id="${esc(id)}">Copy</button><button class="sm fix" data-a="toggle" data-id="${esc(id)}">${d.enabled ? 'Tắt' : 'Bật'}</button><button class="sm dng fix" data-a="del" data-id="${esc(id)}">Xoá</button></div></td></tr>`;
+    }).join('');
+  } catch (e) { $('gc-tb').innerHTML = `<tr><td colspan="6" style="color:var(--bad)">Không tải được: ${esc(e.code || e.message)}</td></tr>`; }
+}
+$('gc-tb').addEventListener('click', async ev => {
+  const b = ev.target.closest('button[data-a]'); if (!b) return;
+  const id = b.dataset.id, d = gcCache[id]; if (!d) return;
+  try {
+    if (b.dataset.a === 'copy') { await navigator.clipboard.writeText(id); b.textContent = '✔'; setTimeout(() => b.textContent = 'Copy', 1000); }
+    else if (b.dataset.a === 'toggle') { await db.collection('gift_codes').doc(id).update({ enabled: !d.enabled }); gcLoad(); }
+    else if (b.dataset.a === 'del') {
+      if (!confirm('Xoá mã ' + id + '? Lịch sử người đã nhập mã này cũng bị xoá (mã tạo lại cùng tên sẽ dùng được lại).')) return;
+      const ref = db.collection('gift_codes').doc(id), used = await ref.collection('redeemed').get();
+      for (let i = 0; i < used.docs.length; i += 400) { const w = db.batch(); used.docs.slice(i, i + 400).forEach(x => w.delete(x.ref)); await w.commit(); }
+      await ref.delete(); gcLoad();
+    }
+  } catch (e) { alert('Lỗi: ' + (e.code || e.message)); }
+});
+
+/* ================= NGƯỜI CHƠI ================= */
+const HERO_NAMES = DEF.heroes.map(h => h.name);
+const TS_NAMES = { 1:'Tôn Sư Ký', 6:'Bá Vương Kiếm', 7:'Thủy Hoàng Đăng', 8:'Trống Lôi Âm', 9:'Kim Giao Tiễn', 10:'Tử Long Đao', 11:'Xích Hỏa Thương', 12:'Liệt Hỏa Luân', 13:'Tử Ngọc Địch', 14:'Thúy Trúc Trượng', 15:'Vô Tự Thiên Thư', 16:'Thất Sắc Liên Hoa', 17:'Hắc Long Châu', 18:'Thanh Long Cung', 19:'Đào Hoa Phiến', 20:'Hỏa Phụng Cầm', 21:'Kim Quang Kiếm' };
+const EQ_NAMES = { hat:'Mũ', armor:'Áo', sword:'Kiếm', boots:'Giày' };
+const PL_RES = [['gold_val','🪙 Vàng'],['silver_val','🥈 Bạc'],['rice_val','🌾 Gạo'],['thandan_val','💎 Thần Đan'],['tiendan_val','🔮 Tiên Đan'],['acc_level','📈 Cấp acc'],['acc_exp','✨ EXP (ở cấp hiện tại)']];
+const plResetData = () => ({ blank_start: '1' });   // Reset = tất cả về 1
+let players = [], ctl = {}, names = {}, cur = null, curData = null, pvpIds = new Set();   // cur = uid đang quản lý; curData = data (map key->chuỗi JSON) đang sửa
+
+async function plLoad() {
+  say('pl-msg', 'Đang tải…');
+  try {
+    const [sv, ct, pv] = await Promise.all([db.collection('saves').get(), db.collection('account_ctl').get(), db.collection('pvp_players').get().catch(() => null)]);
+    ctl = {}; ct.forEach(d => ctl[d.id] = d.data());
+    names = {}; pvpIds = new Set(); if (pv) pv.forEach(d => { names[d.id] = (d.data() || {}).name || ''; pvpIds.add(d.id); });
+    players = []; sv.forEach(d => { const v = d.data() || {}; players.push({ uid: d.id, t: v.t || 0, data: v.data || {} }); });
+    players.sort((a, b) => b.t - a.t);
+    say('pl-msg', 'Có ' + players.length + ' tài khoản.'); plRender();
+  } catch (e) { say('pl-msg', 'Lỗi tải: ' + (e.code || e.message) + ' — đã dán quy tắc Firestore mới chưa?', false); }
+}
+const pName = p => p.data.player_name || names[p.uid] || ('(' + p.uid.slice(0, 6) + ')');
+function plRender() {
+  const q = ($('pl-q').value || '').trim().toLowerCase();
+  $('pl-list').innerHTML = players.filter(p => !q || pName(p).toLowerCase().includes(q) || p.uid.toLowerCase().includes(q)).slice(0, 300).map(p => {
+    const c = ctl[p.uid] || {};
+    return `<tr><td>${esc(pName(p))}</td><td>${fmt(pnum(p.data.acc_level, p.data.blank_start === '1' ? 1 : 74))}</td><td>${fmt(pnum(p.data.gold_val, 0))}</td><td>${fmt(pnum(p.data.silver_val, 0))}</td><td>${p.t ? new Date(p.t).toLocaleString('vi-VN') : '-'}</td>
+      <td>${c.locked ? '<span class="tag off">KHÓA</span>' : '<span class="tag on">Bình thường</span>'}</td><td><button class="sm" onclick="plOpen('${p.uid}')">Quản lý</button></td></tr>`;
+  }).join('');
+}
+
+function plOpen(uid) {
+  const p = players.find(x => x.uid === uid); if (!p) return;
+  cur = uid; curData = Object.assign({}, p.data);
+  $('pl-detail').classList.remove('hide');
+  $('pl-d-name').textContent = pName(p); $('pl-d-uid').textContent = uid;
+  $('pl-snaps').innerHTML = ''; say('pl-d-msg', ''); say('pl-sn-msg', ''); say('pl-e-msg', '');
+  plState(); plEdit();
+  $('pl-detail').scrollIntoView({ behavior: 'smooth' });
+}
+function plState() {
+  const c = ctl[cur] || {};
+  $('pl-d-state').innerHTML = (c.locked ? '<span class="tag off">ĐANG KHÓA</span> Lý do: ' + esc(c.reason || '—') : '<span class="tag on">Bình thường</span>') + ' · epoch ' + (c.epoch || 0);
+}
+function plEdit() {
+  const d = curData;
+  $('pl-e-res').innerHTML = PL_RES.map(([k, l]) => `<div><label>${l}</label><input data-res="${k}" type="number" min="0" value="${pnum(d[k], 0)}"></div>`).join('') +
+    `<div><label>💊 Viên thể lực</label><input data-res="pills" type="number" min="0" value="${Math.max(0, Math.floor(pj(d.sta_state, {}).pills) || 0)}"></div>`;
+  const kho = (pj(d.guild_state, {}).kho) || {};
+  $('pl-e-kho').innerHTML = Object.keys(kho).map(n => `<div><label>${esc(kho[n].ico || '')} ${esc(n)}</label><input data-kho="${esc(n)}" type="number" min="0" value="${kho[n].qty || 0}"></div>`).join('') || '<span class="sub">Trống</span>';
+  const blank = d.blank_start === '1', ow = pj(d.hero_owned, {});
+  $('pl-e-own-note').textContent = blank ? 'Tick = đã ghép ra tướng. Bỏ tick = thu hồi tướng. Tick thêm = tặng tướng. (Tướng chưa ghép thì cần đủ mảnh ở mục Mảnh tướng.)' : 'Tài khoản kiểu cũ (tướng 70+) luôn có đủ tướng — không áp dụng.';
+  $('pl-e-own').innerHTML = blank ? HERO_NAMES.map((n, i) => `<label class="chk"><input type="checkbox" data-own="${i}" ${ow[i] ? 'checked' : ''}> ${esc(n)}</label>`).join('') : '';
+  const sh = pj(d.hero_shards, {});
+  $('pl-e-shard').innerHTML = Object.keys(sh).filter(k => sh[k] > 0).map(k => `<div><label>🧩 ${esc(HERO_NAMES[k] || 'Tướng ' + k)}</label><input data-shard="${esc(k)}" type="number" min="0" value="${sh[k]}"></div>`).join('') || '<span class="sub">Trống</span>';
+  const ts = pj(d.ts_bag, []);
+  $('pl-e-ts').innerHTML = ts.map((t, i) => `<tr><td>${esc(TS_NAMES[t.id] || 'Loại ' + t.id)}</td><td>${esc(JSON.stringify(t))}</td><td><button class="sm dng" onclick="plDel('ts',${i})">Xóa</button></td></tr>`).join('') || '<tr><td class="sub">Trống</td></tr>';
+  const eq = pj(d.eq_bag, []);
+  $('pl-e-eq').innerHTML = eq.map((t, i) => `<tr><td>${esc(EQ_NAMES[t.k] || t.k)}</td><td>Cấp ${t.lv} ${t.f >= 0 ? '(đang gắn khung ' + (t.f + 1) + ')' : ''}</td><td><button class="sm dng" onclick="plDel('eq',${i})">Xóa</button></td></tr>`).join('') || '<tr><td class="sub">Trống</td></tr>';
+  const own = (((pj(d.guild_state, {}).tt) || {}).own) || {};
+  $('pl-e-beast').innerHTML = Object.keys(own).map(n => `<div><label>🦄 ${esc(n)} (Lv ${own[n].lv}, ★${own[n].star})</label><button class="sm dng" data-beast="${esc(n)}" onclick="plDel('beast',this.dataset.beast)">Thu hồi con này</button></div>`).join('') || '<span class="sub">Không có</span>';
+}
+function plDel(kind, i) {
+  if (!confirm('Xóa mục này khỏi dữ liệu (chỉ áp dụng sau khi bấm Lưu thay đổi)?')) return;
+  plRead();
+  if (kind === 'ts') { const a = pj(curData.ts_bag, []); a.splice(i, 1); curData.ts_bag = JSON.stringify(a); }
+  else if (kind === 'eq') { const a = pj(curData.eq_bag, []); a.splice(i, 1); curData.eq_bag = JSON.stringify(a); }
+  else if (kind === 'beast') { const g = pj(curData.guild_state, {}); if (g.tt && g.tt.own) delete g.tt.own[i]; curData.guild_state = JSON.stringify(g); }
+  plEdit();
+}
+function plRead() {   // đọc các ô nhập vào curData
+  document.querySelectorAll('#s-players [data-res]').forEach(i => {
+    const k = i.dataset.res, v = Math.max(0, Math.floor(pnum(i.value, 0)));
+    if (k === 'pills') { const s = pj(curData.sta_state, {}); s.pills = v; curData.sta_state = JSON.stringify(s); }
+    else curData[k] = String(v);
+  });
+  const g = pj(curData.guild_state, {}); g.kho = g.kho || {};
+  document.querySelectorAll('#s-players [data-kho]').forEach(i => { const n = i.dataset.kho; if (g.kho[n]) g.kho[n].qty = Math.max(0, Math.floor(pnum(i.value, 0))); });
+  curData.guild_state = JSON.stringify(g);
+  const sh = pj(curData.hero_shards, {});
+  document.querySelectorAll('#s-players [data-shard]').forEach(i => { sh[i.dataset.shard] = Math.max(0, Math.floor(pnum(i.value, 0))); });
+  if (curData.blank_start === '1' && document.querySelector('#s-players [data-own]')) {
+    const ow = {}; document.querySelectorAll('#s-players [data-own]').forEach(i => { if (i.checked) ow[i.dataset.own] = 1; });
+    curData.hero_owned = JSON.stringify(ow);
+  }
+  curData.hero_shards = JSON.stringify(sh);
+}
+
+
+/* ===== TỶ VÕ: xoá số liệu cũ của acc ngay trên bảng xếp hạng (pvp_players), KHÔNG cần người chơi đăng nhập =====
+   Reset / khôi phục / khóa xong, acc đó không còn đứng ở hạng cao với đội hình + cấp cũ (kể cả đồ hack).
+   opt.bottom = đẩy xuống CUỐI bảng • opt.locked = true/false đánh dấu khóa. Giữ nguyên tên để admin còn nhận ra. */
+async function pvpMaxRank() {
+  try { const s = await db.collection('pvp_players').orderBy('rank', 'desc').limit(1).get(); let m = 0; s.forEach(d => { const v = d.data().rank; if (typeof v === 'number' && isFinite(v)) m = Math.max(m, v); }); return m; } catch (e) { return 0; }
+}
+async function pvpWipe(uids, opt) {
+  opt = opt || {};
+  uids = uids.filter(u => pvpIds.has(u)); if (!uids.length) return 0;
+  let mx = opt.bottom ? await pvpMaxRank() : 0;
+  for (let i = 0; i < uids.length; i += 150) {
+    const b = db.batch(), now = Date.now();
+    uids.slice(i, i + 150).forEach(u => {
+      const o = { team: [], beast: '', pt: [], lvl: 1, power: 0, stale: true, rt: now, ep: (ctl[u] || {}).epoch || 0 };
+      if (opt.bottom) o.rank = ++mx;
+      if (opt.locked !== undefined) o.locked = opt.locked;
+      b.set(db.collection('pvp_players').doc(u), o, { merge: true });
+    });
+    await b.commit();
+  }
+  return uids.length;
+}
+
+/* Ghi dữ liệu: luôn tăng epoch để máy người chơi bỏ dữ liệu cũ, tải bản mới */
+async function plBackup(uid, data) {
+  await db.collection('save_history').doc(uid).collection('snaps').doc('pre-' + Date.now()).set({ t: Date.now(), data: data, tag: 'trước khi admin chỉnh', ep: (ctl[uid] || {}).epoch || 0, pw: 0 });
+}
+async function plWrite(uid, data, patchCtl) {
+  const cur0 = (await db.collection('account_ctl').doc(uid).get()).data() || {};
+  const ep = (cur0.epoch || 0) + 1, b = db.batch();
+  b.set(db.collection('account_ctl').doc(uid), Object.assign({}, cur0, patchCtl || {}, { epoch: ep }), { merge: true });
+  b.set(db.collection('saves').doc(uid), { t: Date.now(), data: data, ep: ep });
+  await b.commit();
+  ctl[uid] = Object.assign({}, cur0, patchCtl || {}, { epoch: ep });
+  const p = players.find(x => x.uid === uid); if (p) { p.data = data; p.t = Date.now(); }
+}
+async function plSaveEdits() {
+  if (!cur) return; plRead();
+  if (!confirm('Lưu thay đổi vật phẩm cho người chơi này?')) return;
+  say('pl-e-msg', 'Đang lưu…');
+  try {
+    const old = (players.find(x => x.uid === cur) || {}).data || {};
+    await plBackup(cur, old); await plWrite(cur, curData);
+    say('pl-e-msg', '✔ Đã lưu. Người chơi sẽ nhận dữ liệu mới khi mở/quay lại game.'); plRender(); plState();
+  } catch (e) { say('pl-e-msg', 'Lỗi: ' + (e.code || e.message), false); }
+}
+async function plSetLock(lock) {
+  if (!cur) return;
+  const reason = ($('pl-d-reason').value || '').trim();
+  try {
+    await db.collection('account_ctl').doc(cur).set({ locked: lock, reason: lock ? reason : '' }, { merge: true });
+    ctl[cur] = Object.assign({}, ctl[cur], { locked: lock, reason: lock ? reason : '' });
+    try { if (lock) await pvpWipe([cur], { bottom: true, locked: true }); else if (pvpIds.has(cur)) await db.collection('pvp_players').doc(cur).set({ locked: false }, { merge: true }); } catch (e) {}   // Tỷ Võ: khóa -> gỡ khỏi bảng + xuống cuối
+    say('pl-d-msg', lock ? '🔒 Đã khóa. Người chơi bị đăng xuất trong ≤1 phút và không đăng nhập lại được.' : '🔓 Đã mở khóa.'); plState(); plRender();
+  } catch (e) { say('pl-d-msg', 'Lỗi: ' + (e.code || e.message), false); }
+}
+async function plResetOne() {
+  if (!cur || !confirm('RESET tài khoản này về mới tinh? (Vẫn khôi phục được từ mốc giờ trong 72 giờ)')) return;
+  try {
+    const old = (players.find(x => x.uid === cur) || {}).data || {};
+    await plBackup(cur, old); const rd = plResetData(); await plWrite(cur, rd);
+    let pv = 0; try { pv = await pvpWipe([cur], { bottom: true }); } catch (e) {}   // Tỷ Võ: xoá đội hình + cấp cũ, đẩy xuống cuối bảng ngay
+    say('pl-d-msg', '✔ Đã reset.' + (pv ? ' Đã xoá số liệu Tỷ Võ, acc xuống cuối bảng.' : '')); curData = Object.assign({}, rd); plEdit(); plRender(); plState();
+  } catch (e) { say('pl-d-msg', 'Lỗi: ' + (e.code || e.message), false); }
+}
+async function plResetAll() {
+  if ($('pl-ra-conf').value.trim() !== 'RESET TAT CA') return say('pl-ra-msg', 'Gõ đúng "RESET TAT CA" để xác nhận.', false);
+  if (!confirm('XÓA DỮ LIỆU CỦA TẤT CẢ ' + players.length + ' NGƯỜI CHƠI?')) return;
+  say('pl-ra-msg', 'Đang reset…');
+  try {
+    let done = 0; const rd = plResetData();
+    for (let i = 0; i < players.length; i += 150) {
+      const b = db.batch(), now = Date.now();
+      players.slice(i, i + 150).forEach(p => {
+        const ep = ((ctl[p.uid] || {}).epoch || 0) + 1;
+        b.set(db.collection('save_history').doc(p.uid).collection('snaps').doc('pre-' + now), { t: now, data: p.data, tag: 'trước reset tất cả', ep: ep - 1, pw: 0 });
+        b.set(db.collection('account_ctl').doc(p.uid), { epoch: ep }, { merge: true });
+        b.set(db.collection('saves').doc(p.uid), { t: now, data: rd, ep: ep });
+        ctl[p.uid] = Object.assign({}, ctl[p.uid], { epoch: ep }); p.data = Object.assign({}, rd); p.t = now;
+      });
+      await b.commit(); done = Math.min(players.length, i + 150); say('pl-ra-msg', 'Đã reset ' + done + '/' + players.length + '…');
+    }
+    let pv = 0; try { pv = await pvpWipe(players.map(p => p.uid)); } catch (e) {}   // Tỷ Võ: xoá đội hình + cấp cũ của mọi acc
+    say('pl-ra-msg', '✔ Đã reset ' + players.length + ' tài khoản' + (pv ? ' (và xoá số liệu Tỷ Võ của ' + pv + ' acc)' : '') + '.'); plRender(); if (cur) { curData = Object.assign({}, rd); plEdit(); }
+  } catch (e) { say('pl-ra-msg', 'Lỗi giữa chừng: ' + (e.code || e.message), false); }
+}
+
+/* Reset BANG riêng: bang mới tinh = cấp 1, Uy Tín 0; phần còn lại để trống cho game tự khởi tạo mặc định */
+const GUILD_BLANK = () => JSON.stringify({ bangLv: 1, uytin: 0 });
+async function plResetGuildOne() {
+  if (!cur || !confirm('RESET BANG của người chơi này về cấp 1? (Chỉ xóa dữ liệu Bang, các thứ khác giữ nguyên. Vẫn khôi phục được từ mốc giờ trong 72 giờ)')) return;
+  try {
+    const old = (players.find(x => x.uid === cur) || {}).data || {};
+    await plBackup(cur, old);
+    const nd = Object.assign({}, old, { guild_state: GUILD_BLANK() });
+    await plWrite(cur, nd); curData = Object.assign({}, nd); plEdit(); plRender(); plState();
+    say('pl-d-msg', '✔ Đã reset Bang. Máy người chơi sẽ tải lại dữ liệu mới.');
+  } catch (e) { say('pl-d-msg', 'Lỗi: ' + (e.code || e.message), false); }
+}
+async function plResetGuildAll() {
+  if ($('pl-rg-conf').value.trim() !== 'RESET BANG') return say('pl-rg-msg', 'Gõ đúng "RESET BANG" để xác nhận.', false);
+  if (!confirm('RESET BANG CỦA TẤT CẢ ' + players.length + ' NGƯỜI CHƠI? (chỉ xóa Bang, giữ nguyên tướng / tài nguyên)')) return;
+  say('pl-rg-msg', 'Đang reset bang…');
+  try {
+    let done = 0;
+    for (let i = 0; i < players.length; i += 150) {
+      const b = db.batch(), now = Date.now();
+      players.slice(i, i + 150).forEach(p => {
+        const ep = ((ctl[p.uid] || {}).epoch || 0) + 1, nd = Object.assign({}, p.data, { guild_state: GUILD_BLANK() });
+        b.set(db.collection('save_history').doc(p.uid).collection('snaps').doc('pre-' + now), { t: now, data: p.data, tag: 'trước reset bang tất cả', ep: ep - 1, pw: 0 });
+        b.set(db.collection('account_ctl').doc(p.uid), { epoch: ep }, { merge: true });
+        b.set(db.collection('saves').doc(p.uid), { t: now, data: nd, ep: ep });
+        ctl[p.uid] = Object.assign({}, ctl[p.uid], { epoch: ep }); p.data = nd; p.t = now;
+      });
+      await b.commit(); done = Math.min(players.length, i + 150); say('pl-rg-msg', 'Đã reset bang ' + done + '/' + players.length + '…');
+    }
+    say('pl-rg-msg', '✔ Đã reset bang của ' + players.length + ' tài khoản.'); plRender(); if (cur) { const p = players.find(x => x.uid === cur); if (p) { curData = Object.assign({}, p.data); plEdit(); } }
+  } catch (e) { say('pl-rg-msg', 'Lỗi giữa chừng: ' + (e.code || e.message), false); }
+}
+
+/* Khôi phục khung giờ */
+let snaps = [];
+function snapLabel(id) { const m = /^(\d{4})(\d{2})(\d{2})(\d{2})$/.exec(id); return m ? `${m[4]}h ngày ${m[3]}/${m[2]}/${m[1]}` : id; }
+async function plLoadSnaps() {
+  if (!cur) return; say('pl-sn-msg', 'Đang tải…');
+  try {
+    const q = await db.collection('save_history').doc(cur).collection('snaps').get();
+    snaps = []; q.forEach(d => snaps.push(Object.assign({ id: d.id }, d.data())));
+    snaps.sort((a, b) => (b.t || 0) - (a.t || 0));
+    $('pl-snaps').innerHTML = snaps.map((s, i) => {
+      const dt = s.data || {};
+      return `<tr><td>${esc(snapLabel(s.id))}${s.tag ? ' <span class="tag">' + esc(s.tag) + '</span>' : ''}</td><td>${s.pw ? fmt(s.pw) : '-'}</td><td>${fmt(pnum(dt.acc_level, 74))}</td><td>${fmt(pnum(dt.gold_val, 0))}</td><td>${fmt(pnum(dt.silver_val, 0))}</td><td><button class="sm" onclick="plRestore(${i})">Khôi phục</button></td></tr>`;
+    }).join('') || '<tr><td class="sub">Chưa có mốc nào (người chơi cần dùng bản game mới để bắt đầu lưu mốc theo giờ).</td></tr>';
+    say('pl-sn-msg', 'Có ' + snaps.length + ' mốc.');
+  } catch (e) { say('pl-sn-msg', 'Lỗi: ' + (e.code || e.message), false); }
+}
+async function plRestore(i) {
+  const s = snaps[i]; if (!s || !cur) return;
+  if (!confirm('Khôi phục tài khoản về mốc ' + snapLabel(s.id) + '?\nDữ liệu hiện tại sẽ được lưu thành mốc hoàn tác.')) return;
+  say('pl-sn-msg', 'Đang khôi phục…');
+  try {
+    const old = (players.find(x => x.uid === cur) || {}).data || {};
+    await plBackup(cur, old); await plWrite(cur, s.data || {});
+    try { await pvpWipe([cur]); } catch (e) {}   // Tỷ Võ: bỏ số liệu cũ, máy người chơi sẽ đăng lại đội hình đúng
+    curData = Object.assign({}, s.data || {}); plEdit(); plRender(); plState();
+    say('pl-sn-msg', '✔ Đã khôi phục về ' + snapLabel(s.id) + '. Máy người chơi sẽ tải lại dữ liệu này.'); plLoadSnaps();
+  } catch (e) { say('pl-sn-msg', 'Lỗi: ' + (e.code || e.message), false); }
+}
+</script>
+</body>
+</html>

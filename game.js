@@ -612,8 +612,8 @@ function cfgOnApply(fn) { cfgHooks.push(fn); try { fn(); } catch (e) { console.w
 
 // ----- Quà (reward): cùng định dạng với Gift Code. Dùng cho Hộp Thư, Nhiệm Vụ, Sự Kiện. -----
 const RW_DAN_ICO = f => ({ 'than-dan': IC_THAN, 'tien-dan': IC_TIEN, 'vien-the-luc': IC_PILL }[f] || '');
-// ===== ICON VẬT PHẨM DÙNG CHUNG (toàn bộ là ẢNH PNG trong vat-pham-game/bang/, không dùng emoji) =====
-const ICO_SRC = { silver: 'vat-pham-game/bang/thoi-bac.webp', rice: 'vat-pham-game/bang/gao.webp', gold: 'vat-pham-game/bang/thoi-vang.webp', than: 'vat-pham-game/bang/than-dan.webp', tien: 'vat-pham-game/bang/tien-dan.webp', pill: 'vat-pham-game/bang/vien-the-luc.webp', peach: 'vat-pham-game/bang/dao-tien.webp', hammer: 'vat-pham-game/trang-bi/icon_hao_thien_chuy_khong_ten.webp', blockUp: 'giao-dien/icon-home/tang-do-don.webp?v=1' };
+// ===== ICON VẬT PHẨM DÙNG CHUNG (toàn bộ là ẢNH PNG trong giao-dien/vat-pham-game/bang/, không dùng emoji) =====
+const ICO_SRC = { silver: 'giao-dien/vat-pham-game/bang/thoi-bac.webp', rice: 'giao-dien/vat-pham-game/bang/gao.webp', gold: 'giao-dien/vat-pham-game/bang/thoi-vang.webp', than: 'giao-dien/vat-pham-game/bang/than-dan.webp', tien: 'giao-dien/vat-pham-game/bang/tien-dan.webp', pill: 'giao-dien/vat-pham-game/bang/vien-the-luc.webp', peach: 'giao-dien/vat-pham-game/bang/dao-tien.webp', hammer: 'giao-dien/vat-pham-game/trang-bi/icon_hao_thien_chuy_khong_ten.webp', blockUp: 'giao-dien/icon-kihieu/tang-do-don.webp?v=1' };
 const ICO_NAME = { silver: 'Bạc', rice: 'Gạo', gold: 'Vàng', than: 'Thần Đan', tien: 'Tiên Đan', pill: 'Viên Thể Lực', peach: 'Đào Tiên', hammer: 'Búa', blockUp: 'Chặn' };
 const icoImg = (k, h) => `<img class="gi-g" src="${ICO_SRC[k]}" alt="${ICO_NAME[k]}" style="height:${h || '1.15em'};width:auto;vertical-align:middle" onerror="this.style.display='none'">`;
 const IC_GOLD = icoImg('gold'), IC_SILVER = icoImg('silver'), IC_RICE = icoImg('rice');
@@ -755,7 +755,7 @@ function ghLockWhy(mode, clearedPrev, lvNeed, what) {
 
 const ghToday = () => { const d = new Date(); return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(); };
 const ghRand = (a, b) => { a = Math.floor(a); b = Math.max(a, Math.floor(b)); return a + Math.floor(Math.random() * (b - a + 1)); };
-const ghGemImg = (t, px) => `<img src="vat-pham-game/da-linh/${t.img}.webp" alt="${t.name}" style="width:${px || 30}px;height:auto;vertical-align:middle">`;
+const ghGemImg = (t, px) => `<img src="giao-dien/vat-pham-game/da-linh/${t.img}.webp" alt="${t.name}" style="width:${px || 30}px;height:auto;vertical-align:middle">`;
 
 // ================= HANG TỤ LINH =================
 let hangState = null;   // đọc lười: file này nạp trước game-state.js nên chưa có loadJSON lúc nạp
@@ -812,7 +812,7 @@ function hangStart(tier) {
 }
 // Dựng trận PVE dùng chung cho Hang Tụ Linh và Luận Kiếm (giống pve/pve-start.js). g = { kind:'hang', tier } | { kind:'lk', ai }
 function ghBegin(g) {
-  battleToken++; playBattleOpen(); battleFast = false;
+  battleToken++; battleFast = false;
   pvp = null; bossB = null; ghB = g; pvpRound = 0; currentWave = 1; busy = false;
   document.getElementById('bf-units').innerHTML = '';
   const sel = teamSel();
@@ -1830,7 +1830,7 @@ var fmtN = n => {
     // BẠC và GẠO: nhận khi thắng mỗi Bàn PVE, dùng để tăng cấp tướng. (VÀNG ở trên: dùng Chiêu Mộ, nhận quà Hộp Thư mỗi ngày)
     const _numLS = (k, d) => { try { const v = parseFloat(localStorage.getItem(k)); return isNaN(v) ? d : Math.max(0, v); } catch (e) { return d; } };
     let silver = _numLS('silver_val', BLANK_START ? 0 : 21873054), rice = _numLS('rice_val', BLANK_START ? 0 : 2549836);
-    // THẦN ĐAN và TIÊN ĐAN: thưởng khi thắng mỗi Bàn PVE (xem trong Túi Đồ). Hiển thị bằng ảnh trong vat-pham-game/ (không dùng emoji)
+    // THẦN ĐAN và TIÊN ĐAN: thưởng khi thắng mỗi Bàn PVE (xem trong Túi Đồ). Hiển thị bằng ảnh trong giao-dien/vat-pham-game/ (không dùng emoji)
 const DAN_IMG = { 'Thần Đan': icoImg('than'), 'Tiên Đan': icoImg('tien') };   // ảnh (lỗi ảnh thì tự về emoji)
 const danIcoHTML = (name, h) => { const k = name === 'Thần Đan' ? 'than' : name === 'Tiên Đan' ? 'tien' : ''; return k ? icoImg(k, h) : (DAN_IMG[name] || ''); };
     let thanDan = _numLS('thandan_val', 0), tienDan = _numLS('tiendan_val', 0);
@@ -1938,15 +1938,14 @@ const SEQ = HERO_T.seq;
 const SEQ_IDLE = HERO_T.seqIdle;
 
 // THỦY LONG (id 8, trước là Lạc Long Quân): đổi tên + thay toàn bộ hình ảnh bằng bộ mới trong heros/thuy-long/
-//   thuy-long-idle.webp   : 25 khung đứng yên     • thuy-long-attack.webp : 25 khung đánh thường
+//   thuy-long-idle.webp   : 25 khung đứng yên     • (đã bỏ hiệu ứng đánh thường thuy-long-attack.webp)
 //   thuy-long-body.webp   : ảnh thân tĩnh          • thuy-long.webp        : ảnh đại diện thẻ tướng
 (function () {
   const D = 'heros/thuy-long/', V = '?v=2';
   const h = HEROES.find(x => x.id === 8), m = (window.HERO_META || []).find(x => x.id === 8);
-  if (m) { Object.keys(m.sprites || {}).forEach(k => { delete SEQ[k]; }); m.name = 'Thủy Long'; m.sprites = { tlIdle: {}, tlAtk: {}, tlUlt: {}, tlDragon: {} }; }
+  if (m) { Object.keys(m.sprites || {}).forEach(k => { delete SEQ[k]; }); m.name = 'Thủy Long'; m.sprites = { tlIdle: {}, tlUlt: {}, tlDragon: {} }; }
   if (h) { h.name = 'Thủy Long'; h.img = D + 'thuy-long.webp' + V; h.body = D + 'thuy-long-body.webp' + V; }
   SEQ.tlIdle = { src: D + 'thuy-long-idle.webp?v=5', cw: 307, ch: 204, n: 25, face: 'R' };                 // ảnh đứng yên mới (2806×184 = 23 khung 122×184), quay mặt sang TRÁI (mặc định)
-  SEQ.tlAtk  = { src: D + 'thuy-long-attack.webp' + V, cw: 308, ch: 205, n: 25, face: 'R' };   // ảnh hiệu ứng đánh mới (7675×204 = 25 khung 307×204)
   SEQ.tlUlt    = { src: D + 'thuy-long-ult.webp?v=1', cw: 270, ch: 220, n: 25, face: 'R' };                     // ulti: 25 khung 270×220 (Thủy Long thả rồng, KHÔNG biến lớn)
   SEQ.tlDragon = { src: D + 'rong-bay-idle.webp?v=1', cw: 307, ch: 204, n: 25 };                // rồng lượn trên trời: 25 khung 307×204 (phát 2 vòng)
   SEQ_IDLE[8] = { sheet: 'tlIdle', h: 120, ms: 1600 };                                           // h = chiều cao hiển thị (px), ms = thời gian 1 vòng
@@ -2042,7 +2041,7 @@ function seqAvatarHTML(id, w, extraStyle) {
       9: { name:'Kim Giao Tiễn',   stats:[ ['spd', 20, .02],    ['critDmg', 500, .15],  ['pierce', 10000, .15] ] }
     });
     const TS_LABEL = { dodge:'Né', acc:'Chuẩn', crit:'Bạo', critDmg:'Bạo Sát', tough:'Bền', heal:'Hồi máu', atkFlat:'Công', hpFlat:'HP', pierce:'Phá giáp', spd:'Tốc' };
-    const TS_IMG = { 1:'vat-pham-game/bao-vat/ton-su-ki.webp?v=25', 6:'vat-pham-game/bao-vat/ba-vuong-kiem.webp?v=25', 7:'vat-pham-game/bao-vat/thuy-hoang-dang.webp?v=25', 8:'vat-pham-game/bao-vat/trong-loi-am.webp?v=25', 9:'vat-pham-game/bao-vat/treasure-09.webp' };
+    const TS_IMG = { 1:'giao-dien/vat-pham-game/bao-vat/ton-su-ki.webp?v=25', 6:'giao-dien/vat-pham-game/bao-vat/ba-vuong-kiem.webp?v=25', 7:'giao-dien/vat-pham-game/bao-vat/thuy-hoang-dang.webp?v=25', 8:'giao-dien/vat-pham-game/bao-vat/trong-loi-am.webp?v=25', 9:'giao-dien/vat-pham-game/bao-vat/treasure-09.webp' };
     const TS_EMO = {};   // loại nào chưa có ảnh thì khai biểu tượng ở đây
     const tsName = id => TS_DEFS[id] ? TS_DEFS[id].name : TS_NAME;
     const tsIcon = id => TS_IMG[id] ? `<img class="eq-img" src="${TS_IMG[id]}">` : (TS_EMO[id] ? `<span style="font-size:30px;line-height:1">${TS_EMO[id]}</span>` : '📜');
@@ -2445,7 +2444,7 @@ function ltSlotHTML(f) {
     20: { name: 'Hỏa Phụng Cầm', stats: [['atkFlat', 1000, 0.15], ['heal', 600, 0.15], ['spd', 10, 0.02]] },
     21: { name: 'Kim Quang Kiếm', stats: [['atkFlat', 1200, 0.15], ['crit', 35, 0.1], ['critDmg', 30, 0.15]] }
   };
-  const EXTRA_IMG = { 10: 'vat-pham-game/bao-vat/treasure-10.webp', 11: 'vat-pham-game/bao-vat/treasure-11.webp', 12: 'vat-pham-game/bao-vat/treasure-12.webp', 13: 'vat-pham-game/bao-vat/treasure-13.webp', 14: 'vat-pham-game/bao-vat/treasure-14.webp', 15: 'vat-pham-game/bao-vat/treasure-15.webp', 16: 'vat-pham-game/bao-vat/treasure-16.webp', 17: 'vat-pham-game/bao-vat/treasure-17.webp', 18: 'vat-pham-game/bao-vat/treasure-18.webp', 19: 'vat-pham-game/bao-vat/treasure-19.webp', 20: 'vat-pham-game/bao-vat/treasure-20.webp', 21: 'vat-pham-game/bao-vat/treasure-21.webp' };
+  const EXTRA_IMG = { 10: 'giao-dien/vat-pham-game/bao-vat/treasure-10.webp', 11: 'giao-dien/vat-pham-game/bao-vat/treasure-11.webp', 12: 'giao-dien/vat-pham-game/bao-vat/treasure-12.webp', 13: 'giao-dien/vat-pham-game/bao-vat/treasure-13.webp', 14: 'giao-dien/vat-pham-game/bao-vat/treasure-14.webp', 15: 'giao-dien/vat-pham-game/bao-vat/treasure-15.webp', 16: 'giao-dien/vat-pham-game/bao-vat/treasure-16.webp', 17: 'giao-dien/vat-pham-game/bao-vat/treasure-17.webp', 18: 'giao-dien/vat-pham-game/bao-vat/treasure-18.webp', 19: 'giao-dien/vat-pham-game/bao-vat/treasure-19.webp', 20: 'giao-dien/vat-pham-game/bao-vat/treasure-20.webp', 21: 'giao-dien/vat-pham-game/bao-vat/treasure-21.webp' };
 
   const base = {}; /* bản gốc để quay về khi admin xoá ghi đè */
   Object.keys(EXTRA).forEach(k => {
@@ -2593,10 +2592,10 @@ progCfgSync();   // áp thông số admin (sau khi các biến ở trên đã kh
     const FRAMES = 5;
     let EQUIP_MAX = cfgNum('equip.maxLv', cfgSnap('eqMax', 1000));
     var EQUIP = [
-      { k:'hat',   name:'Mũ',   icon:'<img class="eq-img" src="vat-pham-game/trang-bi/equipment-hat.webp?v=24">', stat:'hp',  per:1000, label:'HP'   },
-      { k:'armor', name:'Áo',   icon:'<img class="eq-img" src="vat-pham-game/trang-bi/equipment-armor.webp?v=24">', stat:'def', per:50,   label:'Thủ'  },
-      { k:'sword', name:'Kiếm', icon:'<img class="eq-img" src="vat-pham-game/trang-bi/equipment-sword.webp?v=24">', stat:'atk', per:300,  label:'Công' },
-      { k:'boots', name:'Giày', icon:'<img class="eq-img" src="vat-pham-game/trang-bi/equipment-boots.webp?v=24">', stat:'spd', per:1,    label:'Tốc'  }
+      { k:'hat',   name:'Mũ',   icon:'<img class="eq-img" src="giao-dien/vat-pham-game/trang-bi/equipment-hat.webp?v=24">', stat:'hp',  per:1000, label:'HP'   },
+      { k:'armor', name:'Áo',   icon:'<img class="eq-img" src="giao-dien/vat-pham-game/trang-bi/equipment-armor.webp?v=24">', stat:'def', per:50,   label:'Thủ'  },
+      { k:'sword', name:'Kiếm', icon:'<img class="eq-img" src="giao-dien/vat-pham-game/trang-bi/equipment-sword.webp?v=24">', stat:'atk', per:300,  label:'Công' },
+      { k:'boots', name:'Giày', icon:'<img class="eq-img" src="giao-dien/vat-pham-game/trang-bi/equipment-boots.webp?v=24">', stat:'spd', per:1,    label:'Tốc'  }
     ];
     // Phần thưởng: đánh thắng Ải 1 - Bàn 5 nhận mỗi loại 4 món vào Túi đồ (once = chỉ nhận lần đầu thắng)
     const EQ_REWARD = cfgSnap('eqReward', { stage:1, battle:5, each:4, startLv:1, once:true });
@@ -2902,7 +2901,7 @@ function addAccExp(n) {
       else if (id === 8) ult = `KHÔNG TỐN NỘ — lượt nào cũng ulti được. Thả rồng bay lượn trên trời, triệu hồi ${TL_BUBBLES} bong bóng rơi dồn dập như mưa: tấn công TOÀN địch ${TL_HITS} lần, tổng ${pct(sk)}% Công, mỗi lần ≈ ${fmtN(st.atk * sk / TL_HITS)}. Cả đội ta +${TL_RAGE} nộ.`;
       else if (id === 7) ult = `Nhảy qua đầu tướng địch, xoay kiếm 5 vòng rồi giáng ${DRAGON_TIERS} lần sát thương lên TOÀN BỘ địch: tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}, mỗi lần ≈ ${fmtN(st.atk * sk / DRAGON_TIERS)}). Đồng thời mỗi địch bị GIẢM ${pct(PD_HP_PCT)}% MÁU HIỆN TẠI trong ${PD_HP_TURNS} hiệp (hết hạn thì máu được cộng lại), bản thân +${pct(PD_ATK_BUFF)}% Công ${PD_BUFF_TURNS} hiệp.`;
       else if (id === 1) ult = `Cần đầy 100 nộ. Mưa cánh hoa sen rơi từ trời xuống chỗ đồng đội đã gục, hoa sen xanh nở ra và HỒI SINH tối đa ${REVIVE_COUNT} tướng với ${pct(REVIVE_HP_PCT)}% HP (nộ về 0, chưa ra đòn ngay lượt đó). Chỉ ulti khi có đồng đội đã gục – nếu chưa có thì giữ nộ và đánh thường.`;
-      else if (id === 6) ult = `KHÔNG TỐN NỘ – lượt nào cũng ulti được. Thứ tự: (1) TRƯỚC khi ulti, TOÀN ĐỘI được +${pct(BFLY_ATK_BUFF)}% Công (không cộng dồn, kéo dài hết trận); (2) toàn bộ địch dính hiệu ứng GIẢM theo 3 màu bướm ngẫu nhiên (trong 7 màu; đều ${pct(BF_PCT)}%, kéo dài ${BF_TURNS} hiệp): 🔴 Đỏ chảy máu • 🟠 Cam giảm sát thương • 🟡 Vàng giảm Thủ • 🟢 Lục giảm hồi máu • 🔵 Lam giảm nộ • 💜 Tím trúng độc; (3) bướm lần lượt rơi xuống giữa đội địch và nổ tia, mỗi lần gây ${pct(sk / BFLY_HITS)}% Công (tổng ${pct(sk)}%, ≈ ${fmtN(st.atk * (1 + BFLY_ATK_BUFF) * sk / BFLY_HITS)} mỗi lần khi đã cộng Công) lên TOÀN BỘ địch; (4) NGAY SAU KHI ULTI XONG: 🟣 Chàm choáng ${BF_STUN_TARGETS} địch ngẫu nhiên ${BF_STUN_TURNS} hiệp • 💜 Tím câm lặng ${BF_SILENCE_TARGETS} địch ngẫu nhiên (không thể dùng tuyệt kỹ).`;
+      else if (id === 6) ult = `KHÔNG TỐN NỘ – lượt nào cũng ulti được. 3 cây quạt xoáy tròn từ trên trời rớt xuống giữa đội địch, lần lượt từng cây: mỗi cây gây ${pct(sk / HML_FAN_HITS)}% Công (tổng ${pct(sk)}%, ≈ ${fmtN(st.atk * sk / HML_FAN_HITS)} mỗi lần) lên TOÀN BỘ địch (3 lần sát thương). TOÀN ĐỘI ta +${pct(HML_FAN_CRIT)}% Bạo và TOÀN địch giảm ${pct(HML_FAN_SLOW)}% Tốc trong ${HML_FAN_TURNS} hiệp.`;
       else if (id === 5) ult = `Nâng hoa sen nở rộ, hồi ${pct(sk)}% (Công + Thủ) ≈ ${fmtN(sk * (st.atk + st.def))} máu cho toàn bộ đồng đội còn sống.`;
       else if (id === 9) ult = `KHÔNG TỐN NỘ – lượt nào cũng ulti được. Tung chiêu rồi PHÂN THÂN lao sang đội địch, lốc lửa bùng lên 1 lần trên TOÀN BỘ địch nhưng gây ${HTT_HITS} lần sát thương: tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}, mỗi lần ≈ ${fmtN(st.atk * sk / HTT_HITS)}). Hiệu ứng: ngay khi bắt đầu ulti TOÀN BỘ địch bị GIẢM ${pct(HTT_DEF_DOWN)}% Thủ ${HTT_DEF_TURNS} hiệp, và sau khi hết lượt đánh mỗi địch bị rút thêm ${pct(HTT_HP_PCT)}% HP hiện tại.`;
       else if (id === 13) ult = `Bay qua đội hình địch, phóng thật nhanh ${BC_HITS} cây tre (hiệu ứng) từ góc chéo trên màn hình xuống, gây sát thương ${BC_DMG_HITS} lần lên TOÀN địch, tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}). TRƯỚC khi tre rơi: tăng ${pct(BC_ATK_UP)}% Công toàn đội rồi giảm ${pct(BC_DEF_DOWN)}% Thủ của toàn địch (kéo dài ${BC_TURNS} hiệp).`;
@@ -2921,7 +2920,7 @@ function addAccExp(n) {
       else if (id === 25) ult = `Cần đầy 100 nộ. Đứng lên không trung, rải hoa xuống đội ta: TOÀN đội ta +${pct(QA_BLOCK_UP)}% Đỡ đòn và hồi máu liên tục mỗi hiệp ${pct(sk)}% Công của Quan Âm (≈ ${fmtN(st.atk * sk)} mỗi hiệp) trong ${QY_TURNS} hiệp; TOÀN địch giảm ${pct(QA_PIERCE_DOWN)}% Phá giáp trong ${QY_TURNS} hiệp.`;
       else if (id === 26) ult = `Cần đầy 100 nộ. Chạy qua đội địch, đứng GIỮA đội hình, nện tích trượng xuống: 1 pháp trận dưới đất và 1 pháp trận trên trời úp ngược xuống bao trọn toàn địch. Gây ${DTA_HITS} lần sát thương lên TOÀN địch, tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}, mỗi lần ≈ ${fmtN(st.atk * sk / DTA_HITS)}); toàn địch giảm ${pct(DTA_ACC_DOWN)}% Chuẩn và ${pct(DTA_DODGE_DOWN)}% Né trong ${DTA_TURNS} hiệp.`;
       else if (id === 27) ult = `Cần đầy 100 nộ. Triệu hồi BẢO THÁP lơ lửng trên đầu đội địch, chiếu ánh sáng lung linh lấp lánh xuống: gây ${LLG_HITS} lần sát thương lên TOÀN địch, tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}, mỗi lần ≈ ${fmtN(st.atk * sk / LLG_HITS)}). CẦM CHÂN: Tốc toàn địch về 0 trong ${LLG_TURNS} hiệp.`;
-      else if (id === 28) ult = `KHÔNG TỐN NỘ – lượt nào cũng ulti được. TRƯỚC khi ra đòn: bản thân tăng ${pct(NK_ATK_UP)}% Công trong ${NK_ATK_TURNS} hiệp. Rồi phân thân làm ${NK_CLONES} người chạy sang ${NK_CLONES} địch ngẫu nhiên (ưu tiên tướng kỹ năng, công kích, trị liệu), mỗi phân thân đánh ${NK_HITS} lần; tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}, mỗi lần ≈ ${fmtN(st.atk * sk / NK_HITS)}). Sau đó ${NK_STAFFS} cây gậy khổng lồ từ trời dựng đứng rồi nện ngang xuống hàng ${NK_CLONES} địch vừa bị đánh, cùng lúc, mỗi cây ${pct(NK_STAFF_MULT * sk)}% Công (≈ ${fmtN(st.atk * NK_STAFF_MULT * sk)}). Mọi sát thương BỎ QUA THỦ của địch, nhưng Đỡ đòn vẫn giảm được.`;
+      else if (id === 28) ult = `KHÔNG TỐN NỘ – lượt nào cũng ulti được. TRƯỚC khi ra đòn: bản thân tăng ${pct(NK_ATK_UP)}% Công trong ${NK_ATK_TURNS} hiệp. Rồi phân thân chạy sang tối đa ${NK_CLONES} địch ngẫu nhiên (ưu tiên tướng kỹ năng, công kích, trị liệu; mỗi địch 1 phân thân, ít địch hơn thì ít phân thân hơn), mỗi phân thân đánh ${NK_HITS} lần; tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}, mỗi lần ≈ ${fmtN(st.atk * sk / NK_HITS)}). Sau đó mỗi địch bị đánh nhận 1 cây gậy khổng lồ từ trời dựng đứng rồi nện ngang xuống (đánh 3 địch = 3 gậy, 2 địch = 2 gậy, 1 địch = 1 gậy), cùng lúc, mỗi cây ${pct(NK_STAFF_MULT * sk)}% Công (≈ ${fmtN(st.atk * NK_STAFF_MULT * sk)}). Mọi sát thương BỎ QUA THỦ của địch, nhưng Đỡ đòn vẫn giảm được.`;
       else if (id === 29) ult = `Cần đầy 100 nộ. TRƯỚC khi ra đòn: toàn đội ta tăng ${pct(NT_ATK_UP)}% Công ${NT_ATK_TURNS} hiệp, toàn địch giảm ${pct(NT_DODGE_DOWN)}% Né ${NT_DODGE_TURNS} hiệp. Rồi nhảy vọt lên cao, đá liên tiếp ${NT_WHEELS} Hỏa Luân khổng lồ từ đội ta sang đội địch: gây ${NT_HITS} lần sát thương lên TOÀN địch, tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}, mỗi lần ≈ ${fmtN(st.atk * sk / NT_HITS)}). Toàn địch bị THIÊU ĐỐT: mỗi hiệp mất ${pct(NT_BURN_PCT)}% HP hiện tại trong ${NT_BURN_TURNS} hiệp.`;
       else if (id === 30) ult = `Cần đầy 100 nộ. TRƯỚC khi ra đòn: toàn đội ta TĂNG ${SB_TOUGH_UP} Bền ${SB_TURNS} hiệp, toàn địch GIẢM ${SB_TOUGH_DOWN} Bền ${SB_TURNS} hiệp. Rồi Sa Tăng hóa thân KHỔNG LỒ, vung Nguyệt Nha Sản chém xuống TOÀN địch ${SB_HITS} lần, tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}, mỗi lần ≈ ${fmtN(st.atk * sk / SB_HITS)}).`;
       else if (id === 31) ult = `KHÔNG TỐN NỘ – lượt nào cũng ulti được. Ulti TẠI CHỖ: bản thân tăng ${pct(BG_DEF_UP)}% Thủ trong ${BG_DEF_TURNS} hiệp, rồi hồi ${pct(BG_HEAL)}% HP tối đa của bản thân (≈ ${fmtN(st.hp * BG_HEAL)}).`;
@@ -2956,7 +2955,7 @@ function addAccExp(n) {
           case 3: return `Mưa ${DUCO_SWORDS} kiếm đánh toàn địch ${DUCO_HIT_COUNT} lần. Địch giảm ${pct(DUCO_SLOW)}% Tốc; cả đội ta tăng ${pct(DUCO_HASTE)}% Tốc, ${DUCO_BUFF_TURNS} hiệp.`;
           case 4: return `Đánh TOÀN BỘ địch. ★5: choáng 1 địch ngẫu nhiên 2 hiệp. ★6: toàn địch chảy máu ${TAICHI_BLEED_TURNS} hiệp (mất ${pct(TAICHI_BLEED_PCT)}% HP hiện tại mỗi hiệp), choáng 2 địch ngẫu nhiên 2 hiệp.`;
           case 5: return `Hồi máu cho TOÀN ĐỘI còn sống.`;
-          case 6: return `Cả đội +${pct(BFLY_ATK_BUFF)}% Công. Đánh TOÀN BỘ địch; mỗi địch dính 3 hiệu ứng ngẫu nhiên ${BF_TURNS} hiệp (chảy máu, giảm sát thương, giảm Thủ, giảm hồi máu, giảm nộ, trúng độc). Sau đó choáng ${BF_STUN_TARGETS} địch ngẫu nhiên ${BF_STUN_TURNS} hiệp, câm lặng ${BF_SILENCE_TARGETS} địch ngẫu nhiên.`;
+          case 6: return `3 cây quạt xoáy từ trời rơi xuống, 3 lần sát thương lên TOÀN địch; toàn đội ta +${pct(HML_FAN_CRIT)}% Bạo, toàn địch -${pct(HML_FAN_SLOW)}% Tốc, ${HML_FAN_TURNS} hiệp.`;
           case 7: return `Đánh TOÀN BỘ địch. Địch mất ${pct(PD_HP_PCT)}% máu hiện tại trong ${PD_HP_TURNS} hiệp. Bản thân +${pct(PD_ATK_BUFF)}% Công ${PD_BUFF_TURNS} hiệp.`;
           case 8: return `Mưa ${TL_BUBBLES} bong bóng đánh toàn địch ${TL_HITS} lần; cả đội ta +${TL_RAGE} nộ.`;
           case 9: return `Đánh TOÀN BỘ địch. Địch giảm ${pct(HTT_DEF_DOWN)}% Thủ ${HTT_DEF_TURNS} hiệp và bị rút ${pct(HTT_HP_PCT)}% HP hiện tại.`;
@@ -2979,7 +2978,7 @@ function addAccExp(n) {
           case 25: return `Rải hoa: toàn đội ta +${pct(QA_BLOCK_UP)}% Đỡ đòn, hồi máu ${pct(sk)}% Công mỗi hiệp; toàn địch -${pct(QA_PIERCE_DOWN)}% Phá giáp, ${QY_TURNS} hiệp.`;
           case 26: return `Nện tích trượng giữa đội địch, pháp trận trời đất bao trọn: toàn địch ${DTA_HITS} lần sát thương, -${pct(DTA_ACC_DOWN)}% Chuẩn, -${pct(DTA_DODGE_DOWN)}% Né ${DTA_TURNS} hiệp.`;
           case 27: return `Bảo tháp chiếu sáng xuống toàn địch ${LLG_HITS} lần; cầm chân: Tốc toàn địch về 0 trong ${LLG_TURNS} hiệp.`;
-          case 28: return `Tăng ${pct(NK_ATK_UP)}% Công ${NK_ATK_TURNS} hiệp, ${NK_CLONES} phân thân đánh ${NK_CLONES} địch (ưu tiên kỹ năng/công kích/trị liệu) ${NK_HITS} lần, rồi ${NK_STAFFS} gậy từ trời nện xuống. Bỏ qua Thủ.`;
+          case 28: return `Tăng ${pct(NK_ATK_UP)}% Công ${NK_ATK_TURNS} hiệp, phân thân đánh tối đa ${NK_CLONES} địch (ưu tiên kỹ năng/công kích/trị liệu) ${NK_HITS} lần, rồi mỗi địch bị đánh nhận 1 gậy từ trời nện xuống (3 địch = 3 gậy, 1 địch = 1 gậy). Bỏ qua Thủ.`;
           case 29: return `Cả đội +${pct(NT_ATK_UP)}% Công ${NT_ATK_TURNS} hiệp, toàn địch -${pct(NT_DODGE_DOWN)}% Né ${NT_DODGE_TURNS} hiệp. Đá ${NT_WHEELS} Hỏa Luân gây ${NT_HITS} lần sát thương lên TOÀN địch, rồi thiêu đốt mất ${pct(NT_BURN_PCT)}% HP hiện tại mỗi hiệp ${NT_BURN_TURNS} hiệp.`;
           case 30: return `Cả đội +${SB_TOUGH_UP} Bền, toàn địch -${SB_TOUGH_DOWN} Bền ${SB_TURNS} hiệp. Hóa khổng lồ chém xuống TOÀN địch ${SB_HITS} lần.`;
           case 31: return `Tại chỗ: bản thân +${pct(BG_DEF_UP)}% Thủ ${BG_DEF_TURNS} hiệp, hồi ${pct(BG_HEAL)}% HP tối đa. Lượt nào cũng ulti.`;
@@ -3170,7 +3169,7 @@ function addAccExp(n) {
       return EQ_STONES.map(item => ({ item, n }));
     }
     const eqStoneQty = name => { const e = ((typeof gdSt === 'function' ? gdSt().kho : null) || {})[name]; return e ? (e.qty | 0) : 0; };
-    const eqStoneImg = name => { const t = (typeof HANG_TIERS !== 'undefined' ? HANG_TIERS : []).find(x => x.name === name); return t ? `<img src="vat-pham-game/da-linh/${t.img}.webp" alt="${name}" style="width:16px;height:auto;vertical-align:middle">` : '💎'; };
+    const eqStoneImg = name => { const t = (typeof HANG_TIERS !== 'undefined' ? HANG_TIERS : []).find(x => x.name === name); return t ? `<img src="giao-dien/vat-pham-game/da-linh/${t.img}.webp" alt="${name}" style="width:16px;height:auto;vertical-align:middle">` : '💎'; };
     function eqUpgrade(id, n) {
       const it = eqBag.find(i => i.id === id), cap = eqLvCap(); if (!it || it.lv >= cap) return;
       const stock = {}, spent = {}; EQ_STONES.forEach(x => { stock[x] = eqStoneQty(x); spent[x] = 0; });
@@ -3305,7 +3304,7 @@ function addAccExp(n) {
    Luồng: Võ Hiệp -> chọn mục -> chọn tướng -> màn này (trước ➜ sau). Tăng sao chỉ cần MẢNH của chính tướng. */
 
     let upgId = 0;
-    // icon bạc / gạo giống thanh tài nguyên trên cùng (vat-pham-game/bang/thoi-bac.webp, gao.webp)
+    // icon bạc / gạo giống thanh tài nguyên trên cùng (giao-dien/vat-pham-game/bang/thoi-bac.webp, gao.webp)
     const UPG_RES_ICO = f => (f === 'gao' ? IC_RICE : IC_SILVER);
     const UPG_TITLE = { sao: 'Tăng Sao', boiduong: 'Thăng Cấp', kynang: 'Nâng Kỹ Năng', phamchat: 'Nâng Phẩm Chất' };
     (function () {
@@ -3475,29 +3474,6 @@ function addAccExp(n) {
       });
     }
     setInterval(() => { if (document.getElementById('screen-chieumo').classList.contains('active')) recTick(); }, 1000);
-    // CỔNG CHIÊU MỘ: chuỗi 24 khung (0-14 cổng mở ra, DỪNG CỐ ĐỊNH ở khung 14 chờ chạm tướng, 15-23 tan biến). Khung 9-20 vị trí/độ sáng lệch nhau nên KHÔNG lặp để cổng không rung. Tướng hiện trong cổng, chạm vào tướng thì cổng mới tan, xong mới hiện bảng kết quả.
-    const REC_GATE = { src: 'giao-dien/cong-chieu-mo-idle.webp?v=2', cw: 256, ch: 256, n: 24 };
-    try { GP.add(REC_GATE.src, 1); } catch (e) {}
-    function recGate(h, cnt, done, label) {
-      const old = document.getElementById('rc-gate'); if (old) old.remove();
-      const ov = document.createElement('div'); ov.id = 'rc-gate';
-      const W = Math.round(Math.max(220, Math.min(window.innerWidth * 0.92, window.innerHeight * 0.6, 420)));
-      ov.innerHTML = `<div class="rcg-box" style="width:${W}px;height:${W}px"><div class="rcg-hero"><div class="rcg-art">${heroIcon(h)}</div><div class="rcg-n">${h.name}</div><div class="rcg-c">${label || ('+' + cnt + ' mảnh')}</div></div></div><div class="rcg-hint">Chạm vào tướng</div>`;
-      document.body.appendChild(ov);
-      const box = ov.querySelector('.rcg-box'), hero = ov.querySelector('.rcg-hero'), hint = ov.querySelector('.rcg-hint'), sp = seqEl(REC_GATE, W);
-      sp.classList.add('rcg-seq'); box.insertBefore(sp, box.firstChild);
-      let st = 'in', f = 0, busy = false, ended = false;
-      const end = () => { if (ended) return; ended = true; clearInterval(tm); ov.classList.add('fade'); setTimeout(() => { ov.remove(); done(); }, 260); };
-      const tm = setInterval(() => {
-        if (st === 'in') { sp.show(f); if (f === 14) { st = 'hold'; hero.classList.add('on'); hint.classList.add('on'); } f++; }
-        else if (st === 'hold') { /* giữ nguyên khung 14: cổng đứng yên */ }
-        else { sp.show(f); f++; if (f > REC_GATE.n - 1) end(); }
-      }, 75);
-      hero.addEventListener('click', () => {
-        if (st !== 'hold' || busy) return; busy = true; hero.classList.add('out'); hint.classList.remove('on');
-        setTimeout(() => { st = 'out'; f = 15; }, 250);
-      });
-    }
     function doRecruit(k) {
       const r = REC[k]; if (!r) return;
       if (recLeft(k) <= 0) { recState[k] = Date.now() + r.cd; saveJSON('rec_state', recState); }   // lượt miễn phí: bắt đầu tính lại thời gian chờ (không tốn thẻ)
@@ -3526,8 +3502,7 @@ function addAccExp(n) {
       const showRes = () => pvShow(pvHead(`🎴 Chiêu Mộ ${r.name}`, `${nNew} tướng mới` + (nSh ? ` • +${nSh} mảnh (tướng đã có)` : '')) + `<div class="hero-chips" style="flex-wrap:wrap;overflow:visible;justify-content:center">${list}</div>` +
         `<button class="btn-attack pv-go" onclick="pvClose()">Xong</button>`);
       renderRecruit();
-      const top = res.find(x => x.isNew) || res[0];   // cổng hiện tướng mới đầu tiên (nếu không có thì tướng đầu)
-      try { recGate(heroById(top.id), top.sh, showRes, top.isNew ? '🌟 Tướng mới' : '+' + top.sh + ' mảnh'); } catch (e) { showRes(); }   // lỗi cổng → vẫn hiện kết quả
+      showRes();   // hiện kết quả ngay, không còn cổng chiêu mộ
     }
     updateGold();
 
@@ -3728,15 +3703,6 @@ function addAccExp(n) {
     }
 
     // u lao tới mục tiêu, đánh `hits` đòn, rồi quay về
-    // Thủy Long: lúc đánh thường phát chuỗi 25 khung "đánh thường" phủ lên tướng, trải đều trong suốt nhịp đánh
-    function tlAttackFx(u, hits, tok) {
-      if (u.id !== 8 || !SEQ.tlAtk || !SEQ_IDLE[8] || !u.el) return null;
-      try {
-        const ov = seqOverlay(u, SEQ.tlAtk, Math.round(SEQ.tlAtk.cw * SEQ_IDLE[8].h / SEQ.tlIdle.ch)), tm = [], dur = 460 + 150 * hits;
-        for (let i = 0; i < SEQ.tlAtk.n; i++) tm.push(setTimeout(() => { if (tok === battleToken) ov.show(i); }, seqT(dur * i / SEQ.tlAtk.n)));
-        return { end() { tm.forEach(clearTimeout); ov.end(); } };
-      } catch (e) { return null; }
-    }
     // Thiết Phiến (id 23): lúc đánh thường phát chuỗi 20 khung "đánh thường" (SEQ.tpAtk) phủ lên tướng, trải đều trong suốt nhịp đánh
     function tpAttackFx(u, hits, tok) {
       if (u.id !== 23 || !SEQ.tpAtk || !SEQ_IDLE[23] || !u.el) return null;
@@ -3747,7 +3713,7 @@ function addAccExp(n) {
       } catch (e) { return null; }
     }
     async function attack(u, foes, hits, dmg, tok, ultHit) {
-      const fx = tlAttackFx(u, hits, tok) || tpAttackFx(u, hits, tok);
+      const fx = tpAttackFx(u, hits, tok);   // Thủy Long đã bỏ hiệu ứng đánh thường
       try { return await attackBase(u, foes, hits, dmg, tok, ultHit); } finally { if (fx) fx.end(); }
     }
     async function attackBase(u, foes, hits, dmg, tok, ultHit) {
@@ -4000,51 +3966,6 @@ function addAccExp(n) {
       if (!u.mods || !u.mods.length) return;
       u.mods = u.mods.filter(m => { if (kind && m.kind !== kind) return true; u[m.k] -= m.d; return false; }); refreshMods(u);
     }
-    // Hiệu ứng của 1 con bướm: targets = toàn bộ địch
-    // phase = 'debuff': các hiệu ứng GIẢM (chảy máu, giảm sát thương/Thủ/hồi máu/nộ, độc) — áp TRƯỚC khi ulti
-    // phase = 'cc'    : KHỐNG CHẾ (Chàm choáng, Tím câm lặng) — áp NGAY SAU KHI ulti xong
-    // bỏ trống        : áp cả hai cùng lúc (kiểu cũ)
-    function bflyEffect(c, targets, phase) {
-      const alive = targets.filter(e => e.alive);
-      const say = (e, t) => setTimeout(() => { if (e.el.isConnected) floatText(e, t); }, 350);
-      const wantDebuff = phase !== 'cc', wantCC = phase !== 'debuff';
-      if (c.k === 'indigo') {                                   // Chàm: choáng 2 địch ngẫu nhiên 1 hiệp
-        if (!wantCC) return;
-        alive.slice().sort(() => Math.random() - 0.5).slice(0, BF_STUN_TARGETS).forEach(e => {
-          stunEnemy(e, Math.max(BF_STUN_TURNS, e.stun || 0)); say(e, '💫 CHOÁNG ' + BF_STUN_TURNS + ' HIỆP');
-        });
-        return;
-      }
-      if (c.k === 'purple' && !wantDebuff) {                    // Tím (pha khống chế): câm lặng 2 địch ngẫu nhiên
-        alive.slice().sort(() => Math.random() - 0.5).slice(0, BF_SILENCE_TARGETS).forEach(e => {
-          (e.dn || (e.dn = {})).silence = BF_TURNS; refreshDbf(e); say(e, '🤐 CÂM LẶNG');
-        });
-        return;
-      }
-      if (!wantDebuff) return;
-      const mute = (c.k === 'purple' && wantCC) ? alive.slice().sort(() => Math.random() - 0.5).slice(0, BF_SILENCE_TARGETS) : [];   // Tím: độc TOÀN địch (+ câm lặng 2 địch nếu không tách pha)
-      alive.forEach(e => {
-        const d = e.dn || (e.dn = {});
-        if (c.k === 'red') {
-          e.bleed = Math.max(e.bleed || 0, BF_TURNS); e.bleedPct = Math.max(e.bleedPct || 0, BF_PCT);
-          if (!e.el.querySelector('.bf-bleed')) { const ic = document.createElement('div'); ic.className = 'bf-bleed'; ic.textContent = '🩸'; e.el.appendChild(ic); }
-          say(e, '🩸 CHẢY MÁU');
-        } else if (c.k === 'orange') {
-          if (!(d.atk > 0)) { d.atkV = Math.min(e.atk - 1, Math.round(e.atk * BF_PCT)); e.atk -= d.atkV; }
-          d.atk = BF_TURNS; say(e, '⚔️ GIẢM SÁT THƯƠNG ' + Math.round(BF_PCT * 100) + '%');
-        } else if (c.k === 'yellow') {
-          if (!(d.def > 0)) { d.defV = Math.round((e.def || 0) * BF_PCT); e.def = (e.def || 0) - d.defV; }
-          d.def = BF_TURNS; say(e, '🛡️ GIẢM THỦ ' + Math.round(BF_PCT * 100) + '%');
-        } else if (c.k === 'green') {
-          d.heal = BF_TURNS; say(e, '💔 GIẢM HỒI MÁU ' + Math.round(BF_PCT * 100) + '%');
-        } else if (c.k === 'blue') {
-          d.rage = BF_TURNS; say(e, '⚡ GIẢM NỘ ' + Math.round(BF_PCT * 100) + '%');
-        } else if (c.k === 'purple') {
-          d.poison = BF_TURNS; if (mute.includes(e)) { d.silence = BF_TURNS; say(e, '☠️ ĐỘC + 🤐 CÂM LẶNG'); } else say(e, '☠️ TRÚNG ĐỘC');
-        }
-        refreshDbf(e);
-      });
-    }
     // Địch gục ngay trong lúc ulti: gỡ biểu tượng chảy máu/choáng đã áp TRƯỚC sát thương (hiệu ứng giảm áp trước khi ulti)
     function dropDeadEffects(list) {
       list.forEach(e => {
@@ -4160,7 +4081,7 @@ cfgOnApply(applyFormationCfg);   // chạy ngay 1 lần + chạy lại mỗi khi
       } catch (e) {}
     }
     // Vô Nhai Tử: mỗi viên cờ rơi xuống kêu 1 tiếng (không phát lúc bắt đầu chiêu; mỗi viên 1 âm riêng nên tạo Audio mới để chồng được lên nhau)
-    const GO_STONE_SND = 'am-thanh-game/go-stone.mp3';
+    const GO_STONE_SND = 'giao-dien/am-thanh-game/go-stone.mp3';
     function playGoStone() {
       try {
         if (!audioSet.skill) return;
@@ -4168,19 +4089,8 @@ cfgOnApply(applyFormationCfg);   // chạy ngay 1 lần + chạy lại mỗi khi
         const p = a.play(); if (p && p.catch) p.catch(() => {});
       } catch (e) {}
     }
-    // Âm mở màn: phát 1 lần mỗi khi vào trận (ải thường, Tỷ Võ… ở đâu cũng phát)
-    const BATTLE_OPEN_SND = 'am-thanh-game/battle-open.mp3';
-    let openSnd = null;
-    function playBattleOpen() {
-      try {
-        if (!audioSet.skill) return;
-        if (openSnd) { openSnd.pause(); openSnd.currentTime = 0; }
-        openSnd = new Audio(BATTLE_OPEN_SND); openSnd.volume = 1;
-        const p = openSnd.play(); if (p && p.catch) p.catch(() => {});
-      } catch (e) {}
-    }
     // Âm đánh thường: tướng chưa đủ nộ để ulti hoặc đang bị câm lặng thì đánh thường kèm âm này (mỗi đòn 1 Audio mới để chồng được)
-    const NORMAL_ATK_SND = 'am-thanh-game/normal-attack.mp3';
+    const NORMAL_ATK_SND = 'giao-dien/am-thanh-game/normal-attack.mp3';
     function playNormalAtk() {
       try {
         if (!audioSet.skill) return;
@@ -4189,8 +4099,8 @@ cfgOnApply(applyFormationCfg);   // chạy ngay 1 lần + chạy lại mỗi khi
       } catch (e) {}
     }
     const normalAttack = (u, foes, tok) => { playNormalAtk(); return attack(u, foes, 1, u.atk, tok); };
-    // (Đã bỏ nhạc nền.) stopBgm giờ chỉ dừng âm mở màn.
-    function stopBgm() { try { if (openSnd) { openSnd.pause(); openSnd.currentTime = 0; } } catch (e) {} }
+    // (Đã bỏ nhạc/âm mở màn khi vào trận.) stopBgm giữ lại làm hàm rỗng cho các nơi còn gọi.
+    function stopBgm() {}
     function stopHeroSounds() { try { Object.values(heroSnd).forEach(a => { a.pause(); a.currentTime = 0; }); } catch (e) {} }
 
     /* ================= ÂM TUYỆT KỸ TỔNG HỢP: Hằng Nga (id 2), Ma Tôn (id 18), Triệu Mẫn (id 19) — không cần file mp3 ================= */
@@ -4421,8 +4331,7 @@ cfgOnApply(applyFormationCfg);   // chạy ngay 1 lần + chạy lại mỗi khi
 /* TRẬN ĐẤU: bộ tạo âm thanh tổng hợp dùng chung
    (tách từ index.html cũ — script) */
 
-    // Hoa Mãn Lâu: 3 bướm 3 màu ngẫu nhiên xoay quanh thân -> lần lượt bay lên trời -> lần lượt từ từ rơi xuống trúng TOÀN BỘ địch -> +50% Công toàn đội
-    // ===== Âm thanh tổng hợp cho Hoa Mãn Lâu (không cần file): pháo xẹt khi bướm bay lên, chuông chùa khi bướm đáp =====
+    // ===== Âm thanh tổng hợp cho Hoa Mãn Lâu (không cần file): pháo xẹt khi tung chiêu, chuông chùa khi quạt chạm đất =====
     let sfxCtx = null;
     function sfxGet() {
       try {
@@ -4458,7 +4367,7 @@ async function taDeUlt(u, tok) {
   const es0 = alive(); if (!es0.length) return;
   const xs = es0.map(e => e.x), ys = es0.map(e => e.y);
   const cx = (Math.min(...xs) + Math.max(...xs)) / 2, cy = (Math.min(...ys) + Math.max(...ys)) / 2;
-  const idleH = (SEQ_IDLE[0] && SEQ_IDLE[0].h) || 120, tw = Math.round(idleH * 1.0913);   // cùng cỡ người với dáng đứng (khung dịch chuyển vuông 296×296)
+  const idleH = (SEQ_IDLE[0] && SEQ_IDLE[0].h) || 120, tw = Math.round(idleH * 0.9034);   // cỡ khung dịch chuyển (vuông 296×296) khớp cỡ người dáng đứng mới (khung 307×512, h=145 → ~131px); thấy tele to/nhỏ hơn dáng đứng thì sửa hệ số 0.9034
   const halfW = tw * 0.5 / W * 100 + 2;   // nửa bề rộng khung dịch chuyển (%) + lề: Tà Đế luôn nằm TRỌN trong sân, không văng ra mép/ra ngoài màn hình
   const landX = Math.max(halfW, Math.min(100 - halfW, u.side === 'hero' ? Math.max(...xs) + 9 : Math.min(...xs) - 9)), landY = cy;
   const dx = (landX - u.x) * W / 100, dy = (landY - u.y) * H / 100;
@@ -4978,93 +4887,91 @@ async function duCoUlt(u, tok) {
         nz.connect(lp); lp.connect(ng); ng.connect(out); nz.start(t); nz.stop(t + 0.06);
       } catch (e) {}
     }
-    // Hoa Mãn Lâu: đứng TẠI CHỖ tung tuyệt kỹ (SEQ.hmlCast). 3 chuỗi bướm màu ngẫu nhiên (trong 7 màu, mỗi chuỗi 16 khung) lần lượt RƠI THẲNG ĐỨNG từ mép trên màn hình
-    // xuống đội địch (nhỏ -> to dần); phát hết các khung rơi, chạm đất mới bung tia nhiều hướng (khung 12-15)
-    // + sát thương TOÀN địch. THỨ TỰ: (1) +Công toàn đội (cộng thêm) -> (2) hiệu ứng GIẢM theo màu lên toàn địch -> (3) ulti (bướm nổ) -> (4) KHỐNG CHẾ (choáng/câm lặng) ngay sau khi ulti xong
-    const BFLY_SEQ = { red: 'hmlRed', orange: 'hmlOrange', yellow: 'hmlYellow', green: 'hmlGreen', blue: 'hmlBlue', indigo: 'hmlIndigo', purple: 'hmlPurple' };
-    async function butterflyUlt(u, tok) {
+    // Hoa Mãn Lâu (id 6): đứng TẠI CHỖ tung tuyệt kỹ (SEQ.hmlCast, 20 khung). 3 cây quạt (SEQ.hmlFan, ảnh heros/hoa-man-lau/hoa-man-lau-quat.webp) XOÁY TRÒN từ trên trời
+    // rớt xuống giữa đội địch, lần lượt từng cây. Mỗi cây chạm đất = 1 lần sát thương lên TOÀN địch (tổng Công × sk chia đều HML_FAN_HITS).
+    // THỨ TỰ: (1) TRƯỚC khi quạt rơi: TOÀN ĐỘI ta +HML_FAN_CRIT Bạo (không cộng dồn) -> (2) quạt rơi, cây đầu tiên chạm đất: TOÀN địch -HML_FAN_SLOW Tốc -> (3) 3 lần sát thương.
+    async function fanUlt(u, tok) {
       const f = document.getElementById('battle-arena'), box = document.getElementById('bf-units');
       const W = f.clientWidth, H = f.clientHeight;
       const alive = () => foesOf(u).filter(e => e.alive);
       const es0 = alive(); if (!es0.length) return;
-      let dmg = 0;                                           // chốt SAU khi cộng Công (hiệu ứng cộng thêm áp trước khi ulti)
+      const hits = Math.max(1, Math.floor(HML_FAN_HITS));
+      let dmg = 0;
       const made = [], timers = [], oldZ = u.el.style.zIndex;
       const at = (ms, fn) => timers.push(setTimeout(() => { if (tok === battleToken) fn(); }, seqT(ms)));
+      const dur = ms => battleFast ? 1 : Math.max(1, ms * ultTimeScale * battleSlow);
       // khung tung chiêu phủ lên tướng: cùng tỉ lệ & điểm neo với dáng đứng (SEQ_IDLE[6]) nên thân không xê dịch
       const CAST_W = Math.round(SEQ.hmlCast.cw * SEQ_IDLE[6].h / SEQ.hmlIdle.ch), CAST_FR = 75;
       const cast = seqOverlay(u, SEQ.hmlCast, CAST_W);
-      const FR = 50, FALL = 8, DIVE = 12, BFR = 70, GAP = 420;   // khung 0-7 = rơi chéo (bay tới đích) • khung 8-11 = chạm đất, đứng yên tại đích • khung 12-15 = bung tia; GAP = ms giữa 2 con
-      const FW = Math.round(Math.max(260, Math.min(W * 0.66, 470))), FH = Math.round(FW * 256 / 384);
-      const fromY = 4;                                        // % chiều cao sân: điểm xuất phát sát mép trên màn hình
-      const strike = async (c, i) => {
+      const FALL = 650, GAP = 420, SPIN_FALL = 900, SPIN_LAND = 420;   // ms rơi • ms giữa 2 cây • độ xoay lúc rơi (độ) • ms xoáy tại chỗ sau khi chạm đất
+      const FW = Math.round(Math.max(150, Math.min(W * 0.36, 250))), FH = Math.round(FW * SEQ.hmlFan.ch / SEQ.hmlFan.cw);
+      let slowed = false;
+      const applySlow = () => {   // giảm Tốc tính trên Tốc GỐC (bỏ lớp 'hml' cũ trước) -> đúng -HML_FAN_SLOW, không cộng dồn
+        if (slowed) return; slowed = true;
+        alive().forEach(e => {
+          const old = (e.mods || []).find(m => m.k === 'spd' && m.tag === 'hml'), d = -Math.round((e.spd - (old ? old.d : 0)) * HML_FAN_SLOW);
+          if (d) { addMod(e, 'spd', d, HML_FAN_TURNS, 'debuff', 'hml'); floatText(e, '🐌 -' + Math.round(HML_FAN_SLOW * 100) + '% Tốc'); }
+        });
+      };
+      const fan = async i => {
         await sleep(i * GAP); if (tok !== battleToken) return;
         const es1 = alive(); if (!es1.length) return;
-        const tx = es1.reduce((a, e) => a + e.x, 0) / es1.length + (i - 1) * 4, ty = es1.reduce((a, e) => a + e.y, 0) / es1.length + (i - 1) * 2;
-        const sx = 0, sy = (fromY - ty) * H / 100;                              // rơi THẲNG ĐỨNG: xuất phát ngay phía trên đích, sát mép trên màn hình (px)
-        const ang = 0;                                                        // không nghiêng
+        const tx = es1.reduce((a, e) => a + e.x, 0) / es1.length + (i - (hits - 1) / 2) * 7;
+        const ty = es1.reduce((a, e) => a + e.y, 0) / es1.length + (i - (hits - 1) / 2) * 3;
+        const sy = (-8 - ty) * H / 100 - FH / 2;                        // xuất phát ngay trên mép trên màn hình
         const el = document.createElement('div'); el.className = 'bf-seq-fx';
-        el.style.left = tx + '%'; el.style.top = `calc(${ty}% + 10px)`; el.style.width = FW + 'px'; el.style.height = FH + 'px';
-        const sc = seqEl(SEQ[BFLY_SEQ[c.k]], FW); el.appendChild(sc); box.appendChild(el); made.push(el);
+        el.style.left = tx + '%'; el.style.top = ty + '%'; el.style.width = FW + 'px'; el.style.height = FH + 'px';
+        el.appendChild(seqEl(SEQ.hmlFan, FW)); box.appendChild(el); made.push(el);
         el.animate([
-          { transform: `translate(calc(-50% + ${sx}px),calc(-50% + ${sy}px)) scale(.28) rotate(${ang}deg)`, opacity: 0 },
-          { transform: `translate(calc(-50% + ${sx * 0.88}px),calc(-50% + ${sy * 0.88}px)) scale(.34) rotate(${ang}deg)`, opacity: 1, offset: 0.06 },
-          { transform: `translate(calc(-50% + ${sx * 0.35}px),calc(-50% + ${sy * 0.35}px)) scale(.7) rotate(${ang * 0.55}deg)`, opacity: 1, offset: 0.65 },
-          { transform: 'translate(-50%,-50%) scale(1) rotate(0deg)', opacity: 1 }
-        ], { duration: battleFast ? 1 : FALL * FR, easing: 'ease-in', fill: 'both' });   // bay tới đích đúng lúc hết khung 7; khung 8-11 phát tại chỗ
-        for (let k = 0; k < DIVE; k++) at(k * FR, () => sc.show(k));          // khung 0-7 rơi, 8-11 chạm đất
-        await sleep(DIVE * FR); if (tok !== battleToken) return;
+          { transform: `translate(-50%,calc(-50% + ${sy}px)) scale(.3) rotate(0deg)`, opacity: 0 },
+          { transform: `translate(-50%,calc(-50% + ${sy * 0.85}px)) scale(.38) rotate(${SPIN_FALL * 0.1}deg)`, opacity: 1, offset: 0.08 },
+          { transform: `translate(-50%,calc(-50% + ${sy * 0.3}px)) scale(.75) rotate(${SPIN_FALL * 0.6}deg)`, opacity: 1, offset: 0.65 },
+          { transform: `translate(-50%,-50%) scale(1) rotate(${SPIN_FALL}deg)`, opacity: 1 }
+        ], { duration: dur(FALL), easing: 'ease-in', fill: 'both' });
+        await sleep(FALL); if (tok !== battleToken) return;
 
-        // Sau khi chạm đất (khung 8-11): BUNG TIA nhiều hướng (khung 12-15) + chuông + chớp sáng + sóng + sát thương toàn địch + hiệu ứng theo màu
-        for (let k = 0; k < 4; k++) at(k * BFR, () => sc.show(DIVE + k));
-        at(4 * BFR + 80, () => el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 180, fill: 'forwards' }));
+        // Chạm đất: vẫn xoáy tròn thêm 1 chút rồi tan + chuông + chớp sáng + sóng + sát thương TOÀN địch
+        el.animate([
+          { transform: `translate(-50%,-50%) scale(1) rotate(${SPIN_FALL}deg)`, opacity: 1 },
+          { transform: `translate(-50%,-50%) scale(1.25) rotate(${SPIN_FALL + 360}deg)`, opacity: 0 }
+        ], { duration: dur(SPIN_LAND), easing: 'ease-out', fill: 'forwards' });
         sfxBell();
-        const col = c.css;
+        const col = '#2dd4bf';   // xanh ngọc, hợp màu quạt
         const fx = document.createElement('div'); fx.className = 'bf-bflash'; fx.style.left = tx + '%'; fx.style.top = ty + '%'; fx.style.setProperty('--fc', col);
         box.appendChild(fx); made.push(fx); setTimeout(() => fx.remove(), 400);
-        fx.animate([{ transform: 'translate(-50%,-50%) scale(.5)', opacity: 1 }, { transform: 'translate(-50%,-50%) scale(8)', opacity: 0 }], { duration: 350, easing: 'ease-out', fill: 'forwards' });
+        fx.animate([{ transform: 'translate(-50%,-50%) scale(.5)', opacity: 1 }, { transform: 'translate(-50%,-50%) scale(8)', opacity: 0 }], { duration: dur(350), easing: 'ease-out', fill: 'forwards' });
         const es = alive(); if (!es.length) return;
+        if (i === 0) applySlow();
         es.forEach(e => {
           skillHit(e, dmg, u);
           const w = document.createElement('div'); w.className = 'bf-wave'; w.style.left = e.x + '%'; w.style.top = e.y + '%';
           w.style.borderColor = col; w.style.boxShadow = `0 0 20px ${col}, inset 0 0 20px ${col}`;
           box.appendChild(w); setTimeout(() => w.remove(), 650);
         });
-        // (hiệu ứng giảm đã áp trước khi ulti, khống chế áp sau khi ulti xong — xem butterflyUlt)
         f.classList.add('screen-shake'); setTimeout(() => f.classList.remove('screen-shake'), 200);
-        await sleep(4 * BFR + 200);
+        await sleep(SPIN_LAND + 80);
       };
       try {
         u.el.style.zIndex = 95;
-        // 0. Chốt 3 màu bướm khác nhau trong 7 màu
-        const picks = BFLY_COLORS.slice().sort(() => Math.random() - 0.5).slice(0, BFLY_HITS);
-        // 1. TRƯỚC KHI ULTI — (a) hiệu ứng CỘNG THÊM: +Công toàn đội (không cộng dồn)
+        // 1. TRƯỚC KHI QUẠT RƠI: TOÀN ĐỘI ta +HML_FAN_CRIT Bạo (không cộng dồn, HML_FAN_TURNS hiệp)
         alliesOf(u).filter(h => h.alive).forEach(h => {
           if (noBuff(h)) { floatText(h, '🚫 KHÓA TĂNG PHÚC'); return; }
-          if (!h.atkBuff) {
-            h.atkBuff = Math.round(h.atk * BFLY_ATK_BUFF);
-            h.atk += h.atkBuff;
-            const ic = document.createElement('div'); ic.className = 'bf-atkup'; ic.textContent = '⚔️'; h.el.appendChild(ic);
-          }
-          floatText(h, 'CÔNG +' + Math.round(BFLY_ATK_BUFF * 100) + '%');
+          addMod(h, 'crit', Math.max(1, Math.round((h.crit || 0) * HML_FAN_CRIT)), HML_FAN_TURNS, 'buff', 'hml');
+          floatText(h, '💥 BẠO +' + Math.round(HML_FAN_CRIT * 100) + '%');
         });
-        dmg = u.atk * (u.sk || 1) / BFLY_HITS;                // sát thương tính trên Công đã cộng
-        //                  (b) hiệu ứng GIẢM theo màu bướm lên toàn địch (chảy máu, giảm sát thương/Thủ/hồi máu/nộ, độc)
-        picks.forEach(c => bflyEffect(c, es0, 'debuff'));
+        dmg = u.atk * (u.sk || 1) / hits;
         refreshPanel();
-        // 2. Đứng yên tung chiêu (16 khung)
-        for (let i = 0; i < 16; i++) at(i * CAST_FR, () => cast.show(i));
-        at(16 * CAST_FR, () => cast.end());
+        // 2. Đứng yên tung chiêu (20 khung)
+        for (let i = 0; i < SEQ.hmlCast.n; i++) at(i * CAST_FR, () => cast.show(i));
+        at(SEQ.hmlCast.n * CAST_FR, () => cast.end());
         sfxRocket();
         await sleep(400); if (tok !== battleToken) return;
 
-        // 3. 3 màu lần lượt rơi thẳng đứng từ mép trên màn hình xuống đội địch (ulti: chỉ gây sát thương)
-        await Promise.all(picks.map((c, i) => strike(c, i)));
+        // 3. 3 cây quạt lần lượt xoáy tròn từ trên trời rớt xuống: mỗi cây 1 lần sát thương TOÀN địch
+        await Promise.all(Array.from({ length: hits }, (_, i) => fan(i)));
         if (tok !== battleToken) return;
         cast.end();
         dropDeadEffects(es0);
-
-        // 4. NGAY SAU KHI ULTI XONG: hiệu ứng KHỐNG CHẾ — Chàm choáng, Tím câm lặng
-        picks.forEach(c => bflyEffect(c, alive(), 'cc'));
         refreshPanel();
         await sleep(225);
       } finally {
@@ -5380,7 +5287,7 @@ var dragonUlt = phamDaoUlt;   // giữ tên cũ để index.html gọi dragonUlt
         const S = SEQ.tlDragon; if (!S) return;
         const DW = Math.round(Math.min(W * 0.95, H * 1.1)), DH = Math.round(DW * S.ch / S.cw);
         dragon = document.createElement('div');
-        dragon.style.cssText = 'position:absolute;left:50%;top:' + Math.max(DH / 2 + 4, H * 0.24) + 'px;transform:translate(-50%,-50%);width:' + DW + 'px;height:' + DH + 'px;z-index:97;pointer-events:none';
+        dragon.style.cssText = 'position:absolute;left:50%;top:' + Math.max(DH / 2 + 4, H * 0.24) + 'px;transform:translate(-50%,-50%)' + (u.side === 'hero' ? '' : ' scaleX(-1)') + ';width:' + DW + 'px;height:' + DH + 'px;z-index:97;pointer-events:none';   // đội ta: giữ hướng gốc; đội địch: lật ngang để rồng quay mặt về phía đội ta
         const sc = seqEl(S, DW); sc.loop(LOOP_MS); dragon.appendChild(sc);
         f.appendChild(dragon); made.push(dragon);
         dragon.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 200, fill: 'forwards' });
@@ -6994,7 +6901,7 @@ const NK_STAFF_ROT = 0;   // độ xoay thêm cho ảnh gậy (0 = giữ nguyên
       const PRIO = ['skill', 'atk', 'heal'], rl = e => { try { return roleOf(e.id); } catch (err) { return 'atk'; } };
       const shuf = a => a.slice().sort(() => Math.random() - 0.5);
       const pool = shuf(es0.filter(e => PRIO.includes(rl(e)))).concat(shuf(es0.filter(e => !PRIO.includes(rl(e)))));
-      const picks = Array.from({ length: nClone }, (_, i) => ({ t: pool[i % pool.length], n: Math.floor(i / pool.length) }));
+      const picks = Array.from({ length: Math.min(nClone, pool.length) }, (_, i) => ({ t: pool[i], n: 0 }));   // mỗi địch bị nhắm chỉ 1 phân thân + 1 gậy: 3 địch = 3 gậy, 2 địch = 2 gậy, 1 địch = 1 gậy (KHÔNG dồn nhiều gậy vào 1 địch)
       const wait = ms => new Promise(r => timers.push(setTimeout(r, seqT(ms))));   // CÙNG đồng hồ với at()/seqT → gậy không lệch nhịp với phân thân
       const DASH = 450, GAP = 380, STAY = 320;                                  // ms: chạy tới địch • giữa 2 lần đánh • đứng thêm rồi tan
       const hid = Array.from(u.el.querySelectorAll('.hero-body, .hero-img, .bf-emo, .bf-sprite .hero-seq'));
@@ -7350,16 +7257,6 @@ async function lccAct(e, tok) {
    File này chỉ còn: hằng số dùng chung + gộp tất cả thành biến toàn cục (MOON_TURNS, DUCO_MULT, ...) + áp cấu hình admin. */
 
     let busy = false;
-    // css = màu chớp sáng/sóng khi bướm chạm đất; ảnh bướm từng màu: SEQ.hmlRed…hmlPurple (hero-seq.js)
-    const BFLY_COLORS = [
-      { k: 'red',    css: '#ef4444' },   // Đỏ: chảy máu
-      { k: 'orange', css: '#f97316' },   // Cam: giảm sát thương
-      { k: 'yellow', css: '#facc15' },   // Vàng: giảm Thủ
-      { k: 'green',  css: '#22c55e' },   // Lục: giảm hồi máu
-      { k: 'blue',   css: '#38bdf8' },   // Lam: giảm nộ
-      { k: 'indigo', css: '#6366f1' },   // Chàm: choáng 2 địch ngẫu nhiên 1 hiệp
-      { k: 'purple', css: '#a855f7' }    // Tím: trúng độc + câm lặng (không dùng được tuyệt kỹ)
-    ];   // Hoa Mãn Lâu: 3 bướm, mỗi con rơi gây 100% Công lên TOÀN địch; +50% Công toàn đội
 
 // Hằng số dùng chung (không thuộc riêng tướng nào):
 //  B4_HERO_*: trận 4, 3 tướng ngẫu nhiên của địch dùng chỉ số THEO ẢI • ULT_HITS/ULT_MULT: ulti chung (lao vào đánh) • HEAL_MULT • RAGE_ATK
@@ -7490,7 +7387,6 @@ cfgOnApply(() => {
       const staCost = STA_WAVES * STA_PER_WAVE;
       if (!staSpend(staCost)) { alert('⚡ Không đủ thể lực! Cần ' + staCost + ' thể lực (có ' + staState.v + ').\nThể lực hồi 1 mỗi phút, hoặc dùng Viên Thể Lực trong Túi đồ (bấm vào ô Thể Lực).'); return; }
       battleToken++;
-      playBattleOpen();
       currentStage = stage; currentBattle = battle; currentWave = 1;
       busy = false;
       document.getElementById('bf-units').innerHTML = '';
@@ -7934,7 +7830,7 @@ cfgOnApply(() => {
     const pvpCompact = (x, y, cx) => [cx + (x - cx) * PVP_COMPACT_X, GROUND_MID + (y - GROUND_MID) * PVP_COMPACT];
     function pvpBegin(o, extra) {
       if (!team.length) { alert('Hãy chọn Đội ngũ ra trận trước!'); return; }
-      battleToken++; playBattleOpen(); battleFast = false;
+      battleToken++; battleFast = false;
       pvp = Object.assign({ opp: o, tower: 0 }, extra || {}); pvpRound = 0; pvpDmg = { hero: 0, enemy: 0 }; currentWave = 1; busy = false;
       document.getElementById('bf-units').innerHTML = '';
       const sel = teamSel();
@@ -9594,10 +9490,10 @@ let G2_RESET_DAYS = [1, 4];   // ngày boss hồi đầy (0 = Chủ nhật … 6
 let GD_DROPS_LOW = GD_DROPS_LOW_DEF, GD_DROPS_HIGH = GD_DROPS_HIGH_DEF;
 const GD_SKILL_UNLOCK = GD_UNLOCK_DEF.slice(), GD_SKILL_MAX = [Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity];   // Lò Luyện Hỏa: nâng cấp không giới hạn
 const GD_ICO = { 'Thú Noãn': 'thu-noan', 'Thú Hồn': 'thu-hon', 'Thú Linh': 'thu-linh', 'Đá Nữ Oa': 'da-nu-oa', 'Dị Linh': 'di-linh', 'Đào Tiên': 'dao-tien', 'Đào Tiên Vương': 'dao-tien', 'Tử Linh Thạch': 'tu-linh-thach' };
-const GD_ICO2 = { 'Đá Xanh Lá': 'vat-pham-game/da-linh/da-xanh-la', 'Đá Tím': 'vat-pham-game/da-linh/da-tim', 'Đá Đen': 'vat-pham-game/da-linh/da-den', 'Đá Vàng': 'vat-pham-game/da-linh/da-vang', 'Đá Cam': 'vat-pham-game/da-linh/da-cam', 'Đá Đỏ': 'vat-pham-game/da-linh/da-do', 'Đá Trắng': 'vat-pham-game/da-linh/da-trang',
-  'Hỏa Thạch': 'vat-pham-game/trang-bi/hoa-thach', 'Linh Phách': 'vat-pham-game/phach/linh_phach', 'Tiên Phách': 'vat-pham-game/phach/tien_phach', 'Thần Phách': 'vat-pham-game/phach/than_phach', 'Bí Kíp': 'vat-pham-game/ky-nang/bi-kip', 'Yếu Quyết': 'vat-pham-game/ky-nang/yeu-quyet', 'Vô Tự Thiên Thư': 'vat-pham-game/ky-nang/vo-tu-thien-thu' };   // ảnh ngoài thư mục bang-hoi (Hang Tụ Linh, kỹ năng)
-const GD_ICO_FULL = { 'Thẻ Chiêu Mộ Sơ Cấp': 'vat-pham-game/the-chieu-mo/so-cap.webp', 'Thẻ Chiêu Mộ Cao Cấp': 'vat-pham-game/the-chieu-mo/cao-cap.webp' };   // ảnh có đường dẫn đầy đủ (kể cả đuôi file)
-function gdIco(name, ico) { if (GD_ICO_FULL[name]) return `<img class="gi" src="${GD_ICO_FULL[name]}" alt="${name}">`; if (typeof DAN_IMG !== 'undefined' && DAN_IMG[name]) return DAN_IMG[name]; if (String(name).indexOf('Đào Tiên') === 0) return IC_PEACH; if (GD_ICO2[name]) return `<img class="gi" src="${GD_ICO2[name]}.webp" alt="${name}">`; const f = GD_ICO[name] || (String(name).indexOf('Châu ') === 0 ? 'chau' : ''); return f ? `<img class="gi" src="${f === 'dao-tien' ? 'vat-pham-game/bang/dao-tien.webp' : 'vat-pham-game/bang/' + f + '.webp'}" alt="${name}">` : ico; }
+const GD_ICO2 = { 'Đá Xanh Lá': 'giao-dien/vat-pham-game/da-linh/da-xanh-la', 'Đá Tím': 'giao-dien/vat-pham-game/da-linh/da-tim', 'Đá Đen': 'giao-dien/vat-pham-game/da-linh/da-den', 'Đá Vàng': 'giao-dien/vat-pham-game/da-linh/da-vang', 'Đá Cam': 'giao-dien/vat-pham-game/da-linh/da-cam', 'Đá Đỏ': 'giao-dien/vat-pham-game/da-linh/da-do', 'Đá Trắng': 'giao-dien/vat-pham-game/da-linh/da-trang',
+  'Hỏa Thạch': 'giao-dien/vat-pham-game/trang-bi/hoa-thach', 'Linh Phách': 'giao-dien/vat-pham-game/phach/linh_phach', 'Tiên Phách': 'giao-dien/vat-pham-game/phach/tien_phach', 'Thần Phách': 'giao-dien/vat-pham-game/phach/than_phach', 'Bí Kíp': 'giao-dien/vat-pham-game/ky-nang/bi-kip', 'Yếu Quyết': 'giao-dien/vat-pham-game/ky-nang/yeu-quyet', 'Vô Tự Thiên Thư': 'giao-dien/vat-pham-game/ky-nang/vo-tu-thien-thu' };   // ảnh ngoài thư mục bang-hoi (Hang Tụ Linh, kỹ năng)
+const GD_ICO_FULL = { 'Thẻ Chiêu Mộ Sơ Cấp': 'giao-dien/vat-pham-game/the-chieu-mo/so-cap.webp', 'Thẻ Chiêu Mộ Cao Cấp': 'giao-dien/vat-pham-game/the-chieu-mo/cao-cap.webp' };   // ảnh có đường dẫn đầy đủ (kể cả đuôi file)
+function gdIco(name, ico) { if (GD_ICO_FULL[name]) return `<img class="gi" src="${GD_ICO_FULL[name]}" alt="${name}">`; if (typeof DAN_IMG !== 'undefined' && DAN_IMG[name]) return DAN_IMG[name]; if (String(name).indexOf('Đào Tiên') === 0) return IC_PEACH; if (GD_ICO2[name]) return `<img class="gi" src="${GD_ICO2[name]}.webp" alt="${name}">`; const f = GD_ICO[name] || (String(name).indexOf('Châu ') === 0 ? 'chau' : ''); return f ? `<img class="gi" src="${f === 'dao-tien' ? 'giao-dien/vat-pham-game/bang/dao-tien.webp' : 'giao-dien/vat-pham-game/bang/' + f + '.webp'}" alt="${name}">` : ico; }
 function gdSt() {
   const s = loadJSON('guild_state');
   s.kho = s.kho || {}; [['Quỷ Linh', 'Dị Linh'], ['Hỏa Tinh', 'Thú Noãn']].forEach(p => { if (s.kho[p[0]]) { s.kho[p[1]] = s.kho[p[1]] || { ico: s.kho[p[0]].ico, qty: 0 }; s.kho[p[1]].qty += s.kho[p[0]].qty; delete s.kho[p[0]]; } });
@@ -9786,7 +9682,7 @@ function bbFight() {
   const [k, ct] = bbCur, s = gdTick(), key = ct ? 'bossCt' : 'boss', mx = gdBossHp(k, ct), cur = s[key][k] === undefined ? mx : s[key][k];
   if (s.left < 1) return scToast('Hết lượt hôm nay'); if (cur <= 0) return scToast('Boss đã bị hạ');
   if (!team.length) return scToast('Chưa có tướng trong đội');
-  battleToken++; playBattleOpen(); battleFast = false; busy = false; currentWave = 1; currentStage = 1; currentBattle = 1;
+  battleToken++; battleFast = false; busy = false; currentWave = 1; currentStage = 1; currentBattle = 1;
   bossB = { k, ct, key, mx, cur, gb: gdBonus(), unit: null, tt: (typeof ttSt === 'function') ? ttSt().tt.cur : null, ttRage: 0, fin: false };
   document.getElementById('bf-units').innerHTML = '';
   const sel = teamSel(), pos = HERO_POS[Math.min(5, Math.max(1, sel.length))].map(p => [p[0], p[1] + HERO_DY]);
@@ -9939,7 +9835,7 @@ const TT_FEED_DEF = Object.assign({}, TT_FEED);
 cfgOnApply(() => { Object.assign(TT_FEED, TT_FEED_DEF); const o = cfgGet('misc.ttFeed', {}) || {}; Object.keys(TT_FEED_DEF).forEach(k => { const v = Number(o[k]); if (isFinite(v) && v >= 0) TT_FEED[k] = v; }); });   // EXP mỗi món cho thần thú ăn — admin chỉnh: misc.ttFeed
 const TT_SLUG = { 'Kỳ Lân': 'ky-lan', 'Xích Vũ': 'xich-vu', 'Tiên Lộc': 'tien-loc', 'Long Quy': 'long-quy', 'Báo Tuyết': 'bao-tuyet', 'Hắc Điêu': 'hac-dieu', 'Cuồng Ngưu': 'cuong-nguu', 'Lân Sư': 'lan-su', 'Khổng Tước': 'khong-tuoc', 'Cửu Vỹ Hồ': 'cuu-vi-ho', 'Hỏa Kỳ Lân': 'hoa-ky-lan', 'Kim Sư': 'kim-su', 'Thiên Lân': 'thien-lan' };
 // Thần thú có chuỗi 16 khung (giao-dien/bang-hoi/thanthu/seq/<slug>-00..15.webp, ảnh gốc đều quay mặt sang PHẢI). Muốn thêm: bỏ đủ 16 khung vào thư mục seq rồi thêm slug vào TT_SEQ.
-const TT_SEQ = ['ky-lan', 'hac-dieu', 'long-quy', 'bao-tuyet', 'tien-loc', 'xich-vu', 'thien-lan', 'cuu-vi-ho', 'cuong-nguu', 'khong-tuoc'], TT_SEQ_N = 16, TT_SEQ_MS = 110;
+const TT_SEQ = ['long-quy', 'bao-tuyet', 'tien-loc', 'xich-vu', 'thien-lan', 'cuu-vi-ho', 'cuong-nguu', 'khong-tuoc'], TT_SEQ_N = 16, TT_SEQ_MS = 110;
 // Khung bị thiếu trong thư mục seq (thiếu file ảnh): lấy khung liền trước. Lân Sư chưa có khung nào → không nằm trong TT_SEQ, hiện ảnh tĩnh lan-su.webp.
 const TT_GAP = {};
 const TT_SEQ_NS = { 'thien-lan': 25, 'xich-vu': 25, 'long-quy': 25, 'bao-tuyet': 15, 'cuong-nguu': 25, 'cuu-vi-ho': 28, 'khong-tuoc': 20 }, ttN = sl => TT_SEQ_NS[sl] || TT_SEQ_N;   // số khung riêng từng loài (mặc định 16); Thiên Lân & Xích Vũ 25 khung
@@ -10452,6 +10348,7 @@ async function dsLoad0() {
       const sn = await dsRef(s.bangId).get();
       if (sn.exists && sn.data().mem && sn.data().mem[uid]) {
         dsG = Object.assign({ id: sn.id }, sn.data()); dsG.apps = dsG.apps || {}; dsG.news = dsG.news || [];
+        if (dsNeedReset(dsG)) { dsApplyReset(dsG); dsResetGuildDoc(sn.id); }   // admin reset bang -> về cấp 1
         const me = dsG.mem[uid], lv = accLevel, pw = Math.round(typeof clPower === 'function' ? clPower() : 0);
         if (me.lv !== lv || me.pw !== pw || me.n !== pvName()) { me.lv = lv; me.pw = pw; me.n = pvName(); dsRef(s.bangId).update({ ['mem.' + uid + '.lv']: lv, ['mem.' + uid + '.pw']: pw, ['mem.' + uid + '.n']: me.n }).catch(() => {}); }
         if (s.bangLv !== dsG.lv) { s.bangLv = dsG.lv; gdSave(s); }
@@ -10467,9 +10364,34 @@ async function dsLoad0() {
     dsList = await dsFetchList();
   } catch (e) { scToast(dsErr(e)); }
 }
+/* RESET BANG: admin tăng guild2.resetEpoch (game_config) -> mọi bang có ep cũ hơn sẽ về cấp 1 (exp 0, bồn 0) khi có người tải bang */
+const dsResetEp = () => Math.max(0, Math.floor(cfgNum('guild2.resetEpoch', 0)));
+function dsNeedReset(g) { return dsResetEp() > (Number(g.ep) || 0); }
+function dsApplyReset(g) { g.lv = 1; g.exp = 0; g.basin = 0; g.ep = dsResetEp(); return g; }
+async function dsResetGuildDoc(id) {   // ghi cấp 1 lên bang chung (nguyên tử, chỉ reset nếu vẫn còn ep cũ)
+  try { await clDb.runTransaction(async tx => { const sn = await tx.get(dsRef(id)); if (!sn.exists) return; const d = sn.data(); if (!dsNeedReset(d)) return; dsApplyReset(d); dsPushNews(d, 'Bang đã được reset về cấp 1'); tx.set(dsRef(id), d); }); } catch (e) {}
+}
+/* Gỡ uid khỏi bang (thành viên "ma"/rời/bị mời rời); hết người thì XÓA bang. Dùng được trong transaction. Trả về true nếu đã xóa bang */
+function dsRemoveMember(tx, ref, d, uid) {
+  d.mem = d.mem || {}; const was = d.mem[uid]; delete d.mem[uid];
+  const rest = Object.keys(d.mem);
+  if (!rest.length) { tx.delete(ref); return true; }
+  if (was && (was.r === 'chu' || d.leader === uid)) { rest.sort((a, b) => dsRoleRank(d.mem[a].r) - dsRoleRank(d.mem[b].r) || (d.mem[a].t - d.mem[b].t)); d.mem[rest[0]].r = 'chu'; d.leader = rest[0]; dsPushNews(d, `${d.mem[rest[0]].n} trở thành Bang Chủ mới`); }
+  tx.set(ref, d); return false;
+}
 async function dsFetchList() {
   const q = await clDb.collection('guilds').orderBy('lv', 'desc').limit(50).get();
-  return q.docs.map(d => Object.assign({ id: d.id }, d.data())).sort((a, b) => (b.lv - a.lv) || ((b.exp || 0) - (a.exp || 0)));
+  const uid = dsUid(), s = gdBang(), out = [];
+  for (const dc of q.docs) {
+    const g = Object.assign({ id: dc.id }, dc.data()); g.mem = g.mem || {};
+    if (!Object.keys(g.mem).length) { dsRef(g.id).delete().catch(() => {}); continue; }   // bang không còn ai -> xóa luôn
+    if (uid && g.mem[uid] && s.bangId !== g.id) {   // máy báo CHƯA vào bang này nhưng bang còn ghi mình là thành viên (dữ liệu cũ sau reset / đổi bang) -> gỡ ra
+      try { const gone = await clDb.runTransaction(async tx => { const sn = await tx.get(dsRef(g.id)); if (!sn.exists) return true; const d = sn.data(); if (!(d.mem && d.mem[uid])) return false; return dsRemoveMember(tx, dsRef(g.id), d, uid); }); if (gone) continue; delete g.mem[uid]; } catch (e) {}
+    }
+    if (dsNeedReset(g)) { dsApplyReset(g); dsResetGuildDoc(g.id); }
+    out.push(g);
+  }
+  return out.sort((a, b) => (b.lv - a.lv) || ((b.exp || 0) - (a.exp || 0)));
 }
 
 function openDaiSanh() { dsTab = 'bang'; document.getElementById('ds-tabs').innerHTML = ''; document.getElementById('ds-body').innerHTML = '<div class="ch-empty">Đang tải...</div>'; switchScreen('daisanh'); renderDaiSanh(); }
@@ -10495,7 +10417,11 @@ async function dsApply(id) {
   try {
     const ref = dsRef(id), uid = dsUid(), s = gdBang();
     await clDb.runTransaction(async tx => { const sn = await tx.get(ref); if (!sn.exists) throw new Error('Bang không còn tồn tại'); const d = sn.data(); d.mem = d.mem || {}; d.apps = d.apps || {};
-      if (d.mem[uid]) throw new Error('Bạn đã ở trong bang này'); if (Object.keys(d.mem).length >= DS_MAXMEM) throw new Error('Bang đã đầy'); if (accLevel < (d.minLv || 1)) throw new Error('Cần cấp ' + (d.minLv || 1) + ' để vào bang này');
+      if (d.mem[uid]) {   // chỉ báo "đã ở trong bang" khi máy này THẬT SỰ đang thuộc bang đó; còn không là dữ liệu cũ -> gỡ ra rồi cho xin vào
+        if (s.bangId === id) throw new Error('Bạn đã ở trong bang này');
+        if (dsRemoveMember(tx, ref, d, uid)) throw new Error('Bang không còn tồn tại');
+      }
+      if (Object.keys(d.mem).length >= DS_MAXMEM) throw new Error('Bang đã đầy'); if (accLevel < (d.minLv || 1)) throw new Error('Cần cấp ' + (d.minLv || 1) + ' để vào bang này');
       d.apps[uid] = { n: pvName(), lv: accLevel, t: Date.now() }; tx.set(ref, d); });
     s.bangApply = id; gdSave(s); scToast('Đã gửi đơn xin vào bang');
   } catch (e) { scToast(dsErr(e)); }
@@ -10551,10 +10477,9 @@ function dsLeave() {
   if (!confirm('Rời bang ' + dsG.name + '?' + (dsMe().r === 'chu' ? '\nBạn là Bang Chủ: chức Bang Chủ sẽ chuyển cho Phó Bang / thành viên lâu năm nhất.' : ''))) return;
   const uid = dsUid(), ref = dsRef(dsG.id), s = gdBang();
   clDb.runTransaction(async tx => {
-    const sn = await tx.get(ref); if (!sn.exists) return; const d = sn.data(); d.mem = d.mem || {}; const was = d.mem[uid]; delete d.mem[uid];
-    const rest = Object.keys(d.mem); if (!rest.length) { tx.delete(ref); return; }
-    if (was && was.r === 'chu') { rest.sort((a, b) => dsRoleRank(d.mem[a].r) - dsRoleRank(d.mem[b].r) || (d.mem[a].t - d.mem[b].t)); d.mem[rest[0]].r = 'chu'; d.leader = rest[0]; dsPushNews(d, `${d.mem[rest[0]].n} trở thành Bang Chủ mới`); }
-    dsPushNews(d, `${(was && was.n) || pvName()} đã rời bang`); tx.set(ref, d);
+    const sn = await tx.get(ref); if (!sn.exists) return; const d = sn.data(); d.mem = d.mem || {}; const was = d.mem[uid];
+    dsPushNews(d, `${(was && was.n) || pvName()} đã rời bang`);
+    dsRemoveMember(tx, ref, d, uid);   // hết người -> xóa bang; Bang Chủ rời -> chuyển chức
   }).then(() => { s.bangId = ''; s.uytin = 0; s.bangLv = 1; s.bangLeaveAt = Date.now(); gdSave(s); scToast('Đã rời bang • Uy Tín về 0 • ' + DS_CD_H + ' giờ nữa mới được tạo / vào bang mới'); renderDaiSanh(); }).catch(e => scToast(dsErr(e)));
 }
 
@@ -11505,7 +11430,7 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
             <div class="dp-arrow">➡</div>
             <div class="dp-pct">${maxed ? 'Đã tối đa' : 'Thuộc tính +' + DP_ATTR_PCT + '%'}</div>
             <div class="dp-vl">Vật Liệu</div>
-            <div class="dp-orb"><span style="display:flex;width:100%;height:100%;align-items:center;justify-content:center;font-size:44px;line-height:1"><img src="vat-pham-game/bang/than-dan.webp" alt="Thần Đan" style="height:1em;width:auto"></span></div>
+            <div class="dp-orb"><span style="display:flex;width:100%;height:100%;align-items:center;justify-content:center;font-size:44px;line-height:1"><img src="giao-dien/vat-pham-game/bang/than-dan.webp" alt="Thần Đan" style="height:1em;width:auto"></span></div>
             <div>${DP_GOD}</div>
             <div class="${ok || maxed ? '' : 'dp-bad'}">${fmtN(have)} / ${maxed ? '-' : fmtN(need)}</div>
           </div>
@@ -11678,7 +11603,7 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
 
 ;
 /* === js/ui/notify.js === */
-/* THÔNG BÁO bằng khung rồng (ảnh trong vat-pham-game/):
+/* THÔNG BÁO bằng khung rồng (ảnh trong giao-dien/vat-pham-game/):
    • notifyBanner(msg)  — khung xanh vàng nền trong suốt, vùng chữ đen ở giữa (khung-thong-bao.webp) cho thông báo thường: hết thể lực, hết lượt, sai mật khẩu, thất bại...
    • notifyResult(msg, win, opt) — pvpToast gọi vào đây:
         PVE / Giang Hồ thắng: khung "Thắng" (khung-thang.webp), vật phẩm nhận được xếp trong nền đen
@@ -11805,7 +11730,7 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
    Trước đây icon/khung chỉ tải khi mở màn → mạng chậm thì chỗ hiện chỗ trống, ảnh nhảy vị trí. Giờ sau khi trang hiện xong, game tải ngầm icon/khung/ảnh tướng
    (tối đa 4 ảnh cùng lúc, lúc rảnh, không chặn trò chơi) để lúc mở màn đã có sẵn trong cache. Ảnh nặng (bản đồ Ải, sprite chiêu) vẫn tải khi cần. === */
 (function () {
-  const LIST = ["giao-dien/icon-home/thoi-bac.webp","giao-dien/icon-home/bang-hoi.webp","giao-dien/icon-home/bao-li-xi.webp","giao-dien/icon-home/bao-vat.webp","giao-dien/icon-home/cai-dat.webp","giao-dien/icon-home/chieu-mo.webp","giao-dien/icon-home/de-mo.webp","giao-dien/icon-home/cua-tiem.webp","giao-dien/icon-home/doi-ngu.webp","giao-dien/icon-home/gao.webp","giao-dien/icon-home/giang-ho.webp","giao-dien/icon-home/gift-code.webp","giao-dien/icon-home/hop-thu.webp","giao-dien/icon-home/ky-ngo.webp","giao-dien/icon-home/luyen-hoa.webp","giao-dien/icon-home/nhiem-vu.webp","giao-dien/icon-home/pve.webp","giao-dien/icon-home/pvp.webp","giao-dien/icon-home/su-kien.webp","giao-dien/icon-home/tang-cap.webp","giao-dien/icon-home/the-thang.webp","giao-dien/icon-home/thoi-vang.webp","giao-dien/icon-home/trang-bi.webp","giao-dien/icon-home/trang-chu.webp","giao-dien/icon-home/tui-do.webp","giao-dien/icon-home/vo-hiep.webp","giao-dien/icon-kihieu/bat_tu.webp","giao-dien/icon-kihieu/cam_lang.webp","giao-dien/icon-kihieu/chay_mau.webp","giao-dien/icon-kihieu/chay_nhanh.webp","giao-dien/icon-kihieu/choang.webp","giao-dien/icon-kihieu/do_don.webp","giao-dien/icon-kihieu/giam_bao.webp","giao-dien/icon-kihieu/giam_bao_sat.webp","giao-dien/icon-kihieu/giam_chinh_xac.webp","giao-dien/icon-kihieu/giam_cong.webp","giao-dien/icon-kihieu/giam_hoi.webp","giao-dien/icon-kihieu/giam_hp.webp","giao-dien/icon-kihieu/giam_ne.webp","giao-dien/icon-kihieu/giam_no.webp","giao-dien/icon-kihieu/giam_pha_giap.webp","giao-dien/icon-kihieu/giam_thu.webp","giao-dien/icon-kihieu/giam_toc.webp","giao-dien/icon-kihieu/khang.webp","giao-dien/icon-kihieu/khoa_tang_phuc.webp","giao-dien/icon-kihieu/me_hoac.webp","giao-dien/icon-kihieu/phong_an.webp","giao-dien/icon-kihieu/tang_bao.webp","giao-dien/icon-kihieu/tang_bao_sat.webp","giao-dien/icon-kihieu/tang_chinh_xac.webp","giao-dien/icon-kihieu/tang_cong.webp","giao-dien/icon-kihieu/tang_hoi.webp","giao-dien/icon-kihieu/tang_hp.webp","giao-dien/icon-kihieu/tang_ne.webp","giao-dien/icon-kihieu/tang_no.webp","giao-dien/icon-kihieu/tang_pha_giap.webp","giao-dien/icon-kihieu/tang_thu.webp","giao-dien/icon-kihieu/tang_toc.webp","giao-dien/icon-kihieu/thieu_dot.webp","giao-dien/icon-kihieu/trung_doc.webp","giao-dien/icon-home/linh-thu.webp","giao-dien/linh-thu/linh-thu.webp","giao-dien/linh-thu/manh-thu.webp","giao-dien/bao-vat/bao-vat.webp","giao-dien/bao-vat/manh-bao-vat.webp","giao-dien/tuong/boi_duong.webp","giao-dien/tuong/dot_pha.webp","giao-dien/tuong/ghep_manh.webp","giao-dien/tuong/giang_ho_ky.webp","giao-dien/tuong/kinh_mach.webp","giao-dien/tuong/ky_nang.webp","giao-dien/tuong/manh_vo_hiep.webp","giao-dien/tuong/tang_sao.webp","vat-pham-game/trang-bi/equipment-hat.webp?v=24","vat-pham-game/trang-bi/equipment-armor.webp?v=24","vat-pham-game/trang-bi/equipment-sword.webp?v=24","vat-pham-game/trang-bi/equipment-boots.webp?v=24","vat-pham-game/thoi-vang.webp","vat-pham-game/than-dan.webp","vat-pham-game/tien-dan.webp","vat-pham-game/vien-the-luc.webp","giao-dien/buc-may.webp","giao-dien/thong-bao/khung-thong-bao.webp?v=5","giao-dien/thong-bao/khung-thua.webp","giao-dien/thong-bao/khung-thang.webp","giao-dien/thong-bao/khung-chat.webp?v=1","giao-dien/icon-phuthe/cap-toc-1.webp","giao-dien/icon-phuthe/cap-toc-2.webp","giao-dien/icon-phuthe/cap-toc-3.webp","giao-dien/icon-phuthe/cap-toc-4.webp","giao-dien/icon-phuthe/cap-toc-5.webp","giao-dien/icon-phuthe/cap-toc-6.webp","giao-dien/icon-phuthe/cap-toc-7.webp","giao-dien/icon-phuthe/gia-toc-1.webp","giao-dien/icon-phuthe/gia-toc-2.webp","giao-dien/icon-phuthe/gia-toc-3.webp","giao-dien/icon-phuthe/gia-toc-4.webp","giao-dien/icon-phuthe/gia-toc-5.webp","giao-dien/icon-phuthe/gia-toc-6.webp","giao-dien/icon-phuthe/gia-toc-7.webp","giao-dien/icon-phuthe/ho-thuan-1.webp","giao-dien/icon-phuthe/ho-thuan-2.webp","giao-dien/icon-phuthe/ho-thuan-3.webp","giao-dien/icon-phuthe/ho-thuan-4.webp","giao-dien/icon-phuthe/ho-thuan-5.webp","giao-dien/icon-phuthe/ho-thuan-6.webp","giao-dien/icon-phuthe/ho-thuan-7.webp","giao-dien/icon-phuthe/ho-toc-1.webp","giao-dien/icon-phuthe/ho-toc-2.webp","giao-dien/icon-phuthe/ho-toc-3.webp","giao-dien/icon-phuthe/ho-toc-4.webp","giao-dien/icon-phuthe/ho-toc-5.webp","giao-dien/icon-phuthe/ho-toc-6.webp","giao-dien/icon-phuthe/ho-toc-7.webp","giao-dien/icon-phuthe/than-thuan-1.webp","giao-dien/icon-phuthe/than-thuan-2.webp","giao-dien/icon-phuthe/than-thuan-3.webp","giao-dien/icon-phuthe/than-thuan-4.webp","giao-dien/icon-phuthe/than-thuan-5.webp","giao-dien/icon-phuthe/than-thuan-6.webp","giao-dien/icon-phuthe/than-thuan-7.webp","giao-dien/icon-phuthe/than-toc-1.webp","giao-dien/icon-phuthe/than-toc-2.webp","giao-dien/icon-phuthe/than-toc-3.webp","giao-dien/icon-phuthe/than-toc-4.webp","giao-dien/icon-phuthe/than-toc-5.webp","giao-dien/icon-phuthe/than-toc-6.webp","giao-dien/icon-phuthe/than-toc-7.webp","giao-dien/icon-phuthe/tro-thuan-1.webp","giao-dien/icon-phuthe/tro-thuan-2.webp","giao-dien/icon-phuthe/tro-thuan-3.webp","giao-dien/icon-phuthe/tro-thuan-4.webp","giao-dien/icon-phuthe/tro-thuan-5.webp","giao-dien/icon-phuthe/tro-thuan-6.webp","giao-dien/icon-phuthe/tro-thuan-7.webp","giao-dien/icon-phuthe/tro-toc-1.webp","giao-dien/icon-phuthe/tro-toc-2.webp","giao-dien/icon-phuthe/tro-toc-3.webp","giao-dien/icon-phuthe/tro-toc-4.webp","giao-dien/icon-phuthe/tro-toc-5.webp","giao-dien/icon-phuthe/tro-toc-6.webp","giao-dien/icon-phuthe/tro-toc-7.webp","vat-pham-game/bao-vat/ton-su-ki.webp?v=25","vat-pham-game/bao-vat/ba-vuong-kiem.webp?v=25","vat-pham-game/bao-vat/treasure-09.webp","vat-pham-game/bao-vat/treasure-10.webp","vat-pham-game/bao-vat/treasure-11.webp","vat-pham-game/bao-vat/treasure-12.webp","vat-pham-game/bao-vat/treasure-13.webp","vat-pham-game/bao-vat/treasure-14.webp","vat-pham-game/bao-vat/treasure-15.webp","vat-pham-game/bao-vat/treasure-16.webp","vat-pham-game/bao-vat/treasure-17.webp","vat-pham-game/bao-vat/treasure-18.webp","vat-pham-game/bao-vat/treasure-19.webp","vat-pham-game/bao-vat/treasure-20.webp","vat-pham-game/bao-vat/treasure-21.webp","vat-pham-game/ky-nang/bi-kip.webp","vat-pham-game/ky-nang/vo-tu-thien-thu.webp","vat-pham-game/ky-nang/yeu-quyet.webp","vat-pham-game/bang/thoi-bac.webp","vat-pham-game/bang/thoi-vang.webp","vat-pham-game/bang/gao.webp","vat-pham-game/bang/than-dan.webp","vat-pham-game/bang/tien-dan.webp","vat-pham-game/bang/vien-the-luc.webp","vat-pham-game/bang/dao-tien.webp"];
+  const LIST = ["giao-dien/vat-pham-game/bang/thoi-bac.webp","giao-dien/icon-home/bang-hoi.webp","giao-dien/icon-home/bao-li-xi.webp","giao-dien/icon-home/bao-vat.webp","giao-dien/icon-home/cai-dat.webp","giao-dien/icon-home/chieu-mo.webp","giao-dien/icon-home/de-mo.webp","giao-dien/icon-home/cua-tiem.webp","giao-dien/icon-home/doi-ngu.webp","giao-dien/vat-pham-game/bang/gao.webp","giao-dien/icon-home/giang-ho.webp","giao-dien/icon-home/gift-code.webp","giao-dien/icon-home/hop-thu.webp","giao-dien/icon-home/ky-ngo.webp","giao-dien/icon-home/luyen-hoa.webp","giao-dien/icon-home/nhiem-vu.webp","giao-dien/icon-home/pve.webp","giao-dien/icon-home/pvp.webp","giao-dien/icon-home/su-kien.webp","giao-dien/icon-home/tang-cap.webp","giao-dien/icon-home/the-thang.webp","giao-dien/vat-pham-game/bang/thoi-vang.webp","giao-dien/icon-home/trang-bi.webp","giao-dien/icon-home/trang-chu.webp","giao-dien/icon-home/tui-do.webp","giao-dien/icon-home/vo-hiep.webp","giao-dien/icon-kihieu/bat_tu.webp","giao-dien/icon-kihieu/cam_lang.webp","giao-dien/icon-kihieu/chay_mau.webp","giao-dien/icon-kihieu/chay_nhanh.webp","giao-dien/icon-kihieu/choang.webp","giao-dien/icon-kihieu/do_don.webp","giao-dien/icon-kihieu/giam_bao.webp","giao-dien/icon-kihieu/giam_bao_sat.webp","giao-dien/icon-kihieu/giam_chinh_xac.webp","giao-dien/icon-kihieu/giam_cong.webp","giao-dien/icon-kihieu/giam_hoi.webp","giao-dien/icon-kihieu/giam_hp.webp","giao-dien/icon-kihieu/giam_ne.webp","giao-dien/icon-kihieu/giam_no.webp","giao-dien/icon-kihieu/giam_pha_giap.webp","giao-dien/icon-kihieu/giam_thu.webp","giao-dien/icon-kihieu/giam_toc.webp","giao-dien/icon-kihieu/khang.webp","giao-dien/icon-kihieu/khoa_tang_phuc.webp","giao-dien/icon-kihieu/me_hoac.webp","giao-dien/icon-kihieu/phong_an.webp","giao-dien/icon-kihieu/tang_bao.webp","giao-dien/icon-kihieu/tang_bao_sat.webp","giao-dien/icon-kihieu/tang_chinh_xac.webp","giao-dien/icon-kihieu/tang_cong.webp","giao-dien/icon-kihieu/tang_hoi.webp","giao-dien/icon-kihieu/tang_hp.webp","giao-dien/icon-kihieu/tang_ne.webp","giao-dien/icon-kihieu/tang_no.webp","giao-dien/icon-kihieu/tang_pha_giap.webp","giao-dien/icon-kihieu/tang_thu.webp","giao-dien/icon-kihieu/tang_toc.webp","giao-dien/icon-kihieu/thieu_dot.webp","giao-dien/icon-kihieu/trung_doc.webp","giao-dien/icon-home/linh-thu.webp","giao-dien/linh-thu/linh-thu.webp","giao-dien/linh-thu/manh-thu.webp","giao-dien/bao-vat/bao-vat.webp","giao-dien/bao-vat/manh-bao-vat.webp","giao-dien/tuong/boi_duong.webp","giao-dien/tuong/dot_pha.webp","giao-dien/tuong/ghep_manh.webp","giao-dien/tuong/giang_ho_ky.webp","giao-dien/tuong/kinh_mach.webp","giao-dien/tuong/ky_nang.webp","giao-dien/tuong/manh_vo_hiep.webp","giao-dien/tuong/tang_sao.webp","giao-dien/vat-pham-game/trang-bi/equipment-hat.webp?v=24","giao-dien/vat-pham-game/trang-bi/equipment-armor.webp?v=24","giao-dien/vat-pham-game/trang-bi/equipment-sword.webp?v=24","giao-dien/vat-pham-game/trang-bi/equipment-boots.webp?v=24","giao-dien/vat-pham-game/bang/thoi-vang.webp","giao-dien/vat-pham-game/bang/than-dan.webp","giao-dien/vat-pham-game/bang/tien-dan.webp","giao-dien/vat-pham-game/bang/vien-the-luc.webp","giao-dien/buc-may.webp","giao-dien/thong-bao/khung-thong-bao.webp?v=5","giao-dien/thong-bao/khung-thua.webp","giao-dien/thong-bao/khung-thang.webp","giao-dien/thong-bao/khung-chat.webp?v=1","giao-dien/icon-phuthe/cap-toc-1.webp","giao-dien/icon-phuthe/cap-toc-2.webp","giao-dien/icon-phuthe/cap-toc-3.webp","giao-dien/icon-phuthe/cap-toc-4.webp","giao-dien/icon-phuthe/cap-toc-5.webp","giao-dien/icon-phuthe/cap-toc-6.webp","giao-dien/icon-phuthe/cap-toc-7.webp","giao-dien/icon-phuthe/gia-toc-1.webp","giao-dien/icon-phuthe/gia-toc-2.webp","giao-dien/icon-phuthe/gia-toc-3.webp","giao-dien/icon-phuthe/gia-toc-4.webp","giao-dien/icon-phuthe/gia-toc-5.webp","giao-dien/icon-phuthe/gia-toc-6.webp","giao-dien/icon-phuthe/gia-toc-7.webp","giao-dien/icon-phuthe/ho-thuan-1.webp","giao-dien/icon-phuthe/ho-thuan-2.webp","giao-dien/icon-phuthe/ho-thuan-3.webp","giao-dien/icon-phuthe/ho-thuan-4.webp","giao-dien/icon-phuthe/ho-thuan-5.webp","giao-dien/icon-phuthe/ho-thuan-6.webp","giao-dien/icon-phuthe/ho-thuan-7.webp","giao-dien/icon-phuthe/ho-toc-1.webp","giao-dien/icon-phuthe/ho-toc-2.webp","giao-dien/icon-phuthe/ho-toc-3.webp","giao-dien/icon-phuthe/ho-toc-4.webp","giao-dien/icon-phuthe/ho-toc-5.webp","giao-dien/icon-phuthe/ho-toc-6.webp","giao-dien/icon-phuthe/ho-toc-7.webp","giao-dien/icon-phuthe/than-thuan-1.webp","giao-dien/icon-phuthe/than-thuan-2.webp","giao-dien/icon-phuthe/than-thuan-3.webp","giao-dien/icon-phuthe/than-thuan-4.webp","giao-dien/icon-phuthe/than-thuan-5.webp","giao-dien/icon-phuthe/than-thuan-6.webp","giao-dien/icon-phuthe/than-thuan-7.webp","giao-dien/icon-phuthe/than-toc-1.webp","giao-dien/icon-phuthe/than-toc-2.webp","giao-dien/icon-phuthe/than-toc-3.webp","giao-dien/icon-phuthe/than-toc-4.webp","giao-dien/icon-phuthe/than-toc-5.webp","giao-dien/icon-phuthe/than-toc-6.webp","giao-dien/icon-phuthe/than-toc-7.webp","giao-dien/icon-phuthe/tro-thuan-1.webp","giao-dien/icon-phuthe/tro-thuan-2.webp","giao-dien/icon-phuthe/tro-thuan-3.webp","giao-dien/icon-phuthe/tro-thuan-4.webp","giao-dien/icon-phuthe/tro-thuan-5.webp","giao-dien/icon-phuthe/tro-thuan-6.webp","giao-dien/icon-phuthe/tro-thuan-7.webp","giao-dien/icon-phuthe/tro-toc-1.webp","giao-dien/icon-phuthe/tro-toc-2.webp","giao-dien/icon-phuthe/tro-toc-3.webp","giao-dien/icon-phuthe/tro-toc-4.webp","giao-dien/icon-phuthe/tro-toc-5.webp","giao-dien/icon-phuthe/tro-toc-6.webp","giao-dien/icon-phuthe/tro-toc-7.webp","giao-dien/vat-pham-game/bao-vat/ton-su-ki.webp?v=25","giao-dien/vat-pham-game/bao-vat/ba-vuong-kiem.webp?v=25","giao-dien/vat-pham-game/bao-vat/treasure-09.webp","giao-dien/vat-pham-game/bao-vat/treasure-10.webp","giao-dien/vat-pham-game/bao-vat/treasure-11.webp","giao-dien/vat-pham-game/bao-vat/treasure-12.webp","giao-dien/vat-pham-game/bao-vat/treasure-13.webp","giao-dien/vat-pham-game/bao-vat/treasure-14.webp","giao-dien/vat-pham-game/bao-vat/treasure-15.webp","giao-dien/vat-pham-game/bao-vat/treasure-16.webp","giao-dien/vat-pham-game/bao-vat/treasure-17.webp","giao-dien/vat-pham-game/bao-vat/treasure-18.webp","giao-dien/vat-pham-game/bao-vat/treasure-19.webp","giao-dien/vat-pham-game/bao-vat/treasure-20.webp","giao-dien/vat-pham-game/bao-vat/treasure-21.webp","giao-dien/vat-pham-game/ky-nang/bi-kip.webp","giao-dien/vat-pham-game/ky-nang/vo-tu-thien-thu.webp","giao-dien/vat-pham-game/ky-nang/yeu-quyet.webp","giao-dien/vat-pham-game/bang/thoi-bac.webp","giao-dien/vat-pham-game/bang/thoi-vang.webp","giao-dien/vat-pham-game/bang/gao.webp","giao-dien/vat-pham-game/bang/than-dan.webp","giao-dien/vat-pham-game/bang/tien-dan.webp","giao-dien/vat-pham-game/bang/vien-the-luc.webp","giao-dien/vat-pham-game/bang/dao-tien.webp"];
   try { (window.HEROES || []).forEach(h => { if (h.img) LIST.unshift(h.img); if (h.body) LIST.push(h.body); }); } catch (e) {}
   // Phân ưu tiên theo thư mục: giao diện màn chính + ảnh đại diện tướng nạp ngay (prio 0); nhóm nặng của màn khác (phụ thể 5,9 MB, bảo vật 2 MB, thân tướng) chạy ngầm sau cùng (prio 2)
   const NOW = /^(icon-home|icon-kihieu|icons|trang-bi|vat-pham-game|ky-nang)\//;
@@ -11825,9 +11750,9 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
      → tướng đứng ở khung đó ra trận có hào quang phù đó dưới chân + nhận chỉ số phù (PHU_STATS → window.phuLinhBonus).
    • Ngọc / phù là vật phẩm trong Kho (tên: 'Ngọc HP','Ngọc Công','Ngọc Thủ','Ngọc Tốc','Tiên Phù','Tôn Phù','Vương Phù','Ma Phù','Thánh Phù','Hoàng Phù','Đế Phù')
      → admin cho thưởng loại "Vật phẩm" đúng tên đó. Ngọc trong kho tự chuyển vào kho ngọc (cấp 1) khi mở màn Khảm Ngọc.
-   • Ảnh: vat-pham-game/ngoc/*.webp • vat-pham-game/phu-linh/*.webp • giao-dien/trang-bi/kham-ngoc.webp, linh-phu.webp */
+   • Ảnh: giao-dien/vat-pham-game/ngoc/*.webp • giao-dien/vat-pham-game/phu-linh/*.webp • giao-dien/trang-bi/kham-ngoc.webp, linh-phu.webp */
 (function () {
-  const GEM_DIR = 'vat-pham-game/ngoc/', PHU_DIR = 'vat-pham-game/phu-linh/', UI_DIR = 'giao-dien/trang-bi/';
+  const GEM_DIR = 'giao-dien/vat-pham-game/ngoc/', PHU_DIR = 'giao-dien/vat-pham-game/phu-linh/', UI_DIR = 'giao-dien/trang-bi/';
   const GEM_TYPES = [
     { k: 'hp',  name: 'Ngọc HP',   stat: 'hp',  label: 'HP',   base: 1000, img: 'ngo-hp',   alt: 'ngoc-hp' },
     { k: 'atk', name: 'Ngọc Công', stat: 'atk', label: 'Công', base: 300,  img: 'ngoc-cong' },
@@ -11980,6 +11905,29 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
 .phu-de .in{border:7px solid currentColor;box-shadow:0 0 22px currentColor,inset 0 0 22px currentColor;animation:phuDe 4s linear infinite}
 .phu-de .in2{inset:14%;border-radius:50%;border:4px solid currentColor;box-shadow:0 0 14px currentColor;animation:phuDe 4s linear infinite -2s}
 @keyframes phuDe{${de}}
+/* ----- BẢN ĐẬM + SẮC NÉT: viền cứng (không mờ dần), màu đặc, ánh sáng toả mạnh — ghi đè các luật phía trên ----- */
+.bf-phu{width:calc(var(--dep,.85)*140px);height:calc(var(--dep,.85)*140px);mix-blend-mode:normal;filter:saturate(1.35) brightness(1.2) drop-shadow(0 0 2px var(--c,#fff)) drop-shadow(0 0 10px var(--c,#fff))}
+.phu-tien{--c:#3b82f6}
+.phu-tien .in{background:radial-gradient(circle,transparent 0 33%,#dbeafe 34% 37%,#2563eb 37% 55%,#60a5fa 55% 59%,transparent 60%)}
+.phu-tien .in2{background:radial-gradient(circle,transparent 0 40%,#fff 41% 44%,transparent 45% 62%,#bfdbfe 63% 66%,transparent 67%)}
+.phu-ton{--c:#ef4444}
+.phu-ton .in{background:radial-gradient(circle,rgba(220,38,38,.6) 0 30%,#fecaca 31% 34%,#dc2626 34% 56%,#ef4444 56% 60%,transparent 61%)}
+.phu-ton .in2{background:radial-gradient(circle,transparent 0 56%,#fca5a5 57% 61%,transparent 63%)}
+.phu-vuong{--c:#fb923c}
+.phu-vuong .in{background:repeating-conic-gradient(#fdba74 0 7deg,transparent 7deg 18deg);-webkit-mask:radial-gradient(circle,transparent 0 32%,#000 33% 66%,transparent 67%);mask:radial-gradient(circle,transparent 0 32%,#000 33% 66%,transparent 67%)}
+.phu-vuong .in2{background:radial-gradient(circle,transparent 0 40%,#fff7ed 41% 44%,#f97316 44% 62%,#fdba74 62% 66%,transparent 67%)}
+.phu-ma{--c:#a855f7}
+.phu-ma .in{background:radial-gradient(circle,rgba(10,0,25,.96) 0 34%,#d8b4fe 35% 38%,#2e1065 38% 58%,#a855f7 58% 62%,transparent 63%)}
+.phu-ma .f{filter:brightness(1.35) saturate(1.3)}
+.phu-thanh{--c:#facc15}
+.phu-thanh .in{background:radial-gradient(circle,transparent 0 30%,#fffbeb 31% 34%,#facc15 34% 56%,#fde047 56% 60%,transparent 61%)}
+.phu-hoang{--c:#22c55e}
+.phu-hoang .in{background:radial-gradient(circle,transparent 0 32%,#dcfce7 33% 36%,#16a34a 36% 56%,#4ade80 56% 60%,transparent 61%);animation:phuHg 2.4s ease-in-out infinite}
+@keyframes phuHg{0%,100%{opacity:.8}50%{opacity:1}}
+.phu-hoang .s{width:17%;height:17%;margin:-8.5% 0 0 -8.5%}
+.phu-de{--c:#f0abfc}
+.phu-de .in{border-width:9px;box-shadow:0 0 14px currentColor,0 0 28px currentColor,inset 0 0 18px currentColor}
+.phu-de .in2{border-width:6px;box-shadow:0 0 12px currentColor,0 0 22px currentColor}
 `;
     document.head.appendChild(st);
   }
@@ -12149,6 +12097,7 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
     } catch (e) {}
     st.innerHTML = auraHtml(k) + `<div style="position:absolute;z-index:2;left:50%;top:36%;width:0;height:0;transform:scale(1.5);transform-origin:50% 0;pointer-events:none">${sp}</div>`;
     const g = st.querySelector('.bf-phu'); if (g) { g.style.top = '79%'; g.style.width = g.style.height = '170px'; }
+    { const sp1 = st.querySelector('.hero-seq'); let tries = 0; const run = () => { if (window._epK !== k || !g || !g.isConnected) return; if (!phuAlign(g, sp1, 1.5) && tries++ < 12) setTimeout(run, 250); }; if (sp1) run(); }   // căn tâm phù vào chân tướng (khung phóng 1.5×)
     PHU_TYPES.forEach(x => { const c = $('ep-d-' + x.k); if (c) c.classList.toggle('sel', x.k === k); });
     const f = $('ep-fx'); if (f) f.innerHTML = `<b style="color:${p.col}">${p.name}</b>: ${p.fx}<br><small>${phuStatsTxt(k)}</small>`;
   };
@@ -12199,6 +12148,47 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
     else if (k === 'thanh') inner = '<i class="in"></i>';
     return `<div class="bf-phu phu-${k}" data-p="${k}">${inner}</div>`;
   }
+  /* ----- CĂN TÂM HÀO QUANG VÀO CHÂN TƯỚNG: người trong khung ảnh thường lệch khỏi giữa khung → đo vị trí chân (tâm các điểm ảnh thấp nhất) rồi dịch hào quang theo ----- */
+  const FOOT = {};   // 'url|n' → tỉ lệ vị trí chân trong khung (0..1, ảnh chưa lật); null = đang tải
+  function footFx(url, n) {
+    const key = url + '|' + n; if (key in FOOT) return FOOT[key];
+    FOOT[key] = null;
+    const im = new Image();
+    im.onload = () => {
+      try {
+        const cw = im.naturalWidth / n, ch = im.naturalHeight, W = Math.max(1, Math.ceil(cw)), cv = document.createElement('canvas'); cv.width = W; cv.height = ch;
+        const cx = cv.getContext('2d', { willReadFrequently: true }), res = [];
+        [0, .25, .5, .75].map(t => Math.min(n - 1, Math.floor(t * n))).forEach(fi => {
+          cx.clearRect(0, 0, W, ch); cx.drawImage(im, fi * cw, 0, cw, ch, 0, 0, W, ch);
+          const d = cx.getImageData(0, 0, W, ch).data; let y0 = -1, y1 = -1;
+          for (let y = 0; y < ch && y0 < 0; y++) for (let x = 0; x < W; x++) if (d[(y * W + x) * 4 + 3] > 60) { y0 = y; break; }
+          for (let y = ch - 1; y >= 0 && y1 < 0; y--) for (let x = 0; x < W; x++) if (d[(y * W + x) * 4 + 3] > 60) { y1 = y; break; }
+          if (y0 < 0) return;
+          const lo = Math.max(y0, y1 - Math.max(4, Math.round((y1 - y0) * 0.07)));
+          let sx = 0, c = 0;
+          for (let y = lo; y <= y1; y++) for (let x = 0; x < W; x++) if (d[(y * W + x) * 4 + 3] > 60) { sx += x; c++; }
+          if (c) res.push(sx / c / W);
+        });
+        FOOT[key] = res.length ? res.reduce((a, b) => a + b, 0) / res.length : 0.5;
+      } catch (e) { FOOT[key] = 0.5; }   // ảnh bị chặn đọc điểm ảnh (mở bằng file://) → giữ giữa khung
+    };
+    im.onerror = () => { FOOT[key] = 0.5; };
+    im.src = url;
+    return null;
+  }
+  function phuAlign(aura, sp, sc) {   // sp = phần tử .hero-seq (dáng đứng); sc = hệ số phóng to của khung chứa. Trả true khi đã căn xong
+    try {
+      if (!aura || !sp || !sp.style.backgroundImage) return true;
+      const m = /url\(["']?(.*?)["']?\)/.exec(sp.style.backgroundImage); if (!m) return true;
+      const w = parseFloat(sp.style.width), bs = parseFloat(sp.style.backgroundSize), n = Math.round(bs / w); if (!w || !n) return true;
+      const fx = footFx(m[1], n); if (fx == null) return false;
+      const flip = /scaleX\(-1\)/.test(sp.style.transform || '');
+      const dx = (fx - 0.5) * w * (flip ? -1 : 1) * (sc || 1);
+      aura.style.left = 'calc(50% + ' + dx.toFixed(1) + 'px)';
+      return true;
+    } catch (e) { return true; }
+  }
+  const alignUnit = el => { const a = el.querySelector('.bf-phu'), sp = el.querySelector('.bf-sprite .hero-seq'); if (a && sp) phuAlign(a, sp, 1); };
   /* ----- Chế độ DEMO chiêu (màn xem thử có nút Trước / Sau / Phe / Chậm / Ulti): thêm nút "Phù: ..." đổi qua lại 7 loại phù,
      hào quang gắn lên tướng đang xem (không cần có phù). Nhận diện màn demo = trong battle-overlay có nút bắt đầu bằng "Phe:". ----- */
   window._phuDemo = null;
@@ -12259,6 +12249,7 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
         if (cur && (!k || cur.dataset.p !== k)) cur.remove();
         if (k && !u.el.querySelector('.bf-phu')) phuHost(u.el).insertAdjacentHTML('afterbegin', auraHtml(k));
       });
+      ov.querySelectorAll('.bf-unit').forEach(alignUnit);   // căn tâm phù vào chân từng tướng (kể cả khi tướng đổi hướng)
     } catch (e) {}
   }, 500);
 })();

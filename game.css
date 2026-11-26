@@ -819,7 +819,7 @@
 /* HIỆU ỨNG TUYỆT KỸ: hoa-man-lau
    (tách từ index.html cũ — style) */
 
-    /* Bướm nay là ảnh chuỗi khung (SEQ.hml* trong js/heroes/hero-seq.js) – không còn emoji */
+    /* Quạt (SEQ.hmlFan) là 1 ảnh tĩnh xoay bằng Web Animations trong fanUlt – không cần CSS riêng */
 
 /* === pham-dao === */
 /* HIỆU ỨNG TUYỆT KỸ: pham-dao (Phạm Dao — thay thế Kiều Phong)
@@ -1659,22 +1659,6 @@ img.gi-g{height:1.15em;width:auto;vertical-align:-.2em;display:inline-block}.bm-
 .bm-info img.gi,#mail-note img.gi{width:auto;height:1.3em;vertical-align:-.25em}
 .qs-gifts img.gi,.qs-gifts img.gi-g{width:auto;height:30px;vertical-align:middle}
 
-
-/* === CỔNG CHIÊU MỘ (recGate trong game.js) === */
-#rc-gate{position:fixed;inset:0;z-index:9000;background:rgba(5,2,20,.88);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .25s}
-#rc-gate.fade{opacity:0}
-.rcg-box{position:relative}
-.rcg-seq{position:absolute;left:0;top:0;pointer-events:none;filter:drop-shadow(0 0 7px #a855f7)}
-.rcg-hero{position:absolute;left:50%;top:56%;width:38%;transform:translate(-50%,-50%) scale(.3);opacity:0;pointer-events:none;text-align:center;cursor:pointer;transition:transform .5s cubic-bezier(.2,1.4,.4,1),opacity .4s}
-.rcg-hero.on{opacity:1;transform:translate(-50%,-50%) scale(1);pointer-events:auto}
-.rcg-hero.out{opacity:0;transform:translate(-50%,-64%) scale(1.3);pointer-events:none;transition:transform .3s ease-in,opacity .3s}
-.rcg-art{aspect-ratio:1;border-radius:12px;overflow:hidden;border:2px solid #fde047;box-shadow:0 0 18px #c084fc;display:flex;align-items:center;justify-content:center;font-size:60px;background:#1b1040}
-.rcg-art .hero-img{width:100%;height:100%;border:0;border-radius:0}
-.rcg-n{color:#fff;font-weight:900;font-size:13px;margin-top:4px;text-shadow:0 1px 3px #000}
-.rcg-c{color:#fde047;font-size:12px;font-weight:800;text-shadow:0 1px 3px #000}
-.rcg-hint{margin-top:10px;color:#e9d5ff;font-size:14px;opacity:0;transition:opacity .4s}
-.rcg-hint.on{opacity:1;animation:rcgBlink 1.2s infinite}
-@keyframes rcgBlink{50%{opacity:.4}}
 
 /* === 2.5D BATTLE VIEW (thêm mới) ===
    Camera nghiêng: tướng đứng thấp (gần camera) to hơn, có bóng elip dưới chân, sắp z-index theo chiều sâu.
