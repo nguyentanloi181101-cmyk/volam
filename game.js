@@ -1963,6 +1963,22 @@ const SEQ_IDLE = HERO_T.seqIdle;
 // Ví dụ tướng id 6 (Hoa Mãn Lâu) thấy to hơn các tướng khác thì ghi 6: 0.9. Hệ số chung HERO_SCALE nhân cho TẤT CẢ tướng.
 // Chiều cao tham chiếu: Âu Cơ / Bắc Cái / Đông Tà / Tây Độc / Nam Đế = 104px (khung ~201px cao), Thủy Long = 106px (khung 205px cao).
 const HERO_SIZE_ADJ = {}, HERO_SCALE = 1;
+
+/* === DÁNG ĐỨNG BẰNG RIG XƯƠNG (JSON) CHO TƯỚNG ===
+   Tướng nào có tên trong HERO_RIG thì dáng đứng yên trong trận / thẻ tướng / Tỷ Võ được vẽ từ file rig xương (bone-rig-2.5d) thay cho chuỗi ảnh idle.
+   Dùng chung bộ phát ttRig của thần thú (khối "THẦN THÚ: HOẠT HÌNH BẰNG RIG XƯƠNG" ở cuối file). Rig lỗi / thiếu file → TỰ ĐỘNG quay về chuỗi ảnh idle cũ (SEQ_IDLE).
+   Mỗi tướng:  id → { slug: khoá riêng của rig (đừng trùng slug thần thú),  path: đường dẫn file KHÔNG đuôi — 1 chuỗi hoặc MẢNG nhiều đường dẫn thử lần lượt (mỗi cái nạp path + '.js', không có thì path + '.json'),
+                      alias: các tên khoá khác mà file .js có thể gán (rig-to-js lấy khoá theo TÊN FILE nên hay lệch) — game chấp nhận cả những khoá này,
+                      h: chiều cao hiển thị (px) — thấy to/nhỏ hơn các tướng khác thì sửa số này,  ar: tỉ lệ rộng/cao của khung (chỉ ảnh hưởng căn giữa),
+                      speed: nhân tốc độ lắc riêng rig này (1 = như file, 2 = nhanh gấp đôi),  drop: hạ chân xuống (0.05 = 5% chiều cao),  face: 'R' nếu rig gốc quay mặt sang PHẢI (mặc định rig quay TRÁI như mọi chuỗi ảnh) }
+   File .js của rig: (window.TT_RIGS = window.TT_RIGS || {})['<slug>'] = { ...JSON xuất từ trình dựng... };   Chỉnh tốc độ lắc chung: TT_RIG_SPEED • giảm giật máy yếu: TT_RIG_FPS (ở khối thần thú). */
+const HERO_RIG = {
+  28: { slug: 'hero-ngo-khong', path: ['heros/ngo-khong/ngo-khong', 'heros/ngo-khong/ngo-khong-rig'], alias: ['ng-khong', 'ngo-khong'], h: 110, ar: 1.05, drop: 0 },   // Tôn Ngộ Không (idle cũ: nkIdle, vẫn giữ làm dự phòng)
+  23: { slug: 'hero-thiet-phien', path: ['heros/thiet-phien/thiet-phien', 'heros/thiet-phien/thiet-phien-rig'], alias: ['thiet-phien', 'thiet-phien-rig', 'thietphien'], h: 110, ar: 1.05, drop: 0, speed: 2 }   // Thiết Phiến (rig xương như Ngộ Không; idle cũ tpIdle giữ làm dự phòng)
+};
+function heroRigOf(id) {   // cấu hình rig của tướng nếu DÙNG ĐƯỢC (có khai báo + rig chưa lỗi + có chuỗi idle dự phòng), ngược lại null
+  try { const c = HERO_RIG[id]; return (c && SEQ_IDLE[id] && typeof ttRigLoad === 'function' && ttRigUsable(c.slug)) ? c : null; } catch (e) { return null; }
+}
 const PD_IDLE_H = 112;   // Phạm Dao: chiều cao khung đứng yên (px). Trước dùng bodyH=84 nên nhỏ hơn hẳn các tướng khác (khung 280×264 như Độc Cô/Hoa Mãn Lâu ≈ 120–140)
 Object.keys(SEQ_IDLE).forEach(id => { const c = SEQ_IDLE[id]; if (c && !c.sized) { c.h = Math.round(c.h * HERO_SCALE * (HERO_SIZE_ADJ[id] || 1)); c.sized = 1; } });
 
@@ -1973,6 +1989,7 @@ GP.onStart(() => {
   const bySlug = {}; (window.HERO_META || []).forEach(m => { bySlug[m.id] = Object.keys(m.sprites || {}).map(k => SEQ[k] && SEQ[k].src); });
   Object.keys(bySlug).forEach(id => GP.add(bySlug[id], own.has(+id) ? 1 : 2));
   Object.keys(SEQ).forEach(k => GP.add(SEQ[k].src, 2));   // lính phụ + sprite còn lại
+  try { Object.keys(HERO_RIG).forEach(id => ttRigLoad(HERO_RIG[id].slug)); } catch (e) {}   // nạp sẵn rig tướng để vào trận không bị trống khung lúc đầu
 });
 
 // Đổi mili-giây theo tốc độ trận (cùng quy tắc với sleep của engine) để khung hình không lệch nhịp khi tua nhanh
@@ -1983,7 +2000,17 @@ const seqT = ms => (typeof battleFast !== 'undefined' && battleFast) ? 0 : ms * 
 const seqFlip = (s, side) => (side === 'hero') !== (s.face === 'R');
 // HTML dáng đứng (thay ảnh thân tĩnh) — gọi từ applyRole trong battle/engine.js
 // Ảnh gốc các chuỗi khung quay mặt sang TRÁI: đội ta (bên trái) phải lật ngang để nhìn sang phải, đội địch (bên phải) giữ nguyên → 2 đội nhìn vào nhau
-function seqIdleHTML(id, hb, side) {
+function seqIdleHTML(id, hb, side) {   // ưu tiên rig xương (JSON) nếu tướng có trong HERO_RIG, không thì chuỗi ảnh như cũ
+  const rg = heroRigOf(id);
+  return rg ? heroRigIdleHTML(id, hb, side, rg) : seqIdleHTMLSeq(id, hb, side);
+}
+function heroRigIdleHTML(id, hb, side, rg) {   // cùng hình học với dáng chuỗi ảnh (cùng .hero-seq, cùng margin) → mọi chỗ căn chân / ẩn khi ulti / hào quang phù vẫn chạy
+  const h = Math.round(rg.h), w = Math.round(h * (rg.ar || 1)), lift = h - ((hb && hb.bodyH) || 76) - Math.round((rg.drop || 0) * h);
+  ttRigLoad(rg.slug); ttRigKick();
+  return '<div class="hero-seq hero-rig" data-hid="' + id + '" data-side="' + side + '" style="width:' + w + 'px;height:' + h + 'px;margin:' + (-lift) + 'px 0 0 ' + (-w / 2) + 'px;' + (seqFlip({ face: rg.face }, side) ? 'transform:scaleX(-1);' : '') + 'animation:none">' +
+    '<canvas data-rig="' + rg.slug + '" data-hero="' + id + '" style="display:block;width:100%;height:100%;object-fit:contain;object-position:50% 100%;pointer-events:none"></canvas></div>';
+}
+function seqIdleHTMLSeq(id, hb, side) {
   const c = SEQ_IDLE[id]; if (!c) return '';
   const s = SEQ[c.sheet], h = c.h, w = Math.round(h * s.cw / s.ch), lift = h - ((hb && hb.bodyH) || 76) - Math.round((s.drop || 0) * h);
   return '<div class="hero-seq" style="width:' + w + 'px;height:' + h + 'px;margin:' + (-lift) + 'px 0 0 ' + (-w / 2) + 'px;' + (seqFlip(s, side) ? 'transform:scaleX(-1);' : '') + 'background-image:url(' + s.src + ');background-size:' + (w * s.n) + 'px ' + h + 'px;--end:' + (-w * s.n) + 'px;--ms:' + c.ms + 'ms;animation:seqRun ' + c.ms + 'ms steps(' + s.n + ') infinite"></div>';
@@ -2006,7 +2033,14 @@ function seqOverlay(u, s, w) {
 
 // ẢNH ĐẠI DIỆN ĐỘNG: dáng đứng (SEQ_IDLE) dùng làm người đại diện ở Tỷ Võ + thẻ tướng trang chủ. Kích thước theo % nên co giãn theo khung chứa.
 // w: số px hoặc chuỗi CSS (vd '150%'). Trả '' nếu tướng chưa có chuỗi đứng → nơi gọi dùng ảnh tĩnh như cũ.
-function seqAvatarHTML(id, w, extraStyle) {
+function seqAvatarHTML(id, w, extraStyle) {   // ưu tiên rig xương (JSON) nếu tướng có trong HERO_RIG
+  const rg = heroRigOf(id), c = SEQ_IDLE[id];
+  if (!rg || !c) return seqAvatarSeqHTML(id, w, extraStyle);
+  const s = SEQ[c.sheet]; ttRigLoad(rg.slug); ttRigKick();
+  return '<div class="seq-av hero-rig-av" data-hid="' + id + '" data-w="' + w + '" data-ex="' + encodeURIComponent(extraStyle || '') + '" style="width:' + (typeof w === 'number' ? w + 'px' : w) + ';aspect-ratio:' + s.cw + '/' + s.ch + ';animation:none;' + (extraStyle || '') + '">' +
+    '<canvas data-rig="' + rg.slug + '" data-hero="' + id + '" style="display:block;width:100%;height:100%;object-fit:contain;object-position:50% 100%;pointer-events:none"></canvas></div>';
+}
+function seqAvatarSeqHTML(id, w, extraStyle) {
   const c = SEQ_IDLE[id]; if (!c) return '';
   const s = SEQ[c.sheet];
   return '<div class="seq-av" style="width:' + (typeof w === 'number' ? w + 'px' : w) + ';aspect-ratio:' + s.cw + '/' + s.ch + ';background-image:url(' + s.src + ');background-size:' + (s.n * 100) + '% 100%;--ms:' + c.ms + 'ms;--stp:' + (s.n - 1) + ';' + (extraStyle || '') + '"></div>';
@@ -9846,8 +9880,192 @@ ttWarm.d = {};
 TT_SEQ.forEach(sl => GP.add((() => { const a = []; for (let i = 0; i < ttN(sl); i++) a.push(ttFrame(sl, i)); return a; })(), 2));   // nạp ngầm; loài đang xem được nâng lên prio 0 qua ttWarm
 let ttSeqI = 0;
 setInterval(() => { const l = document.querySelectorAll('img[data-seq]'); if (!l.length) return; ttSeqI = (ttSeqI + 1) % 400; l.forEach(im => { im.src = ttFrame(im.dataset.seq, ttSeqI); }); }, TT_SEQ_MS);
+/* === THẦN THÚ: HOẠT HÌNH BẰNG RIG XƯƠNG (JSON) thay cho chuỗi ảnh — dùng cho MỌI thần thú ===
+   Mỗi thần thú 1 file rig đặt ở giao-dien/bang-hoi/thanthu/rig/<slug>.js (slug theo TT_SLUG: bao-tuyet, long-quy, ky-lan, tien-loc...).
+   File .js tạo từ JSON xuất ra của trình dựng "bone-rig-2.5d" bằng công cụ rig-to-js.html (mở thẳng file, không cần cài gì), nội dung: (window.TT_RIGS = window.TT_RIGS || {})['<slug>'] = {...JSON...};
+   Game tự nạp file đó bằng thẻ <script> (chạy được cả khi mở game bằng file://). Nếu mở qua host (http/https) mà không có .js thì thử tải <slug>.json. Thần thú nào chưa có rig → dùng chuỗi ảnh / ảnh tĩnh như cũ.
+   • Layer có mesh = lưới tam giác bị xương kéo (skinning); layer không mesh (bind null) vẽ tĩnh. Thứ tự vẽ = thứ tự trong JSON.
+   • Mỗi xương lắc theo pose.swing: góc = offset + amp × sin(speed × t + phase) (đảo dấu phần lắc nếu reverse) — đơn vị độ, t tính bằng giây.
+   • Mỗi thần thú dựng 1 lần/khung hình vào canvas chung, rồi chép sang mọi <canvas data-rig> đang hiện (thẻ, danh sách, sân đấu, boss…).
+   Chỉnh nhanh: TT_RIG_ON (tắt hết) • TT_RIG_SPEED (nhân tốc độ lắc: 0.5 chậm một nửa, 2 nhanh gấp đôi) • TT_RIG_FPS • TT_RIG_VER (tăng khi thay file rig mới để trình duyệt tải lại). Hướng mặt vẫn theo TT_FACE_LEFT. */
+const TT_RIG_ON = true, TT_RIG_DIR = 'giao-dien/bang-hoi/thanthu/rig/', TT_RIG_VER = 1, TT_RIG_FPS = 30, TT_RIG_SPEED = 1;
+const TT_RIG_PATH = {};   // slug → đường dẫn file rig (không đuôi) cho rig KHÔNG nằm trong TT_RIG_DIR: rig của tướng (khai ở HERO_RIG, hero-seq.js)
+const TT_RIG_ALIAS = {};   // slug → các khoá thay thế trong window.TT_RIGS
+try { Object.keys(HERO_RIG).forEach(id => { TT_RIG_PATH[HERO_RIG[id].slug] = HERO_RIG[id].path; TT_RIG_ALIAS[HERO_RIG[id].slug] = HERO_RIG[id].alias || []; }); } catch (e) {}
+const ttRigs = {}, ttRigLoop = { raf: 0, empty: 0 };   // ttRigs[slug] = { st: 1 đang tải • 2 sẵn sàng • 3 lỗi/không có, last, b, L, box, S, master, mctx }
+const ttRigDeg = Math.PI / 180;
+function ttRigShape(shape, x) {
+  const s = Math.sin(x);
+  if (shape === 'tri' || shape === 'triangle') return Math.asin(s) * 2 / Math.PI;
+  if (shape === 'square') return s >= 0 ? 1 : -1;
+  if (shape === 'saw') return ((x / (2 * Math.PI)) % 1 + 1) % 1 * 2 - 1;
+  return s;   // 'sin' (mặc định)
+}
+// Ma trận xương: [a,b,c,d,e,f] (kiểu canvas). rot tính theo độ.
+function ttRigMul(p, m) { return [p[0] * m[0] + p[2] * m[1], p[1] * m[0] + p[3] * m[1], p[0] * m[2] + p[2] * m[3], p[1] * m[2] + p[3] * m[3], p[0] * m[4] + p[2] * m[5] + p[4], p[1] * m[4] + p[3] * m[5] + p[5]]; }
+function ttRigLocal(x, y, deg) { const c = Math.cos(deg * ttRigDeg), s = Math.sin(deg * ttRigDeg); return [c, s, -s, c, x, y]; }
+function ttRigInv(m) { const det = m[0] * m[3] - m[1] * m[2]; return [m[3] / det, -m[1] / det, -m[2] / det, m[0] / det, (m[2] * m[5] - m[3] * m[4]) / det, (m[1] * m[4] - m[0] * m[5]) / det]; }
+// Tư thế xương tại thời điểm t (giây): trả về mảng ma trận thế giới theo chỉ số xương. t = null → tư thế gốc (không lắc)
+function ttRigPose(R, t) {
+  const W = new Array(R.bones.length);
+  R.bones.forEach((b, i) => {
+    const p = (R.pose && R.pose[i]) || {}, sw = p.swing;
+    let rot = b.rotation || 0, px = 0, py = 0;
+    if (t !== null) {
+      rot += p.rotation || 0; px = p.x || 0; py = p.y || 0;
+      if (sw && sw.enabled) rot += (sw.offset || 0) + (sw.reverse ? -1 : 1) * (sw.amp || 0) * ttRigShape(sw.shape, (sw.speed || 0) * TT_RIG_SPEED * (R.spdMul || 1) * t + (sw.phase || 0) * ttRigDeg);
+    }
+    const loc = ttRigLocal(b.x + px, b.y + py, rot), par = b.parent == null ? null : R.idx[b.parent];
+    W[i] = par == null ? loc : ttRigMul(W[par], loc);
+  });
+  return W;
+}
+function ttRigSkin(m, v, W) {
+  let x = 0, y = 0; const inf = m.inf[v];
+  if (!inf.length) return [m.v[v * 2], m.v[v * 2 + 1]];
+  for (let k = 0; k < inf.length; k++) { const [bi, w, bx, by] = inf[k], M = W[bi]; x += w * (M[0] * bx + M[2] * by + M[4]); y += w * (M[1] * bx + M[3] * by + M[5]); }
+  return [x, y];
+}
+// Lấy dữ liệu rig của 1 thần thú: window.TT_RIGS[slug] (nạp bằng <script>) → không có và đang chạy qua host thì tải <slug>.json
+function ttRigData(sl) {
+  const D = (window.TT_RIGS = window.TT_RIGS || {});
+  const al = [sl].concat(TT_RIG_ALIAS[sl] || []), pick = () => { for (const k of al) if (D[k]) return D[k]; return null; };
+  if (pick()) return Promise.resolve(pick());
+  const q = '?v=' + TT_RIG_VER, bases = [].concat(TT_RIG_PATH[sl] || (TT_RIG_DIR + sl));
+  const one = base => new Promise((ok, no) => {
+    const s = document.createElement('script'); s.src = base + '.js' + q;
+    s.onload = () => { const r = pick(); r ? ok(r) : no(new Error('file ' + base + '.js nạp được nhưng KHÔNG gán window.TT_RIGS["' + sl + '"] (các khoá có trong file: ' + Object.keys(D).join(', ') + ')')); };
+    s.onerror = () => { s.remove(); no(new Error('không có ' + base + '.js')); };
+    document.head.appendChild(s);
+  }).catch(e => (location.protocol === 'file:' || typeof fetch !== 'function') ? Promise.reject(e) : fetch(base + '.json' + q).then(r => { if (!r.ok) throw e; return r.json(); }));
+  let p = Promise.reject(new Error('không có đường dẫn rig'));
+  bases.forEach(b => { p = p.catch(() => one(b)); });   // thử lần lượt từng đường dẫn, cái nào nạp được thì dùng
+  return p;
+}
+function ttRigLoad(sl) {
+  if (ttRigs[sl]) return; const st = ttRigs[sl] = { st: 1, last: 0 };
+  ttRigData(sl).then(R => {
+    if (!R || !Array.isArray(R.bones) || !Array.isArray(R.layers)) throw new Error('rig sai định dạng');
+    R.idx = {}; R.bones.forEach((b, i) => { R.idx[b.name] = i; });
+    try { const hc = Object.keys(HERO_RIG).map(k => HERO_RIG[k]).find(c => c.slug === sl); R.spdMul = (hc && hc.speed) || 1; } catch (e) { R.spdMul = 1; }   // speed riêng từng rig tướng (HERO_RIG), mặc định 1
+    const rest = ttRigPose(R, null), inv = rest.map(ttRigInv), imgs = new Map(), loads = [];
+    const L = R.layers.map(l => {
+      const o = { l, vis: l.visible !== false, img: null, mesh: null };
+      if (l.data) { let im = imgs.get(l.data); if (!im) { im = new Image(); imgs.set(l.data, im); loads.push(new Promise((ok, no) => { im.onload = ok; im.onerror = () => no(new Error('ảnh rig lỗi')); })); im.src = l.data; } o.img = im; }
+      const m = l.mesh;
+      if (m && m.vertices && m.weights) {   // gắn mỗi đỉnh với các xương ảnh hưởng: toạ độ đỉnh trong hệ xương lúc nghỉ (bind)
+        const n = m.vertices.length / 2, inf = new Array(n);
+        for (let v = 0; v < n; v++) {
+          const x = m.vertices[v * 2], y = m.vertices[v * 2 + 1];
+          inf[v] = (m.weights[v] || []).map(([bi, w]) => { const iv = inv[bi]; return [bi, w, iv[0] * x + iv[2] * y + iv[4], iv[1] * x + iv[3] * y + iv[5]]; });
+        }
+        o.mesh = { n, inf, uv: m.uvs, tri: m.triangles, v: m.vertices };
+      }
+      return o;
+    });
+    return Promise.all(loads).then(() => {
+      // Khung cắt: gộp vùng có màu của mọi layer trong nhiều tư thế lắc (quét 24 giây) để thần thú không bị cắt khi lắc
+      const al = new Map(), alpha = img => { let a = al.get(img); if (!a) { const c = document.createElement('canvas'); c.width = img.naturalWidth; c.height = img.naturalHeight; const g = c.getContext('2d', { willReadFrequently: true }); g.drawImage(img, 0, 0); a = { w: c.width, h: c.height, d: g.getImageData(0, 0, c.width, c.height).data }; al.set(img, a); } return a; };
+      const solid = (o, u, v) => {   // điểm (u,v) trên ảnh có pixel đặc không (lưới thưa)
+        const a = alpha(o.img), px = Math.round(u * a.w), py = Math.round(v * a.h);
+        for (let y = Math.max(0, py - 4); y <= Math.min(a.h - 1, py + 4); y += 2) for (let x = Math.max(0, px - 4); x <= Math.min(a.w - 1, px + 4); x += 2) if (a.d[(y * a.w + x) * 4 + 3] > 40) return true;
+        return false;
+      };
+      let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
+      const add = (x, y) => { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; };
+      L.forEach(o => {
+        if (!o.vis || !o.img) return;
+        if (!o.mesh) {   // layer tĩnh: lấy khung chữ nhật của vùng có màu
+          const l = o.l, a = alpha(o.img); let ax0 = a.w, ay0 = a.h, ax1 = -1, ay1 = -1;
+          for (let y = 0; y < a.h; y++) for (let x = 0; x < a.w; x++) if (a.d[(y * a.w + x) * 4 + 3] > 40) { if (x < ax0) ax0 = x; if (x > ax1) ax1 = x; if (y < ay0) ay0 = y; if (y > ay1) ay1 = y; }
+          if (ax1 >= 0) { const sx = (l.width || a.w) / a.w, sy = (l.height || a.h) / a.h; add(l.x + ax0 * sx, l.y + ay0 * sy); add(l.x + (ax1 + 1) * sx, l.y + (ay1 + 1) * sy); }
+          return;
+        }
+        o.solid = Array.from(new Set(o.mesh.tri)).filter(v => solid(o, o.mesh.uv[v * 2], o.mesh.uv[v * 2 + 1]));
+      });
+      for (let t = 0; t < 24; t += 0.2) {
+        const W = ttRigPose(R, t);
+        L.forEach(o => { if (!o.vis || !o.mesh || !o.solid) return; o.solid.forEach(v => { const p = ttRigSkin(o.mesh, v, W); add(p[0], p[1]); }); });
+      }
+      if (x1 < x0) throw new Error('rig rỗng');
+      const pad = 3; x0 -= pad; y0 -= pad; x1 += pad; y1 += pad;
+      const bw = x1 - x0, bh = y1 - y0, S = Math.max(1, Math.min(2.5, 320 / Math.max(bw, bh)));
+      const mc = document.createElement('canvas'); mc.width = Math.ceil(bw * S); mc.height = Math.ceil(bh * S);
+      Object.assign(st, { b: R, L, box: { x: x0, y: y0, w: bw, h: bh }, S, master: mc, mctx: mc.getContext('2d'), st: 2 });
+      ttRigKick();
+    });
+  }).catch(e => { console.warn('[ttRig] ' + sl + ': không dùng được rig → dùng ảnh cũ (' + (e && e.message || e) + ')'); st.st = 3; ttRigFallback(sl); });
+}
+// Vẽ 1 tư thế vào canvas chung của thần thú
+function ttRigRender(r, t) {
+  const g = r.mctx, B = r.box, S = r.S, W = ttRigPose(r.b, t);
+  g.setTransform(1, 0, 0, 1, 0, 0); g.clearRect(0, 0, r.master.width, r.master.height);
+  g.setTransform(S, 0, 0, S, -B.x * S, -B.y * S);
+  r.L.forEach(o => {
+    if (!o.vis || !o.img) return;
+    const im = o.img, iw = im.naturalWidth, ih = im.naturalHeight;
+    if (!o.mesh) { g.drawImage(im, o.l.x, o.l.y, o.l.width || iw, o.l.height || ih); return; }
+    const m = o.mesh, P = new Array(m.n);
+    for (let v = 0; v < m.n; v++) P[v] = ttRigSkin(m, v, W);
+    const tr = m.tri;
+    for (let i = 0; i < tr.length; i += 3) {
+      const a = tr[i], b = tr[i + 1], c = tr[i + 2], d0 = P[a], d1 = P[b], d2 = P[c];
+      const s0x = m.uv[a * 2] * iw, s0y = m.uv[a * 2 + 1] * ih, s1x = m.uv[b * 2] * iw, s1y = m.uv[b * 2 + 1] * ih, s2x = m.uv[c * 2] * iw, s2y = m.uv[c * 2 + 1] * ih;
+      const ux = s1x - s0x, uy = s1y - s0y, vx = s2x - s0x, vy = s2y - s0y, det = ux * vy - vx * uy; if (Math.abs(det) < 1e-9) continue;
+      const q1x = d1[0] - d0[0], q1y = d1[1] - d0[1], q2x = d2[0] - d0[0], q2y = d2[1] - d0[1];
+      const A = (q1x * vy - q2x * uy) / det, C = (q2x * ux - q1x * vx) / det, Bb = (q1y * vy - q2y * uy) / det, D = (q2y * ux - q1y * vx) / det;
+      const E = d0[0] - A * s0x - C * s0y, F = d0[1] - Bb * s0x - D * s0y;
+      const cx = (d0[0] + d1[0] + d2[0]) / 3, cy = (d0[1] + d1[1] + d2[1]) / 3, ex = 1.2;   // nở tam giác ~1.2 đơn vị để khỏi lộ khe giữa các mảnh
+      const grow = d => { const dx = d[0] - cx, dy = d[1] - cy, L = Math.hypot(dx, dy) || 1; return [d[0] + dx / L * ex, d[1] + dy / L * ex]; };
+      const e0 = grow(d0), e1 = grow(d1), e2 = grow(d2);
+      const bx0 = Math.max(0, Math.floor(Math.min(s0x, s1x, s2x)) - 1), by0 = Math.max(0, Math.floor(Math.min(s0y, s1y, s2y)) - 1);
+      const bx1 = Math.min(iw, Math.ceil(Math.max(s0x, s1x, s2x)) + 1), by1 = Math.min(ih, Math.ceil(Math.max(s0y, s1y, s2y)) + 1);
+      g.save(); g.beginPath(); g.moveTo(e0[0], e0[1]); g.lineTo(e1[0], e1[1]); g.lineTo(e2[0], e2[1]); g.closePath(); g.clip();
+      g.transform(A, Bb, C, D, E, F); g.drawImage(im, bx0, by0, bx1 - bx0, by1 - by0, bx0, by0, bx1 - bx0, by1 - by0); g.restore();
+    }
+  });
+}
+function ttRigFrame(now) {
+  ttRigLoop.raf = 0;
+  const cs = document.querySelectorAll('canvas[data-rig]');
+  if (!cs.length) { if (++ttRigLoop.empty > 90) return; ttRigLoop.raf = requestAnimationFrame(ttRigFrame); return; }   // hết thẻ nào dùng thì nghỉ sau ~1,5 giây
+  ttRigLoop.empty = 0;
+  if (!document.hidden) {
+    const by = {};
+    cs.forEach(c => { if (c.offsetParent !== null || c.getClientRects().length) (by[c.dataset.rig] = by[c.dataset.rig] || []).push(c); });
+    Object.keys(by).forEach(sl => {
+      const r = ttRigs[sl]; if (!r || r.st !== 2 || now - r.last < 1000 / TT_RIG_FPS - 3) return;
+      r.last = now; ttRigRender(r, now / 1000);
+      const mw = r.master.width, mh = r.master.height;
+      by[sl].forEach(c => { if (c.width !== mw || c.height !== mh) { c.width = mw; c.height = mh; } const g = c.getContext('2d'); g.clearRect(0, 0, mw, mh); g.drawImage(r.master, 0, 0); });
+    });
+  }
+  ttRigLoop.raf = requestAnimationFrame(ttRigFrame);
+}
+function ttRigKick() { ttRigLoop.empty = 0; if (!ttRigLoop.raf) ttRigLoop.raf = requestAnimationFrame(ttRigFrame); }
+function ttRigFallback(sl) {   // thần thú này không có rig / rig lỗi: đổi mọi canvas đang có về ảnh chuỗi khung / ảnh tĩnh cũ
+  document.querySelectorAll('canvas[data-rig="' + sl + '"]').forEach(c => {
+    if (c.dataset.hero) {   // canvas của TƯỚNG: thay cả khung bằng dáng đứng chuỗi ảnh cũ (seqIdleHTMLSeq / seqAvatarSeqHTML)
+      try {
+        const id = +c.dataset.hero, box = c.parentElement, t = document.createElement('template');
+        if (box.classList.contains('hero-rig-av')) { const w = box.dataset.w; t.innerHTML = seqAvatarSeqHTML(id, isNaN(+w) ? w : +w, decodeURIComponent(box.dataset.ex || '')); }
+        else t.innerHTML = seqIdleHTMLSeq(id, (window.HEROES || []).find(x => x.id === id), box.dataset.side);
+        box.replaceWith(t.content);
+      } catch (e) { console.warn('[ttRig] không đổi lại được dáng đứng tướng', e); }
+      return;
+    }
+    const t = document.createElement('template'); t.innerHTML = ttImgOld(c.dataset.n, c.dataset.ct === '1'); const el = c.closest('.ct-wrap') || c; el.replaceWith(t.content); });
+}
+const ttRigUsable = sl => !!sl && TT_RIG_ON && !(ttRigs[sl] && ttRigs[sl].st === 3);
+function ttRigHTML(n, ct) {
+  const sl = TT_SLUG[n]; ttRigLoad(sl); ttRigKick();
+  const r = ttRigs[sl], mw = r && r.master ? r.master.width : 320, mh = r && r.master ? r.master.height : 280;
+  const cv = `<canvas class="tt-img tt-rig${ct ? ' ct' : ''}" data-rig="${sl}" data-n="${n}" data-ct="${ct ? 1 : 0}" width="${mw}" height="${mh}"></canvas>`;
+  return ct ? `<span class="ct-wrap">${cv}<i class="ct-crown">👑</i></span>` : cv;
+}
 function ttImgFail(el) { el.onerror = null; const b = TT_BEASTS.find(x => x[0] === el.alt), sp = document.createElement('span'); sp.className = 'tt-emo'; sp.textContent = b ? b[3] : '❔'; (el.parentNode.classList.contains('ct-wrap') ? el.parentNode.replaceChild(sp, el) : el.replaceWith(sp)); }   // thiếu ảnh thần thú → hiện icon thay vì ảnh vỡ
-function ttImg(n, ct) { const sl = TT_SLUG[n], b = TT_BEASTS.find(x => x[0] === n); if (sl && TT_SEQ.includes(sl)) ttWarm(sl); const sq = sl && TT_SEQ.includes(sl) ? ` data-seq="${sl}" data-f="0"` : ''; const src0 = sq ? ttFrame(sl, ttSeqI) : `giao-dien/bang-hoi/thanthu/${sl}.webp`; return sl ? (ct ? `<span class="ct-wrap"><img class="tt-img ct"${sq} alt="${n}" src="${src0}" onerror="ttImgFail(this)"><i class="ct-crown">👑</i></span>` : `<img class="tt-img"${sq} alt="${n}" src="${src0}" onerror="ttImgFail(this)">`) : `<span class="tt-emo">${b ? b[3] : '❔'}</span>`; }
+function ttImgOld(n, ct) { const sl = TT_SLUG[n], b = TT_BEASTS.find(x => x[0] === n); if (sl && TT_SEQ.includes(sl)) ttWarm(sl); const sq = sl && TT_SEQ.includes(sl) ? ` data-seq="${sl}" data-f="0"` : ''; const src0 = sq ? ttFrame(sl, ttSeqI) : `giao-dien/bang-hoi/thanthu/${sl}.webp`; return sl ? (ct ? `<span class="ct-wrap"><img class="tt-img ct"${sq} alt="${n}" src="${src0}" onerror="ttImgFail(this)"><i class="ct-crown">👑</i></span>` : `<img class="tt-img"${sq} alt="${n}" src="${src0}" onerror="ttImgFail(this)">`) : `<span class="tt-emo">${b ? b[3] : '❔'}</span>`; }
+function ttImg(n, ct) { return ttRigUsable(TT_SLUG[n]) ? ttRigHTML(n, ct) : ttImgOld(n, ct); }   // thần thú có rig xương (JSON) thì dùng rig; chưa có/lỗi/tắt thì dùng chuỗi ảnh
 const ttBeast = n => TT_BEASTS.find(b => b[0] === n);
 function ttSt() {
   const s = gdSt();
