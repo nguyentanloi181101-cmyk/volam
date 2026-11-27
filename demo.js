@@ -58,7 +58,7 @@
   ctl.id = 'dm-ctl';
   ctl.innerHTML = '<div class="dm-info"><b id="dm-name"></b><em id="dm-idx"></em><span class="u" id="dm-ult"></span><small id="dm-desc"></small></div>' +
     '<div class="dm-row sm"><button id="dm-prev">◀ Trước</button><button id="dm-next">Sau ▶</button><button id="dm-side"></button><button id="dm-slow"></button></div>' +
-    '<div class="dm-row"><button data-a="idle">Đứng Yên</button><button data-a="atk">Đánh Thường</button><button data-a="ult" class="u">Ulti</button><button id="dm-exit" class="x">Thoát</button></div>';
+    '<div class="dm-row"><button data-a="idle">Đứng Yên</button><button data-a="atk">Đánh Thường</button><button data-a="ult" class="u">Ulti</button><button data-a="blast" style="display:none">Tự bạo</button><button id="dm-exit" class="x">Thoát</button></div>';
   $('battle-overlay').appendChild(ctl);
 
   const setBtns = on => ctl.querySelectorAll('button').forEach(b => { if (b.id !== 'dm-exit') b.disabled = !on; });
@@ -85,6 +85,7 @@
 
     waveUnits = es ? { heroes: foes, enemies: [u, ...allies] } : { heroes: [u, ...allies], enemies: foes };
     D.hero = u; D.allies = allies; D.foes = foes;
+    ctl.querySelector('[data-a="blast"]').style.display = h.id === 61813 ? "" : "none";
 
     $('dm-name').textContent = h.name;
     $('dm-idx').textContent = (D.idx + 1) + '/' + HEROES.length + ' • ' + (ROLE_NAME[roleOf(h.id)] || '');
@@ -121,7 +122,10 @@
     D.busy = true; setBtns(false);
     const tok = battleToken, u = D.hero;
     try {
-      if (kind === 'ult') {
+      if (kind === 'blast' && u.id === 61813) {
+        hit(u, u.hp - Math.max(1, Math.floor(u.max * .09)), true, null, true);
+        await sleep(1000);
+      } else if (kind === 'ult') {
         if (u.id === 1) D.allies.forEach(a => { a.alive = false; a.hp = 0; a.el.classList.add('dead'); setHpBar(a); });   // Thanh Y: cần đồng đội gục để hồi sinh
         u.rage = 100; u.stun = 0;
         await ultimate(u, tok);

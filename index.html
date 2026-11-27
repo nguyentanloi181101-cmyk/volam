@@ -263,6 +263,8 @@
           <div class="vh-btn" onclick="vhGo('kinhmach')" title="Kinh Mạch"><img class="vh-ic" src="giao-dien/tuong/kinh_mach.webp" alt="Kinh Mạch" loading="lazy" decoding="async" width="260" height="315"></div>
           <div class="vh-btn" onclick="vhGo('phamchat')" title="Nâng Phẩm Chất"><img class="vh-ic" src="giao-dien/tuong/nang_pham_chat.webp" alt="Nâng Phẩm Chất" loading="lazy" decoding="async" onerror="eqIcFallback(this,'💎','Nâng Phẩm Chất')"></div>
           <div class="vh-btn" onclick="vhGo('gianghoky')" title="Giang Hồ Ký"><img class="vh-ic" src="giao-dien/tuong/giang_ho_ky.webp" alt="Giang Hồ Ký" loading="lazy" decoding="async" width="260" height="334"></div>
+          <div class="vh-btn" onclick="vhGo('congphap')" title="Công Pháp"><img class="vh-ic" src="giao-dien/tuong/cong-phap.png" alt="Công Pháp" loading="lazy" decoding="async" onerror="eqIcFallback(this,'📜','Công Pháp')"></div>
+          <div class="vh-btn" onclick="vhGo('luyenthe')" title="Luyện Thể"><img class="vh-ic" src="giao-dien/tuong/luyen-the.png" alt="Luyện Thể" loading="lazy" decoding="async" onerror="eqIcFallback(this,'💪','Luyện Thể')"></div>
         </div>
       </div>
 
@@ -322,7 +324,7 @@
       </div>
       <div class="nav-btn" id="nav-btn-chieumo" onclick="openRecruit()"><div class="nav-icon-circle"><img class="hi" src="giao-dien/icon-home/chieu-mo.webp" alt="Chiêu Mộ" draggable="false" width="238" height="276"><span class="badge-nav" id="nb-chieumo" style="display:none">0</span></div></div>
       <div class="nav-btn" id="nav-btn-kyngo" onclick="openKyNgo()"><div class="nav-icon-circle"><img class="hi" src="giao-dien/icon-home/ky-ngo.webp" alt="Kỳ Ngộ" draggable="false" width="236" height="276"><span class="badge-nav" id="nb-kyngo" style="display:none">0</span></div></div>
-      <div class="nav-btn" onclick="alert('Cửa Tiệm')"><div class="nav-icon-circle"><img class="hi" src="giao-dien/icon-home/cua-tiem.webp" alt="Cửa Tiệm" draggable="false" width="249" height="280"></div></div>
+      <div class="nav-btn" id="nav-btn-shop" onclick="openShop()"><div class="nav-icon-circle"><img class="hi" src="giao-dien/icon-home/cua-tiem.webp" alt="Cửa Tiệm" draggable="false" width="249" height="280"></div></div>
       <div class="nav-btn" id="nav-btn-guild" onclick="openGuild()"><div class="nav-icon-circle"><img class="hi" src="giao-dien/icon-home/bang-hoi.webp" alt="Bang Hội" draggable="false" width="230" height="295"></div></div>
     </div>
   </div>
@@ -429,7 +431,7 @@
 
   <!-- ===== SCRIPT: nạp theo đúng thứ tự (các file dùng chung biến toàn cục, KHÔNG đổi thứ tự) ===== -->
   <script src="heros/hero-data.js?v=7"></script>   <!-- dữ liệu 18 tướng -->
-  <script src="game.js?v=15"></script>
-  <script src="demo.js?v=3"></script>   <!-- DEMO tướng: idle / đánh thường / ulti -->   <!-- TOÀN BỘ JS game gộp 1 file (xem banner === trong file) -->
+  <script src="game.js?v=24"></script>
+  <script src="demo.js?v=4"></script>   <!-- DEMO tướng: idle / đánh thường / ulti -->   <!-- TOÀN BỘ JS game gộp 1 file (xem banner === trong file) -->
 </body>
 </html>

@@ -77,7 +77,7 @@ window.HERO_DATA = {
     "constants": { "lv": 70, "star": 5, "border": "purple", "ultName": "Tà Đế Ngũ Trảm" },
     "audio": "00-ta-de.mp3?v=1",
     "sprites": {
-      "tdeIdle": { "src": "ta-de-idle.webp?v=2", "cw": 298, "ch": 280, "n": 43, "face": "R" },
+      "tdeIdle": { "src": "ta-de-idle.webp?v=2", "cw": 298, "ch": 280, "n": 16, "face": "R" },
       "tdeTele": { "src": "ta-de-tele.webp?v=1", "cw": 296, "ch": 296, "n": 18, "drop": 0.05 },
       "tdeSlash1": { "src": "ta-de-slash1.webp?v=1", "cw": 264, "ch": 150, "n": 7 },
       "tdeSlash2": { "src": "ta-de-slash2.webp?v=1", "cw": 256, "ch": 230, "n": 7 },
