@@ -631,6 +631,143 @@ window.HERO_DATA = {
     "ultFn": "bachCamUlt",
     "skillConfig": { "BQ_CLONES": 2, "BQ_HITS": 3, "BQ_MULT": 1, "BQ_CRIT_UP": 3, "BQ_TURNS": 2, "BQ_STUN": 1 },
     "skillNote": "Bạch Cầm (tướng kỹ năng): TRƯỚC khi ra đòn, bản thân +300% Bạo 2 hiệp; phân thân làm 2 người chạy sang đập đàn vào đầu 2 địch ngẫu nhiên, mỗi địch bị đánh 3 lần (tổng 100% Công); 2 địch bị đánh bị choáng 1 hiệp và cấm hồi máu 2 hiệp"
+  },
+{
+  "id": 90770,
+  "key": "luctieuphung",
+  "slug": "luc-tieu-phung",
+  "name": "Lục Tiểu Phụng",
+  "emoji": "🪭",
+  "role": "skill",
+  "img": "luc-tieu-phung.webp",
+  "body": "luc-tieu-phung-body.webp",
+  "bodyH": 96,
+  "stats": {
+    "hp": 6000,
+    "atk": 700,
+    "spd": 120
+  },
+  "combat": {
+    "dodge": 60,
+    "acc": 300,
+    "crit": 0,
+    "critDmg": 0,
+    "tough": 0,
+    "pierce": 0,
+    "block": 0,
+    "def": 300
+  },
+  "tia": 1,
+  "constants": {
+    "lv": 1,
+    "star": 1,
+    "border": "orange",
+    "ultName": "Phụng Vĩ Cữu Thiên"
+  },
+  "audio": "luc-tieu-phung-ult.mp3",
+  "sprites": {
+    "LTPIdle": {
+      "src": "luc-tieu-phung-idle.webp",
+      "cw": 320,
+      "ch": 320,
+      "n": 16,
+      "face": "R"
+    },
+    "LTPCast": {
+      "src": "luc-tieu-phung-ult.webp",
+      "cw": 320,
+      "ch": 320,
+      "n": 16,
+      "face": "R"
+    },
+    "LTPFx": {
+      "src": "luc-tieu-phung-fx.webp",
+      "cw": 320,
+      "ch": 320,
+      "n": 16
+    }
+  },
+  "idle": {
+    "sheet": "LTPIdle",
+    "h": 120,
+    "ms": 1600
+  },
+  "ultFn": "luctieuphungUlt",
+  "skillConfig": {
+    "LTP_HITS": 4,
+    "LTP_DODGE": 0.7,
+    "LTP_TURNS": 2,
+    "LTP_ATK": 0.5
   }
+},
+{
+  "id": 97950,
+  "key": "taymonxuytuyet",
+  "slug": "tay-mon-xuy-tuyet",
+  "name": "Tây Môn Xuy Tuyết",
+  "emoji": "⚔️",
+  "role": "skill",
+  "img": "tay-mon-xuy-tuyet.webp",
+  "body": "tay-mon-xuy-tuyet-body.webp",
+  "bodyH": 96,
+  "stats": {
+    "hp": 6000,
+    "atk": 700,
+    "spd": 120
+  },
+  "combat": {
+    "dodge": 60,
+    "acc": 300,
+    "crit": 0,
+    "critDmg": 0,
+    "tough": 0,
+    "pierce": 0,
+    "block": 0,
+    "def": 300
+  },
+  "tia": 1,
+  "constants": {
+    "lv": 1,
+    "star": 1,
+    "border": "orange",
+    "ultName": "Nhất Kiếm Tây Lai"
+  },
+  "audio": "tay-mon-xuy-tuyet-ult.mp3",
+  "sprites": {
+    "TMXTIdle": {
+      "src": "tay-mon-xuy-tuyet-idle.webp",
+      "cw": 320,
+      "ch": 320,
+      "n": 16,
+      "face": "R"
+    },
+    "TMXTCast": {
+      "src": "tay-mon-xuy-tuyet-ult.webp",
+      "cw": 320,
+      "ch": 320,
+      "n": 16,
+      "face": "R"
+    },
+    "TMXTFx": {
+      "src": "tay-mon-xuy-tuyet-fx.webp",
+      "cw": 320,
+      "ch": 320,
+      "n": 16
+    }
+  },
+  "idle": {
+    "sheet": "TMXTIdle",
+    "h": 120,
+    "ms": 1600
+  },
+  "ultFn": "taymonxuytuyetUlt",
+  "skillConfig": {
+    "TMXT_HITS": 4,
+    "TMXT_DODGE": 0.7,
+    "TMXT_TURNS": 2,
+    "TMXT_TARGETS": 3,
+    "TMXT_STUN": 1
+  }
+}
   ]
 };
