@@ -2989,7 +2989,7 @@ function addAccExp(n) {
     function heroSkills(id) {
       const st = heroStats(id), sk = skillMult(id), p = getProg(id), pct = x => Math.round(x * 100);
       let ult;
-      if (id === 4) ult = `KHÔNG TỐN NỘ – lượt nào cũng ulti được. Tụ khối cầu Thái Cực trắng đen, nhảy lên trời rồi ném xuống: gây ${TAICHI_HITS} lần sát thương, tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}) lên TOÀN BỘ địch. ${p.star >= STAR_MAX ? '(Đang ★6) ' : '(Đang ★' + p.star + ') '}★5: ngay sau khi ulti xong, choáng 1 địch ngẫu nhiên 2 hiệp (không chảy máu). ★6: TRƯỚC khi ném xuống, toàn bộ địch bị CHẢY MÁU ${TAICHI_BLEED_TURNS} hiệp, mỗi hiệp mất ${pct(TAICHI_BLEED_PCT)}% HP hiện tại; ngay sau khi ulti xong, choáng 2 địch ngẫu nhiên 2 hiệp.`;
+      if (id === 4) ult = `KHÔNG TỐN NỘ – lượt nào cũng ulti được. Nhảy lên vẽ Thái Cực, tạo vòng Thái Cực dưới chân và Bát Quái trên đầu địch: gây ${TAICHI_HITS} lần sát thương, tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}) lên TOÀN BỘ địch. ${p.star >= STAR_MAX ? '(Đang ★6) ' : '(Đang ★' + p.star + ') '}★5: ngay sau khi ulti xong, choáng 1 địch ngẫu nhiên 2 hiệp (không chảy máu). ★6: TRƯỚC khi gây sát thương, toàn bộ địch bị CHẢY MÁU ${TAICHI_BLEED_TURNS} hiệp, mỗi hiệp mất ${pct(TAICHI_BLEED_PCT)}% HP hiện tại; ngay sau khi ulti xong, choáng 2 địch ngẫu nhiên 2 hiệp.`;
       else if (id === 3) ult = `Cần đầy 100 nộ. Nhảy vọt lên, triệu hồi cơn mưa ${DUCO_SWORDS} thanh kiếm tím từ trên trời cắm xuống ào ạt. Tấn công TOÀN địch ${DUCO_HIT_COUNT} lần, tổng ${pct(sk)}% Công, mỗi lần ≈ ${fmtN(st.atk * sk / DUCO_HIT_COUNT)}. Toàn địch giảm ${pct(DUCO_SLOW)}% Tốc, toàn đội ta tăng ${pct(DUCO_HASTE)}% Tốc trong ${DUCO_BUFF_TURNS} hiệp.`;
       else if (id === 0) ult = `Cần đầy 100 nộ. Tan thành sương tím, DỊCH CHUYỂN sang sau đội hình địch rồi ulti ${TADE_HITS} nhát chém tím từ nhiều hướng; mỗi nhát trúng TOÀN BỘ địch còn sống: tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}, mỗi nhát ≈ ${fmtN(st.atk * sk / TADE_HITS)}). Mỗi nhát GIẢM ${pct(TADE_SLOW)}% Tốc toàn địch trong ${TADE_SLOW_TURNS} hiệp (không cộng dồn) và BỎ QUA BẤT TỬ – giết được cả tướng đang bất tử. Khi vào chiêu, TOÀN ĐỘI ta +${TADE_PIERCE} Phá giáp trong ${TADE_PIERCE_TURNS} hiệp. Xong dịch chuyển về chỗ cũ, nộ về 0.`;
       else if (id === 12) ult = `Ra trận ĐẦY NỘ. Ulti 18 đạo tàn ảnh dồn dập chạy từ đội ta sang đội địch. TOÀN ĐỘI nhận trong ${LB_TURNS} hiệp: +${pct(LB_DODGE_MULT)}% Né của Đoàn Dự (≈ +${fmtN(st.dodge * LB_DODGE_MULT)}% Né), +${pct(LB_SPD_MULT)}% Tốc của Đoàn Dự (≈ +${fmtN(st.spd * LB_SPD_MULT)} Tốc) và mỗi hiệp hồi ${pct(LB_HEAL_MULT)}% Máu của Đoàn Dự (≈ ${fmtN(st.hp * LB_HEAL_MULT)} máu/hiệp). Cần đầy 100 nộ, mỗi lần ulti xong nộ về 0.`;
@@ -4867,20 +4867,30 @@ async function duCoUlt(u, tok) {
       } catch (e) {}
     }
     async function taichiUlt(u, tok) {
-      // Đứng TẠI CHỖ tung tuyệt kỹ (không nhảy): chuỗi 16 khung SEQ.ttpCast phủ lên tướng, lốc xoáy SEQ.ttpStorm mở ra bên địch rồi gây sát thương toàn địch + choáng
+      // Chỉ đổi hình ảnh: Thái Cực dưới chân, Bát Quái trên đầu từng địch.
       const g = nt(u), { f, W, H, made } = g, es0 = g.es(); if (!es0.length) return;
-      const b = g.box0(es0), S = SEQ.ttpStorm;
-      const SW = Math.round(Math.max(190, Math.min(W * 0.5, H * 0.85)) * 1.4), SH = Math.round(SW * S.ch / S.cw), hw = SW * 0.5 / W * 100, hh = SH * 0.5 / H * 100;
-      const cx = Math.max(hw + 1, Math.min(99 - hw, b.cx)), cy = Math.max(hh + 2, Math.min(98 - hh, b.cy - 3));
-      const cast = seqOverlay(u, SEQ.ttpCast, 172), timers = [], oldZ = u.el.style.zIndex; let storm = null;
+      const cast = seqOverlay(u, SEQ.ttpCast, SEQ_IDLE[4].h), timers = [], oldZ = u.el.style.zIndex;
+      cast.el.style.bottom = '9px';
       const at = (ms, fn) => timers.push(setTimeout(() => { if (tok === battleToken) fn(); }, seqT(ms)));
+      const effects = [];
       try {
         u.el.style.zIndex = 99;
-        for (let i = 0; i < 16; i++) at(i * 100, () => cast.show(i));          // 16 khung: tụ cầu → tung ra
-        at(780, () => {                                                         // cầu Thái Cực đã lớn → lốc xoáy mở ra bên địch
-          storm = g.mk('bf-seq-fx', '', cx, cy); storm.style.width = SW + 'px'; storm.style.height = SH + 'px';
-          const sc = seqEl(S, SW); sc.loop(1300); storm.appendChild(sc);
-          storm.animate([{ transform: 'translate(-50%,-50%) scale(.15,.05)', opacity: 0 }, { transform: 'translate(-50%,-50%) scale(1.08,1.12)', opacity: 1, offset: .65 }, { transform: 'translate(-50%,-50%) scale(1,1)', opacity: 1 }], { duration: 700, easing: 'ease-out', fill: 'forwards' });
+        for (let i = 0; i < 16; i++) at(i * 100, () => cast.show(i));
+        at(780, () => {
+          es0.filter(e => e.alive).forEach(e => {
+            const unitH = e.el.offsetHeight || 80;
+            const sprite = e.el.querySelector('.bf-sprite .hero-seq, .bf-sprite .hero-body');
+            const bodyH = sprite ? sprite.offsetHeight : unitH;
+            const foot = e.y + (unitH / 2 - 9) / H * 100;
+            const head = foot - (bodyH + 12) / H * 100;
+            [[SEQ.ttpStorm, foot, 100, 0, ' scaleY(.48)'], [SEQ.ttpBagua, head, 76, 105, ' scaleY(.65)']].forEach(([S,y,w,z,tilt]) => {
+              const el = g.mk('bf-seq-fx', '', e.x, y);
+              el.style.cssText += ';width:'+w+'px;height:'+w+'px;z-index:'+z+';transform:translate(-50%,-50%)'+tilt;
+              const sc = seqEl(S,w); el.appendChild(sc); effects.push({el,sc});
+              for(let i=0;i<8;i++) at(780+i*75,()=>sc.show(i));
+              at(1380,()=>sc.show(8));
+            });
+          });
         });
         await sleep(1450); if (tok !== battleToken) return;
         // Lốc xoáy giáng xuống: va chạm
@@ -4904,7 +4914,7 @@ async function duCoUlt(u, tok) {
         const left = g.es();
         shuffled(left).slice(0, six ? 2 : 1).forEach(v => { stunEnemy(v, Math.max(2, v.stun || 0)); floatText(v, 'CHOÁNG 2 HIỆP'); });
         await sleep(900); if (tok !== battleToken) return;
-        if (storm) storm.animate([{ opacity: 1, transform: 'translate(-50%,-50%) scale(1,1)' }, { opacity: 0, transform: 'translate(-50%,-50%) scale(.6,1.25)' }], { duration: 480, fill: 'forwards' });
+        effects.forEach(({el,sc}) => { for(let i=9;i<16;i++) timers.push(setTimeout(()=>{if(tok===battleToken) sc.show(i);},seqT((i-9)*65))); el.animate([{opacity:1},{opacity:0}],{duration:seqT(480),fill:'forwards'}); });
         await sleep(500);
       } finally {
         timers.forEach(clearTimeout); cast.end(); u.el.style.zIndex = oldZ; made.forEach(d => d.remove());
