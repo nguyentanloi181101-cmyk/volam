@@ -768,6 +768,69 @@ window.HERO_DATA = {
     "TMXT_TARGETS": 3,
     "TMXT_STUN": 1
   }
+},
+{
+  "id": 86427,
+  "key": "phongthanhduong",
+  "slug": "phong-thanh-duong",
+  "name": "Phong Thanh Dương",
+  "emoji": "⚔️",
+  "role": "skill",
+  "img": "phong-thanh-duong.webp",
+  "body": "phong-thanh-duong-body.webp",
+  "bodyH": 96,
+  "stats": {
+    "hp": 6000,
+    "atk": 700,
+    "spd": 120
+  },
+  "combat": {
+    "dodge": 60,
+    "acc": 1000,
+    "crit": 0,
+    "critDmg": 0,
+    "tough": 0,
+    "pierce": 0,
+    "block": 0,
+    "def": 300
+  },
+  "tia": 1,
+  "constants": {
+    "lv": 1,
+    "star": 1,
+    "border": "orange",
+    "ultName": "Vạn Kiếm Quy Tông"
+  },
+  "audio": "phong-thanh-duong-ult.mp3",
+  "sprites": {
+    "PTDIdle": {
+      "src": "phong-thanh-duong-idle.webp",
+      "cw": 320,
+      "ch": 320,
+      "n": 16,
+      "face": "R"
+    },
+    "PTDCast": {
+      "src": "phong-thanh-duong-ult.webp",
+      "cw": 320,
+      "ch": 320,
+      "n": 16,
+      "face": "R"
+    }
+  },
+  "idle": {
+    "sheet": "PTDIdle",
+    "h": 120,
+    "ms": 1600
+  },
+  "ultFn": "phongThanhDuongUlt",
+  "skillConfig": {
+    "PTD_HITS": 3,
+    "PTD_TARGETS": 2,
+    "PTD_CRIT": 300,
+    "PTD_CDMG": 300,
+    "PTD_TURNS": 2
+  }
 }
   ]
 };
