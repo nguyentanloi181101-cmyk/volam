@@ -521,7 +521,9 @@ window.GP = (function () {
   const joinName = s => String(s || '').replace(/Đ/g, 'D').replace(/đ/g, 'd').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]/g, '');
   if (!window.HERO_DATA.heroes.some(h => h.id === 90770)) window.HERO_DATA.heroes.push({"id": 90770, "key": "luctieuphung", "slug": "luc-tieu-phung", "name": "Lục Tiểu Phụng", "emoji": "🪭", "role": "skill", "img": "luc-tieu-phung.webp", "body": "luc-tieu-phung-body.webp", "bodyH": 96, "stats": {"hp": 6000, "atk": 700, "spd": 120}, "combat": {"dodge": 60, "acc": 300, "crit": 0, "critDmg": 0, "tough": 0, "pierce": 0, "block": 0, "def": 300}, "tia": 1, "constants": {"lv": 1, "star": 1, "border": "orange", "ultName": "Phụng Vĩ Cữu Thiên"}, "audio": "luc-tieu-phung-ult.mp3", "sprites": {"LTPIdle": {"src": "luc-tieu-phung-idle.webp", "cw": 320, "ch": 320, "n": 16, "face": "R"}, "LTPCast": {"src": "luc-tieu-phung-ult.webp", "cw": 320, "ch": 320, "n": 16, "face": "R"}, "LTPFx": {"src": "luc-tieu-phung-fx.webp", "cw": 320, "ch": 320, "n": 16}}, "idle": {"sheet": "LTPIdle", "h": 120, "ms": 1600}, "ultFn": "luctieuphungUlt", "skillConfig": {"LTP_HITS": 4, "LTP_DODGE": 0.7, "LTP_TURNS": 2, "LTP_ATK": 0.5}});
   if (!window.HERO_DATA.heroes.some(h => h.id === 97950)) window.HERO_DATA.heroes.push({"id": 97950, "key": "taymonxuytuyet", "slug": "tay-mon-xuy-tuyet", "name": "Tây Môn Xuy Tuyết", "emoji": "⚔️", "role": "skill", "img": "tay-mon-xuy-tuyet.webp", "body": "tay-mon-xuy-tuyet-body.webp", "bodyH": 96, "stats": {"hp": 6000, "atk": 700, "spd": 120}, "combat": {"dodge": 60, "acc": 300, "crit": 0, "critDmg": 0, "tough": 0, "pierce": 0, "block": 0, "def": 300}, "tia": 1, "constants": {"lv": 1, "star": 1, "border": "orange", "ultName": "Nhất Kiếm Tây Lai"}, "audio": "tay-mon-xuy-tuyet-ult.mp3", "sprites": {"TMXTIdle": {"src": "tay-mon-xuy-tuyet-idle.webp", "cw": 320, "ch": 320, "n": 16, "face": "R"}, "TMXTCast": {"src": "tay-mon-xuy-tuyet-ult.webp", "cw": 320, "ch": 320, "n": 16, "face": "R"}, "TMXTFx": {"src": "tay-mon-xuy-tuyet-fx.webp", "cw": 320, "ch": 320, "n": 16}}, "idle": {"sheet": "TMXTIdle", "h": 120, "ms": 1600}, "ultFn": "taymonxuytuyetUlt", "skillConfig": {"TMXT_HITS": 4, "TMXT_DODGE": 0.7, "TMXT_TURNS": 2, "TMXT_TARGETS": 3, "TMXT_STUN": 1}});
+  if (!window.HERO_DATA.heroes.some(h => h.id === 86427)) window.HERO_DATA.heroes.push({"id": 86427, "key": "phongthanhduong", "slug": "phong-thanh-duong", "name": "Phong Thanh Dương", "emoji": "⚔️", "role": "skill", "img": "phong-thanh-duong.webp", "body": "phong-thanh-duong-body.webp", "bodyH": 96, "stats": {"hp": 6000, "atk": 700, "spd": 120}, "combat": {"dodge": 60, "acc": 1000, "crit": 0, "critDmg": 0, "tough": 0, "pierce": 0, "block": 0, "def": 300}, "tia": 1, "constants": {"lv": 1, "star": 1, "border": "orange", "ultName": "Vạn Kiếm Quy Tông"}, "audio": "phong-thanh-duong-ult.mp3", "sprites": {"PTDIdle": {"src": "phong-thanh-duong-idle.webp", "cw": 320, "ch": 320, "n": 16, "face": "R"}, "PTDCast": {"src": "phong-thanh-duong-ult.webp", "cw": 320, "ch": 320, "n": 16, "face": "R"}}, "idle": {"sheet": "PTDIdle", "h": 120, "ms": 1600}, "ultFn": "phongThanhDuongUlt", "skillConfig": {"PTD_HITS": 3, "PTD_TARGETS": 2, "PTD_CRIT": 300, "PTD_CDMG": 300, "PTD_TURNS": 2}});
   const HERO_UID = {
+    86427: [86427, 'phongthanhduong'],
     97950: [97950, 'taymonxuytuyet'],
     90770: [90770, 'luctieuphung'],   // [id cũ]: [ID số, ID chữ]
     0: [73848, 'tade'],
@@ -3023,6 +3025,7 @@ function addAccExp(n) {
       else if (id === 32) ult = `Cần đầy 100 nộ. HÓA THÂN thành BẠCH CỐT (bộ xương), nhảy vào GIỮA đội địch gây ${BCT_HITS} lần sát thương lên TOÀN địch, tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}, mỗi lần ≈ ${fmtN(st.atk * sk / BCT_HITS)}). Đánh xong, THÔI MIÊN 1 địch (ưu tiên công kích / kỹ năng): địch đó lập tức TỰ ULTI đánh chính đồng đội của mình.`;
       else if (id === 33) ult = `Cần đầy 100 nộ. TRƯỚC khi ra đòn: toàn đội ta tăng ${pct(LQ_HEAL_UP)}% hiệu quả hồi máu (x${1 + LQ_HEAL_UP}) trong ${LQ_HEAL_TURNS} hiệp, toàn địch bị CẤM HỒI MÁU ${LQ_NOHEAL_TURNS} hiệp. Rồi nhảy lên, giơ ĐỈNH khổng lồ quá đầu và ném xuống đội địch: gây ${LQ_HITS} lần sát thương lên TOÀN địch, tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}, mỗi lần ≈ ${fmtN(st.atk * sk / LQ_HITS)}).`;
       else if (id === 90770) ult = `Gây ${LTP_HITS} lần sát thương toàn địch; toàn đội ta tăng ${pct(LTP_DODGE)}% Né ${pct(LTP_ATK)}% Công trong ${LTP_TURNS} hiệp. Tổng ${pct(sk)}% Công.`;
+      else if (id === 86427) ult = `Gây ${PTD_HITS} lần sát thương lên ${PTD_TARGETS} địch ngẫu nhiên; bản thân tăng ${PTD_CRIT} Bạo và ${PTD_CDMG} Bạo Sát trong ${PTD_TURNS} hiệp. Tổng ${pct(sk)}% Công.`;
       else if (id === 97950) ult = `Gây ${TMXT_HITS} lần sát thương lên ${TMXT_TARGETS} địch ngẫu nhiên, choáng ${TMXT_STUN} hiệp; toàn đội ta tăng ${pct(TMXT_DODGE)}% Né trong ${TMXT_TURNS} hiệp. Tổng ${pct(sk)}% Công.`;
       else if (id === 34) ult = `VÀO TRẬN ĐẦY 100 NỘ – ulti được ngay hiệp đầu. TRƯỚC khi ra đòn: toàn đội ta tăng ${pct(DL_CRIT_UP)}% Bạo và ${pct(DL_CDMG_UP)}% Bạo Sát trong ${DL_TURNS} hiệp. Rồi Diêm La Vương đứng yên chọi Lệnh Bài Sinh Tử xuống: lệnh bài rơi giữa đội địch rồi nổ, gây ${DL_HITS} lần sát thương lên TOÀN địch, tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}, mỗi lần ≈ ${fmtN(st.atk * sk / DL_HITS)}).`;
       else if (id === 58316) ult = `Cần đầy 100 nộ. TRƯỚC khi ra đòn: bản thân tăng ${pct(LD_CRIT_UP)}% Bạo và ${pct(LD_CDMG_UP)}% Bạo Sát trong ${LD_TURNS} hiệp, toàn địch GIẢM ${LD_TOUGH_DOWN}% Bền ${LD_TURNS} hiệp. Rồi Linda đứng yên chọi ${LD_BRICKS} viên gạch bay qua đội địch, xoay nhiều góc độ, rơi dồn dập xuống, gây ${LD_HITS} lần sát thương lên TOÀN địch, tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}, mỗi lần ≈ ${fmtN(st.atk * sk / LD_HITS)}).`;
@@ -3088,6 +3091,7 @@ function addAccExp(n) {
           case 32: return `Hóa Bạch Cốt nhảy vào giữa địch, ${BCT_HITS} lần sát thương TOÀN địch. Rồi thôi miên 1 địch (ưu tiên công kích/kỹ năng) tự ulti đánh đồng đội.`;
           case 33: return `Cả đội ta x${1 + LQ_HEAL_UP} hồi máu ${LQ_HEAL_TURNS} hiệp, toàn địch cấm hồi máu ${LQ_NOHEAL_TURNS} hiệp. Ném đỉnh khổng lồ xuống địch, ${LQ_HITS} lần sát thương TOÀN địch.`;
           case 90770: return `Gây ${LTP_HITS} lần sát thương toàn địch; toàn đội ta tăng ${pct(LTP_DODGE)}% Né ${pct(LTP_ATK)}% Công trong ${LTP_TURNS} hiệp.`;
+          case 86427: return `Gây ${PTD_HITS} lần sát thương lên ${PTD_TARGETS} địch ngẫu nhiên; bản thân tăng ${PTD_CRIT} Bạo và ${PTD_CDMG} Bạo Sát trong ${PTD_TURNS} hiệp.`;
           case 97950: return `Gây ${TMXT_HITS} lần sát thương lên ${TMXT_TARGETS} địch ngẫu nhiên, choáng ${TMXT_STUN} hiệp; toàn đội ta tăng ${pct(TMXT_DODGE)}% Né trong ${TMXT_TURNS} hiệp.`;
           case 34: return `Vào trận đầy nộ, ulti hiệp đầu. Cả đội +${pct(DL_CRIT_UP)}% Bạo, +${pct(DL_CDMG_UP)}% Bạo Sát ${DL_TURNS} hiệp. Chọi lệnh bài xuống địch, ${DL_HITS} lần sát thương TOÀN địch.`;
           case 58316: return `Bản thân +${pct(LD_CRIT_UP)}% Bạo, +${pct(LD_CDMG_UP)}% Bạo Sát ${LD_TURNS} hiệp, toàn địch -${LD_TOUGH_DOWN}% Bền ${LD_TURNS} hiệp. Chọi ${LD_BRICKS} viên gạch xuống địch, ${LD_HITS} lần sát thương TOÀN địch.`;
@@ -6765,6 +6769,33 @@ async function luctieuphungUlt(u, tok) {
     
     dropDeadEffects(targets);refreshPanel();
   } finally {cast.end();u.el.style.zIndex=oldZ;g.made.forEach(d=>d.remove());}
+}
+
+async function phongThanhDuongUlt(u, tok) {
+  const g=nt(u), targets=shuffled(g.es()).slice(0,Math.max(1,Math.floor(PTD_TARGETS))); if(!targets.length)return;
+  const S=SEQ.PTDCast, cast=seqOverlay(u,S,120), oldZ=u.el.style.zIndex;
+  const wait=ms=>new Promise(r=>setTimeout(r,seqT(ms))), n=Math.max(1,Math.floor(PTD_HITS));
+  let sound;
+  try {
+    u.el.style.zIndex=99;
+    if(!noBuff(u)){addMod(u,'crit',PTD_CRIT,PTD_TURNS,'buff','PTD:crit');addMod(u,'critDmg',PTD_CDMG,PTD_TURNS,'buff','PTD:cdmg');}
+    refreshPanel(); const per=u.atk*(u.sk||1)/n;
+    for(let i=0;i<S.n;i++){cast.show(i);await wait(75);if(tok!==battleToken)return;}
+    cast.end();
+    for(let hit=0;hit<n;hit++){
+      const live=targets.filter(e=>e.alive);if(!live.length)break;
+      const swords=live.map(e=>Array.from({length:6},()=>{const d=g.mk('','',e.x,e.y);Object.assign(d.style,{position:'absolute',width:'58px',height:'24px',pointerEvents:'none',zIndex:104,background:'url(heros/phong-thanh-duong/phong-thanh-duong-sword.webp) center/contain no-repeat'});return d;}));
+      for(let f=0;f<=12;f++){
+        const radius=f<=8?48:48*(12-f)/4;
+        swords.forEach(group=>group.forEach((d,i)=>{const angle=i*Math.PI/3+Math.min(f,8)*Math.PI/8;d.style.transform=`translate(-50%,-50%) translate(${Math.cos(angle)*radius}px,${Math.sin(angle)*radius}px) rotate(${angle*180/Math.PI}deg)`;}));
+        await wait(40);if(tok!==battleToken)return;
+      }
+      try{if(audioSet.skill && !battleFast){if(sound)sound.pause();sound=new Audio('heros/phong-thanh-duong/phong-thanh-duong-hit.mp3');sound.play().catch(()=>{});}}catch(e){}
+      live.filter(e=>e.alive).forEach(e=>skillHit(e,per,u));swords.flat().forEach(d=>d.remove());refreshPanel();
+      await wait(140);if(tok!==battleToken)return;
+    }
+    dropDeadEffects(targets);refreshPanel();
+  } finally {if(sound)sound.pause();cast.end();u.el.style.zIndex=oldZ;g.made.forEach(d=>d.remove());}
 }
 
 async function taymonxuytuyetUlt(u, tok) {
