@@ -2083,7 +2083,7 @@ function seqEl(s, w) {
   const h = Math.round(w * s.ch / s.cw), d = document.createElement('div');
   d.className = 'hero-seq'; d.style.width = w + 'px'; d.style.height = h + 'px';
   d.style.backgroundImage = 'url(' + s.src + ')'; d.style.backgroundSize = (w * s.n) + 'px ' + h + 'px';
-  d.show = i => { d.style.animation = 'none'; d.style.backgroundPosition = (-i * w) + 'px 0'; };
+  d.show = i => { i = Math.max(0, Math.min(s.n - 1, Math.floor(Number(i) || 0))); d.style.animation = 'none'; d.style.backgroundPosition = (-i * w) + 'px 0'; };
   d.loop = ms => { d.style.setProperty('--end', (-w * s.n) + 'px'); d.style.animation = 'seqRun ' + ms + 'ms steps(' + s.n + ') infinite'; };
   d.show(0); return d;
 }
@@ -3967,7 +3967,7 @@ function addAccExp(n) {
       const sp = u.el.querySelector('.bf-sprite'), hb = heroById(u.id);
       if (u.id === 7 && sp && typeof pdMountIdle === 'function') { pdMountIdle(u, sp, Math.round(PD_IDLE_H * HERO_SCALE * (HERO_SIZE_ADJ[7] || 1))); return; }   // Phạm Dao: dáng đứng yên bằng chuỗi 20 khung hòa mượt (heros/pham-dao/pham-dao.js)
       const sq = (typeof seqIdleHTML === 'function') ? seqIdleHTML(u.id, hb, u.side) : '';   // dáng đứng bằng chuỗi khung (hero-seq.js)
-      if (sp && sq) { if (!sp.querySelector('.hero-seq')) sp.innerHTML = sq; return; }
+      if (sp && sq) { if (!sp.querySelector('.hero-seq')) sp.innerHTML = sq; if(u.id===4){const d=sp.querySelector('.hero-seq');if(d)d.style.transform=u.side==='hero'?'none':'scaleX(-1)';} return; }
       if (sp && hb && hb.body && !sp.querySelector('.hero-body')) { sp.innerHTML = '<img class="hero-body" style="height:' + (hb.bodyH || 76) + 'px" src="' + hb.body + '">'; return; }
       if (sp && hb && hb.img && !hb.body && !sp.querySelector('.hero-body')) { sp.innerHTML = '<img class="hero-body hero-portrait" style="height:80px" src="' + hb.img + '">'; return; }
       if (sp && !sp.querySelector('.hero-img, .bf-emo, .hero-body')) sp.innerHTML = '<span class="bf-emo">' + sp.innerHTML + '</span>';
@@ -4406,31 +4406,13 @@ cfgOnApply(applyFormationCfg);   // chạy ngay 1 lần + chạy lại mỗi khi
 /* TRẬN ĐẤU: điều phối tuyệt kỹ (ultimate) và hồi máu
    (tách từ index.html cũ — script) */
 
-    // ★6: ulti 2 lần • ★11: ulti 3 lần • ★16: gộp 3 lần thành 1 lần ulti, sát thương ×3 (vd 300 × 3 lần = 900 → 1 lần đánh 900)
-    function ultPlan(star) { return { casts: 1, mult: 1 }; }   // đã bỏ cơ chế ★6/★11/★16: mọi tướng chỉ ulti 1 lần
-    function ultStarOf(u) {
-      if (u.id === undefined || u.id === null) return 1;
-      if (u.side === 'hero') return getProg(u.id).star;
-      if (u.star) return u.star;   // đối thủ người thật: số sao thật của họ
-      return pvp ? ((START_PROG[u.id] || {}).star || 5) : 1;   // địch trong ải thường không có sao
-    }
-    const QUICK_CHAIN = new Set([4, 7]);   // Trương Tam Phong, Phạm Dao
+    // Một lượt tung chiêu = đúng một lần gọi hàm ulti. HITS là số nhịp sát thương bên trong.
     async function ultimate(u, tok) {
-      const plan = ultPlan(ultStarOf(u));
-      const sk0 = u.sk, z0 = u.el.style.zIndex;
-      const chain = QUICK_CHAIN.has(u.id);   // tướng bay lên / nhảy qua đầu: giữ nguyên tư thế, chỉ đánh liên tiếp
-      try {
-        if (plan.mult !== 1) u.sk = (u.sk || 1) * plan.mult;     // ×3 hiệu lực/sát thương tuyệt kỹ
-        for (let i = 0; i < plan.casts; i++) {
-          if (tok !== battleToken || !u.alive) return;
-          if (i > 0) { if (!foesOf(u).some(e => e.alive)) return; await sleep(chain ? 60 : 200); if (tok !== battleToken || !u.alive) return; }
-          u.qRepeat = i > 0; u.qKeep = chain && i < plan.casts - 1; ultTimeScale = i > 0 ? 0.5 : 1;
-          await ultimateOnce(u, tok);
-        }
-      } finally {
-        u.sk = sk0; ultTimeScale = 1; u.qRepeat = false; u.qKeep = false;
-        if (plan.casts > 1) { try { u.el.getAnimations().forEach(a => a.cancel()); } catch (e) {} u.el.style.zIndex = z0; }
-      }
+      if (tok !== battleToken || !u.alive) return;
+      const oldScale = ultTimeScale;
+      u.qRepeat = false; u.qKeep = false; ultTimeScale = 1;
+      try { await ultimateOnce(u, tok); }
+      finally { ultTimeScale = oldScale; u.qRepeat = false; u.qKeep = false; }
     }
     function ultimateOnce(u, tok) {
       if (u.isSoldier) return lcUlt(u, tok);   // Lính phụ (cờ/kiếm/cung/đao/chuỳ/thương): heros/linh-cam.js
@@ -4867,59 +4849,64 @@ async function duCoUlt(u, tok) {
       } catch (e) {}
     }
     async function taichiUlt(u, tok) {
-      // Chỉ đổi hình ảnh: Thái Cực dưới chân, Bát Quái trên đầu từng địch.
-      const g = nt(u), { f, W, H, made } = g, es0 = g.es(); if (!es0.length) return;
-      const cast = seqOverlay(u, SEQ.ttpCast, SEQ_IDLE[4].h), timers = [], oldZ = u.el.style.zIndex;
+      const g = nt(u), { f, box, made } = g, targets = g.es().slice();
+      if (!targets.length) return;
+      const S = SEQ.ttpCast, I = SEQ[SEQ_IDLE[4].sheet];
+      const idle = u.el.querySelector('.bf-sprite .hero-seq');
+      const w = Math.round((idle ? idle.offsetHeight : SEQ_IDLE[4].h) * S.cw / I.ch);
+      const cast = seqOverlay(u, S, w), oldZ = u.el.style.zIndex;
+      const oldFilter = f.style.filter, oldTransition = f.style.transition;
+      const fx = [], timers = [];
+      const at = (ms, fn) => timers.push(setTimeout(() => { if(tok === battleToken) fn(); }, seqT(ms)));
+      const n = Math.max(1, Math.floor(TAICHI_HITS)), per = u.atk * (u.sk || 1) / n;
+      const six = (u.side === 'hero' ? getProg(4).star : (u.star || 0)) >= STAR_MAX;
+      const direction = targets.reduce((v,e)=>v+e.x,0)/targets.length >= u.x;
+      cast.el.style.transform = 'translateX(-50%)' + (direction ? '' : ' scaleX(-1)');
       cast.el.style.bottom = '9px';
-      const at = (ms, fn) => timers.push(setTimeout(() => { if (tok === battleToken) fn(); }, seqT(ms)));
-      const effects = [];
+      if(idle) cast.el.style.scale = getComputedStyle(idle.parentElement).scale;
+      function place(e, ground) {
+        const rect = box.getBoundingClientRect(), unit = e.el.getBoundingClientRect();
+        const sp = e.el.querySelector('.bf-sprite .hero-seq, .bf-sprite .hero-body, .bf-sprite');
+        const body = sp ? sp.getBoundingClientRect() : unit;
+        const x = (unit.left + unit.width/2 - rect.left) / (rect.width || 1) * 100;
+        const y = ((ground ? body.bottom : body.top - 14) - rect.top) / (rect.height || 1) * 100;
+        const d = g.mk('bf-seq-fx','',x,y), size = ground ? 108 : 82;
+        Object.assign(d.style,{width:size+'px',height:size+'px',zIndex:ground?'0':'105',opacity:'0',transform:'translate(-50%,-50%) scaleY('+(ground?.48:.65)+')'});
+        const im = document.createElement('img');
+        im.src = 'heros/truong-tam-phong/truong-tam-phong-'+(ground?'storm':'bagua')+'-spin.webp?v=31';
+        Object.assign(im.style,{display:'block',width:'100%',height:'100%',pointerEvents:'none'}); d.appendChild(im);
+        const spin = im.animate([{transform:'rotate(0deg)'},{transform:'rotate('+(ground?360:-360)+'deg)'}],{duration:Math.max(1,seqT(1350)),iterations:Infinity,easing:'linear'});
+        const fade = d.animate([{opacity:0},{opacity:1}],{duration:Math.max(1,seqT(220)),fill:'forwards'});
+        fx.push({d,spin,fade});
+      }
       try {
         u.el.style.zIndex = 99;
-        for (let i = 0; i < 16; i++) at(i * 100, () => cast.show(i));
-        at(780, () => {
-          es0.filter(e => e.alive).forEach(e => {
-            const unitH = e.el.offsetHeight || 80;
-            const sprite = e.el.querySelector('.bf-sprite .hero-seq, .bf-sprite .hero-body');
-            const bodyH = sprite ? sprite.offsetHeight : unitH;
-            const foot = e.y + (unitH / 2 - 9) / H * 100;
-            const head = foot - (bodyH + 12) / H * 100;
-            [[SEQ.ttpStorm, foot, 100, 0, ' scaleY(.48)'], [SEQ.ttpBagua, head, 76, 105, ' scaleY(.65)']].forEach(([S,y,w,z,tilt]) => {
-              const el = g.mk('bf-seq-fx', '', e.x, y);
-              el.style.cssText += ';width:'+w+'px;height:'+w+'px;z-index:'+z+';transform:translate(-50%,-50%)'+tilt;
-              const sc = seqEl(S,w); el.appendChild(sc); effects.push({el,sc});
-              for(let i=0;i<8;i++) at(780+i*75,()=>sc.show(i));
-              at(1380,()=>sc.show(8));
-            });
-          });
+        // 16 khung theo đúng thứ tự, chỉ chạy một lần.
+        for(let i=0;i<S.n;i++) at(i*95,()=>cast.show(i));
+        at(760,()=>targets.filter(e=>e.alive).forEach(e=>{place(e,true);place(e,false);}));
+        await sleep(1520); if(tok!==battleToken)return;
+        cast.end();
+        if(six) targets.filter(e=>e.alive).forEach(e=>{
+          e.bleed=Math.max(e.bleed||0,TAICHI_BLEED_TURNS); e.bleedPct=Math.max(e.bleedPct||0,TAICHI_BLEED_PCT);
+          if(!e.el.querySelector('.bf-bleed')){const ic=document.createElement('div');ic.className='bf-bleed';ic.textContent='🩸';e.el.appendChild(ic);}
+          floatText(e,'CHẢY MÁU '+Math.round(TAICHI_BLEED_PCT*100)+'%');
         });
-        await sleep(1450); if (tok !== battleToken) return;
-        // Lốc xoáy giáng xuống: va chạm
-        const es = g.es(); if (!es.length) return;
         sfxGlassBreak();
-        f.style.transition = 'filter .08s'; f.style.filter = 'contrast(1.35) brightness(1.25)';
-        setTimeout(() => { f.style.filter = 'contrast(1.2) brightness(.8)'; }, 90);
-        setTimeout(() => { f.style.filter = ''; }, 380);
-        f.classList.add('screen-shake'); setTimeout(() => f.classList.remove('screen-shake'), 400);
-        // ★5: choáng 1 địch ngẫu nhiên 2 hiệp, không chảy máu • ★6: choáng 2 địch ngẫu nhiên 2 hiệp + chảy máu 40%
-        // THỨ TỰ: hiệu ứng GIẢM (chảy máu ★6) TRƯỚC khi ulti -> sát thương -> KHỐNG CHẾ (choáng) ngay sau khi ulti xong
-        const six = (u.side === 'hero' ? getProg(4).star : (u.star || 0)) >= STAR_MAX;
-        if (six) es.forEach(e => {
-          e.bleed = Math.max(e.bleed || 0, TAICHI_BLEED_TURNS); e.bleedPct = Math.max(e.bleedPct || 0, TAICHI_BLEED_PCT);
-          if (!e.el.querySelector('.bf-bleed')) { const ic = document.createElement('div'); ic.className = 'bf-bleed'; ic.textContent = '🩸'; e.el.appendChild(ic); }
-          floatText(e, 'CHẢY MÁU ' + Math.round(TAICHI_BLEED_PCT * 100) + '%');
-        });
-        { const nT = Math.max(1, Math.floor(TAICHI_HITS)), perT = u.atk * (u.sk || 1) / nT;   // TAICHI_HITS lần sát thương, tổng % Công giữ nguyên
-          for (let k = 0; k < nT; k++) { g.es().forEach(e => skillHit(e, perT, u)); if (k < nT - 1) { await sleep(260); if (tok !== battleToken) return; } } }
-        dropDeadEffects(es);
-        const left = g.es();
-        shuffled(left).slice(0, six ? 2 : 1).forEach(v => { stunEnemy(v, Math.max(2, v.stun || 0)); floatText(v, 'CHOÁNG 2 HIỆP'); });
-        await sleep(900); if (tok !== battleToken) return;
-        effects.forEach(({el,sc}) => { for(let i=9;i<16;i++) timers.push(setTimeout(()=>{if(tok===battleToken) sc.show(i);},seqT((i-9)*65))); el.animate([{opacity:1},{opacity:0}],{duration:seqT(480),fill:'forwards'}); });
-        await sleep(500);
+        for(let k=0;k<n;k++){
+          const live=targets.filter(e=>e.alive); if(!live.length)break;
+          live.forEach(e=>skillHit(e,per,u)); refreshPanel();
+          if(k<n-1){await sleep(260);if(tok!==battleToken)return;}
+        }
+        dropDeadEffects(targets);
+        shuffled(targets.filter(e=>e.alive)).slice(0,six?2:1).forEach(v=>{stunEnemy(v,Math.max(2,v.stun||0));floatText(v,'CHOÁNG 2 HIỆP');});
+        fx.forEach(({d,fade})=>{fade.cancel();d.style.opacity='1';d.animate([{opacity:1},{opacity:0}],{duration:Math.max(1,seqT(420)),fill:'forwards'});});
+        await sleep(440);
       } finally {
-        timers.forEach(clearTimeout); cast.end(); u.el.style.zIndex = oldZ; made.forEach(d => d.remove());
+        timers.forEach(clearTimeout); fx.forEach(({spin,fade})=>{spin.cancel();fade.cancel();});
+        cast.end();u.el.style.zIndex=oldZ;f.style.filter=oldFilter;f.style.transition=oldTransition;made.forEach(d=>d.remove());
       }
     }
+
 
 /* === au-co === */
 /* ÂU CƠ (id 5): tuyệt kỹ hoa sen
