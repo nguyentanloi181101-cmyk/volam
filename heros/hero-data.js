@@ -184,9 +184,10 @@ window.HERO_DATA = {
     "constants": { "lv": 73, "star": 3, "border": "orange", "ultName": "Thái Cực Quyền" },
     "audio": "04-truong-tam-phong.mp3?v=2",
     "sprites": {
-      "ttpIdle": { "src": "truong-tam-phong-idle.webp?v=28", "cw": 317, "ch": 256, "n": 16 },
-      "ttpCast": { "src": "truong-tam-phong-ult.webp?v=28", "cw": 354, "ch": 256, "n": 16 },
-      "ttpStorm": { "src": "truong-tam-phong-storm.webp?v=28", "cw": 283, "ch": 256, "n": 17 }
+      "ttpIdle": { "src": "truong-tam-phong-idle.webp?v=29", "cw": 336, "ch": 336, "n": 16, "face": "R" },
+      "ttpCast": { "src": "truong-tam-phong-ult.webp?v=29", "cw": 336, "ch": 336, "n": 16, "face": "R" },
+      "ttpStorm": { "src": "truong-tam-phong-storm.webp?v=29", "cw": 336, "ch": 336, "n": 16 },
+      "ttpBagua": { "src": "truong-tam-phong-bagua.webp?v=29", "cw": 336, "ch": 336, "n": 16 }
     },
     "idle": { "sheet": "ttpIdle", "h": 120, "ms": 1500 },
     "ultFn": "taichiUlt",
