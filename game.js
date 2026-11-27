@@ -504,6 +504,14 @@ window.GP = (function () {
     sprites:{tdeIdle:{src:'tuyet-de-idle.webp',cw:300,ch:256,n:20,face:'R'},tdeUlt:{src:'tuyet-de-ult.webp',cw:300,ch:256,n:20,face:'R'},tdeFx:{src:'tuyet-de-fx.webp',cw:512,ch:512,n:20,face:'R'}},
     skillConfig:{TDE_HITS:4,TDE_FREEZE:2}
   });
+  if (!window.HERO_DATA.heroes.some(h => h.id === 58271)) window.HERO_DATA.heroes.push({
+    id:58271,key:'hoade',slug:'hoa-de',name:'Hỏa Đế',emoji:'🔥',img:'hoa-de.webp',body:'hoa-de-body.webp',bodyH:96,
+    stats:{hp:6000,atk:800,spd:1600},combat:{def:300,dodge:60,acc:300,crit:0,critDmg:0,tough:0,pierce:0,block:0},
+    role:'atk',tia:1,constants:{lv:1,star:1,border:'orange',ultName:'Hỏa Diệm Pháo'},
+    idle:{sheet:'hdeIdle',h:130,ms:1900},ultFn:'hoaDeUlt',audio:'hoa-de-ult.mp3',
+    sprites:{hdeIdle:{src:'hoa-de-idle.webp',cw:300,ch:256,n:20,face:'R'},hdeUlt:{src:'hoa-de-ult.webp',cw:300,ch:256,n:20,face:'R'},hdeFx:{src:'hoa-de-fx.webp',cw:512,ch:512,n:20,face:'R'}},
+    skillConfig:{HDE_HITS:4,HDE_BURN_TURNS:2,HDE_BURN_PCT:.15}
+  });
   // === ĐÃ XOÁ THANH Y (id 1) khỏi danh sách tướng: không còn trong kho tướng, chiêu mộ, đội hình ===
   window.HERO_DATA.heroes = window.HERO_DATA.heroes.filter(h => h.id !== 1);
   // ===== HAI ID CHO MỖI TƯỚNG — BẮT BUỘC ĐÚNG CẢ HAI (tránh trùng id, lấy nhầm hình ảnh / dữ liệu) =====
@@ -547,6 +555,7 @@ window.GP = (function () {
     33: [42290, 'thaithuonglaoquan'],
     59787: [59787, 'thuytinh'],
     61813: [61813, 'haicongchua'],
+    58271: [58271, 'hoade'],
     67926: [67926, 'tuyetde'],
     84621: [84621, 'sontinh'],
     34: [45132, 'diemlavuong']
@@ -3014,6 +3023,7 @@ function addAccExp(n) {
       else if (id === 63917) ult = `Cần đầy 100 nộ. TRƯỚC khi ra đòn: bản thân tăng ${fmtN(LDT_PIERCE_UP)} Phá giáp trong ${LDT_TURNS} hiệp, toàn địch GIẢM ${pct(LDT_DEF_DOWN)}% Thủ và ${pct(LDT_BLOCK_DOWN)}% Đỡ đòn ${LDT_TURNS} hiệp. Rồi Lính Đánh Thuê quỳ gối nạp đạn cối, trực thăng xuất hiện trên trời phía địch thả ${LDT_BOMBS} quả bom, nổ sáng chói, gây ${LDT_HITS} lần sát thương lên TOÀN địch, tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}, mỗi lần ≈ ${fmtN(st.atk * sk / LDT_HITS)}); Phá giáp tính đủ MỖI lần.`
       else if (id === 59787) ult = `Cần đầy 100 nộ. Thủy Tinh biến mất, sóng nước ập qua toàn địch, gây ${TTINH_HITS} lần sát thương, tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}). Sau đòn cuối: choáng ${TTINH_STUN} hiệp, nộ địch về 0, nộ đồng đội lên 100 (trừ bản thân).`;
       else if (id === 61813) ult = `Đánh địch HP thấp nhất 6 lần, tổng HL × Công; câm lặng toàn địch 1 hiệp, xóa buff và khóa buff 2 hiệp. HP dưới 10% tự bạo, gây 50.000 sát thương chuẩn mỗi địch trừ Boss, không hồi sinh.`;
+      else if (id === 58271) ult = `Hỏa Diệm Pháo: đánh hàng trước ${HDE_HITS} lần, tổng HL × Công trên mỗi địch; thiêu đốt ${Math.round(HDE_BURN_PCT*100)}% HP hiện tại mỗi hiệp trong ${HDE_BURN_TURNS} hiệp.`;
       else if (id === 67926) ult = `Vĩnh Đông Chi Vực: đánh toàn địch ${TDE_HITS} lần, tổng HL × Công trên mỗi địch; đóng băng (mất lượt như choáng) ${TDE_FREEZE} hiệp.`;
       else if (id === 84621) ult = `Đánh địch Công cao nhất 3 lần, tổng HL × Công; toàn đội miễn khống chế và +30% Thủ, toàn địch -30% Công trong 2 hiệp. Nội tại: đồng đội xuống dưới 10% HP nhận +70 điểm % Đỡ đòn 2 hiệp.`;
       else ult = `Lao vào địch, đánh ${ULT_HITS} đòn liên tiếp, tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}, mỗi đòn ≈ ${fmtN(st.atk * sk / Math.max(1, ULT_HITS))}). Cần đầy 100 nộ.`;
@@ -3076,6 +3086,7 @@ function addAccExp(n) {
           case 63917: return `Bản thân +${fmtN(LDT_PIERCE_UP)} Phá giáp ${LDT_TURNS} hiệp, toàn địch -${pct(LDT_DEF_DOWN)}% Thủ, -${pct(LDT_BLOCK_DOWN)}% Đỡ đòn ${LDT_TURNS} hiệp. Trực thăng thả ${LDT_BOMBS} bom xuống địch, ${LDT_HITS} lần sát thương TOÀN địch.`;
           case 59787: return `Biến mất, sóng nước đánh toàn địch ${TTINH_HITS} lần; sau đòn cuối choáng ${TTINH_STUN} hiệp, xóa nộ địch, đầy nộ đồng đội (trừ bản thân).`;
           case 61813: return `Đánh địch HP thấp nhất 6 lần, tổng HL × Công; câm lặng toàn địch 1 hiệp, xóa buff và khóa buff 2 hiệp. HP dưới 10% tự bạo, gây 50.000 sát thương chuẩn mỗi địch trừ Boss, không hồi sinh.`;
+          case 58271: return `Hỏa Diệm Pháo: đánh hàng trước ${HDE_HITS} lần, tổng HL × Công trên mỗi địch; thiêu đốt ${Math.round(HDE_BURN_PCT*100)}% HP hiện tại mỗi hiệp trong ${HDE_BURN_TURNS} hiệp.`;
           case 67926: return `Vĩnh Đông Chi Vực: đánh toàn địch ${TDE_HITS} lần, tổng HL × Công trên mỗi địch; đóng băng (mất lượt như choáng) ${TDE_FREEZE} hiệp.`;
           case 84621: return `Đánh địch Công cao nhất 3 lần, tổng HL × Công; toàn đội miễn khống chế và +30% Thủ, toàn địch -30% Công trong 2 hiệp. Nội tại: đồng đội xuống dưới 10% HP nhận +70 điểm % Đỡ đòn 2 hiệp.`;
           default: return `Lao vào địch đánh ${ULT_HITS} đòn liên tiếp.`;
@@ -6928,6 +6939,28 @@ async function haiCongChuaUlt(u,tok) {
     for(let i=0;i<n;i++)at(250+1050*i/Math.max(1,n-1),()=>{if(target.alive)skillHit(target,per,u);const b=g.box0(es),d=g.mk('bf-seq-fx','♫ ♪',b.cx,b.cy);d.style.cssText+=';color:#b8faff;font-size:48px;text-shadow:0 0 16px #38bdf8;z-index:110;pointer-events:none;';animations.push(d.animate([{opacity:1,transform:'translate(-50%,-50%) scale(.5)'},{opacity:0,transform:'translate(-50%,-50%) scale(2)'}],{duration:Math.max(1,seqT(250)),fill:'forwards'}));refreshPanel();});
     await wait(1500);if(tok!==battleToken)return;dropDeadEffects(es);
   }finally{timers.forEach(clearTimeout);animations.forEach(a=>a.cancel());cast.end();g.made.forEach(e=>e.remove());}
+}
+
+async function hoaDeUlt(u,tok) {
+  const g=nt(u), all=g.es(); if(!all.length)return;
+  const dist=e=>Math.abs(e.x-50), front=Math.min(...all.map(dist));
+  const es=all.filter(e=>dist(e)<=front+2);
+  const S=SEQ.hdeUlt,F=SEQ.hdeFx,timers=[],end=1500;
+  const at=(ms,fn)=>timers.push(setTimeout(()=>{if(tok===battleToken)fn();},seqT(ms)));
+  const n=Math.max(1,Math.floor(HDE_HITS)),per=u.atk*(u.sk||1)/n;
+  let cast;
+  try {
+    cast=seqOverlay(u,S,Math.round(S.cw*((SEQ_IDLE[u.id]||{}).h||130)/S.ch));
+    for(let i=0;i<S.n;i++)at(i*end/S.n,()=>cast.show(i));
+    const effects=es.map(e=>{const fx=g.mk('bf-seq-fx','',e.x,e.y);fx.style.zIndex='106';fx.style.pointerEvents='none';fx.style.opacity='0';const field=seqEl(F,160);if(e.x<u.x)field.style.transform='scaleX(-1)';fx.appendChild(field);return {fx,field,e};});
+    for(let i=0;i<F.n;i++)at(750+i*750/F.n,()=>effects.forEach(({fx,field,e})=>{fx.style.opacity='1';field.show(i);if(i<8){const t=(i+1)/8;fx.style.left=(u.x+(e.x-u.x)*t)+'%';fx.style.top=(u.y+(e.y-u.y)*t)+'%';}else{fx.style.left=e.x+'%';fx.style.top=e.y+'%';}}));
+    for(let i=0;i<n;i++)at(1050+300*i/Math.max(1,n-1),()=>{
+      es.forEach(e=>{if(e.alive)skillHit(e,per,u);});
+      if(i===n-1)es.forEach(e=>{if(!e.alive)return;e.burn=Math.max(e.burn||0,HDE_BURN_TURNS);e.burnPct=Math.max(e.burnPct||0,HDE_BURN_PCT);floatText(e,'THIÊU ĐỐT');});
+      refreshPanel();
+    });
+    await new Promise(r=>setTimeout(r,seqT(end)));if(tok!==battleToken)return;dropDeadEffects(es);
+  }finally{timers.forEach(clearTimeout);if(cast)cast.end();g.made.forEach(e=>e.remove());}
 }
 
 async function tuyetDeUlt(u,tok) {
