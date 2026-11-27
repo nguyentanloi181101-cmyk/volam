@@ -519,7 +519,11 @@ window.GP = (function () {
   // Tướng CŨ (id 0-34): id cũ vẫn là khóa lưu tiến trình / cấu hình admin nên KHÔNG đổi; cặp ID mới khai ở bảng HERO_UID dưới đây (admin.html có bảng y hệt).
   // Tướng MỚI: id = ID số 5 chữ số + trường key = ID chữ. Sai 1 trong 2 (hoặc trùng) → bộ nạp BỎ tướng đó và báo lỗi trong Console.
   const joinName = s => String(s || '').replace(/Đ/g, 'D').replace(/đ/g, 'd').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]/g, '');
-  const HERO_UID = {   // [id cũ]: [ID số, ID chữ]
+  if (!window.HERO_DATA.heroes.some(h => h.id === 90770)) window.HERO_DATA.heroes.push({"id": 90770, "key": "luctieuphung", "slug": "luc-tieu-phung", "name": "Lục Tiểu Phụng", "emoji": "🪭", "role": "skill", "img": "luc-tieu-phung.webp", "body": "luc-tieu-phung-body.webp", "bodyH": 96, "stats": {"hp": 6000, "atk": 700, "spd": 120}, "combat": {"dodge": 60, "acc": 300, "crit": 0, "critDmg": 0, "tough": 0, "pierce": 0, "block": 0, "def": 300}, "tia": 1, "constants": {"lv": 1, "star": 1, "border": "orange", "ultName": "Phụng Vĩ Cữu Thiên"}, "audio": "luc-tieu-phung-ult.mp3", "sprites": {"LTPIdle": {"src": "luc-tieu-phung-idle.webp", "cw": 320, "ch": 320, "n": 16, "face": "R"}, "LTPCast": {"src": "luc-tieu-phung-ult.webp", "cw": 320, "ch": 320, "n": 16, "face": "R"}, "LTPFx": {"src": "luc-tieu-phung-fx.webp", "cw": 320, "ch": 320, "n": 16}}, "idle": {"sheet": "LTPIdle", "h": 120, "ms": 1600}, "ultFn": "luctieuphungUlt", "skillConfig": {"LTP_HITS": 4, "LTP_DODGE": 0.7, "LTP_TURNS": 2, "LTP_ATK": 0.5}});
+  if (!window.HERO_DATA.heroes.some(h => h.id === 97950)) window.HERO_DATA.heroes.push({"id": 97950, "key": "taymonxuytuyet", "slug": "tay-mon-xuy-tuyet", "name": "Tây Môn Xuy Tuyết", "emoji": "⚔️", "role": "skill", "img": "tay-mon-xuy-tuyet.webp", "body": "tay-mon-xuy-tuyet-body.webp", "bodyH": 96, "stats": {"hp": 6000, "atk": 700, "spd": 120}, "combat": {"dodge": 60, "acc": 300, "crit": 0, "critDmg": 0, "tough": 0, "pierce": 0, "block": 0, "def": 300}, "tia": 1, "constants": {"lv": 1, "star": 1, "border": "orange", "ultName": "Nhất Kiếm Tây Lai"}, "audio": "tay-mon-xuy-tuyet-ult.mp3", "sprites": {"TMXTIdle": {"src": "tay-mon-xuy-tuyet-idle.webp", "cw": 320, "ch": 320, "n": 16, "face": "R"}, "TMXTCast": {"src": "tay-mon-xuy-tuyet-ult.webp", "cw": 320, "ch": 320, "n": 16, "face": "R"}, "TMXTFx": {"src": "tay-mon-xuy-tuyet-fx.webp", "cw": 320, "ch": 320, "n": 16}}, "idle": {"sheet": "TMXTIdle", "h": 120, "ms": 1600}, "ultFn": "taymonxuytuyetUlt", "skillConfig": {"TMXT_HITS": 4, "TMXT_DODGE": 0.7, "TMXT_TURNS": 2, "TMXT_TARGETS": 3, "TMXT_STUN": 1}});
+  const HERO_UID = {
+    97950: [97950, 'taymonxuytuyet'],
+    90770: [90770, 'luctieuphung'],   // [id cũ]: [ID số, ID chữ]
     0: [73848, 'tade'],
     2: [14464, 'hangnga'],
     3: [96683, 'doccocaubai'],
@@ -3018,6 +3022,8 @@ function addAccExp(n) {
       else if (id === 31) ult = `KHÔNG TỐN NỘ – lượt nào cũng ulti được. Ulti TẠI CHỖ: bản thân tăng ${pct(BG_DEF_UP)}% Thủ trong ${BG_DEF_TURNS} hiệp, rồi hồi ${pct(BG_HEAL)}% HP tối đa của bản thân (≈ ${fmtN(st.hp * BG_HEAL)}).`;
       else if (id === 32) ult = `Cần đầy 100 nộ. HÓA THÂN thành BẠCH CỐT (bộ xương), nhảy vào GIỮA đội địch gây ${BCT_HITS} lần sát thương lên TOÀN địch, tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}, mỗi lần ≈ ${fmtN(st.atk * sk / BCT_HITS)}). Đánh xong, THÔI MIÊN 1 địch (ưu tiên công kích / kỹ năng): địch đó lập tức TỰ ULTI đánh chính đồng đội của mình.`;
       else if (id === 33) ult = `Cần đầy 100 nộ. TRƯỚC khi ra đòn: toàn đội ta tăng ${pct(LQ_HEAL_UP)}% hiệu quả hồi máu (x${1 + LQ_HEAL_UP}) trong ${LQ_HEAL_TURNS} hiệp, toàn địch bị CẤM HỒI MÁU ${LQ_NOHEAL_TURNS} hiệp. Rồi nhảy lên, giơ ĐỈNH khổng lồ quá đầu và ném xuống đội địch: gây ${LQ_HITS} lần sát thương lên TOÀN địch, tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}, mỗi lần ≈ ${fmtN(st.atk * sk / LQ_HITS)}).`;
+      else if (id === 90770) ult = `Gây ${LTP_HITS} lần sát thương toàn địch; toàn đội ta tăng ${pct(LTP_DODGE)}% Né ${pct(LTP_ATK)}% Công trong ${LTP_TURNS} hiệp. Tổng ${pct(sk)}% Công.`;
+      else if (id === 97950) ult = `Gây ${TMXT_HITS} lần sát thương lên ${TMXT_TARGETS} địch ngẫu nhiên, choáng ${TMXT_STUN} hiệp; toàn đội ta tăng ${pct(TMXT_DODGE)}% Né trong ${TMXT_TURNS} hiệp. Tổng ${pct(sk)}% Công.`;
       else if (id === 34) ult = `VÀO TRẬN ĐẦY 100 NỘ – ulti được ngay hiệp đầu. TRƯỚC khi ra đòn: toàn đội ta tăng ${pct(DL_CRIT_UP)}% Bạo và ${pct(DL_CDMG_UP)}% Bạo Sát trong ${DL_TURNS} hiệp. Rồi Diêm La Vương đứng yên chọi Lệnh Bài Sinh Tử xuống: lệnh bài rơi giữa đội địch rồi nổ, gây ${DL_HITS} lần sát thương lên TOÀN địch, tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}, mỗi lần ≈ ${fmtN(st.atk * sk / DL_HITS)}).`;
       else if (id === 58316) ult = `Cần đầy 100 nộ. TRƯỚC khi ra đòn: bản thân tăng ${pct(LD_CRIT_UP)}% Bạo và ${pct(LD_CDMG_UP)}% Bạo Sát trong ${LD_TURNS} hiệp, toàn địch GIẢM ${LD_TOUGH_DOWN}% Bền ${LD_TURNS} hiệp. Rồi Linda đứng yên chọi ${LD_BRICKS} viên gạch bay qua đội địch, xoay nhiều góc độ, rơi dồn dập xuống, gây ${LD_HITS} lần sát thương lên TOÀN địch, tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}, mỗi lần ≈ ${fmtN(st.atk * sk / LD_HITS)}).`;
       else if (id === 63917) ult = `Cần đầy 100 nộ. TRƯỚC khi ra đòn: bản thân tăng ${fmtN(LDT_PIERCE_UP)} Phá giáp trong ${LDT_TURNS} hiệp, toàn địch GIẢM ${pct(LDT_DEF_DOWN)}% Thủ và ${pct(LDT_BLOCK_DOWN)}% Đỡ đòn ${LDT_TURNS} hiệp. Rồi Lính Đánh Thuê quỳ gối nạp đạn cối, trực thăng xuất hiện trên trời phía địch thả ${LDT_BOMBS} quả bom, nổ sáng chói, gây ${LDT_HITS} lần sát thương lên TOÀN địch, tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}, mỗi lần ≈ ${fmtN(st.atk * sk / LDT_HITS)}); Phá giáp tính đủ MỖI lần.`
@@ -3081,6 +3087,8 @@ function addAccExp(n) {
           case 31: return `Tại chỗ: bản thân +${pct(BG_DEF_UP)}% Thủ ${BG_DEF_TURNS} hiệp, hồi ${pct(BG_HEAL)}% HP tối đa. Lượt nào cũng ulti.`;
           case 32: return `Hóa Bạch Cốt nhảy vào giữa địch, ${BCT_HITS} lần sát thương TOÀN địch. Rồi thôi miên 1 địch (ưu tiên công kích/kỹ năng) tự ulti đánh đồng đội.`;
           case 33: return `Cả đội ta x${1 + LQ_HEAL_UP} hồi máu ${LQ_HEAL_TURNS} hiệp, toàn địch cấm hồi máu ${LQ_NOHEAL_TURNS} hiệp. Ném đỉnh khổng lồ xuống địch, ${LQ_HITS} lần sát thương TOÀN địch.`;
+          case 90770: return `Gây ${LTP_HITS} lần sát thương toàn địch; toàn đội ta tăng ${pct(LTP_DODGE)}% Né ${pct(LTP_ATK)}% Công trong ${LTP_TURNS} hiệp.`;
+          case 97950: return `Gây ${TMXT_HITS} lần sát thương lên ${TMXT_TARGETS} địch ngẫu nhiên, choáng ${TMXT_STUN} hiệp; toàn đội ta tăng ${pct(TMXT_DODGE)}% Né trong ${TMXT_TURNS} hiệp.`;
           case 34: return `Vào trận đầy nộ, ulti hiệp đầu. Cả đội +${pct(DL_CRIT_UP)}% Bạo, +${pct(DL_CDMG_UP)}% Bạo Sát ${DL_TURNS} hiệp. Chọi lệnh bài xuống địch, ${DL_HITS} lần sát thương TOÀN địch.`;
           case 58316: return `Bản thân +${pct(LD_CRIT_UP)}% Bạo, +${pct(LD_CDMG_UP)}% Bạo Sát ${LD_TURNS} hiệp, toàn địch -${LD_TOUGH_DOWN}% Bền ${LD_TURNS} hiệp. Chọi ${LD_BRICKS} viên gạch xuống địch, ${LD_HITS} lần sát thương TOÀN địch.`;
           case 63917: return `Bản thân +${fmtN(LDT_PIERCE_UP)} Phá giáp ${LDT_TURNS} hiệp, toàn địch -${pct(LDT_DEF_DOWN)}% Thủ, -${pct(LDT_BLOCK_DOWN)}% Đỡ đòn ${LDT_TURNS} hiệp. Trực thăng thả ${LDT_BOMBS} bom xuống địch, ${LDT_HITS} lần sát thương TOÀN địch.`;
@@ -6741,6 +6749,42 @@ async function thaiThuongUlt(u, tok) {
 const DL_TOKEN_IMG = 'heros/diem-la-vuong/diem-la-vuong-lenh-bai.webp?v=1';
 GP.add(DL_TOKEN_IMG, 2);
 ['dlIdle', 'dlUlt', 'dlFx'].forEach(k => { const s = SEQ[k]; if (!s) return; const im = new Image(); im.onload = () => { if (im.naturalWidth && s.n) { s.cw = im.naturalWidth / s.n; s.ch = im.naturalHeight; } }; im.src = s.src; });
+async function luctieuphungUlt(u, tok) {
+  const g=nt(u), targets=g.es(); if (!targets.length) return;
+  const S=SEQ.LTPCast,F=SEQ.LTPFx, cast=seqOverlay(u,S,120), oldZ=u.el.style.zIndex;
+  const wait=ms=>new Promise(r=>setTimeout(r,seqT(ms))), n=Math.max(1,Math.floor(LTP_HITS));
+  try {
+    u.el.style.zIndex=99;
+    g.as().forEach(a=>{if(noBuff(a))return; pctMod(a,'dodge',LTP_DODGE,LTP_TURNS,'buff','LTP:dodge'); pctMod(a,'atk',LTP_ATK,LTP_TURNS,'buff','LTP:atk'); });
+    refreshPanel(); const per=u.atk*(u.sk||1)/n;
+    for(let i=0;i<S.n;i++){cast.show(i);await wait(75);if(tok!==battleToken)return;}
+    const locations=[g.box0(targets)];
+    const fx=locations.map(b=>{const d=g.mk('bf-seq-fx','',b.cx,b.cy), w=Math.round(Math.min(g.W*.65, 380));d.style.width=w+'px';d.style.height=w+'px';d.style.zIndex=104;const el=seqEl(F,w);d.appendChild(el);return el;});
+    let hits=0;
+    for(let i=0;i<F.n;i++){fx.forEach(e=>e.show(i));while(hits<n && i>=Math.floor(hits*(F.n-1)/n)){targets.filter(e=>e.alive).forEach(e=>skillHit(e,per,u));hits++;refreshPanel();}await wait(80);if(tok!==battleToken)return;}
+    
+    dropDeadEffects(targets);refreshPanel();
+  } finally {cast.end();u.el.style.zIndex=oldZ;g.made.forEach(d=>d.remove());}
+}
+
+async function taymonxuytuyetUlt(u, tok) {
+  const g=nt(u), targets=shuffled(g.es()).slice(0, Math.max(1, Math.floor(TMXT_TARGETS))); if (!targets.length) return;
+  const S=SEQ.TMXTCast,F=SEQ.TMXTFx, cast=seqOverlay(u,S,120), oldZ=u.el.style.zIndex;
+  const wait=ms=>new Promise(r=>setTimeout(r,seqT(ms))), n=Math.max(1,Math.floor(TMXT_HITS));
+  try {
+    u.el.style.zIndex=99;
+    g.as().forEach(a=>{if(noBuff(a))return; pctMod(a,'dodge',TMXT_DODGE,TMXT_TURNS,'buff','TMXT:dodge');  });
+    refreshPanel(); const per=u.atk*(u.sk||1)/n;
+    for(let i=0;i<S.n;i++){cast.show(i);await wait(75);if(tok!==battleToken)return;}
+    const locations=targets.map(e=>({cx:e.x,cy:e.y}));
+    const fx=locations.map(b=>{const d=g.mk('bf-seq-fx','',b.cx,b.cy), w=Math.round(Math.min(g.W*.28, 180));d.style.width=w+'px';d.style.height=w+'px';d.style.zIndex=104;const el=seqEl(F,w);d.appendChild(el);return el;});
+    let hits=0;
+    for(let i=0;i<F.n;i++){fx.forEach(e=>e.show(i));while(hits<n && i>=Math.floor(hits*(F.n-1)/n)){targets.filter(e=>e.alive).forEach(e=>skillHit(e,per,u));hits++;refreshPanel();}await wait(80);if(tok!==battleToken)return;}
+    targets.filter(e=>e.alive).forEach(e=>stunEnemy(e,Math.max(e.stun||0,TMXT_STUN)));
+    dropDeadEffects(targets);refreshPanel();
+  } finally {cast.end();u.el.style.zIndex=oldZ;g.made.forEach(d=>d.remove());}
+}
+
 async function diemLaVuongUlt(u, tok) {
   const g = nt(u), { W, H, made } = g, es0 = g.es(); if (!es0.length) return;
   const S = SEQ.dlUlt, F = SEQ.dlFx, I = SEQ.dlIdle, timers = [];
