@@ -1,1 +1,0 @@
-Goi tai nguyen chuan bi cho APK. Chua tich hop vao Android. Khong xoa anh goc tren hosting. Neu thu web, sao luu va them importScripts("extra-assets-sw.js"); vao hero-binary-sw.js, giu nguyen cac file cu va kiem tra HTTPS/localhost. APK se dung index.json de doc offset truc tiep.

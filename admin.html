@@ -86,6 +86,12 @@ button{background:#26364a;border-color:#40516a;border-radius:7px;padding:9px 13p
 <style id="admin-icon-theme">
 .admin-icon{width:21px;height:21px;flex:0 0 21px;vertical-align:middle;color:#a8bbd1}h1>.admin-icon{width:30px;height:30px;color:var(--gold);margin-right:5px}#tabs-main button{display:flex;align-items:center;gap:11px;text-align:left}#tabs-main button.on .admin-icon{color:var(--gold)}#tabs-main button:not(.on):hover .admin-icon{color:#fff}#tabs-main button.on{background:#e8c47b20;color:var(--gold);border-color:#e8c47b66}
 </style>
+<script>/* HBN1: claim the page before subsequent asset requests. */
+(function(){if(location.hostname==='appassets.androidplatform.net'||!('serviceWorker' in navigator)||!window.isSecureContext)return;
+ const sw=navigator.serviceWorker;let reloaded=false;
+ sw.addEventListener('controllerchange',function(){if(!reloaded){reloaded=true;location.reload();}});
+ sw.register('./hero-binary-sw.js?v=4',{scope:'./',updateViaCache:'none'}).catch(function(e){console.warn('HBN1 fallback:',e);});
+})();</script>
 </head>
 <body>
 <div class="wrap">

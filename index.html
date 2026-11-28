@@ -24,10 +24,10 @@
     .bf-dbf, .bf-mods, .bf-lb { font-size: 22px !important; }
   </style>
 <script>/* HBN1: claim the page before subsequent asset requests. */
-(function(){if(!('serviceWorker' in navigator)||!window.isSecureContext)return;
- const sw=navigator.serviceWorker, first=!sw.controller;let reloaded=false;
- sw.addEventListener('controllerchange',function(){if(first&&!reloaded){reloaded=true;location.reload();}});
- sw.register('./hero-binary-sw.js?v=3',{scope:'./',updateViaCache:'none'}).catch(function(e){console.warn('HBN1 fallback:',e);});
+(function(){if(location.hostname==='appassets.androidplatform.net'||!('serviceWorker' in navigator)||!window.isSecureContext)return;
+ const sw=navigator.serviceWorker;let reloaded=false;
+ sw.addEventListener('controllerchange',function(){if(!reloaded){reloaded=true;location.reload();}});
+ sw.register('./hero-binary-sw.js?v=4',{scope:'./',updateViaCache:'none'}).catch(function(e){console.warn('HBN1 fallback:',e);});
 })();</script>
 </head>
 <body>
