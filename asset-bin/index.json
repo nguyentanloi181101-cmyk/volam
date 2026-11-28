@@ -1,0 +1,3040 @@
+{
+  "giang-ho/ai-map-1.webp": {
+    "pack": "asset-bin/giang-ho--root.bin",
+    "offset": 5140,
+    "size": 698396,
+    "mime": "image/webp",
+    "sha256": "d41787c96a8676a3cd0e89bc714b62893738301479403326d6228f96d906ddc3"
+  },
+  "giang-ho/ai-map-2.webp": {
+    "pack": "asset-bin/giang-ho--root.bin",
+    "offset": 703536,
+    "size": 666040,
+    "mime": "image/webp",
+    "sha256": "b1d5bb523240e81e047dc11c80ff1ce287e4a7787ffb56b2ec81c958e847a70f"
+  },
+  "giang-ho/ai-map-3.webp": {
+    "pack": "asset-bin/giang-ho--root.bin",
+    "offset": 1369576,
+    "size": 673200,
+    "mime": "image/webp",
+    "sha256": "d8fbc363f48fdf692ac43c3b475e5114d48a2e35ac78c1022e211c57edfa2902"
+  },
+  "giang-ho/bao-kho.webp": {
+    "pack": "asset-bin/giang-ho--root.bin",
+    "offset": 2042776,
+    "size": 57938,
+    "mime": "image/webp",
+    "sha256": "dae62c47107e9e2d1546da5bf0864212cf4d69554f918915e862632350d29dba"
+  },
+  "giang-ho/baokho-1.webp": {
+    "pack": "asset-bin/giang-ho--root.bin",
+    "offset": 2100714,
+    "size": 29510,
+    "mime": "image/webp",
+    "sha256": "158de069c887871db4a257d2541d8ca8f9ae964b51cbc1bc93e5dd25c78cb2fc"
+  },
+  "giang-ho/baokho-10.webp": {
+    "pack": "asset-bin/giang-ho--root.bin",
+    "offset": 2130224,
+    "size": 28528,
+    "mime": "image/webp",
+    "sha256": "82ce9633491ec45d96aa6a6bb01ac3d349fd8d17b5edf760e20b9d13b9040c82"
+  },
+  "giang-ho/baokho-2.webp": {
+    "pack": "asset-bin/giang-ho--root.bin",
+    "offset": 2158752,
+    "size": 30534,
+    "mime": "image/webp",
+    "sha256": "f724027a0efc16d23502686cd945db4eb1deb87e56c994b9fad49399da39bce4"
+  },
+  "giang-ho/baokho-3.webp": {
+    "pack": "asset-bin/giang-ho--root.bin",
+    "offset": 2189286,
+    "size": 31992,
+    "mime": "image/webp",
+    "sha256": "5582dfb6fba2e8f3bf5a8e214c01d7ecf27c3a41feeda7c11903ed7cc6e79b4a"
+  },
+  "giang-ho/baokho-4.webp": {
+    "pack": "asset-bin/giang-ho--root.bin",
+    "offset": 2221278,
+    "size": 27764,
+    "mime": "image/webp",
+    "sha256": "0fac0a68ec6bc0946461e336eb41ee02d5679c50d3471f77a74f52a359d0308d"
+  },
+  "giang-ho/baokho-5.webp": {
+    "pack": "asset-bin/giang-ho--root.bin",
+    "offset": 2249042,
+    "size": 29088,
+    "mime": "image/webp",
+    "sha256": "51553aacd4f98a34b84ade36b9a210a401dddc5e2465e1db6268861c7363f9cd"
+  },
+  "giang-ho/baokho-6.webp": {
+    "pack": "asset-bin/giang-ho--root.bin",
+    "offset": 2278130,
+    "size": 28608,
+    "mime": "image/webp",
+    "sha256": "d3abf55ea7d2c676616383dba92e638b62ba3f5f2c6a70bfdcd8aebd4f84a26a"
+  },
+  "giang-ho/baokho-7.webp": {
+    "pack": "asset-bin/giang-ho--root.bin",
+    "offset": 2306738,
+    "size": 26372,
+    "mime": "image/webp",
+    "sha256": "ba3da9ec7936eec2d90d3161663e5527c1142d7ace4953326f46d64911a2fe52"
+  },
+  "giang-ho/baokho-8.webp": {
+    "pack": "asset-bin/giang-ho--root.bin",
+    "offset": 2333110,
+    "size": 29154,
+    "mime": "image/webp",
+    "sha256": "b907c92b5245ef96226111db592f2e048f244f385a07455d2a924d24e02b8ee4"
+  },
+  "giang-ho/baokho-9.webp": {
+    "pack": "asset-bin/giang-ho--root.bin",
+    "offset": 2362264,
+    "size": 27758,
+    "mime": "image/webp",
+    "sha256": "62edaf129982903e39685a129ec54da65d2bce6330b365e252382ebec04f4f88"
+  },
+  "giang-ho/danh-tuong-lau-nen.webp": {
+    "pack": "asset-bin/giang-ho--root.bin",
+    "offset": 2390022,
+    "size": 454002,
+    "mime": "image/webp",
+    "sha256": "7d830130d0949f86b1c76d82889b00b15735e06664a3fd792fc2fe9d9ecc891c"
+  },
+  "giang-ho/danh-tuong-lau.webp": {
+    "pack": "asset-bin/giang-ho--root.bin",
+    "offset": 2844024,
+    "size": 58008,
+    "mime": "image/webp",
+    "sha256": "dee882254d5f6fd0d8b351e003674f5846937490a8a83155f33268ed6a670af8"
+  },
+  "giang-ho/dao-tien.webp": {
+    "pack": "asset-bin/giang-ho--root.bin",
+    "offset": 2902032,
+    "size": 57120,
+    "mime": "image/webp",
+    "sha256": "cfbdb27c9af5979e25635afbc9ea8510c1a9e53fd5275d990a709a69c81b317b"
+  },
+  "giang-ho/daotien-1.webp": {
+    "pack": "asset-bin/giang-ho--root.bin",
+    "offset": 2959152,
+    "size": 28324,
+    "mime": "image/webp",
+    "sha256": "bc1f64ca6997ceef6895d8af1014bb001daa0dea0db07f7fe0a6d7d2a81f8279"
+  },
+  "giang-ho/daotien-10.webp": {
+    "pack": "asset-bin/giang-ho--root.bin",
+    "offset": 2987476,
+    "size": 27852,
+    "mime": "image/webp",
+    "sha256": "3858c228afe74c0840ac18aa3b06e647266bb419dff4be621ec7a13129a310e8"
+  },
+  "giang-ho/daotien-2.webp": {
+    "pack": "asset-bin/giang-ho--root.bin",
+    "offset": 3015328,
+    "size": 30848,
+    "mime": "image/webp",
+    "sha256": "340fd9369ff29d6fffa565ba23c3e49d0cc37759eaba6b3c33a6ebda39f6753a"
+  },
+  "giang-ho/daotien-3.webp": {
+    "pack": "asset-bin/giang-ho--root.bin",
+    "offset": 3046176,
+    "size": 31750,
+    "mime": "image/webp",
+    "sha256": "b55e0801a77b274485a878b778c08f2d6798efed7edca6bd25d658b1497b18f8"
+  },
+  "giang-ho/daotien-4.webp": {
+    "pack": "asset-bin/giang-ho--root.bin",
+    "offset": 3077926,
+    "size": 29428,
+    "mime": "image/webp",
+    "sha256": "dbe6e74e13092deb73e6b738ada8bb464de0a5200ecc61f6a8f2a2ec9ab4c9cf"
+  },
+  "giang-ho/daotien-5.webp": {
+    "pack": "asset-bin/giang-ho--root.bin",
+    "offset": 3107354,
+    "size": 26722,
+    "mime": "image/webp",
+    "sha256": "9bbf3e648eac0ecb59fe8bbd886f2664ec89ef494428320914fd2c079222ec11"
+  },
+  "giang-ho/daotien-6.webp": {
+    "pack": "asset-bin/giang-ho--root.bin",
+    "offset": 3134076,
+    "size": 27926,
+    "mime": "image/webp",
+    "sha256": "0b16f03d4a1e8e92b372568d7b2af37b21f5a1636fa0504c8baf159b7b0797dd"
+  },
+  "giang-ho/daotien-7.webp": {
+    "pack": "asset-bin/giang-ho--root.bin",
+    "offset": 3162002,
+    "size": 27952,
+    "mime": "image/webp",
+    "sha256": "6bca191c8f5a914032e14524403b2a67df02dabdaecf98d75c53ef808d720e5a"
+  },
+  "giang-ho/daotien-8.webp": {
+    "pack": "asset-bin/giang-ho--root.bin",
+    "offset": 3189954,
+    "size": 29338,
+    "mime": "image/webp",
+    "sha256": "1435511305f25d4fcc17a19ffc9fab404ea44f44abfb2ce0737f51dffc6aeae5"
+  },
+  "giang-ho/daotien-9.webp": {
+    "pack": "asset-bin/giang-ho--root.bin",
+    "offset": 3219292,
+    "size": 29444,
+    "mime": "image/webp",
+    "sha256": "21a430bbe9a132146684d005c2b0d0b39e053d52d0f68010e0ac9d29e2f066b8"
+  },
+  "giang-ho/hang-tu-linh.webp": {
+    "pack": "asset-bin/giang-ho--root.bin",
+    "offset": 3248736,
+    "size": 57612,
+    "mime": "image/webp",
+    "sha256": "679d189dc7f3a85d0a2ab662bf9379b38a8f2695f380a9ed0db114b898c8bd86"
+  },
+  "giang-ho/luan-kiem-bg.webp": {
+    "pack": "asset-bin/giang-ho--root.bin",
+    "offset": 3306348,
+    "size": 411032,
+    "mime": "image/webp",
+    "sha256": "2dd5cbb2a0bfa11623aaa6cb4c05fd1bb6b30cda032d56ffb31f9f3a802a758f"
+  },
+  "giang-ho/luan-kiem-nen.webp": {
+    "pack": "asset-bin/giang-ho--root.bin",
+    "offset": 3717380,
+    "size": 457136,
+    "mime": "image/webp",
+    "sha256": "7e0c738700288787f0fa8816556755dd6e9bd8f8820fe4732c243dba505c26ca"
+  },
+  "giang-ho/luan-kiem.webp": {
+    "pack": "asset-bin/giang-ho--root.bin",
+    "offset": 4174516,
+    "size": 58770,
+    "mime": "image/webp",
+    "sha256": "bdceb4034f1a360668ce2beb1193b2af8f8f42c118a1e2dd972225b46683a25f"
+  },
+  "giang-ho/than-dan.webp": {
+    "pack": "asset-bin/giang-ho--root.bin",
+    "offset": 4233286,
+    "size": 61764,
+    "mime": "image/webp",
+    "sha256": "91a672ecc1f1bd5015320a1d12b6bbc047a01501cae4787c07671db164ef0f4b"
+  },
+  "giang-ho/tron.webp": {
+    "pack": "asset-bin/giang-ho--root.bin",
+    "offset": 4295050,
+    "size": 58724,
+    "mime": "image/webp",
+    "sha256": "6af15a04f6b1f40eb48845b7ce2071e79d3395584b8831d0185b7fb01f43a98f"
+  },
+  "giang-ho/than-dan/td-atk.webp": {
+    "pack": "asset-bin/giang-ho--than-dan.bin",
+    "offset": 852,
+    "size": 82368,
+    "mime": "image/webp",
+    "sha256": "795229a9a1897238d1b304f1819f257f2ed82e1c42d48d422426a371091dfc4f"
+  },
+  "giang-ho/than-dan/td-heal.webp": {
+    "pack": "asset-bin/giang-ho--than-dan.bin",
+    "offset": 83220,
+    "size": 75030,
+    "mime": "image/webp",
+    "sha256": "de7e407e630329ee53481d02f71404293342ac8c87aee9541c02f5c8cf6a42da"
+  },
+  "giang-ho/than-dan/td-skill.webp": {
+    "pack": "asset-bin/giang-ho--than-dan.bin",
+    "offset": 158250,
+    "size": 83706,
+    "mime": "image/webp",
+    "sha256": "2d3a4623442bc5de01ed35c4080bfa21bd7782a8142f1339065442f2f7182b7c"
+  },
+  "giang-ho/than-dan/td-sup.webp": {
+    "pack": "asset-bin/giang-ho--than-dan.bin",
+    "offset": 241956,
+    "size": 77202,
+    "mime": "image/webp",
+    "sha256": "ba081379cf489f1df3bdc936e62c4ced40042d567e60527e35fdbc08254738a4"
+  },
+  "giang-ho/than-dan/td-tank.webp": {
+    "pack": "asset-bin/giang-ho--than-dan.bin",
+    "offset": 319158,
+    "size": 74690,
+    "mime": "image/webp",
+    "sha256": "a4d17c86eef2595d9b34a5aab384038b71ec314e55f39405d43b908557e97813"
+  },
+  "giao-dien/am-thanh-game/go-stone.mp3": {
+    "pack": "asset-bin/giao-dien--am-thanh-game.bin",
+    "offset": 394,
+    "size": 4365,
+    "mime": "audio/mpeg",
+    "sha256": "0b68224b0b3bf76ddfd0118631860589a1fe33926ca53506d04492daaba08a7c"
+  },
+  "giao-dien/am-thanh-game/normal-attack.mp3": {
+    "pack": "asset-bin/giao-dien--am-thanh-game.bin",
+    "offset": 4759,
+    "size": 10413,
+    "mime": "audio/mpeg",
+    "sha256": "90261e223cfa2ca7b03877d180cfac8162208aa3e976eed97a67057a8eb83b94"
+  },
+  "giao-dien/bang-hoi/bang-chien.webp": {
+    "pack": "asset-bin/giao-dien--bang-hoi.bin",
+    "offset": 1570,
+    "size": 124816,
+    "mime": "image/webp",
+    "sha256": "0421c24a74e55cceadbd2110eedc3c6e1d3c51564b2407a89133bc081ec21d9e"
+  },
+  "giao-dien/bang-hoi/cam-dia.webp": {
+    "pack": "asset-bin/giao-dien--bang-hoi.bin",
+    "offset": 126386,
+    "size": 14480,
+    "mime": "image/webp",
+    "sha256": "7d4545fbd60a17e4ed38efeb82ecd55a7d37b4b0a3969b539481a0c2b965b6fa"
+  },
+  "giao-dien/bang-hoi/dai-sanh.webp": {
+    "pack": "asset-bin/giao-dien--bang-hoi.bin",
+    "offset": 140866,
+    "size": 135314,
+    "mime": "image/webp",
+    "sha256": "782e199d43f51cbc88ae650e5e6ae4285445e882519b13c5183d88739ea7f93f"
+  },
+  "giao-dien/bang-hoi/lo-luyen-hoa.webp": {
+    "pack": "asset-bin/giao-dien--bang-hoi.bin",
+    "offset": 276180,
+    "size": 193140,
+    "mime": "image/webp",
+    "sha256": "1c46a80878c7d1cb0f90a5072eb08534b6a5a91dcb445e706e9d11bdb952d21e"
+  },
+  "giao-dien/bang-hoi/than-thu.webp": {
+    "pack": "asset-bin/giao-dien--bang-hoi.bin",
+    "offset": 469320,
+    "size": 43210,
+    "mime": "image/webp",
+    "sha256": "4080155e8b17445d43614a3844cc496347781cf79eee1dd71233712fc4701892"
+  },
+  "giao-dien/bang-hoi/thanthu/anim/hac-dieu.webp": {
+    "pack": "asset-bin/giao-dien--bang-hoi.bin",
+    "offset": 512530,
+    "size": 1953502,
+    "mime": "image/webp",
+    "sha256": "78fca7084eb5904ddd91a11dcdf1ae9376ba36ff2baf30a0267714508c338ebe"
+  },
+  "giao-dien/bang-hoi/thanthu/anim/ky-lan.webp": {
+    "pack": "asset-bin/giao-dien--bang-hoi.bin",
+    "offset": 2466032,
+    "size": 2773912,
+    "mime": "image/webp",
+    "sha256": "41f86b37b1ec5ed300c700b01010c30c562438d92cba43e59fd1a8e7be98848a"
+  },
+  "giao-dien/bang-hoi/thanthu/anim/tien-loc.webp": {
+    "pack": "asset-bin/giao-dien--bang-hoi.bin",
+    "offset": 5239944,
+    "size": 2365236,
+    "mime": "image/webp",
+    "sha256": "03cce45f899cff244df2ced616728520bee546eadbc30f8b23604ebd0e7eee43"
+  },
+  "giao-dien/bang-hoi/tu-bao-bon.webp": {
+    "pack": "asset-bin/giao-dien--bang-hoi.bin",
+    "offset": 7605180,
+    "size": 168046,
+    "mime": "image/webp",
+    "sha256": "063104ac4cdb2b2ab2f194b6ddcae20e5ca95b7e4a3a144a4eb207a07af3f91a"
+  },
+  "giao-dien/bao-vat/bao-vat.webp": {
+    "pack": "asset-bin/giao-dien--bao-vat.bin",
+    "offset": 383,
+    "size": 1079730,
+    "mime": "image/webp",
+    "sha256": "a15ad3ca543aa7a87fc2d4374f8eb4b2e602550b6e92ddd53542095838086240"
+  },
+  "giao-dien/bao-vat/manh-bao-vat.webp": {
+    "pack": "asset-bin/giao-dien--bao-vat.bin",
+    "offset": 1080113,
+    "size": 952238,
+    "mime": "image/webp",
+    "sha256": "4fb52be158620e865bd32caa248b11d315eed971b544f6cdfb81da8952fcbc27"
+  },
+  "giao-dien/hang-tu-linh/hang-1.webp": {
+    "pack": "asset-bin/giao-dien--hang-tu-linh.bin",
+    "offset": 1205,
+    "size": 48680,
+    "mime": "image/webp",
+    "sha256": "bee5df4f0816970d2d756cd05f6aa75bacccf0a5f38e1ff446e70a665b71975f"
+  },
+  "giao-dien/hang-tu-linh/hang-2.webp": {
+    "pack": "asset-bin/giao-dien--hang-tu-linh.bin",
+    "offset": 49885,
+    "size": 41406,
+    "mime": "image/webp",
+    "sha256": "46571d0683fa2cb799964db19e3df12d98e1797cc315bfe7aa8ffb416cee8308"
+  },
+  "giao-dien/hang-tu-linh/hang-3.webp": {
+    "pack": "asset-bin/giao-dien--hang-tu-linh.bin",
+    "offset": 91291,
+    "size": 46122,
+    "mime": "image/webp",
+    "sha256": "c82713243c4bf6d02691f02001f8925d685ed35b16d1c9568057cfe5a0007da2"
+  },
+  "giao-dien/hang-tu-linh/hang-4.webp": {
+    "pack": "asset-bin/giao-dien--hang-tu-linh.bin",
+    "offset": 137413,
+    "size": 41288,
+    "mime": "image/webp",
+    "sha256": "414f6f9523e22615c5de4292e82881c54992a2ef6da7f9a81554af082ea2f68f"
+  },
+  "giao-dien/hang-tu-linh/hang-5.webp": {
+    "pack": "asset-bin/giao-dien--hang-tu-linh.bin",
+    "offset": 178701,
+    "size": 39302,
+    "mime": "image/webp",
+    "sha256": "82acc9cc33103503b8a807ff6551c4904bfebeea0fc1ef17311f2aec3e163b55"
+  },
+  "giao-dien/hang-tu-linh/hang-6.webp": {
+    "pack": "asset-bin/giao-dien--hang-tu-linh.bin",
+    "offset": 218003,
+    "size": 41734,
+    "mime": "image/webp",
+    "sha256": "f5f6350ae96925682a3e227cab16c25c17b843294ba289b86ff14b6bea410109"
+  },
+  "giao-dien/hang-tu-linh/hang-7.webp": {
+    "pack": "asset-bin/giao-dien--hang-tu-linh.bin",
+    "offset": 259737,
+    "size": 52338,
+    "mime": "image/webp",
+    "sha256": "0eb6c16aac61c9beaf04bc8c21267e4e87ebf585743322002a429051f55a746b"
+  },
+  "giao-dien/icon-home/bang-hoi.webp": {
+    "pack": "asset-bin/giao-dien--icon-home.bin",
+    "offset": 6626,
+    "size": 45650,
+    "mime": "image/webp",
+    "sha256": "f9afb15a362439b822775fcb9bebb42b369b05019f508d1dcadf40b077474efc"
+  },
+  "giao-dien/icon-home/bao-li-xi.webp": {
+    "pack": "asset-bin/giao-dien--icon-home.bin",
+    "offset": 52276,
+    "size": 34310,
+    "mime": "image/webp",
+    "sha256": "3412b87785ae35bf5abe46e74dc845a12799380dca0574bf0c20de918ded90ca"
+  },
+  "giao-dien/icon-home/bao-vat.webp": {
+    "pack": "asset-bin/giao-dien--icon-home.bin",
+    "offset": 86586,
+    "size": 51706,
+    "mime": "image/webp",
+    "sha256": "26797872a9910bd0af3c46388cc8053dab3902e53f1cc07c66299d67beb51de0"
+  },
+  "giao-dien/icon-home/buc-phai-vo-hiep.png": {
+    "pack": "asset-bin/giao-dien--icon-home.bin",
+    "offset": 138292,
+    "size": 1404433,
+    "mime": "image/png",
+    "sha256": "4542b28a6011e97645e4da81611045e06cc472445eeb458312f2ae09355832c8"
+  },
+  "giao-dien/icon-home/buc-phai-vo-hiep.webp": {
+    "pack": "asset-bin/giao-dien--icon-home.bin",
+    "offset": 1542725,
+    "size": 81912,
+    "mime": "image/webp",
+    "sha256": "19086a7b6108b80478ef0fb12a881652f4ba129750aa06c95a7536e82a589919"
+  },
+  "giao-dien/icon-home/cai-dat.webp": {
+    "pack": "asset-bin/giao-dien--icon-home.bin",
+    "offset": 1624637,
+    "size": 40716,
+    "mime": "image/webp",
+    "sha256": "976e79c2022068ddd8506308815813daa20236f2c97f092a4b55b09503536452"
+  },
+  "giao-dien/icon-home/chieu-mo.webp": {
+    "pack": "asset-bin/giao-dien--icon-home.bin",
+    "offset": 1665353,
+    "size": 42624,
+    "mime": "image/webp",
+    "sha256": "e7f6d1348d12dc8a7daa745db0e9dc143b7ff0e6c6f6b9562caf81ccd447d2b5"
+  },
+  "giao-dien/icon-home/cua-tiem-1.png": {
+    "pack": "asset-bin/giao-dien--icon-home.bin",
+    "offset": 1707977,
+    "size": 1897465,
+    "mime": "image/png",
+    "sha256": "8c4d467d234f9bf8adbb953c10e76d30f77f81d9f0ea123cf8fa26b37c10deda"
+  },
+  "giao-dien/icon-home/cua-tiem.webp": {
+    "pack": "asset-bin/giao-dien--icon-home.bin",
+    "offset": 3605442,
+    "size": 45772,
+    "mime": "image/webp",
+    "sha256": "69e777c450836d91668206c04acc48144c778a65dd65fb6d33ed6eade5946e33"
+  },
+  "giao-dien/icon-home/dao-kiem.png": {
+    "pack": "asset-bin/giao-dien--icon-home.bin",
+    "offset": 3651214,
+    "size": 2139249,
+    "mime": "image/png",
+    "sha256": "f1e6802a401e54be2e45ae12e9d28ce748ae7a128080cf8e6c3dddd7e1a4d8b5"
+  },
+  "giao-dien/icon-home/dao-kiem.webp": {
+    "pack": "asset-bin/giao-dien--icon-home.bin",
+    "offset": 5790463,
+    "size": 1008188,
+    "mime": "image/webp",
+    "sha256": "54b3b0f225a2b4bf8a59287a7a847c91049773d1bc1bd0f7e2e412e865a542a0"
+  },
+  "giao-dien/icon-home/dao.png": {
+    "pack": "asset-bin/giao-dien--icon-home.bin",
+    "offset": 6798651,
+    "size": 1636326,
+    "mime": "image/png",
+    "sha256": "c6c37a90da060d4197ad56316e556efdd61b64214023c754c5ea26f6b712f4ca"
+  },
+  "giao-dien/icon-home/dao.webp": {
+    "pack": "asset-bin/giao-dien--icon-home.bin",
+    "offset": 8434977,
+    "size": 173040,
+    "mime": "image/webp",
+    "sha256": "03885259c5a57bfbefdcf3d922d08a9d6bed230723e7e83e9fe05f5c4e2454ad"
+  },
+  "giao-dien/icon-home/de-mo.webp": {
+    "pack": "asset-bin/giao-dien--icon-home.bin",
+    "offset": 8608017,
+    "size": 2097422,
+    "mime": "image/webp",
+    "sha256": "98bc44b80fef63678ef75968073111ef1cb869829f33d513f8f6e7e04eaf3895"
+  },
+  "giao-dien/icon-home/diem-danh.png": {
+    "pack": "asset-bin/giao-dien--icon-home.bin",
+    "offset": 10705439,
+    "size": 1790482,
+    "mime": "image/png",
+    "sha256": "b9483a1ea7edaf98f17825939cec8c7007c5b3df064b1b7570d3e52f368c4c82"
+  },
+  "giao-dien/icon-home/do-than.png": {
+    "pack": "asset-bin/giao-dien--icon-home.bin",
+    "offset": 12495921,
+    "size": 2560339,
+    "mime": "image/png",
+    "sha256": "8dd721fe71e9b455bdd8d4d3627b9a57f83b05d303db20bb9824488cb9cc11af"
+  },
+  "giao-dien/icon-home/doi-ngu.webp": {
+    "pack": "asset-bin/giao-dien--icon-home.bin",
+    "offset": 15056260,
+    "size": 51372,
+    "mime": "image/webp",
+    "sha256": "770cf2ead36a0284eae7118c60390947c6090979658b767e016f6dc0a67f9329"
+  },
+  "giao-dien/icon-home/giang-ho.webp": {
+    "pack": "asset-bin/giao-dien--icon-home.bin",
+    "offset": 15107632,
+    "size": 51034,
+    "mime": "image/webp",
+    "sha256": "33f2cedc451f23a4163cde3878544897054158c07c28ff2498a187a68a3662b0"
+  },
+  "giao-dien/icon-home/gift-code.webp": {
+    "pack": "asset-bin/giao-dien--icon-home.bin",
+    "offset": 15158666,
+    "size": 56778,
+    "mime": "image/webp",
+    "sha256": "33347c4442d535009972666a0acb1e0c9b4478c7e7827a23f4cbaa1df834a2de"
+  },
+  "giao-dien/icon-home/hop-thu.webp": {
+    "pack": "asset-bin/giao-dien--icon-home.bin",
+    "offset": 15215444,
+    "size": 58182,
+    "mime": "image/webp",
+    "sha256": "f6019fc0bc71c657606b323666f0daf86a58e272031f213fedb8805f3b1fe2f8"
+  },
+  "giao-dien/icon-home/kiem.png": {
+    "pack": "asset-bin/giao-dien--icon-home.bin",
+    "offset": 15273626,
+    "size": 1441935,
+    "mime": "image/png",
+    "sha256": "28af6e9da3cc608fa1197a53fa148926fd8c87591c05680acb315c84c0bd4bb0"
+  },
+  "giao-dien/icon-home/kiem.webp": {
+    "pack": "asset-bin/giao-dien--icon-home.bin",
+    "offset": 16715561,
+    "size": 121828,
+    "mime": "image/webp",
+    "sha256": "ccfe8c1ada30ad7d3012a3927eda64c4fdbd059899fe1576ae97c55343c71462"
+  },
+  "giao-dien/icon-home/ky-ngo.webp": {
+    "pack": "asset-bin/giao-dien--icon-home.bin",
+    "offset": 16837389,
+    "size": 42600,
+    "mime": "image/webp",
+    "sha256": "0e4864fb615d40a65262546ea972ed5763200933305e5ec6e2d32c92be6b7451"
+  },
+  "giao-dien/icon-home/linh-thu.webp": {
+    "pack": "asset-bin/giao-dien--icon-home.bin",
+    "offset": 16879989,
+    "size": 1489512,
+    "mime": "image/webp",
+    "sha256": "a7c5491a34f259a0c1fb5550c6794bf2e1179743413d2e71acc6b59882165cfb"
+  },
+  "giao-dien/icon-home/luyen-hoa.webp": {
+    "pack": "asset-bin/giao-dien--icon-home.bin",
+    "offset": 18369501,
+    "size": 54344,
+    "mime": "image/webp",
+    "sha256": "762ccd7346ad9c5e3e6afb9b2510651f1c2a754915d6e88cc2a497a9d695bd5a"
+  },
+  "giao-dien/icon-home/nhiem-vu.webp": {
+    "pack": "asset-bin/giao-dien--icon-home.bin",
+    "offset": 18423845,
+    "size": 56942,
+    "mime": "image/webp",
+    "sha256": "794fa1b364ebe8f3c673d3953a46fdd51cc0bb4824b83f9c85e89de073a70a2e"
+  },
+  "giao-dien/icon-home/phai-vo-hiep.png": {
+    "pack": "asset-bin/giao-dien--icon-home.bin",
+    "offset": 18480787,
+    "size": 2176006,
+    "mime": "image/png",
+    "sha256": "cd7470b00723b04ab15bdaea8dc00bc698b5e04cd5a0329bc95b4deaddbcfca1"
+  },
+  "giao-dien/icon-home/pve.webp": {
+    "pack": "asset-bin/giao-dien--icon-home.bin",
+    "offset": 20656793,
+    "size": 51946,
+    "mime": "image/webp",
+    "sha256": "5e168688b5e3a1dcd757723552017d61240012c6946f52ed01d5f6741fa6f2ff"
+  },
+  "giao-dien/icon-home/pvp.webp": {
+    "pack": "asset-bin/giao-dien--icon-home.bin",
+    "offset": 20708739,
+    "size": 61358,
+    "mime": "image/webp",
+    "sha256": "ba1253bc637cc2fd3df5f5d9ba89136284c4f498908b3eea1965d4990ba237d2"
+  },
+  "giao-dien/icon-home/ruou.png": {
+    "pack": "asset-bin/giao-dien--icon-home.bin",
+    "offset": 20770097,
+    "size": 1469355,
+    "mime": "image/png",
+    "sha256": "c950454ae92f714e5c68fcabc689567bea4a801a965e8ee86ce4097f58624abb"
+  },
+  "giao-dien/icon-home/ruou.webp": {
+    "pack": "asset-bin/giao-dien--icon-home.bin",
+    "offset": 22239452,
+    "size": 166350,
+    "mime": "image/webp",
+    "sha256": "d8a55566b2f9eb83d96baf5c77f901e1a536580e6801046ca2aa058de208164f"
+  },
+  "giao-dien/icon-home/su-kien.webp": {
+    "pack": "asset-bin/giao-dien--icon-home.bin",
+    "offset": 22405802,
+    "size": 58824,
+    "mime": "image/webp",
+    "sha256": "866f19ace6b0dc3d0b99425d5e386cbc4ed24b6c8bdf34d6309b978b9704af07"
+  },
+  "giao-dien/icon-home/tang-cap.webp": {
+    "pack": "asset-bin/giao-dien--icon-home.bin",
+    "offset": 22464626,
+    "size": 47174,
+    "mime": "image/webp",
+    "sha256": "64fa87bf2cb66d60b740a8ec1131965e24e534a845bd996d9e50af3a8382a3f5"
+  },
+  "giao-dien/icon-home/thang-cap.png": {
+    "pack": "asset-bin/giao-dien--icon-home.bin",
+    "offset": 22511800,
+    "size": 1696813,
+    "mime": "image/png",
+    "sha256": "d978617a3a85e7079e79244eda3fd0fc67f9e2afbda0b0f041f32718597bb20b"
+  },
+  "giao-dien/icon-home/the-thang.webp": {
+    "pack": "asset-bin/giao-dien--icon-home.bin",
+    "offset": 24208613,
+    "size": 2318042,
+    "mime": "image/webp",
+    "sha256": "a07aea7420c54efe7cf8db67af99c8bee737e04cff827e52b8a33a17e692a9bc"
+  },
+  "giao-dien/icon-home/trang-bi.webp": {
+    "pack": "asset-bin/giao-dien--icon-home.bin",
+    "offset": 26526655,
+    "size": 54648,
+    "mime": "image/webp",
+    "sha256": "f3ee8b1176214300b32f1a704a8be289739e39b592f821a9b6f01ae3742c3cd1"
+  },
+  "giao-dien/icon-home/trang-chu.webp": {
+    "pack": "asset-bin/giao-dien--icon-home.bin",
+    "offset": 26581303,
+    "size": 52886,
+    "mime": "image/webp",
+    "sha256": "51af066d3cb124c7ea15536873134075f77718e53b93b3d6173e34322cb8dcc6"
+  },
+  "giao-dien/icon-home/tui-do.webp": {
+    "pack": "asset-bin/giao-dien--icon-home.bin",
+    "offset": 26634189,
+    "size": 60176,
+    "mime": "image/webp",
+    "sha256": "1aa81cc560d20c6d1c1bcd2c2985cfb3ce6e211e640b1d93dca0195c3778391f"
+  },
+  "giao-dien/icon-home/ung-ruou.png": {
+    "pack": "asset-bin/giao-dien--icon-home.bin",
+    "offset": 26694365,
+    "size": 1903027,
+    "mime": "image/png",
+    "sha256": "fac3cf83a1f715d297e05df965fa504b9b634cb807fa895fc6515fb895e60735"
+  },
+  "giao-dien/icon-home/vo-hiep.webp": {
+    "pack": "asset-bin/giao-dien--icon-home.bin",
+    "offset": 28597392,
+    "size": 46138,
+    "mime": "image/webp",
+    "sha256": "dd7706f002e5b7522883845e20caa8364943245041ed83f4f70f9e4d1d109047"
+  },
+  "giao-dien/icon-kihieu/bat_tu.webp": {
+    "pack": "asset-bin/giao-dien--icon-kihieu.bin",
+    "offset": 5856,
+    "size": 15664,
+    "mime": "image/webp",
+    "sha256": "5045d4a5e42225d129c8bea327392aa20ceb3e4e3b1b1a0f8c7105f91dec151e"
+  },
+  "giao-dien/icon-kihieu/cam_lang.webp": {
+    "pack": "asset-bin/giao-dien--icon-kihieu.bin",
+    "offset": 21520,
+    "size": 19130,
+    "mime": "image/webp",
+    "sha256": "15a1466966aed6b49105b5d7c72c264d7a4ad0017e8c5e7e8963b809dc312b1d"
+  },
+  "giao-dien/icon-kihieu/chay_mau.webp": {
+    "pack": "asset-bin/giao-dien--icon-kihieu.bin",
+    "offset": 40650,
+    "size": 15100,
+    "mime": "image/webp",
+    "sha256": "7ee9f8dc1fa67f2228fe1cf9f154a8230eb3c28fe86779499786a412bab88918"
+  },
+  "giao-dien/icon-kihieu/chay_nhanh.webp": {
+    "pack": "asset-bin/giao-dien--icon-kihieu.bin",
+    "offset": 55750,
+    "size": 11932,
+    "mime": "image/webp",
+    "sha256": "aa62b21c276492caefa1798468b6c9b70d1995118fca311cd176158587d305a2"
+  },
+  "giao-dien/icon-kihieu/choang.webp": {
+    "pack": "asset-bin/giao-dien--icon-kihieu.bin",
+    "offset": 67682,
+    "size": 16328,
+    "mime": "image/webp",
+    "sha256": "cc31366459d865d17739f8bf13a7ad716bedbf4e8a7feb5160e58efcd037271e"
+  },
+  "giao-dien/icon-kihieu/do_don.webp": {
+    "pack": "asset-bin/giao-dien--icon-kihieu.bin",
+    "offset": 84010,
+    "size": 17888,
+    "mime": "image/webp",
+    "sha256": "7446031d4227df7a3aedbc4b8c9e40b0aa663c1843737c473bb3a1e798caba51"
+  },
+  "giao-dien/icon-kihieu/giam_bao.webp": {
+    "pack": "asset-bin/giao-dien--icon-kihieu.bin",
+    "offset": 101898,
+    "size": 15866,
+    "mime": "image/webp",
+    "sha256": "eb1408bf25175b349f12d859cc03549db1f6f0cf6cadc33cec6d2966f729b5ba"
+  },
+  "giao-dien/icon-kihieu/giam_bao_sat.webp": {
+    "pack": "asset-bin/giao-dien--icon-kihieu.bin",
+    "offset": 117764,
+    "size": 13088,
+    "mime": "image/webp",
+    "sha256": "73112398c2797a109684012bd7d8efb08f523ce9490a301d5d33caa514e6cdfb"
+  },
+  "giao-dien/icon-kihieu/giam_chinh_xac.webp": {
+    "pack": "asset-bin/giao-dien--icon-kihieu.bin",
+    "offset": 130852,
+    "size": 12776,
+    "mime": "image/webp",
+    "sha256": "0dbf323003bf4d859e2bef56028324a62ae5eecd82176a9eb04ccb3efa20d44a"
+  },
+  "giao-dien/icon-kihieu/giam_cong.webp": {
+    "pack": "asset-bin/giao-dien--icon-kihieu.bin",
+    "offset": 143628,
+    "size": 19720,
+    "mime": "image/webp",
+    "sha256": "5f09d8663eb130833c96e08c28d9d69b1d2289bbb7b6fe2fb1287cf0a9d3b5dc"
+  },
+  "giao-dien/icon-kihieu/giam_hoi.webp": {
+    "pack": "asset-bin/giao-dien--icon-kihieu.bin",
+    "offset": 163348,
+    "size": 13050,
+    "mime": "image/webp",
+    "sha256": "b524790e6d480eebc93d44a517eae05d4637546d0c182cdaf19b02e51b236e95"
+  },
+  "giao-dien/icon-kihieu/giam_hp.webp": {
+    "pack": "asset-bin/giao-dien--icon-kihieu.bin",
+    "offset": 176398,
+    "size": 12066,
+    "mime": "image/webp",
+    "sha256": "c09e41d8e53325c4ac393065521e200cb4a302746d849cebe727f8d6163d2e80"
+  },
+  "giao-dien/icon-kihieu/giam_ne.webp": {
+    "pack": "asset-bin/giao-dien--icon-kihieu.bin",
+    "offset": 188464,
+    "size": 15994,
+    "mime": "image/webp",
+    "sha256": "3d65906cc34413708ab5ee962182e1cf4ab6b05e15e6d144a436bf5830d21f38"
+  },
+  "giao-dien/icon-kihieu/giam_no.webp": {
+    "pack": "asset-bin/giao-dien--icon-kihieu.bin",
+    "offset": 204458,
+    "size": 15608,
+    "mime": "image/webp",
+    "sha256": "aacb24794fb9e74ae3d304052001e2f052ca2fee0bbd7be13e199551108fecc9"
+  },
+  "giao-dien/icon-kihieu/giam_pha_giap.webp": {
+    "pack": "asset-bin/giao-dien--icon-kihieu.bin",
+    "offset": 220066,
+    "size": 14758,
+    "mime": "image/webp",
+    "sha256": "f5b8cc8a3bcebf153204c1dbbfe3e40d52b6bae12478229fbe69db6b8d31195c"
+  },
+  "giao-dien/icon-kihieu/giam_thu.webp": {
+    "pack": "asset-bin/giao-dien--icon-kihieu.bin",
+    "offset": 234824,
+    "size": 13316,
+    "mime": "image/webp",
+    "sha256": "552203e717ad2c023ad4d7a8632c688a7df2ca5e0307a4d8f1c4e85f235a8358"
+  },
+  "giao-dien/icon-kihieu/giam_toc.webp": {
+    "pack": "asset-bin/giao-dien--icon-kihieu.bin",
+    "offset": 248140,
+    "size": 15220,
+    "mime": "image/webp",
+    "sha256": "299bf0996873f099161337d0a796e03cc2807d419e87fbd3e1d13214e4c361eb"
+  },
+  "giao-dien/icon-kihieu/khang.webp": {
+    "pack": "asset-bin/giao-dien--icon-kihieu.bin",
+    "offset": 263360,
+    "size": 15034,
+    "mime": "image/webp",
+    "sha256": "80267d78c8d0da00944c0f7d8b0f1f1dce78718ac845da9fdd642f1bde56f5aa"
+  },
+  "giao-dien/icon-kihieu/khoa_tang_phuc.webp": {
+    "pack": "asset-bin/giao-dien--icon-kihieu.bin",
+    "offset": 278394,
+    "size": 16092,
+    "mime": "image/webp",
+    "sha256": "b99b76aaccc0d13949e002fed10ec1be9fa13990087a926ba4ba3cde81b4a303"
+  },
+  "giao-dien/icon-kihieu/me_hoac.webp": {
+    "pack": "asset-bin/giao-dien--icon-kihieu.bin",
+    "offset": 294486,
+    "size": 18976,
+    "mime": "image/webp",
+    "sha256": "dd94ce52ea5178635aae930655732107bae6d2c65164e0c8f6228a68d4495ea1"
+  },
+  "giao-dien/icon-kihieu/phong_an.webp": {
+    "pack": "asset-bin/giao-dien--icon-kihieu.bin",
+    "offset": 313462,
+    "size": 17304,
+    "mime": "image/webp",
+    "sha256": "b3cec87c1bfa191a4d812ddf47b533a6104af6cebf5c6b2cee73de658e2fa8ba"
+  },
+  "giao-dien/icon-kihieu/tang-do-don.webp": {
+    "pack": "asset-bin/giao-dien--icon-kihieu.bin",
+    "offset": 330766,
+    "size": 19318,
+    "mime": "image/webp",
+    "sha256": "f091429c02eef6f03f062afce13566001f8d659f417567cdafb9db559b0cf4d9"
+  },
+  "giao-dien/icon-kihieu/tang_bao.webp": {
+    "pack": "asset-bin/giao-dien--icon-kihieu.bin",
+    "offset": 350084,
+    "size": 14052,
+    "mime": "image/webp",
+    "sha256": "c20d2a555de63dacca9fb0fd9171503f6ad6d7ed270facc590ab8e978b644c2d"
+  },
+  "giao-dien/icon-kihieu/tang_bao_sat.webp": {
+    "pack": "asset-bin/giao-dien--icon-kihieu.bin",
+    "offset": 364136,
+    "size": 15708,
+    "mime": "image/webp",
+    "sha256": "566421659fa487b0928362c035dd7e4833a6b7a90013975c973113a6b2a77e18"
+  },
+  "giao-dien/icon-kihieu/tang_chinh_xac.webp": {
+    "pack": "asset-bin/giao-dien--icon-kihieu.bin",
+    "offset": 379844,
+    "size": 16120,
+    "mime": "image/webp",
+    "sha256": "3f9558100b362511f020efd26f2090cedfae24ed66e566890f01ef83481b19a6"
+  },
+  "giao-dien/icon-kihieu/tang_cong.webp": {
+    "pack": "asset-bin/giao-dien--icon-kihieu.bin",
+    "offset": 395964,
+    "size": 17658,
+    "mime": "image/webp",
+    "sha256": "dc4f5416866f509978382dc6a5edaf806b513eac99e4ca0e7e7d0e8e1b02429b"
+  },
+  "giao-dien/icon-kihieu/tang_hoi.webp": {
+    "pack": "asset-bin/giao-dien--icon-kihieu.bin",
+    "offset": 413622,
+    "size": 12768,
+    "mime": "image/webp",
+    "sha256": "c78500c29cd35308fafe644970fd2f346e5aa1a36a3037c729291a0ca7c538d3"
+  },
+  "giao-dien/icon-kihieu/tang_hp.webp": {
+    "pack": "asset-bin/giao-dien--icon-kihieu.bin",
+    "offset": 426390,
+    "size": 11682,
+    "mime": "image/webp",
+    "sha256": "c2ff33afa955fc1a8d1f0b221623daf4f41d6cc5eb1bcc3fc315593e9c55fd30"
+  },
+  "giao-dien/icon-kihieu/tang_ne.webp": {
+    "pack": "asset-bin/giao-dien--icon-kihieu.bin",
+    "offset": 438072,
+    "size": 14438,
+    "mime": "image/webp",
+    "sha256": "1e0de9458fe1467c561e292a51f1e6ace7a254d6ee42bef69f5f44c584959eb4"
+  },
+  "giao-dien/icon-kihieu/tang_no.webp": {
+    "pack": "asset-bin/giao-dien--icon-kihieu.bin",
+    "offset": 452510,
+    "size": 15016,
+    "mime": "image/webp",
+    "sha256": "55fdf8da3221904f41d1194342514ccb0e24136510fa67476696da6d98afd8eb"
+  },
+  "giao-dien/icon-kihieu/tang_pha_giap.webp": {
+    "pack": "asset-bin/giao-dien--icon-kihieu.bin",
+    "offset": 467526,
+    "size": 15154,
+    "mime": "image/webp",
+    "sha256": "4448a0582a228c0cb9ede1c1558f1c327bed7e3ecea181e4a23b4a85abda6408"
+  },
+  "giao-dien/icon-kihieu/tang_thu.webp": {
+    "pack": "asset-bin/giao-dien--icon-kihieu.bin",
+    "offset": 482680,
+    "size": 16466,
+    "mime": "image/webp",
+    "sha256": "e2eb94674a6a1b9f143e8e33fb806c87556f8e757bb1527a833ff116839e3119"
+  },
+  "giao-dien/icon-kihieu/tang_toc.webp": {
+    "pack": "asset-bin/giao-dien--icon-kihieu.bin",
+    "offset": 499146,
+    "size": 16278,
+    "mime": "image/webp",
+    "sha256": "932a2a6ba4b02ff6b2a2c5caa746ed9bf49dffc826175c92c89c7903ac731d05"
+  },
+  "giao-dien/icon-kihieu/thieu_dot.webp": {
+    "pack": "asset-bin/giao-dien--icon-kihieu.bin",
+    "offset": 515424,
+    "size": 14580,
+    "mime": "image/webp",
+    "sha256": "23bf7b8a15459201bfdd2b64efa0b00690ad867cad881ffc8f035bc42a0ffe2d"
+  },
+  "giao-dien/icon-kihieu/trung_doc.webp": {
+    "pack": "asset-bin/giao-dien--icon-kihieu.bin",
+    "offset": 530004,
+    "size": 19302,
+    "mime": "image/webp",
+    "sha256": "753012195797c02124c734bb90b6b0858d65c688e87d4a66312463bfa5251302"
+  },
+  "giao-dien/icon-phuthe/cap-toc-1.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 18772,
+    "size": 117957,
+    "mime": "image/png",
+    "sha256": "0378c468fb4e12c2fbca80721fb3bf6dc13c2bccad785d9c58162200fbeb82f3"
+  },
+  "giao-dien/icon-phuthe/cap-toc-1.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 136729,
+    "size": 16506,
+    "mime": "image/webp",
+    "sha256": "13647b25701a1dfbf3c5e4d0d82843adf31d4e96315a8889ae986bac2934deb5"
+  },
+  "giao-dien/icon-phuthe/cap-toc-2.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 153235,
+    "size": 117857,
+    "mime": "image/png",
+    "sha256": "3442da972d25b35000a90d39436a77b0616c85c945da6a334b54e0152428718f"
+  },
+  "giao-dien/icon-phuthe/cap-toc-2.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 271092,
+    "size": 14952,
+    "mime": "image/webp",
+    "sha256": "54dc5c90cf3a20526d9a758aa65fd640a9df911c2c1bbaee9717e69c74385e5f"
+  },
+  "giao-dien/icon-phuthe/cap-toc-3.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 286044,
+    "size": 116018,
+    "mime": "image/png",
+    "sha256": "bf9b85625d8d137e7469cd648b88c7e6fc94a3b02843853e1fa098fa2eb4578d"
+  },
+  "giao-dien/icon-phuthe/cap-toc-3.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 402062,
+    "size": 15438,
+    "mime": "image/webp",
+    "sha256": "ed893382e25b0b6ae652f2e3c5d4d297f134de96bc4974f45b0ad50859e88be1"
+  },
+  "giao-dien/icon-phuthe/cap-toc-4.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 417500,
+    "size": 114011,
+    "mime": "image/png",
+    "sha256": "d194169c7f2067bc8fffa319be495eae8d894aac25b85f25cf3e721bc9ea696c"
+  },
+  "giao-dien/icon-phuthe/cap-toc-4.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 531511,
+    "size": 20256,
+    "mime": "image/webp",
+    "sha256": "811a5c7e74494f4d4a71c77fd3e6482448341ec02e6c66d689ee774f60944436"
+  },
+  "giao-dien/icon-phuthe/cap-toc-5.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 551767,
+    "size": 120016,
+    "mime": "image/png",
+    "sha256": "b69c25dc7b0196a4519d180e20a3acac0abc4f57fc7ef014fd498f5bffd72a32"
+  },
+  "giao-dien/icon-phuthe/cap-toc-5.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 671783,
+    "size": 16050,
+    "mime": "image/webp",
+    "sha256": "dc72a2c249086287f1e4b15f69f551ea6be1cf0759e17ce3061084035dd5fca7"
+  },
+  "giao-dien/icon-phuthe/cap-toc-6.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 687833,
+    "size": 120742,
+    "mime": "image/png",
+    "sha256": "3fe66a887cfe6bacd7731c1f039235b284d15ad1d28c8cfb256c63aeb9eae3ee"
+  },
+  "giao-dien/icon-phuthe/cap-toc-6.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 808575,
+    "size": 15812,
+    "mime": "image/webp",
+    "sha256": "b533ede3fd84017d298d081ebb6e09b1ac86052d7a71383fda012d962e190286"
+  },
+  "giao-dien/icon-phuthe/cap-toc-7.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 824387,
+    "size": 117933,
+    "mime": "image/png",
+    "sha256": "53de78c6e1eb7a075b562e809216f06a4f88f6ab191ddf0df13f6573b9ab5b4f"
+  },
+  "giao-dien/icon-phuthe/cap-toc-7.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 942320,
+    "size": 15000,
+    "mime": "image/webp",
+    "sha256": "3b613f05447d5bc74ac9da02c02e12ac9d7b5534cd069d5dd178acf919b3bc70"
+  },
+  "giao-dien/icon-phuthe/gia-toc-1.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 957320,
+    "size": 114255,
+    "mime": "image/png",
+    "sha256": "73d706458b85656d2f3e6a4d2c94a8fe78e17f2821fcef1a17738e7308ff76aa"
+  },
+  "giao-dien/icon-phuthe/gia-toc-1.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 1071575,
+    "size": 15826,
+    "mime": "image/webp",
+    "sha256": "703c42c2e9c07bdb461db0f7528cb0beb681a3a20c732b05df6b173074592822"
+  },
+  "giao-dien/icon-phuthe/gia-toc-2.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 1087401,
+    "size": 114524,
+    "mime": "image/png",
+    "sha256": "787ccdfbd5ce43f54996368e8b75108cf5bdb479fa3e04417a3333b7b81322d3"
+  },
+  "giao-dien/icon-phuthe/gia-toc-2.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 1201925,
+    "size": 15018,
+    "mime": "image/webp",
+    "sha256": "40a7dde53270394892818003c222a29d5f177739fad1d25172bf31ed7c5d1cba"
+  },
+  "giao-dien/icon-phuthe/gia-toc-3.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 1216943,
+    "size": 113342,
+    "mime": "image/png",
+    "sha256": "e627d12d26933f3f0823f582bd91f09e5901b6fd99fb2e51820862ad3192f4db"
+  },
+  "giao-dien/icon-phuthe/gia-toc-3.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 1330285,
+    "size": 14588,
+    "mime": "image/webp",
+    "sha256": "3a31ee05223a016178e9fb2510e97d8a31ae22d22333d58df052017aca5ff21a"
+  },
+  "giao-dien/icon-phuthe/gia-toc-4.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 1344873,
+    "size": 115446,
+    "mime": "image/png",
+    "sha256": "fef9f13a701e39883e0b46faecf59a275545b3d82fb281fc9840c61cd531538d"
+  },
+  "giao-dien/icon-phuthe/gia-toc-4.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 1460319,
+    "size": 15224,
+    "mime": "image/webp",
+    "sha256": "3158d4a7c5831001828e024fbb07321cd0eebb4e8d36e6151bd9d716af38c6be"
+  },
+  "giao-dien/icon-phuthe/gia-toc-5.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 1475543,
+    "size": 114669,
+    "mime": "image/png",
+    "sha256": "af82fb22a66cf42627ba04717d0e8ecf2f471ef8b87d6bdf1493cf6d639e66e7"
+  },
+  "giao-dien/icon-phuthe/gia-toc-5.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 1590212,
+    "size": 15148,
+    "mime": "image/webp",
+    "sha256": "5731b7bfe30a2053cf07c45f6fff4cde1daba66a9360bd3645cab4c629c3e93b"
+  },
+  "giao-dien/icon-phuthe/gia-toc-6.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 1605360,
+    "size": 111673,
+    "mime": "image/png",
+    "sha256": "9c9ddc7a889914a2ce6bec38f6a446ee26b98e6717ce8d0da6ca02dbf05bfe4c"
+  },
+  "giao-dien/icon-phuthe/gia-toc-6.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 1717033,
+    "size": 14866,
+    "mime": "image/webp",
+    "sha256": "53317504dde57b1881b8f286b1d4b6fc046c7558a6f7ee5df1f4dec1b62a16ef"
+  },
+  "giao-dien/icon-phuthe/gia-toc-7.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 1731899,
+    "size": 114235,
+    "mime": "image/png",
+    "sha256": "3392b668cc22ab70ec76f44b5881582f64c5e37fced6f57107ed818fb21c8712"
+  },
+  "giao-dien/icon-phuthe/gia-toc-7.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 1846134,
+    "size": 14768,
+    "mime": "image/webp",
+    "sha256": "5e2b5f7fafbe37a8b631ac52d8ea3d54d47e4d99b590de85ea9e9f8486fbb7e5"
+  },
+  "giao-dien/icon-phuthe/ho-thuan-1.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 1860902,
+    "size": 101586,
+    "mime": "image/png",
+    "sha256": "e566114676234ffff758c28336308054a9ea0024f6fdb6786e62da082b3f9b5a"
+  },
+  "giao-dien/icon-phuthe/ho-thuan-1.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 1962488,
+    "size": 21688,
+    "mime": "image/webp",
+    "sha256": "71e87733ce937fbcee544490ddd1d8e2434e3391b91bbb93b02f09d93d39ba91"
+  },
+  "giao-dien/icon-phuthe/ho-thuan-2.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 1984176,
+    "size": 101930,
+    "mime": "image/png",
+    "sha256": "687a4c55e2eb191112a0cf9b16b3e75feabd25d60168f4d5c0f26007acf07dc7"
+  },
+  "giao-dien/icon-phuthe/ho-thuan-2.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 2086106,
+    "size": 22198,
+    "mime": "image/webp",
+    "sha256": "5890d925955767034898f1a4006da6f0f145e251ca33b2f69006a313ef9af93d"
+  },
+  "giao-dien/icon-phuthe/ho-thuan-3.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 2108304,
+    "size": 105350,
+    "mime": "image/png",
+    "sha256": "a8e2a7bbb549f660189b15fc0ce23e61234c47f57a7ff89172e4ccb1f5ebdfbf"
+  },
+  "giao-dien/icon-phuthe/ho-thuan-3.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 2213654,
+    "size": 23078,
+    "mime": "image/webp",
+    "sha256": "749a9c6d3a6d9e2ab94aedf9013c327d74d3a562bb5e1e0f67e2e365165fecb4"
+  },
+  "giao-dien/icon-phuthe/ho-thuan-4.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 2236732,
+    "size": 104974,
+    "mime": "image/png",
+    "sha256": "6c0544f6e82184a12b24eb6e6e1308d1d4c980f9721b67041a9d41dda68f1ebf"
+  },
+  "giao-dien/icon-phuthe/ho-thuan-4.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 2341706,
+    "size": 22624,
+    "mime": "image/webp",
+    "sha256": "5b0fe0f1cfd214930d662b51498a34545e1897bb5ae6506dceb733286e36dfaf"
+  },
+  "giao-dien/icon-phuthe/ho-thuan-5.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 2364330,
+    "size": 111528,
+    "mime": "image/png",
+    "sha256": "66c1fc4148e0a7984e0aac89175b7ce08d3fd47d2c6e4e968756e58c591888f7"
+  },
+  "giao-dien/icon-phuthe/ho-thuan-5.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 2475858,
+    "size": 24274,
+    "mime": "image/webp",
+    "sha256": "c222810467d0a376ed7a7875284fd8c030373149130a63301bc83763baf96ff5"
+  },
+  "giao-dien/icon-phuthe/ho-thuan-6.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 2500132,
+    "size": 109392,
+    "mime": "image/png",
+    "sha256": "111b30650fb1761fc7a5a547457e5edf9929643e650b833b9694ab111b5eb007"
+  },
+  "giao-dien/icon-phuthe/ho-thuan-6.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 2609524,
+    "size": 28250,
+    "mime": "image/webp",
+    "sha256": "6f417709e4a6937f8561fb49c98c2477147f2c05eb69d85414fb9d408605f656"
+  },
+  "giao-dien/icon-phuthe/ho-thuan-7.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 2637774,
+    "size": 108408,
+    "mime": "image/png",
+    "sha256": "452ef0f0d39b705cbc907feacbdfaeff2f5e68309e73943b24e09a1ec0a6203a"
+  },
+  "giao-dien/icon-phuthe/ho-thuan-7.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 2746182,
+    "size": 22134,
+    "mime": "image/webp",
+    "sha256": "b76172b177509a1eee1ca8cfe5c6c24f5ed5de3c6cdf722105e48aed664f1ead"
+  },
+  "giao-dien/icon-phuthe/ho-toc-1.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 2768316,
+    "size": 113134,
+    "mime": "image/png",
+    "sha256": "985128cf35d39a827306e7a85f6b54bd9d5d52a8cc6bb33dca766b066fb05a06"
+  },
+  "giao-dien/icon-phuthe/ho-toc-1.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 2881450,
+    "size": 15154,
+    "mime": "image/webp",
+    "sha256": "68ea485127d2b22c4361f730bfb46e00c66ce7fef5349d75f1b9aea5efcc4ddf"
+  },
+  "giao-dien/icon-phuthe/ho-toc-2.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 2896604,
+    "size": 116997,
+    "mime": "image/png",
+    "sha256": "7c37a4c37411010f181f4b7f2888c00107f4dbaa8c187fe0a48db39f80193c3a"
+  },
+  "giao-dien/icon-phuthe/ho-toc-2.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 3013601,
+    "size": 15190,
+    "mime": "image/webp",
+    "sha256": "4259b190497d86e03825f7a2385a1645fce140d9c9755b44190071420d8f3c54"
+  },
+  "giao-dien/icon-phuthe/ho-toc-3.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 3028791,
+    "size": 114969,
+    "mime": "image/png",
+    "sha256": "93358f4cd5c845edb84303dc14d5d62e203b1b645b8e57119d193ccbccabbe89"
+  },
+  "giao-dien/icon-phuthe/ho-toc-3.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 3143760,
+    "size": 15186,
+    "mime": "image/webp",
+    "sha256": "e4c7780ffe72d2642dcb38290a068a02a455b0b41bae61ca9c69a684073ed013"
+  },
+  "giao-dien/icon-phuthe/ho-toc-4.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 3158946,
+    "size": 119668,
+    "mime": "image/png",
+    "sha256": "cd7e276e8fa7338e6bd22beacff074d6c5be514178b3b32a614ba096ef7161c5"
+  },
+  "giao-dien/icon-phuthe/ho-toc-4.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 3278614,
+    "size": 16068,
+    "mime": "image/webp",
+    "sha256": "6a1d00e1e597489118d78106a39e057a9262a606e18ddf6b31ef4abbd6307936"
+  },
+  "giao-dien/icon-phuthe/ho-toc-5.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 3294682,
+    "size": 117699,
+    "mime": "image/png",
+    "sha256": "e4c3c9b7872164d6f4ff7b1e4bc1848fb51931ff0ffc4fab79f15b93e78cbefd"
+  },
+  "giao-dien/icon-phuthe/ho-toc-5.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 3412381,
+    "size": 15312,
+    "mime": "image/webp",
+    "sha256": "1703dc741b0fde0df9234edd81296b585c7988c7d9c22839228010c9b250a3f8"
+  },
+  "giao-dien/icon-phuthe/ho-toc-6.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 3427693,
+    "size": 116504,
+    "mime": "image/png",
+    "sha256": "c273588cb9ca205ac47d3c90e063651c1c339d68f051a69f5c0be5a2197fd309"
+  },
+  "giao-dien/icon-phuthe/ho-toc-6.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 3544197,
+    "size": 14212,
+    "mime": "image/webp",
+    "sha256": "848d98dc559ce9c71521c3d451050249c977d2fb141deca8a87eddd561974837"
+  },
+  "giao-dien/icon-phuthe/ho-toc-7.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 3558409,
+    "size": 106196,
+    "mime": "image/png",
+    "sha256": "4765c719af3556f7620effa9c076c607e2f284b7b526f8ad4fa972a7d4bd47ac"
+  },
+  "giao-dien/icon-phuthe/ho-toc-7.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 3664605,
+    "size": 17970,
+    "mime": "image/webp",
+    "sha256": "4f91811fd77f199def7209c0b7a1930010cb76d1b52a08a4df73fc4e95660ce8"
+  },
+  "giao-dien/icon-phuthe/than-thuan-1.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 3682575,
+    "size": 98174,
+    "mime": "image/png",
+    "sha256": "4e5b2d392ed3b002f9ac7e6efb3353741f277fae6a6c6bacab1d72bcc9acdae1"
+  },
+  "giao-dien/icon-phuthe/than-thuan-1.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 3780749,
+    "size": 21122,
+    "mime": "image/webp",
+    "sha256": "4d68331c60287eb1dd907982d7d1e8583fb0b441567084935ed076d1c388aeb1"
+  },
+  "giao-dien/icon-phuthe/than-thuan-2.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 3801871,
+    "size": 101101,
+    "mime": "image/png",
+    "sha256": "fc2e498b10db56aaa5264bf8c67a6bd1a4b9f6391dd7bea7fda91a97ae6a5fe7"
+  },
+  "giao-dien/icon-phuthe/than-thuan-2.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 3902972,
+    "size": 21746,
+    "mime": "image/webp",
+    "sha256": "7a52325ea56a4cd7a1c9bbb312fb72010d958a2b100f7f61894b8cbf2894b82a"
+  },
+  "giao-dien/icon-phuthe/than-thuan-3.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 3924718,
+    "size": 107490,
+    "mime": "image/png",
+    "sha256": "b5a91a5934b00fda59e4f642381518a1ffa287928ec2ec26c0c99bf6b3c58e84"
+  },
+  "giao-dien/icon-phuthe/than-thuan-3.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 4032208,
+    "size": 23620,
+    "mime": "image/webp",
+    "sha256": "8751331b7c6cbde98f9f119ff01efc7269925ffa976e37cc95a41e16abebdc69"
+  },
+  "giao-dien/icon-phuthe/than-thuan-4.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 4055828,
+    "size": 103798,
+    "mime": "image/png",
+    "sha256": "240922d12e6b9138d8be44c84d2a0329e0ecc5a52b22ec2f115700c0f3515aed"
+  },
+  "giao-dien/icon-phuthe/than-thuan-4.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 4159626,
+    "size": 21946,
+    "mime": "image/webp",
+    "sha256": "faef401a09499dd34310853b508d7fbe6534071db60e739e6ead520fc8f57dde"
+  },
+  "giao-dien/icon-phuthe/than-thuan-5.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 4181572,
+    "size": 109730,
+    "mime": "image/png",
+    "sha256": "da20fb46c3816944deb1e883ff3c27cc3b71a404eaeaf32c8c01a2b69cece6f8"
+  },
+  "giao-dien/icon-phuthe/than-thuan-5.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 4291302,
+    "size": 23006,
+    "mime": "image/webp",
+    "sha256": "c9c78277f2688379f6db0b65308236a16f0dd5d695c0b1d1a0a2ed5b2d3f2bbc"
+  },
+  "giao-dien/icon-phuthe/than-thuan-6.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 4314308,
+    "size": 106423,
+    "mime": "image/png",
+    "sha256": "74a989f9deae586bc9da5eb9d7e99eb3720c5d9e34f89ea9e9c8a1ebd6ada0fd"
+  },
+  "giao-dien/icon-phuthe/than-thuan-6.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 4420731,
+    "size": 25838,
+    "mime": "image/webp",
+    "sha256": "747869ccbdd45f52523201bc76ccf72a208cb28b9ef3fd6594f81a434c5ef67c"
+  },
+  "giao-dien/icon-phuthe/than-thuan-7.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 4446569,
+    "size": 105695,
+    "mime": "image/png",
+    "sha256": "907c3ad5ad5f6d1bd70ebc229fb4621bbe13d1b137aec38d52ade6f6cbd8f176"
+  },
+  "giao-dien/icon-phuthe/than-thuan-7.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 4552264,
+    "size": 21464,
+    "mime": "image/webp",
+    "sha256": "1ba020dd1d2a120c9fa10bfd12014647913fed426f78b027c888b3f20638b390"
+  },
+  "giao-dien/icon-phuthe/than-toc-1.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 4573728,
+    "size": 111522,
+    "mime": "image/png",
+    "sha256": "4ab1c1b44861e61c72065ce71f6ef4235704c325b26897eb393c5f2cc6af3159"
+  },
+  "giao-dien/icon-phuthe/than-toc-1.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 4685250,
+    "size": 15220,
+    "mime": "image/webp",
+    "sha256": "3678be4027f35d8764a3c01215fb2d1f45780ebc383e94f96f0a5f1cee0f0d13"
+  },
+  "giao-dien/icon-phuthe/than-toc-2.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 4700470,
+    "size": 104087,
+    "mime": "image/png",
+    "sha256": "4a31d64a59ecb4ae0aad45c3daac8a0682a8c278b0eeb0a84b93fd5eb58cee7b"
+  },
+  "giao-dien/icon-phuthe/than-toc-2.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 4804557,
+    "size": 17396,
+    "mime": "image/webp",
+    "sha256": "fd888389e92dd13d167bce10ecacceb036b75c3592b1c9c730e220c705e6ba73"
+  },
+  "giao-dien/icon-phuthe/than-toc-3.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 4821953,
+    "size": 112982,
+    "mime": "image/png",
+    "sha256": "e3092869fb09658f043d814a339ab5a00dac1d23ec847d1ba7af6341206a64e5"
+  },
+  "giao-dien/icon-phuthe/than-toc-3.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 4934935,
+    "size": 14760,
+    "mime": "image/webp",
+    "sha256": "5dc9d3b3287c41e0449895b584095654e2ef0836820ca3efe84217cda1a9f3c5"
+  },
+  "giao-dien/icon-phuthe/than-toc-4.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 4949695,
+    "size": 116188,
+    "mime": "image/png",
+    "sha256": "f86c71078a9059cda844874da98df3a2c6422c4f054cbd1da5dc23e6c80db24e"
+  },
+  "giao-dien/icon-phuthe/than-toc-4.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 5065883,
+    "size": 15344,
+    "mime": "image/webp",
+    "sha256": "55183f2a464a159f8344c0a1241e2a8947db13ebfea206eaf3cf0427d92310a2"
+  },
+  "giao-dien/icon-phuthe/than-toc-5.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 5081227,
+    "size": 113104,
+    "mime": "image/png",
+    "sha256": "6598874361aff3b3817b05a9a5d651d538e279b3f1210db62f58be08dd1fcd40"
+  },
+  "giao-dien/icon-phuthe/than-toc-5.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 5194331,
+    "size": 15210,
+    "mime": "image/webp",
+    "sha256": "e26f1bbaf63cabd162bbfd47559fe669518e170129d70ccd356fe87734fda588"
+  },
+  "giao-dien/icon-phuthe/than-toc-6.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 5209541,
+    "size": 113990,
+    "mime": "image/png",
+    "sha256": "01b883857d0f0318ae5e9497b491177aa6da1361c374606f2e7360f732bd7410"
+  },
+  "giao-dien/icon-phuthe/than-toc-6.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 5323531,
+    "size": 14718,
+    "mime": "image/webp",
+    "sha256": "6ea8761c3a104074ca9d78ff90f4352aa4617b83b5f17fc5be125637718f79ed"
+  },
+  "giao-dien/icon-phuthe/than-toc-7.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 5338249,
+    "size": 99466,
+    "mime": "image/png",
+    "sha256": "b725f1f395ebb1b1d69e1f17e7ea4f1012442149947e927c4554c11d0bc2a06e"
+  },
+  "giao-dien/icon-phuthe/than-toc-7.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 5437715,
+    "size": 18306,
+    "mime": "image/webp",
+    "sha256": "4b6e0fa4e15fae88f7d0ca98cb785dd4eceabf46d3f60a9dbf8485159fbe7f57"
+  },
+  "giao-dien/icon-phuthe/tro-thuan-1.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 5456021,
+    "size": 97796,
+    "mime": "image/png",
+    "sha256": "4e9b21eb9cddd17531691cdee224140f853f72f19ec27d64732d5448e978118f"
+  },
+  "giao-dien/icon-phuthe/tro-thuan-1.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 5553817,
+    "size": 21416,
+    "mime": "image/webp",
+    "sha256": "25d50ee0c77205a6876ebeb46f121d59d0e5fac09957836292954bf0024f906c"
+  },
+  "giao-dien/icon-phuthe/tro-thuan-2.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 5575233,
+    "size": 102461,
+    "mime": "image/png",
+    "sha256": "7ad15fce62436edf9b86701f508ab2a293164230b128e28dca6f0c52b84640de"
+  },
+  "giao-dien/icon-phuthe/tro-thuan-2.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 5677694,
+    "size": 22096,
+    "mime": "image/webp",
+    "sha256": "4d3578fe4a464428b90aef9f89c24d1c431b080e58550cf2e294c6862a1da917"
+  },
+  "giao-dien/icon-phuthe/tro-thuan-3.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 5699790,
+    "size": 106352,
+    "mime": "image/png",
+    "sha256": "87679845e5398bf32ccec7a9dd991f90923c60e998033aff7ec8e3f0ad94fa8b"
+  },
+  "giao-dien/icon-phuthe/tro-thuan-3.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 5806142,
+    "size": 22884,
+    "mime": "image/webp",
+    "sha256": "8128cb8ddd28b3e7aa9d77b84b5a3c0c3c9400183d544a634b8ede653094741b"
+  },
+  "giao-dien/icon-phuthe/tro-thuan-4.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 5829026,
+    "size": 105386,
+    "mime": "image/png",
+    "sha256": "fa331edf97a323a58a756850632fb0123851e7dbcb80dc38ac02dea4fa0d0682"
+  },
+  "giao-dien/icon-phuthe/tro-thuan-4.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 5934412,
+    "size": 23228,
+    "mime": "image/webp",
+    "sha256": "e53be54b230c13cb58a8b7e5e01767b18cc3a19d880a309658846f5a91cf7581"
+  },
+  "giao-dien/icon-phuthe/tro-thuan-5.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 5957640,
+    "size": 109528,
+    "mime": "image/png",
+    "sha256": "01844bf8fcaeaf81498399399968d6b6fa6ab8b6e186e188be41ffa0b11ac3f0"
+  },
+  "giao-dien/icon-phuthe/tro-thuan-5.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 6067168,
+    "size": 23222,
+    "mime": "image/webp",
+    "sha256": "15b3d3fbd0da9f631fb791c8bc635ff66d98ce4fd6196d2a62446b524b14b62c"
+  },
+  "giao-dien/icon-phuthe/tro-thuan-6.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 6090390,
+    "size": 105970,
+    "mime": "image/png",
+    "sha256": "a4d5c09170f22381606c6a27f969dbdd847edd9c578d9d4a42b9242d7397497f"
+  },
+  "giao-dien/icon-phuthe/tro-thuan-6.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 6196360,
+    "size": 29188,
+    "mime": "image/webp",
+    "sha256": "c8b5d9c217f1f9ff9d7bbd91464c8f7ecfa0bd67cfdb60c11b1d1bc7ac0dac5a"
+  },
+  "giao-dien/icon-phuthe/tro-thuan-7.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 6225548,
+    "size": 110069,
+    "mime": "image/png",
+    "sha256": "6c5a50d862f24b2399b611ae525b980c3cc6ba3fb2403039c98442de2c17515f"
+  },
+  "giao-dien/icon-phuthe/tro-thuan-7.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 6335617,
+    "size": 21764,
+    "mime": "image/webp",
+    "sha256": "0e657ceb406958f9461b850f1a44a9751d2a5fcc47f279f0a9c42c46dac4b2c1"
+  },
+  "giao-dien/icon-phuthe/tro-toc-1.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 6357381,
+    "size": 114436,
+    "mime": "image/png",
+    "sha256": "8cb4824c36229d367a68dc8c039509ede3bb46e0536c7638bcbfaac66a8075ea"
+  },
+  "giao-dien/icon-phuthe/tro-toc-1.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 6471817,
+    "size": 15540,
+    "mime": "image/webp",
+    "sha256": "9204de39cfc8a60b63bf5191ebe6f617ee81eff559acaec4752bf61d0e362461"
+  },
+  "giao-dien/icon-phuthe/tro-toc-2.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 6487357,
+    "size": 107780,
+    "mime": "image/png",
+    "sha256": "10ffb15e001bb11739f433714eebb7611396642b72cad80e9e61bd899ddb8d78"
+  },
+  "giao-dien/icon-phuthe/tro-toc-2.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 6595137,
+    "size": 17458,
+    "mime": "image/webp",
+    "sha256": "51fdd55ccfd1d80e1f0bea03a43e9ed7b4ba082c92b590d879e65441f32fe193"
+  },
+  "giao-dien/icon-phuthe/tro-toc-3.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 6612595,
+    "size": 112712,
+    "mime": "image/png",
+    "sha256": "44b8e2fdb7d027074770cc0b47168a91d829376f00e643a5a17a69bf78f45442"
+  },
+  "giao-dien/icon-phuthe/tro-toc-3.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 6725307,
+    "size": 14748,
+    "mime": "image/webp",
+    "sha256": "603c635173a4f975722eb818bb3c8bba8e6bbd025f8a1792bf3d3fafac93843a"
+  },
+  "giao-dien/icon-phuthe/tro-toc-4.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 6740055,
+    "size": 116167,
+    "mime": "image/png",
+    "sha256": "e5873a173b54e583277f429d1dba34bc16b8114650d63b2b2df06d024a707f80"
+  },
+  "giao-dien/icon-phuthe/tro-toc-4.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 6856222,
+    "size": 15696,
+    "mime": "image/webp",
+    "sha256": "d9f909f0e80feabaf116591c5ee597752d3ec45b4a24a4761852927005ffd3b8"
+  },
+  "giao-dien/icon-phuthe/tro-toc-5.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 6871918,
+    "size": 113005,
+    "mime": "image/png",
+    "sha256": "82a13a48dcf98c2e9da6dda7dd9be1cba524aaa0dec057e5667e0e2a8dbdca99"
+  },
+  "giao-dien/icon-phuthe/tro-toc-5.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 6984923,
+    "size": 15340,
+    "mime": "image/webp",
+    "sha256": "ae12c456a5df253971116e2a4525324539537f927d89920a827c5737f203a27d"
+  },
+  "giao-dien/icon-phuthe/tro-toc-6.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 7000263,
+    "size": 113338,
+    "mime": "image/png",
+    "sha256": "1e561fc125fad2737aba2fe2fa2be07a887bd555573b69540d37fec8900b2fd2"
+  },
+  "giao-dien/icon-phuthe/tro-toc-6.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 7113601,
+    "size": 14928,
+    "mime": "image/webp",
+    "sha256": "c7df8d99b20196f63981a2f872a31d2ce89a521a7c2f56decba05bf44dfbd409"
+  },
+  "giao-dien/icon-phuthe/tro-toc-7.png": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 7128529,
+    "size": 104162,
+    "mime": "image/png",
+    "sha256": "ab20c2d6c2c269ce179ccc60bce23a9d1d1c84f62be5f5a084dbbef29595c898"
+  },
+  "giao-dien/icon-phuthe/tro-toc-7.webp": {
+    "pack": "asset-bin/giao-dien--icon-phuthe.bin",
+    "offset": 7232691,
+    "size": 17998,
+    "mime": "image/webp",
+    "sha256": "86ef9045a81d6ada82fccf1389abbb72f71e86a1c00f6f70957eaab29de775b5"
+  },
+  "giao-dien/linh-thu/cuu-vi-ho.png": {
+    "pack": "asset-bin/giao-dien--linh-thu.bin",
+    "offset": 2704,
+    "size": 1452365,
+    "mime": "image/png",
+    "sha256": "5086cfebccb8d5d3641330bf3a70606b9c7b4ce4e506a9c9d1ad8b9f9d030b19"
+  },
+  "giao-dien/linh-thu/cuu-vi-ho.webp": {
+    "pack": "asset-bin/giao-dien--linh-thu.bin",
+    "offset": 1455069,
+    "size": 40122,
+    "mime": "image/webp",
+    "sha256": "6eba3f8dfe72cb71bbe4f7a4528597c825b63463b83feb4564e9a35830cb5eb8"
+  },
+  "giao-dien/linh-thu/linh-thu.webp": {
+    "pack": "asset-bin/giao-dien--linh-thu.bin",
+    "offset": 1495191,
+    "size": 1489512,
+    "mime": "image/webp",
+    "sha256": "a7c5491a34f259a0c1fb5550c6794bf2e1179743413d2e71acc6b59882165cfb"
+  },
+  "giao-dien/linh-thu/LT-bach-ho.png": {
+    "pack": "asset-bin/giao-dien--linh-thu.bin",
+    "offset": 2984703,
+    "size": 2488055,
+    "mime": "image/png",
+    "sha256": "0e95985704666644a7bb5a0a11280a0120d072382a2ae6cb36fae5df894426d6"
+  },
+  "giao-dien/linh-thu/LT-bach-ho.webp": {
+    "pack": "asset-bin/giao-dien--linh-thu.bin",
+    "offset": 5472758,
+    "size": 62588,
+    "mime": "image/webp",
+    "sha256": "150680eda3481f52986325137b28ebaf33138ff92283f6e9574da7672453bff3"
+  },
+  "giao-dien/linh-thu/LT-chu-tuoc.png": {
+    "pack": "asset-bin/giao-dien--linh-thu.bin",
+    "offset": 5535346,
+    "size": 3000209,
+    "mime": "image/png",
+    "sha256": "c53ab40cefc20906d0bc9fab57495233fadcc013c4cad8ac223796e3200b52d2"
+  },
+  "giao-dien/linh-thu/LT-chu-tuoc.webp": {
+    "pack": "asset-bin/giao-dien--linh-thu.bin",
+    "offset": 8535555,
+    "size": 101994,
+    "mime": "image/webp",
+    "sha256": "525159f6e217206f5c5123f9502a34f3ebfd0ebc73ef02728afe190c32ebcc71"
+  },
+  "giao-dien/linh-thu/LT-huyen-vu.png": {
+    "pack": "asset-bin/giao-dien--linh-thu.bin",
+    "offset": 8637549,
+    "size": 2922203,
+    "mime": "image/png",
+    "sha256": "75f1a399f8245c79969c5e3296f7b0720becf83b0cd1e7dbec7bb9b84dd78ace"
+  },
+  "giao-dien/linh-thu/LT-huyen-vu.webp": {
+    "pack": "asset-bin/giao-dien--linh-thu.bin",
+    "offset": 11559752,
+    "size": 71444,
+    "mime": "image/webp",
+    "sha256": "67816d239a67842ee3616f7e1a15f39f62c0ba5c4783374b4f2ae27c02bed0a3"
+  },
+  "giao-dien/linh-thu/LT-thanh-long.png": {
+    "pack": "asset-bin/giao-dien--linh-thu.bin",
+    "offset": 11631196,
+    "size": 2756777,
+    "mime": "image/png",
+    "sha256": "7cfdb3cdd5846abc3896662e59b4641bdd763dbb87ecd99b6ece2bf00efbe864"
+  },
+  "giao-dien/linh-thu/LT-thanh-long.webp": {
+    "pack": "asset-bin/giao-dien--linh-thu.bin",
+    "offset": 14387973,
+    "size": 84404,
+    "mime": "image/webp",
+    "sha256": "945e079f7f78b611843ba733586cd2b781499730531122b0d06b3bef35572b03"
+  },
+  "giao-dien/linh-thu/manh-thu.webp": {
+    "pack": "asset-bin/giao-dien--linh-thu.bin",
+    "offset": 14472377,
+    "size": 1077246,
+    "mime": "image/webp",
+    "sha256": "edbd4dd0bf51f375c789dc01a02eab906cef0bb2bf2afd3218a1e09faa2e6339"
+  },
+  "giao-dien/linh-thu/thien-lan.png": {
+    "pack": "asset-bin/giao-dien--linh-thu.bin",
+    "offset": 15549623,
+    "size": 1118074,
+    "mime": "image/png",
+    "sha256": "0861bcbb73d6def66617880af472ac1bf4c60d165e7838cc810ebe89da48f806"
+  },
+  "giao-dien/linh-thu/thien-lan.webp": {
+    "pack": "asset-bin/giao-dien--linh-thu.bin",
+    "offset": 16667697,
+    "size": 43018,
+    "mime": "image/webp",
+    "sha256": "a7a568367f821a603b11f6a8b5d0ff33a93f064405a5915d96127e26093d149e"
+  },
+  "giao-dien/linh-thu/tien-loc.png": {
+    "pack": "asset-bin/giao-dien--linh-thu.bin",
+    "offset": 16710715,
+    "size": 788245,
+    "mime": "image/png",
+    "sha256": "6fe1434116fcb779627fdde34f6c10adaca61ca704aec207c216eedd63bf55d1"
+  },
+  "giao-dien/linh-thu/tien-loc.webp": {
+    "pack": "asset-bin/giao-dien--linh-thu.bin",
+    "offset": 17498960,
+    "size": 41046,
+    "mime": "image/webp",
+    "sha256": "a58bac9e6aa420dc5d3b8ea7c7e2fe5fbe5640cb7dec7b66bbb7b9fa8bcb0f73"
+  },
+  "giao-dien/nen-dau/battle-bg.webp": {
+    "pack": "asset-bin/giao-dien--nen-dau.bin",
+    "offset": 5457,
+    "size": 174268,
+    "mime": "image/webp",
+    "sha256": "76ec78efca4e02c888a25f87d346a9490691ec61d6f0754e0d8966003fa6e01b"
+  },
+  "giao-dien/nen-dau/nen-dau1.png": {
+    "pack": "asset-bin/giao-dien--nen-dau.bin",
+    "offset": 179725,
+    "size": 2565932,
+    "mime": "image/png",
+    "sha256": "4fe641d9e762cb2f5371c3a30402cb1179c8907606e887cabdbe8ce93513732c"
+  },
+  "giao-dien/nen-dau/nen-dau1.webp": {
+    "pack": "asset-bin/giao-dien--nen-dau.bin",
+    "offset": 2745657,
+    "size": 139182,
+    "mime": "image/webp",
+    "sha256": "05517d72b3f2d8fabf1cfa6871e7ba89fa5d9d0b5b99f6802dabad5418fe83b7"
+  },
+  "giao-dien/nen-dau/nen-dau10.png": {
+    "pack": "asset-bin/giao-dien--nen-dau.bin",
+    "offset": 2884839,
+    "size": 3238072,
+    "mime": "image/png",
+    "sha256": "eb01860c7bd0af1ed64c35ae888507d8538a19575fc42a7ff66223a075fb0e3f"
+  },
+  "giao-dien/nen-dau/nen-dau10.webp": {
+    "pack": "asset-bin/giao-dien--nen-dau.bin",
+    "offset": 6122911,
+    "size": 258592,
+    "mime": "image/webp",
+    "sha256": "043898f3f19954496373f2dc026c155da808399c420062bd1aa3800ec0d7f7d3"
+  },
+  "giao-dien/nen-dau/nen-dau11.png": {
+    "pack": "asset-bin/giao-dien--nen-dau.bin",
+    "offset": 6381503,
+    "size": 2952790,
+    "mime": "image/png",
+    "sha256": "158433357d73a0e4285390c404e0967b739c3b312319689d981197f4b549be40"
+  },
+  "giao-dien/nen-dau/nen-dau11.webp": {
+    "pack": "asset-bin/giao-dien--nen-dau.bin",
+    "offset": 9334293,
+    "size": 221106,
+    "mime": "image/webp",
+    "sha256": "2c36319dccf5d7a066f9f7238ed900dfa5a052ad254203b8b7401636a24ad971"
+  },
+  "giao-dien/nen-dau/nen-dau12.png": {
+    "pack": "asset-bin/giao-dien--nen-dau.bin",
+    "offset": 9555399,
+    "size": 3083031,
+    "mime": "image/png",
+    "sha256": "ef2e5c571e312b4e3fa9cfa1cabbde9a1d486ba1da0be91f9ed9059c113be042"
+  },
+  "giao-dien/nen-dau/nen-dau12.webp": {
+    "pack": "asset-bin/giao-dien--nen-dau.bin",
+    "offset": 12638430,
+    "size": 219266,
+    "mime": "image/webp",
+    "sha256": "3fcda944dc86fc0056c688c84e15a446b90546ef6153b119293a8fd461dadea7"
+  },
+  "giao-dien/nen-dau/nen-dau13.png": {
+    "pack": "asset-bin/giao-dien--nen-dau.bin",
+    "offset": 12857696,
+    "size": 3041505,
+    "mime": "image/png",
+    "sha256": "009f4bcef0cb56117c6a8fde84448367d91ddf116091b2db69f48bc304f25fd4"
+  },
+  "giao-dien/nen-dau/nen-dau13.webp": {
+    "pack": "asset-bin/giao-dien--nen-dau.bin",
+    "offset": 15899201,
+    "size": 208804,
+    "mime": "image/webp",
+    "sha256": "d9c37edee6b87b5c70becd720a5d9dd37706114c4306b00f4ce243fb729c147b"
+  },
+  "giao-dien/nen-dau/nen-dau14.png": {
+    "pack": "asset-bin/giao-dien--nen-dau.bin",
+    "offset": 16108005,
+    "size": 2888028,
+    "mime": "image/png",
+    "sha256": "4d7fb5f27596b5122a9e167c3bb72f14893d50a99d098cc0be022c1d0759fde9"
+  },
+  "giao-dien/nen-dau/nen-dau14.webp": {
+    "pack": "asset-bin/giao-dien--nen-dau.bin",
+    "offset": 18996033,
+    "size": 196888,
+    "mime": "image/webp",
+    "sha256": "2863c3dbfddca17764347abdf006b324c3dea71aa70696f91f252131854850f0"
+  },
+  "giao-dien/nen-dau/nen-dau15.png": {
+    "pack": "asset-bin/giao-dien--nen-dau.bin",
+    "offset": 19192921,
+    "size": 3119455,
+    "mime": "image/png",
+    "sha256": "6738fd316766f1d3c4f23e0e172406106e94f57f440adfd16db3ac845f53c81a"
+  },
+  "giao-dien/nen-dau/nen-dau15.webp": {
+    "pack": "asset-bin/giao-dien--nen-dau.bin",
+    "offset": 22312376,
+    "size": 242376,
+    "mime": "image/webp",
+    "sha256": "a87981b062978fc3263ab19e1f1a915f4fed5b4d913991dbf30999ed2a732e7a"
+  },
+  "giao-dien/nen-dau/nen-dau16.png": {
+    "pack": "asset-bin/giao-dien--nen-dau.bin",
+    "offset": 22554752,
+    "size": 3474406,
+    "mime": "image/png",
+    "sha256": "560ae5528e88530670f8f7224d7ebab99fd4bbc9199f28ec1a125628679a631a"
+  },
+  "giao-dien/nen-dau/nen-dau16.webp": {
+    "pack": "asset-bin/giao-dien--nen-dau.bin",
+    "offset": 26029158,
+    "size": 295756,
+    "mime": "image/webp",
+    "sha256": "bff4fc139e473e848b4ae3bae87483737b1938f629e12e50d62e5d08d8095ad9"
+  },
+  "giao-dien/nen-dau/nen-dau17.webp": {
+    "pack": "asset-bin/giao-dien--nen-dau.bin",
+    "offset": 26324914,
+    "size": 275540,
+    "mime": "image/webp",
+    "sha256": "81c37164568ba678f0fb020bf87392430d92cf19b6356ab32dec4f908af1803a"
+  },
+  "giao-dien/nen-dau/nen-dau2.png": {
+    "pack": "asset-bin/giao-dien--nen-dau.bin",
+    "offset": 26600454,
+    "size": 2790545,
+    "mime": "image/png",
+    "sha256": "4e266c451826f19674362b4d7f214052085e42eb27e59d99534556d1455de888"
+  },
+  "giao-dien/nen-dau/nen-dau2.webp": {
+    "pack": "asset-bin/giao-dien--nen-dau.bin",
+    "offset": 29390999,
+    "size": 188452,
+    "mime": "image/webp",
+    "sha256": "01f7cc09e3398aa68c7f234233c75c837658193815f8c0f84f92e9ca8c9a57de"
+  },
+  "giao-dien/nen-dau/nen-dau3.png": {
+    "pack": "asset-bin/giao-dien--nen-dau.bin",
+    "offset": 29579451,
+    "size": 2728167,
+    "mime": "image/png",
+    "sha256": "4ef431899dcb89ee634ac20ac4bfa2c93282c58cf2199be7c4da248074766589"
+  },
+  "giao-dien/nen-dau/nen-dau3.webp": {
+    "pack": "asset-bin/giao-dien--nen-dau.bin",
+    "offset": 32307618,
+    "size": 185432,
+    "mime": "image/webp",
+    "sha256": "6664902afcaa28a8e9401902ca83c47d42a54cf2ca20400a90e14e3bdd78397f"
+  },
+  "giao-dien/nen-dau/nen-dau4.png": {
+    "pack": "asset-bin/giao-dien--nen-dau.bin",
+    "offset": 32493050,
+    "size": 2625120,
+    "mime": "image/png",
+    "sha256": "f474a925fa38f56307adc2ef5f43fa982db7405cac67d67f88df080f43b6583b"
+  },
+  "giao-dien/nen-dau/nen-dau4.webp": {
+    "pack": "asset-bin/giao-dien--nen-dau.bin",
+    "offset": 35118170,
+    "size": 180168,
+    "mime": "image/webp",
+    "sha256": "bba5e4a89f5236c5d71c81810a7ea2643b90c7f0a6e78381ea421d01ab2557bd"
+  },
+  "giao-dien/nen-dau/nen-dau5.png": {
+    "pack": "asset-bin/giao-dien--nen-dau.bin",
+    "offset": 35298338,
+    "size": 2915196,
+    "mime": "image/png",
+    "sha256": "33d925ef193a4069dfb7c11399ec94e234899c74dc06454d409e3178c1cfa8d7"
+  },
+  "giao-dien/nen-dau/nen-dau5.webp": {
+    "pack": "asset-bin/giao-dien--nen-dau.bin",
+    "offset": 38213534,
+    "size": 204254,
+    "mime": "image/webp",
+    "sha256": "6262b751ce23d8ca29551b161c7826a5abe8752994ebf7c26501a5c52c8140fc"
+  },
+  "giao-dien/nen-dau/nen-dau6.png": {
+    "pack": "asset-bin/giao-dien--nen-dau.bin",
+    "offset": 38417788,
+    "size": 2837839,
+    "mime": "image/png",
+    "sha256": "f01aff245c684423390c95354d544eda89729e533dc91359f162ebb1b7153f24"
+  },
+  "giao-dien/nen-dau/nen-dau6.webp": {
+    "pack": "asset-bin/giao-dien--nen-dau.bin",
+    "offset": 41255627,
+    "size": 189208,
+    "mime": "image/webp",
+    "sha256": "db255adcf9389e0c1e2073b962ba2e270716feb063dbbe07abb866436d8bd2f1"
+  },
+  "giao-dien/nen-dau/nen-dau7.png": {
+    "pack": "asset-bin/giao-dien--nen-dau.bin",
+    "offset": 41444835,
+    "size": 3151498,
+    "mime": "image/png",
+    "sha256": "a97d5765544f2214912d1ac897a38a225f1ddc078e2732e194969e7ded6cedaa"
+  },
+  "giao-dien/nen-dau/nen-dau7.webp": {
+    "pack": "asset-bin/giao-dien--nen-dau.bin",
+    "offset": 44596333,
+    "size": 239222,
+    "mime": "image/webp",
+    "sha256": "cacac6285271abbd9f0e4f93933f0f9152acd846d4758a22d96479eaf4b3c23c"
+  },
+  "giao-dien/nen-dau/nen-dau8.webp": {
+    "pack": "asset-bin/giao-dien--nen-dau.bin",
+    "offset": 44835555,
+    "size": 271518,
+    "mime": "image/webp",
+    "sha256": "44dad678435400674451b0d13127093dd462104fd4a5d406ca4478386d2113f5"
+  },
+  "giao-dien/nen-dau/nen-dau9.png": {
+    "pack": "asset-bin/giao-dien--nen-dau.bin",
+    "offset": 45107073,
+    "size": 3527687,
+    "mime": "image/png",
+    "sha256": "539d01cc33f8f08c5ef85022dd35430830efe4a8bb1ed669a1f15aebab292882"
+  },
+  "giao-dien/nen-dau/nen-dau9.webp": {
+    "pack": "asset-bin/giao-dien--nen-dau.bin",
+    "offset": 26324914,
+    "size": 275540,
+    "mime": "image/webp",
+    "sha256": "81c37164568ba678f0fb020bf87392430d92cf19b6356ab32dec4f908af1803a"
+  },
+  "giao-dien/pvp/pvp-bg.webp": {
+    "pack": "asset-bin/giao-dien--pvp.bin",
+    "offset": 206,
+    "size": 117414,
+    "mime": "image/webp",
+    "sha256": "bb759a8a2752e7d4edb50d9e6a592397c7bb8b645c5924148017c74381c32985"
+  },
+  "giao-dien/battle-bg.webp": {
+    "pack": "asset-bin/giao-dien--root.bin",
+    "offset": 359,
+    "size": 174268,
+    "mime": "image/webp",
+    "sha256": "76ec78efca4e02c888a25f87d346a9490691ec61d6f0754e0d8966003fa6e01b"
+  },
+  "giao-dien/buc-may.webp": {
+    "pack": "asset-bin/giao-dien--root.bin",
+    "offset": 174627,
+    "size": 947367,
+    "mime": "image/webp",
+    "sha256": "91e061a399ba5dcc42d6fa18b07ee37bbc6dbf5dddcf6b9a7f52a1a8e04b7569"
+  },
+  "giao-dien/thong-bao/khung-chat.webp": {
+    "pack": "asset-bin/giao-dien--thong-bao.bin",
+    "offset": 729,
+    "size": 234310,
+    "mime": "image/webp",
+    "sha256": "a68cba656dd4050b5440cedbd994c5d295fe9344df33b1000a3d9fed19f68454"
+  },
+  "giao-dien/thong-bao/khung-thang.webp": {
+    "pack": "asset-bin/giao-dien--thong-bao.bin",
+    "offset": 235039,
+    "size": 1494182,
+    "mime": "image/webp",
+    "sha256": "d9973225a8f25f5e1b624afbf4dd9e374e86c3a291420d97ad40339399f1d75d"
+  },
+  "giao-dien/thong-bao/khung-thong-bao.webp": {
+    "pack": "asset-bin/giao-dien--thong-bao.bin",
+    "offset": 1729221,
+    "size": 134310,
+    "mime": "image/webp",
+    "sha256": "d0b62510f6f825193195c1804aec491c53abfa2e280203766da30b3416b0f18a"
+  },
+  "giao-dien/thong-bao/khung-thua.webp": {
+    "pack": "asset-bin/giao-dien--thong-bao.bin",
+    "offset": 235039,
+    "size": 1494182,
+    "mime": "image/webp",
+    "sha256": "d9973225a8f25f5e1b624afbf4dd9e374e86c3a291420d97ad40339399f1d75d"
+  },
+  "giao-dien/trang-bi/1.png": {
+    "pack": "asset-bin/giao-dien--trang-bi.bin",
+    "offset": 3687,
+    "size": 1896234,
+    "mime": "image/png",
+    "sha256": "95376d79942e7bbbba7a67eedd72136d50007618ef769012596d4c9dac22bcd1"
+  },
+  "giao-dien/trang-bi/1.webp": {
+    "pack": "asset-bin/giao-dien--trang-bi.bin",
+    "offset": 1899921,
+    "size": 128476,
+    "mime": "image/webp",
+    "sha256": "b430bebfe324ce81695e0e181912c7db86848bf40919c9469aa06effefab29f8"
+  },
+  "giao-dien/trang-bi/2.png": {
+    "pack": "asset-bin/giao-dien--trang-bi.bin",
+    "offset": 2028397,
+    "size": 2662846,
+    "mime": "image/png",
+    "sha256": "eeba78327a5c80b2567b247ab67e3c1c4a5eca12749f82873b53651929b5a0a7"
+  },
+  "giao-dien/trang-bi/2.webp": {
+    "pack": "asset-bin/giao-dien--trang-bi.bin",
+    "offset": 4691243,
+    "size": 96850,
+    "mime": "image/webp",
+    "sha256": "91962cc627727bab1c29117fc4e7923cde07c117c4332e12468a3200fb6dc0fe"
+  },
+  "giao-dien/trang-bi/3cfd8da6-80d7-4b38-835d-2fc3fc52aa9a.png": {
+    "pack": "asset-bin/giao-dien--trang-bi.bin",
+    "offset": 4788093,
+    "size": 2884642,
+    "mime": "image/png",
+    "sha256": "37b357e6e33d373b04b863e45c618f7a5f40653d5918daf2dc8ab9d6b0b4883c"
+  },
+  "giao-dien/trang-bi/3cfd8da6-80d7-4b38-835d-2fc3fc52aa9a.webp": {
+    "pack": "asset-bin/giao-dien--trang-bi.bin",
+    "offset": 7672735,
+    "size": 107502,
+    "mime": "image/webp",
+    "sha256": "3577e01ef16369729cfb4d3d88dc62a88b7e92fb73066cff1c90968b271dc92b"
+  },
+  "giao-dien/trang-bi/hieu-ung.png": {
+    "pack": "asset-bin/giao-dien--trang-bi.bin",
+    "offset": 7780237,
+    "size": 2771748,
+    "mime": "image/png",
+    "sha256": "03d4cec5aeef007a20b49d76342b536fe3a996f5f5a20d709e7a4bb4e9de37fa"
+  },
+  "giao-dien/trang-bi/hieu-ung.webp": {
+    "pack": "asset-bin/giao-dien--trang-bi.bin",
+    "offset": 10551985,
+    "size": 100496,
+    "mime": "image/webp",
+    "sha256": "53f8755983992851504e856e5de60bb2843ad139dafdd2c8bfc20677017ba74e"
+  },
+  "giao-dien/trang-bi/kham-ngoc.png": {
+    "pack": "asset-bin/giao-dien--trang-bi.bin",
+    "offset": 10652481,
+    "size": 2737992,
+    "mime": "image/png",
+    "sha256": "fc2b77d6120e27ea2aea8d4e58b2fe2fe5ac61a1dbaf85f51b601396b2370416"
+  },
+  "giao-dien/trang-bi/kham-ngoc.webp": {
+    "pack": "asset-bin/giao-dien--trang-bi.bin",
+    "offset": 13390473,
+    "size": 89176,
+    "mime": "image/webp",
+    "sha256": "38ef14407232d9c8f2b7cc1f0183732914002ae867712fc3654a4c6255ed0687"
+  },
+  "giao-dien/trang-bi/kho-ngoc.png": {
+    "pack": "asset-bin/giao-dien--trang-bi.bin",
+    "offset": 13479649,
+    "size": 2561152,
+    "mime": "image/png",
+    "sha256": "0814ae5c70c88bbc2d00dbce3ffc43b29dec667b67bf7c4ab514df3067d9c345"
+  },
+  "giao-dien/trang-bi/kho-ngoc.webp": {
+    "pack": "asset-bin/giao-dien--trang-bi.bin",
+    "offset": 16040801,
+    "size": 133820,
+    "mime": "image/webp",
+    "sha256": "a9a2d6f3b7e752701d3e599e9d8223c4595b19eef4e7bdbc6ec3a5a231cfeb14"
+  },
+  "giao-dien/trang-bi/kho-phu.png": {
+    "pack": "asset-bin/giao-dien--trang-bi.bin",
+    "offset": 16174621,
+    "size": 2829509,
+    "mime": "image/png",
+    "sha256": "15a817db81dbc777c3093ddc2a3ee9b71fd64c95d5d65b873b2c333fc9ce1ef5"
+  },
+  "giao-dien/trang-bi/kho-phu.webp": {
+    "pack": "asset-bin/giao-dien--trang-bi.bin",
+    "offset": 19004130,
+    "size": 177850,
+    "mime": "image/webp",
+    "sha256": "1cee41d113e48f0760c5985c971c0e0b9f8c615b48b9e96e10780065c2d2dc72"
+  },
+  "giao-dien/trang-bi/linh-phu.png": {
+    "pack": "asset-bin/giao-dien--trang-bi.bin",
+    "offset": 19181980,
+    "size": 2722264,
+    "mime": "image/png",
+    "sha256": "be4c8aa88adeb0670cb579f16d388873f5f3a27df5bf67e9f9f538ceba31d83a"
+  },
+  "giao-dien/trang-bi/linh-phu.webp": {
+    "pack": "asset-bin/giao-dien--trang-bi.bin",
+    "offset": 21904244,
+    "size": 103194,
+    "mime": "image/webp",
+    "sha256": "bd9586f7fd0101df8fec7947601de052720740f64bce5d5253effa741d1b846b"
+  },
+  "giao-dien/trang-bi/ngoc.png": {
+    "pack": "asset-bin/giao-dien--trang-bi.bin",
+    "offset": 22007438,
+    "size": 2300895,
+    "mime": "image/png",
+    "sha256": "8fc9b11c0ed8d1548ce96d190f08a31554dd147be886052b7983865a515d75d9"
+  },
+  "giao-dien/trang-bi/ngoc.webp": {
+    "pack": "asset-bin/giao-dien--trang-bi.bin",
+    "offset": 24308333,
+    "size": 130760,
+    "mime": "image/webp",
+    "sha256": "495f9faf75812a08ca63fd235254d0eb62c0307994f6f0e8a0c5f90130bb6758"
+  },
+  "giao-dien/trang-bi/phu-linh.png": {
+    "pack": "asset-bin/giao-dien--trang-bi.bin",
+    "offset": 24439093,
+    "size": 2652222,
+    "mime": "image/png",
+    "sha256": "2af95683db0619a79a7ae9a1d3e5805416e85fa32b65da64cd9f0116ac515da8"
+  },
+  "giao-dien/trang-bi/phu-linh.webp": {
+    "pack": "asset-bin/giao-dien--trang-bi.bin",
+    "offset": 27091315,
+    "size": 151490,
+    "mime": "image/webp",
+    "sha256": "dda1754b4a15d1bc9b150bd7852285bef517a993c29cf01aeda1304607f51bef"
+  },
+  "giao-dien/trang-bi/tang-cap.webp": {
+    "pack": "asset-bin/giao-dien--trang-bi.bin",
+    "offset": 27242805,
+    "size": 1518040,
+    "mime": "image/webp",
+    "sha256": "f842f8024a940bfd051b3bd4a2265d7ded2816fde40fa1f0de4d40f0c1bb0530"
+  },
+  "giao-dien/trang-bi/tang-sao.webp": {
+    "pack": "asset-bin/giao-dien--trang-bi.bin",
+    "offset": 28760845,
+    "size": 1302156,
+    "mime": "image/webp",
+    "sha256": "97723ed5a161edd5e5bc2795e43dc21b8b2eba85a2716099e3ae17668a87b907"
+  },
+  "giao-dien/tron/1.webp": {
+    "pack": "asset-bin/giao-dien--tron.bin",
+    "offset": 1119,
+    "size": 340793,
+    "mime": "image/webp",
+    "sha256": "2d40a75af222f7e2b818297e19d0f6ac4698ccef4bed410cb83dfb4ad283a9c7"
+  },
+  "giao-dien/tron/2.webp": {
+    "pack": "asset-bin/giao-dien--tron.bin",
+    "offset": 341912,
+    "size": 346572,
+    "mime": "image/webp",
+    "sha256": "429bfe9375d4789a3b4184d68977cc1b27a3e982686f48cb17a1959b934be373"
+  },
+  "giao-dien/tron/3.webp": {
+    "pack": "asset-bin/giao-dien--tron.bin",
+    "offset": 688484,
+    "size": 354124,
+    "mime": "image/webp",
+    "sha256": "0a810e19af31e9a1ba372704befe62867d5c73d771de35894b57d3cf678e1903"
+  },
+  "giao-dien/tron/4.webp": {
+    "pack": "asset-bin/giao-dien--tron.bin",
+    "offset": 1042608,
+    "size": 350174,
+    "mime": "image/webp",
+    "sha256": "cf3a390ca6f5c144e1614e1dbcd5e6e8577fa39dd9e3f4955810733f56551441"
+  },
+  "giao-dien/tron/5.webp": {
+    "pack": "asset-bin/giao-dien--tron.bin",
+    "offset": 1392782,
+    "size": 357607,
+    "mime": "image/webp",
+    "sha256": "f61f0763fe48ce9919a1d5c155c494ad480df86cec9f1ec246b39b80baa0c119"
+  },
+  "giao-dien/tron/6.webp": {
+    "pack": "asset-bin/giao-dien--tron.bin",
+    "offset": 1750389,
+    "size": 389173,
+    "mime": "image/webp",
+    "sha256": "6231d7e8bddd6b51f2b60f12718e16774b79dd2bee2732151caf7df0fc89f3ca"
+  },
+  "giao-dien/tron/7.webp": {
+    "pack": "asset-bin/giao-dien--tron.bin",
+    "offset": 2139562,
+    "size": 366793,
+    "mime": "image/webp",
+    "sha256": "2d2ff7a904eb86f796c5570054bf0b7bd8b1185f1f744dd2aa3f6664502a949c"
+  },
+  "giao-dien/tuong/boi_duong.webp": {
+    "pack": "asset-bin/giao-dien--tuong.bin",
+    "offset": 1826,
+    "size": 39908,
+    "mime": "image/webp",
+    "sha256": "412d3c54e08d862abc19556a4a64845a67f95bbb8289e32c71500d7bcb092ec6"
+  },
+  "giao-dien/tuong/cong-phap.png": {
+    "pack": "asset-bin/giao-dien--tuong.bin",
+    "offset": 41734,
+    "size": 2285086,
+    "mime": "image/png",
+    "sha256": "bb782594f1bd4a8398e712ba119adf47f6845b3079c3ef4086fa56d2712c148d"
+  },
+  "giao-dien/tuong/dot_pha.webp": {
+    "pack": "asset-bin/giao-dien--tuong.bin",
+    "offset": 2326820,
+    "size": 38542,
+    "mime": "image/webp",
+    "sha256": "7a092c7f80ec367ba23aed97839e29e47d35cf4097715c73c50a2d143f54dbfe"
+  },
+  "giao-dien/tuong/ghep_manh.webp": {
+    "pack": "asset-bin/giao-dien--tuong.bin",
+    "offset": 2365362,
+    "size": 31198,
+    "mime": "image/webp",
+    "sha256": "b3dcc3d9db6ac822330aa67f5d70f39e0e767ec575ada5224cc4c5c9c2e25873"
+  },
+  "giao-dien/tuong/giang_ho_ky.webp": {
+    "pack": "asset-bin/giao-dien--tuong.bin",
+    "offset": 2396560,
+    "size": 41866,
+    "mime": "image/webp",
+    "sha256": "019c57bd74a64a035f005bd3d7a6c4ba742207227447ba7bdd18f9394833f2ba"
+  },
+  "giao-dien/tuong/kinh_mach.webp": {
+    "pack": "asset-bin/giao-dien--tuong.bin",
+    "offset": 2438426,
+    "size": 37576,
+    "mime": "image/webp",
+    "sha256": "a60c04f44159828546a3ef9eaa2d7c0bcaf6ba63640bdc701388d2452567e1e0"
+  },
+  "giao-dien/tuong/ky_nang.webp": {
+    "pack": "asset-bin/giao-dien--tuong.bin",
+    "offset": 2476002,
+    "size": 43096,
+    "mime": "image/webp",
+    "sha256": "9daafdd098e657466314c72bdd01294a0d0fc270f819da02cb04b7ff705850aa"
+  },
+  "giao-dien/tuong/luyen-the.png": {
+    "pack": "asset-bin/giao-dien--tuong.bin",
+    "offset": 2519098,
+    "size": 2515093,
+    "mime": "image/png",
+    "sha256": "7158ab5a5cc708c141e8f0adceea98c020a306d1df52799161c9f09e6e0b7f59"
+  },
+  "giao-dien/tuong/manh_vo_hiep.webp": {
+    "pack": "asset-bin/giao-dien--tuong.bin",
+    "offset": 5034191,
+    "size": 37792,
+    "mime": "image/webp",
+    "sha256": "a3bb5102d6036826cd1af0aed67d17b488eab79afea4abc641a602a7ee5a6254"
+  },
+  "giao-dien/tuong/nang_pham_chat.webp": {
+    "pack": "asset-bin/giao-dien--tuong.bin",
+    "offset": 5071983,
+    "size": 465592,
+    "mime": "image/webp",
+    "sha256": "9c29bbd4da216159e003663334fa0dee4424d5e2662e59c447afda0ebd724173"
+  },
+  "giao-dien/tuong/tang_sao.webp": {
+    "pack": "asset-bin/giao-dien--tuong.bin",
+    "offset": 5537575,
+    "size": 36918,
+    "mime": "image/webp",
+    "sha256": "20f3ec6ab42455212583969f10becf4a918777c504b8a302f3fe0e4841bf89c1"
+  },
+  "giao-dien/vat-pham-game/bang/chau.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 16572,
+    "size": 26390,
+    "mime": "image/webp",
+    "sha256": "98958b0bd8d9f8b4aca0469a5f015e31111657b76423c93cf835d02ac64ab624"
+  },
+  "giao-dien/vat-pham-game/bang/da-nu-oa.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 42962,
+    "size": 27754,
+    "mime": "image/webp",
+    "sha256": "205d7d6cf518feeeb4854dda600d0a5cbb4da1661f3f46753a42d09b79e9d0e2"
+  },
+  "giao-dien/vat-pham-game/bang/dao-tien.png": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 70716,
+    "size": 1348987,
+    "mime": "image/png",
+    "sha256": "a2ff82b4b2cf64f966631795599692abef24db30fda5a62771280e749a15d88c"
+  },
+  "giao-dien/vat-pham-game/bang/dao-tien.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 1419703,
+    "size": 13630,
+    "mime": "image/webp",
+    "sha256": "d0838507b050c70c2d2484b2d4f92d3a0217300041607f78589a973ff5a6b643"
+  },
+  "giao-dien/vat-pham-game/bang/di-linh.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 1433333,
+    "size": 37650,
+    "mime": "image/webp",
+    "sha256": "241e7d8580e988fed1bf37ae0ba6de6964871972ce021067391b2ab2f3807319"
+  },
+  "giao-dien/vat-pham-game/bang/gao.png": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 1470983,
+    "size": 956650,
+    "mime": "image/png",
+    "sha256": "41a48f0fcc1acc0bcffcae2e10be3a9ee40b2e1ade2fb12b60bb05f6a2c20404"
+  },
+  "giao-dien/vat-pham-game/bang/gao.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 2427633,
+    "size": 38800,
+    "mime": "image/webp",
+    "sha256": "b50ebabfee8273926fcb33914cd05a139d1ffc8d4ed24eec1fd8a954d3eae490"
+  },
+  "giao-dien/vat-pham-game/bang/than-dan.png": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 2466433,
+    "size": 241008,
+    "mime": "image/png",
+    "sha256": "3a1babad116e7373e8ad82ebce426e2c18a81eb961c6454f6af541041cbee900"
+  },
+  "giao-dien/vat-pham-game/bang/than-dan.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 2707441,
+    "size": 36260,
+    "mime": "image/webp",
+    "sha256": "d9f0d3a7d85d6bc9df3c54c6dce08d7d732f7c99acbf5ae65acc5e3e8cd69596"
+  },
+  "giao-dien/vat-pham-game/bang/thoi-bac.png": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 2743701,
+    "size": 572118,
+    "mime": "image/png",
+    "sha256": "33b169a43f0982979fae0468aa01315aa7c6549671228441c3de9600b0cd5937"
+  },
+  "giao-dien/vat-pham-game/bang/thoi-bac.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 3315819,
+    "size": 7098,
+    "mime": "image/webp",
+    "sha256": "873ae979b3618e30119981dc263ac3767d0fe62c4312b618cf5cedae5ded0b72"
+  },
+  "giao-dien/vat-pham-game/bang/thoi-vang.png": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 3322917,
+    "size": 565258,
+    "mime": "image/png",
+    "sha256": "9d602a53bd0f34c9cc9ddb9615b90fbef36aae0e5836f0270579c2beaa90eafa"
+  },
+  "giao-dien/vat-pham-game/bang/thoi-vang.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 3888175,
+    "size": 9428,
+    "mime": "image/webp",
+    "sha256": "1391bedb70522d3a6f4511223f06608f339beb9773a7ac52349c98f5bd86f48a"
+  },
+  "giao-dien/vat-pham-game/bang/thu-hon.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 3897603,
+    "size": 26546,
+    "mime": "image/webp",
+    "sha256": "698585f11ca6f258e8e7b4ce759321d0740b396e29ff222fb7f3d467820b9f7c"
+  },
+  "giao-dien/vat-pham-game/bang/thu-linh.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 3924149,
+    "size": 22472,
+    "mime": "image/webp",
+    "sha256": "978b80a26093683ac1f2d7dea2f775461e99589c7226780e1d05b1e6d283a408"
+  },
+  "giao-dien/vat-pham-game/bang/tien-dan.png": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 3946621,
+    "size": 122820,
+    "mime": "image/png",
+    "sha256": "5c4a35911579287070e4ae21ee36cc654b9a928b51d83ef0035db1bde75aafdb"
+  },
+  "giao-dien/vat-pham-game/bang/tien-dan.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 4069441,
+    "size": 21624,
+    "mime": "image/webp",
+    "sha256": "d06bcc17e5dca234437356353147f0b69f162668fb8db6586a4a7f7fb3c1b8dd"
+  },
+  "giao-dien/vat-pham-game/bang/tu-linh-thach.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 4091065,
+    "size": 36946,
+    "mime": "image/webp",
+    "sha256": "c189cc416313900cbc25342c997daa975fad2463b5db96534db5afc2e0965a96"
+  },
+  "giao-dien/vat-pham-game/bang/vien-the-luc.png": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 4128011,
+    "size": 1958122,
+    "mime": "image/png",
+    "sha256": "72a52c94f85d045235dc18ee6f1def903d51914899a30c8eb3d2969e9c819f84"
+  },
+  "giao-dien/vat-pham-game/bang/vien-the-luc.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 6086133,
+    "size": 26284,
+    "mime": "image/webp",
+    "sha256": "37e8bb032d714aca316cb705951ee0dc702d381f47512661833187d27d4f4175"
+  },
+  "giao-dien/vat-pham-game/bao-vat/ba-vuong-kiem.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 6112417,
+    "size": 239410,
+    "mime": "image/webp",
+    "sha256": "b52b7f6e93e23963f63c5c60573e4296e7e8c4f9b79e143d4d715692c73dbf7a"
+  },
+  "giao-dien/vat-pham-game/bao-vat/thuy-hoang-dang.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 6351827,
+    "size": 620854,
+    "mime": "image/webp",
+    "sha256": "e490b83a742d71849472d0157dfef8722307879ad841bc12fd79a3739a8633c3"
+  },
+  "giao-dien/vat-pham-game/bao-vat/ton-su-ki.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 6972681,
+    "size": 373328,
+    "mime": "image/webp",
+    "sha256": "baa762e92dfcbd694224e3feda4c1f1afa836b5e2f5a178febf4771af29295b6"
+  },
+  "giao-dien/vat-pham-game/bao-vat/treasure-09.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 7346009,
+    "size": 42488,
+    "mime": "image/webp",
+    "sha256": "2404eae9315d562e2659b698f3ec90d7edd28becd541c87c2c1349ab48418641"
+  },
+  "giao-dien/vat-pham-game/bao-vat/treasure-10.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 7388497,
+    "size": 76688,
+    "mime": "image/webp",
+    "sha256": "50dbc97172de567c0b7ece5240b6344082b20116000cf58a70b3b84b54712834"
+  },
+  "giao-dien/vat-pham-game/bao-vat/treasure-11.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 7465185,
+    "size": 53010,
+    "mime": "image/webp",
+    "sha256": "932123ff3938df62eec4b43d9d5c24b66ee624a8ebc2efbebf2bde2d96282fc4"
+  },
+  "giao-dien/vat-pham-game/bao-vat/treasure-12.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 7518195,
+    "size": 199476,
+    "mime": "image/webp",
+    "sha256": "b7e0390fa45cab3caacb606c258427629ccb1f3e8e6b5f86a4018f4bac8f41ff"
+  },
+  "giao-dien/vat-pham-game/bao-vat/treasure-13.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 7717671,
+    "size": 150204,
+    "mime": "image/webp",
+    "sha256": "9202531e24815b2cb38b1a18b892571d7051ca7d8ffa73c5720293b7dade09b1"
+  },
+  "giao-dien/vat-pham-game/bao-vat/treasure-14.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 7867875,
+    "size": 157068,
+    "mime": "image/webp",
+    "sha256": "97d170bf2cea057fd4bfb2b3c8863c69a8a892d80c92e8262e9f04f461ba5275"
+  },
+  "giao-dien/vat-pham-game/bao-vat/treasure-15.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 8024943,
+    "size": 230008,
+    "mime": "image/webp",
+    "sha256": "b165f64e8f17b512f0893aafba35df26c5b7ab5bf098da0ce24693d002404f44"
+  },
+  "giao-dien/vat-pham-game/bao-vat/treasure-16.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 8254951,
+    "size": 253086,
+    "mime": "image/webp",
+    "sha256": "b4c90e6448f80cbe38460d504a67608344a0c0e5fb3f305d0819f4fbe90cd0f5"
+  },
+  "giao-dien/vat-pham-game/bao-vat/treasure-17.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 8508037,
+    "size": 255756,
+    "mime": "image/webp",
+    "sha256": "e004a324b9ba78d44dfaf16c6a71ecac94e2a78c626bd62ed327bc278e9001f3"
+  },
+  "giao-dien/vat-pham-game/bao-vat/treasure-18.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 8763793,
+    "size": 159586,
+    "mime": "image/webp",
+    "sha256": "64a96d49f5df59fdab10ee7763dde7eee5bbe69c6dc7a29915cc28f7b6d151a5"
+  },
+  "giao-dien/vat-pham-game/bao-vat/treasure-19.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 8923379,
+    "size": 173644,
+    "mime": "image/webp",
+    "sha256": "e003d2fc83153c8c3586e58c1887d7fe3994a943920de0d1500a7982f53e952e"
+  },
+  "giao-dien/vat-pham-game/bao-vat/treasure-20.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 9097023,
+    "size": 177602,
+    "mime": "image/webp",
+    "sha256": "2eb13a593bb4e52a5a24214fe8b231bfc16d481cc8321013d975779ea667e2c1"
+  },
+  "giao-dien/vat-pham-game/bao-vat/treasure-21.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 9274625,
+    "size": 132244,
+    "mime": "image/webp",
+    "sha256": "af9901450b7ee7a8c7d738f77e2fa5baa4575dd39d02f9f035d41c43e2a4fcc4"
+  },
+  "giao-dien/vat-pham-game/bao-vat/trong-loi-am.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 9406869,
+    "size": 424042,
+    "mime": "image/webp",
+    "sha256": "7335c9c149c8ab7f49caff6872b077564a588c48887ba320bd319f3f77e8fedc"
+  },
+  "giao-dien/vat-pham-game/cong-phap/dia-giai.png": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 9830911,
+    "size": 3067559,
+    "mime": "image/png",
+    "sha256": "c0f7889431013edaf135163ea25801b86555abde92c99d6d28e453bc9ac114df"
+  },
+  "giao-dien/vat-pham-game/cong-phap/hoang-giai.png": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 12898470,
+    "size": 2891230,
+    "mime": "image/png",
+    "sha256": "cf44bc4ae75330276cf4c56e4849b5616a23e6d1820450c77036cb630bab936d"
+  },
+  "giao-dien/vat-pham-game/cong-phap/huyen-giai.png": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 15789700,
+    "size": 2713562,
+    "mime": "image/png",
+    "sha256": "84cf8858d655ea713df530ba4dc2c1a42150f8ee16e5db3b107c89dbb1ff924c"
+  },
+  "giao-dien/vat-pham-game/cong-phap/thien-giai.png": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 18503262,
+    "size": 2871544,
+    "mime": "image/png",
+    "sha256": "ddf2ce2848c84d64dd19621577dcab8fbcaa02e29527d6ff18429d0e2aab0f62"
+  },
+  "giao-dien/vat-pham-game/da-linh/da-cam.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 21374806,
+    "size": 35446,
+    "mime": "image/webp",
+    "sha256": "21f5ae57e96f5e84216b99205ca2ec7ed6e9161fa99a62a70f3b5d72f31cdf3e"
+  },
+  "giao-dien/vat-pham-game/da-linh/da-den.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 21410252,
+    "size": 41164,
+    "mime": "image/webp",
+    "sha256": "5897b19bca465834aa1adc0f7dd5fecb9eee5f34fe66f0364a403bafc0142dd7"
+  },
+  "giao-dien/vat-pham-game/da-linh/da-do.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 21451416,
+    "size": 35264,
+    "mime": "image/webp",
+    "sha256": "efe215e7e55981a821ae4d1ad7e16c9be9bb0ee62269255443d4f698b32d5006"
+  },
+  "giao-dien/vat-pham-game/da-linh/da-tim.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 21486680,
+    "size": 37452,
+    "mime": "image/webp",
+    "sha256": "61e8258dfae3bdde559624f44ee924364707966632b42e2fdda562ee9f0b1ef5"
+  },
+  "giao-dien/vat-pham-game/da-linh/da-trang.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 21524132,
+    "size": 33010,
+    "mime": "image/webp",
+    "sha256": "14baf9faa0bb71e94e5f19bab73bf599e145675e02ec02149f36eb5b6c4eee54"
+  },
+  "giao-dien/vat-pham-game/da-linh/da-vang.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 21557142,
+    "size": 33560,
+    "mime": "image/webp",
+    "sha256": "76a0be2ec0c6d6445bdb046ccf9e0c85ce3c2485c7dcfb1812d1562e9cc1d48b"
+  },
+  "giao-dien/vat-pham-game/da-linh/da-xanh-la.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 21590702,
+    "size": 38252,
+    "mime": "image/webp",
+    "sha256": "fa6a6a0ade163a5f1d643ee7b224ccd47c35478ad1d7287ae59b0ebcf6d93f6a"
+  },
+  "giao-dien/vat-pham-game/ky-nang/bi-kip-nhan.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 21628954,
+    "size": 53868,
+    "mime": "image/webp",
+    "sha256": "49e292501e300359cd4e2036ee5a427c4be2afbc2e7c6e7545776a3ce7199cc3"
+  },
+  "giao-dien/vat-pham-game/ky-nang/bi-kip.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 21682822,
+    "size": 34500,
+    "mime": "image/webp",
+    "sha256": "f8b969f90ef55302d98482c75edf3d58373770d60884d7f5e2cb95ede9884f7e"
+  },
+  "giao-dien/vat-pham-game/ky-nang/vo-tu-thien-thu-nhan.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 21717322,
+    "size": 51510,
+    "mime": "image/webp",
+    "sha256": "1e049ae28f24cbfdfa431d017ef756892e0b5256a83dded21fdcb5d9a2d42508"
+  },
+  "giao-dien/vat-pham-game/ky-nang/vo-tu-thien-thu.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 21768832,
+    "size": 28218,
+    "mime": "image/webp",
+    "sha256": "aecc45c633a2774375cdde736001328d339b5ef3bec92caf7781c34914cec8e5"
+  },
+  "giao-dien/vat-pham-game/ky-nang/yeu-quyet-nhan.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 21797050,
+    "size": 61308,
+    "mime": "image/webp",
+    "sha256": "acb278b8f9ad542002892d3d8fc9fbc741309b90028a6dadd04e07da99b753c4"
+  },
+  "giao-dien/vat-pham-game/ky-nang/yeu-quyet.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 21858358,
+    "size": 33418,
+    "mime": "image/webp",
+    "sha256": "c0e98a96ffcb49184c34a2537262721f9a8e0c9bb74cfdd712f32e552c57fc49"
+  },
+  "giao-dien/vat-pham-game/ngoc/ngo-hp.png": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 21891776,
+    "size": 2104231,
+    "mime": "image/png",
+    "sha256": "a225f9d024a4071eb171916d27a837256a3f7499da870ef024117e35d63cc924"
+  },
+  "giao-dien/vat-pham-game/ngoc/ngo-hp.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 23996007,
+    "size": 57654,
+    "mime": "image/webp",
+    "sha256": "5399a537f1b5f792df1366d5bb2707ffb3aaac7e7c88d7e63f1069e023d231cb"
+  },
+  "giao-dien/vat-pham-game/ngoc/ngoc-cong.png": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 24053661,
+    "size": 2601839,
+    "mime": "image/png",
+    "sha256": "1a08d9478c0dcf9be068748ef75c4f0f755ae7e4aa33146186f23fa0195bb7f9"
+  },
+  "giao-dien/vat-pham-game/ngoc/ngoc-cong.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 26655500,
+    "size": 53136,
+    "mime": "image/webp",
+    "sha256": "a5952ca774a2e4906c0e31b64de566d606ed9b51ab4e499e8e1c8f720009fc3b"
+  },
+  "giao-dien/vat-pham-game/ngoc/ngoc-thu.png": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 26708636,
+    "size": 2778677,
+    "mime": "image/png",
+    "sha256": "24438586a4005a5e4b5de85c1af66a9542cc1755cc3eb4e15f15f9f9f0811f24"
+  },
+  "giao-dien/vat-pham-game/ngoc/ngoc-thu.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 29487313,
+    "size": 64846,
+    "mime": "image/webp",
+    "sha256": "df77b940d00a485b2b5a3a22b8f04f82a66e392a99d40beaf3a9b20347bd7461"
+  },
+  "giao-dien/vat-pham-game/ngoc/ngoc-toc.png": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 29552159,
+    "size": 2798564,
+    "mime": "image/png",
+    "sha256": "10438c25f5661d1bf5cfe5ae7870a853bc3695232a2d2516255ce89a8a493361"
+  },
+  "giao-dien/vat-pham-game/ngoc/ngoc-toc.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 32350723,
+    "size": 63282,
+    "mime": "image/webp",
+    "sha256": "39bbad2e4b332f18e664614a741493aa29c4e163cf6446835ba8c4c1e60f5dcc"
+  },
+  "giao-dien/vat-pham-game/phach/linh_phach.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 32414005,
+    "size": 552352,
+    "mime": "image/webp",
+    "sha256": "c5839e131855b8ac038b95d42632473bd221abc3ea2fc342aa352187a40a6260"
+  },
+  "giao-dien/vat-pham-game/phach/than_phach.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 32966357,
+    "size": 1034016,
+    "mime": "image/webp",
+    "sha256": "0046d1e1ad3bd951a8bf52bd6357699e1ab25eee8cd55409c33e74b4a4214f44"
+  },
+  "giao-dien/vat-pham-game/phach/tien_phach.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 34000373,
+    "size": 948696,
+    "mime": "image/webp",
+    "sha256": "e07344d7abc8bf5c7d87cd54a96de4533a84693af127bc38a8ec7158d69d2a70"
+  },
+  "giao-dien/vat-pham-game/phu-linh/de-phu.png": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 34949069,
+    "size": 2829624,
+    "mime": "image/png",
+    "sha256": "ea07297ad3499897edef09f507fb3c14f12ea27d023007cdfff91107efff27e0"
+  },
+  "giao-dien/vat-pham-game/phu-linh/de-phu.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 37778693,
+    "size": 71408,
+    "mime": "image/webp",
+    "sha256": "5428881ac177fa53a241a673a9a321ea4c5bbfe361819fa69c9936982e279062"
+  },
+  "giao-dien/vat-pham-game/phu-linh/hoang-phu.png": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 37850101,
+    "size": 2754402,
+    "mime": "image/png",
+    "sha256": "ba5760c9c6fb797fe32d31a4565c7ba957466e89da77de2a35a2242852725dc3"
+  },
+  "giao-dien/vat-pham-game/phu-linh/hoang-phu.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 40604503,
+    "size": 65492,
+    "mime": "image/webp",
+    "sha256": "effd681c6354466ee514d9cca59edd448fc2addf2a5c74252839a395eaf25516"
+  },
+  "giao-dien/vat-pham-game/phu-linh/ma-phu.png": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 40669995,
+    "size": 2687541,
+    "mime": "image/png",
+    "sha256": "ccd3efa8a7b5793c228d7fc912ace38ab8915d78ea128fb85a7cf244a452e92f"
+  },
+  "giao-dien/vat-pham-game/phu-linh/ma-phu.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 43357536,
+    "size": 68122,
+    "mime": "image/webp",
+    "sha256": "91530d3b6c5a0c99219f6ab441271a3b95180568d7c3be80b9e96797259fd3d8"
+  },
+  "giao-dien/vat-pham-game/phu-linh/thanh-phu.png": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 43425658,
+    "size": 2787640,
+    "mime": "image/png",
+    "sha256": "275483d194e52b2aa07824257d4dce14de04a2bcc28d45c3a811f38bdbc8cb92"
+  },
+  "giao-dien/vat-pham-game/phu-linh/thanh-phu.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 46213298,
+    "size": 64432,
+    "mime": "image/webp",
+    "sha256": "1c7aa747043ab390c9662c6c0077f43083abf14431fd4c4a65d59190e5dfbd7a"
+  },
+  "giao-dien/vat-pham-game/phu-linh/tien-phu.png": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 46277730,
+    "size": 2648233,
+    "mime": "image/png",
+    "sha256": "4fe66f3789b5df986aba77d605c1b96bfb9e8113264fabf6e76d284a8220776f"
+  },
+  "giao-dien/vat-pham-game/phu-linh/tien-phu.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 48925963,
+    "size": 65148,
+    "mime": "image/webp",
+    "sha256": "52b4ec429ca8b22ecbb48b427f78c6a02c8b2e2affebdd09e7a42c347001fef2"
+  },
+  "giao-dien/vat-pham-game/phu-linh/ton-phu.png": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 48991111,
+    "size": 2707712,
+    "mime": "image/png",
+    "sha256": "6e97e15f922627ceecd1db0f54f99b5a7a7d1e9457ffcc7275e524afc7adf26c"
+  },
+  "giao-dien/vat-pham-game/phu-linh/ton-phu.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 51698823,
+    "size": 64688,
+    "mime": "image/webp",
+    "sha256": "fb4b6ab2bb42ff78c0e80974d6480f100f2299e7fcb18cb1c490678a608dee80"
+  },
+  "giao-dien/vat-pham-game/phu-linh/vuong-phu.png": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 51763511,
+    "size": 2755501,
+    "mime": "image/png",
+    "sha256": "b4a0a4516d2c096c73bc9fdf1fe6c172dfd7ec6d6b13dc5f6d0595186ce9c756"
+  },
+  "giao-dien/vat-pham-game/phu-linh/vuong-phu.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 54519012,
+    "size": 65812,
+    "mime": "image/webp",
+    "sha256": "084538826cb8fb4c66f3bb354cd956f6c6f9a1a3203ca60a88d9330742f3460b"
+  },
+  "giao-dien/vat-pham-game/the-chieu-mo/cao-cap.png": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 54584824,
+    "size": 3408556,
+    "mime": "image/png",
+    "sha256": "62b8dd6b72c6c11e7e54130ee063f4a6ab4748834244eee74e42347df59288eb"
+  },
+  "giao-dien/vat-pham-game/the-chieu-mo/cao-cap.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 57993380,
+    "size": 48634,
+    "mime": "image/webp",
+    "sha256": "8f3b6c33a18f7f72d83e43925c62cf36f013e5618373434f53818b34681910e7"
+  },
+  "giao-dien/vat-pham-game/the-chieu-mo/so-cap.png": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 58042014,
+    "size": 2778435,
+    "mime": "image/png",
+    "sha256": "7fe0eff72469213f69577091041ccfacc79c18592e6c57ff83576d729fe00db2"
+  },
+  "giao-dien/vat-pham-game/the-chieu-mo/so-cap.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 60820449,
+    "size": 30284,
+    "mime": "image/webp",
+    "sha256": "25e7b14cc1716b044a98f9eb23f6b2e9ae3bd11d9281b0315266e77953e1df68"
+  },
+  "giao-dien/vat-pham-game/trang-bi/bao-dan.png": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 60850733,
+    "size": 2712202,
+    "mime": "image/png",
+    "sha256": "0bf51b8b9a3a2e7fc4954692c1ba818cdce18d3d16e2e44b196bea6c5676e32e"
+  },
+  "giao-dien/vat-pham-game/trang-bi/de-dan.png": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 63562935,
+    "size": 2550136,
+    "mime": "image/png",
+    "sha256": "2e17f7a280169c9e0414fc550644e10878cdab399f2e8915ad5207cb14c601ea"
+  },
+  "giao-dien/vat-pham-game/trang-bi/equipment-armor.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 66113071,
+    "size": 39334,
+    "mime": "image/webp",
+    "sha256": "3361c80e5b9fcf38517fb5cb63e5d3854ded3b4271922eb57005bd03f9ebacd2"
+  },
+  "giao-dien/vat-pham-game/trang-bi/equipment-boots.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 66152405,
+    "size": 35934,
+    "mime": "image/webp",
+    "sha256": "50f632af8658906375d4c4645962c493ac00dfe872a6ef32d82c05b42f0e311a"
+  },
+  "giao-dien/vat-pham-game/trang-bi/equipment-hat.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 66188339,
+    "size": 25698,
+    "mime": "image/webp",
+    "sha256": "56d7ee1e4bb5d50d228f8726928c7709dbed5030e4d8b9ee24c38063668bd982"
+  },
+  "giao-dien/vat-pham-game/trang-bi/equipment-sword.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 66214037,
+    "size": 14162,
+    "mime": "image/webp",
+    "sha256": "5f3e5de61d02bfc1ef3d3afad640378506e3b48003da1ca29e8809ea23ecc4b5"
+  },
+  "giao-dien/vat-pham-game/trang-bi/hoa-thach.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 66228199,
+    "size": 851552,
+    "mime": "image/webp",
+    "sha256": "21dcae3735771397480c3ca0f9238dc04b4d6a7c56126816803f3ce25fe7fb09"
+  },
+  "giao-dien/vat-pham-game/trang-bi/huyen-dan.png": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 67079751,
+    "size": 2723128,
+    "mime": "image/png",
+    "sha256": "cb259f8eb74888663f05d676d7cbd4b0e1dd28d84299f4e3d821aa735392dec4"
+  },
+  "giao-dien/vat-pham-game/trang-bi/icon_hao_thien_chuy_khong_ten.webp": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 69802879,
+    "size": 446720,
+    "mime": "image/webp",
+    "sha256": "9ab613a6ee5e2d2407a6da4fbde347c8a02dd146cf2d232913c5bfe0f4095d19"
+  },
+  "giao-dien/vat-pham-game/trang-bi/kim-dan.png": {
+    "pack": "asset-bin/giao-dien--vat-pham-game.bin",
+    "offset": 70249599,
+    "size": 2828012,
+    "mime": "image/png",
+    "sha256": "ab29e9f3158845e82228b8af670406a7c464e834d9f8be992b321f70e7cb82d9"
+  }
+}

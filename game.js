@@ -501,8 +501,8 @@ window.GP = (function () {
     id:67926, key:'tuyetde', slug:'tuyet-de', name:'Tuyết Đế', emoji:'❄️', img:'tuyet-de.webp', body:'tuyet-de-body.webp', bodyH:96,
     stats:{hp:6500,atk:700,spd:1600}, combat:{def:320,dodge:60,acc:300,crit:0,critDmg:0,tough:0,pierce:0,block:0},
     role:'sup', tia:1, constants:{lv:1,star:1,border:'purple',ultName:'Vĩnh Đông Chi Vực'},
-    idle:{sheet:'tdeIdle',h:130,ms:1900}, ultFn:'tuyetDeUlt', audio:'tuyet-de-ult.mp3',
-    sprites:{tdeIdle:{src:'tuyet-de-idle.webp',cw:300,ch:256,n:20,face:'R'},tdeUlt:{src:'tuyet-de-ult.webp',cw:300,ch:256,n:20,face:'R'},tdeFx:{src:'tuyet-de-fx.webp',cw:512,ch:512,n:20,face:'R'}},
+    idle:{sheet:'tuyetDeIdle',h:130,ms:1900}, ultFn:'tuyetDeUlt', audio:'tuyet-de-ult.mp3',
+    sprites:{tuyetDeIdle:{src:'tuyet-de-idle.webp',cw:300,ch:256,n:20,face:'R'},tuyetDeUlt:{src:'tuyet-de-ult.webp',cw:300,ch:256,n:20,face:'R'},tuyetDeFx:{src:'tuyet-de-fx.webp',cw:512,ch:512,n:20,face:'R'}},
     skillConfig:{TDE_HITS:4,TDE_FREEZE:2}
   });
   if (!window.HERO_DATA.heroes.some(h => h.id === 58271)) window.HERO_DATA.heroes.push({
@@ -7243,7 +7243,7 @@ async function tuyetDeUlt(u,tok) {
   const TDE_HITS=cpParam(u,'TDE_HITS',window.TDE_HITS), TDE_FREEZE=cpParam(u,'TDE_FREEZE',window.TDE_FREEZE);
 
   const g=nt(u), es=g.es(); if(!es.length)return;
-  const S=SEQ.tdeUlt,F=SEQ.tdeFx,timers=[],end=1500;
+  const S=SEQ.tuyetDeUlt,F=SEQ.tuyetDeFx,timers=[],end=1500;
   const at=(ms,fn)=>timers.push(setTimeout(()=>{if(tok===battleToken)fn();},seqT(ms)));
   const wait=ms=>new Promise(r=>setTimeout(r,seqT(ms)));
   const n=Math.max(1,Math.floor(TDE_HITS)),per=u.atk*(u.sk||1)/n;
