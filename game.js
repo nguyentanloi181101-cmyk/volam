@@ -526,6 +526,8 @@ window.GP = (function () {
   if (!window.HERO_DATA.heroes.some(h => h.id === 58372)) window.HERO_DATA.heroes.push({"id": 58372, "key": "dongphuongbatbai", "slug": "dong-phuong-bat-bai", "name": "Đông Phương Bất Bại", "emoji": "🌺", "role": "skill", "img": "dong-phuong-bat-bai.webp", "body": "dong-phuong-bat-bai-body.webp", "bodyH": 96, "stats": {"hp": 6000, "atk": 700, "spd": 120}, "combat": {"dodge": 60, "acc": 1000, "crit": 0, "critDmg": 0, "tough": 0, "pierce": 0, "block": 0, "def": 300}, "tia": 1, "constants": {"lv": 1, "star": 1, "border": "orange", "ultName": "Quỳ Hoa Bảo Điển"}, "audio": "dong-phuong-bat-bai-ult.mp3", "sprites": {"DPBBIdle": {"src": "dong-phuong-bat-bai-idle.webp", "cw": 128, "ch": 125, "n": 16, "face": "R"}, "DPBBCast": {"src": "dong-phuong-bat-bai-ult.webp", "cw": 128, "ch": 125, "n": 16, "face": "R"}, "DPBBFx": {"src": "dong-phuong-bat-bai-fx.webp", "cw": 128, "ch": 125, "n": 16, "face": "R"}}, "idle": {"sheet": "DPBBIdle", "h": 120, "ms": 1600}, "ultFn": "dongPhuongUlt", "skillConfig": {"DPBB_HITS": 5, "DPBB_TARGETS": 3, "DPBB_PIERCE": 15000, "DPBB_DOWN": 0.5, "DPBB_TURNS": 2}});
   if (!window.HERO_DATA.heroes.some(h => h.id === 73649)) window.HERO_DATA.heroes.push({"id": 73649, "audio": "duong-qua-ult.mp3", "key": "duongqua", "slug": "duong-qua", "name": "Dương Quá", "emoji": "🦅", "role": "atk", "img": "duong-qua.webp", "body": "duong-qua-body.webp", "bodyH": 96, "stats": {"hp": 6200, "atk": 830, "spd": 120}, "combat": {"dodge": 60, "acc": 300, "crit": 0, "critDmg": 0, "tough": 0, "pierce": 0, "block": 0, "def": 300}, "tia": 1, "constants": {"lv": 1, "star": 1, "border": "orange", "ultName": "Ám Nhiên Tiêu Hồn Chưởng"}, "sprites": {"DQIdle": {"src": "duong-qua-idle.webp", "cw": 320, "ch": 320, "n": 16, "face": "R"}, "DQAtk": {"src": "duong-qua-atk.webp", "cw": 320, "ch": 320, "n": 16, "face": "R"}, "DQCast": {"src": "duong-qua-ult.webp", "cw": 128, "ch": 128, "n": 16, "face": "R"}}, "idle": {"sheet": "DQIdle", "h": 120, "ms": 1760}, "ultFn": "duongQuaUlt", "skillConfig": {"DQ_HITS": 5, "DQ_TARGETS": 3, "DQ_ACC": 300, "DQ_DODGE": 300, "DQ_TURNS": 2}});
   const HERO_UID = {
+    63917: [63917, 'linhdanhthue'],
+    58316: [58316, 'linda'],
     91763: [91763, 'tieulongnu'],
     58372: [58372, 'dongphuongbatbai'],
     73649: [73649, 'duongqua'],
@@ -668,6 +670,42 @@ function cfgGet(path, def) {
 const cfgNum = (path, def) => { const v = Number(cfgGet(path, def)); return isFinite(v) ? v : def; };
 
 // Các file dữ liệu đăng ký hàm đọc cấu hình: chạy ngay 1 lần khi đăng ký và chạy lại mỗi lần cfgApply (khi admin đổi số).
+
+/* === Công Pháp: tham số riêng của từng đơn vị trong trận === */
+function cpClamp(n) { return Math.max(0, Math.min(4, Math.floor(Number(n)||0))); }
+function cpLevel(id) { return cpClamp((loadJSON('cp_prog') || {})[id]); }
+function cpUnitLevel(u) { return cpClamp(u.cpTier ?? (u.side === 'hero' ? cpLevel(u.id) : 0)); }
+function cpValue(id, tier, key, fallback) {
+  const t = cpClamp(tier), d = window.CP_SKILL_DATA[id];
+  if (!t || !d || !Object.prototype.hasOwnProperty.call(d.tiers[t-1], key)) return fallback;
+  const v = cfgNum('congphap.skills.'+id+'.'+t+'.'+key, d.tiers[t-1][key]);
+  if (!Number.isFinite(v) || v < 0) return d.tiers[t-1][key];
+  const f=d.fields.find(x=>x[0]===key);
+  if (f && f[2]==='#') return Math.floor(v);
+  if (key==='MOON_TAKE'||key==='MOON_REFLECT') return Math.min(1,v);
+  return v;
+}
+function cpParam(u, key, fallback) { return cpValue(u.id, cpUnitLevel(u), key, fallback); }
+function cpTierText(id, tier) {
+  const d = window.CP_SKILL_DATA[id]; tier=cpClamp(tier); if(!d||!tier)return '';
+  const fmt=(v,unit)=>unit==='%' ? Math.round(v*10000)/100+'%' : unit==='P' ? v+'%' : String(v);
+  const fields=d.fields.map(([key,label,unit])=>{
+    const v=cpValue(id,tier,key,0);
+    if(key==='MOON_TAKE') return 'Giảm sát thương '+fmt(1-v,'%');
+    if(key==='LQ_HEAL_UP') return 'Hồi máu ×'+(1+v);
+    return label+' '+fmt(v,unit);
+  });
+  return window.CP_STAGE_NAMES[tier]+': '+fields.join(' · ')+'. '+d.keep;
+}
+function cpCost(tier) {
+  const def=window.CP_BOOK_COST(tier);
+  if (!def) return null;
+  const raw=cfgGet('congphap.cost.'+tier,def);
+  if(!Array.isArray(raw)||raw.some(x=>!x||typeof x.k!=='string'||!x.k.trim()||!Number.isSafeInteger(x.n)||x.n<=0))return null;
+  const merged=new Map(); for(const x of raw) merged.set(x.k,(merged.get(x.k)||0)+x.n);
+  return [...merged].every(([k,n])=>Number.isSafeInteger(n))?[...merged].map(([k,n])=>({k,n})):null;
+}
+
 const cfgHooks = [];
 function cfgOnApply(fn) { cfgHooks.push(fn); try { fn(); } catch (e) { console.warn('cfgHook', e); } }
 
@@ -2642,7 +2680,7 @@ function ltSlotHTML(f) {
       return ((HL_BASE[r] != null ? HL_BASE[r] : HL_BASE.atk) + HL_STEP_QUALITY * ql) / 100;   // gốc theo chất + 15%/bậc phẩm chất
     };
     const skillStepOf = lv => (lv <= 1 ? 0 : HL_STEP_SKILL / 100);   // mỗi lần LÊN cấp kỹ năng +7% (cố định, không phụ thuộc loại sách)
-    const skillMultOf = (sk, id, qlo) => { let m = skillBaseOf(id, qlo); for (let lv = 2; lv <= sk; lv++) m += skillStepOf(lv); return m; };
+    const skillMultOf = (sk, id, qlo, tier = cpLevel(id)) => { let m = skillBaseOf(id, qlo); const role = roleOf(id); const base = (HL_BASE[role] ?? HL_BASE.atk) / 100; m += cpValue(id, tier, "CP_HL", base) - base; for (let lv = 2; lv <= sk; lv++) m += skillStepOf(lv); return m; };
     const skillMult = id => skillMultOf(getProg(id).sk, id);
 
     // ---- CHI PHÍ LÊN CẤP TƯỚNG: cấp 2 = 100 bạc + 200 gạo; mỗi cấp sau đắt hơn cấp trước 10% (cấp 3 = cấp 2 + 10%, cấp 4 = cấp 3 + 10%, ...) ----
@@ -3048,6 +3086,7 @@ function addAccExp(n) {
       else if (id === 67926) ult = `Vĩnh Đông Chi Vực: đánh toàn địch ${TDE_HITS} lần, tổng HL × Công trên mỗi địch; đóng băng (mất lượt như choáng) ${TDE_FREEZE} hiệp.`;
       else if (id === 84621) ult = `Đánh địch Công cao nhất 3 lần, tổng HL × Công; toàn đội miễn khống chế và +30% Thủ, toàn địch -30% Công trong 2 hiệp. Nội tại: đồng đội xuống dưới 10% HP nhận +70 điểm % Đỡ đòn 2 hiệp.`;
       else ult = `Lao vào địch, đánh ${ULT_HITS} đòn liên tiếp, tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}, mỗi đòn ≈ ${fmtN(st.atk * sk / Math.max(1, ULT_HITS))}). Cần đầy 100 nộ.`;
+      if (cpLevel(id) && window.CP_SKILL_DATA[id]) ult = cpTierText(id,cpLevel(id));
       { const hh = heroById(id), free = /^KHÔNG TỐN NỘ – (lượt|hiệp) nào cũng ulti được\.\s*/;
         if (hh.alwaysUlt) { if (!free.test(ult)) ult = 'KHÔNG TỐN NỘ – lượt nào cũng ulti được. ' + ult.replace(/Cần đầy 100 nộ[,.]?\s*/g, ''); }
         else if (free.test(ult)) ult = ult.replace(free, 'Cần đầy 100 nộ mới ulti được. '); }
@@ -3062,9 +3101,10 @@ function addAccExp(n) {
     }
 
     // ---- Mô tả NGẮN của tuyệt kỹ (chỉ hiện tuyệt kỹ trong Chi tiết tướng): đánh ai • tăng/giảm gì • dính hiệu ứng gì • mấy hiệp ----
-    function heroUltOverride(id) { try { const o = cfgGet('skillText.' + id, null); return !!(o && typeof o === 'object' && typeof o[1] === 'string' && o[1].trim()); } catch (e) { return false; } }   // admin đã chỉnh chữ tuyệt kỹ → dùng chữ đó
-    function heroUltShort(id) {
+    function heroUltOverride(id) { if(cpLevel(id)&&window.CP_SKILL_DATA[id])return false; try { const o = cfgGet('skillText.' + id, null); return !!(o && typeof o === 'object' && typeof o[1] === 'string' && o[1].trim()); } catch (e) { return false; } }   // admin đã chỉnh chữ tuyệt kỹ → dùng chữ đó
+    function heroUltShort(id, tier = cpLevel(id)) {
       try {
+        if (tier && window.CP_SKILL_DATA[id]) return cpTierText(id,tier);
         const st = heroStats(id), sk = skillMult(id), pct = x => Math.round(x * 100);
         switch (id) {
           case 0: return `Dịch chuyển, chém TOÀN BỘ địch ${TADE_HITS} nhát (xuyên bất tử, giảm ${pct(TADE_SLOW)}% Tốc địch); đội ta +${TADE_PIERCE} Phá giáp ${TADE_PIERCE_TURNS} hiệp.`;
@@ -3739,9 +3779,9 @@ function addAccExp(n) {
     }
     function removeMoon(u) { u.moon = 0; u.el.classList.remove('moon-on'); const ic = u.el.querySelector('.bf-moonshield'); if (ic) ic.remove(); }
     const noBuff = u => !!(u.dn && (u.dn.nobuff > 0 || u.dn.hccLock > 0));          // Độc Cô Cầu Bại: đang bị khóa tăng phúc
-    function applyMoon(u) {
+    function applyMoon(u, caster) {
       if (noBuff(u)) { floatText(u, '🚫 KHÓA TĂNG PHÚC'); return; }
-      u.moon = MOON_TURNS;
+      u.moon = MOON_TURNS; u.moonReflect = caster ? cpParam(caster,'MOON_REFLECT',MOON_REFLECT) : MOON_REFLECT; u.moonTake = caster ? cpParam(caster,'MOON_TAKE',MOON_TAKE) : MOON_TAKE;
       let ic = u.el.querySelector('.bf-moonshield');
       if (!ic) { ic = document.createElement('div'); ic.className = 'bf-moonshield'; u.el.appendChild(ic); }
       ic.innerHTML = '<b>🌙' + u.moon + '</b>';
@@ -3802,7 +3842,7 @@ function addAccExp(n) {
       }
       let refl = 0;
       if (u.moon > 0 && !noRage && !noRefl) {      // Khiên Trăng Khuyết: nhận 30%, phản 50% về địch
-        refl = Math.round(dmg * MOON_REFLECT); dmg = Math.max(1, Math.round(dmg * MOON_TAKE));
+        refl = Math.round(dmg * (u.moonReflect ?? MOON_REFLECT)); dmg = Math.max(1, Math.round(dmg * (u.moonTake ?? MOON_TAKE)));
         const ic = u.el.querySelector('.bf-moonshield'); if (ic) ic.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.3)' }, { transform: 'scale(1)' }], { duration: 260 });
       }
       if (!(ray && ray.hccTrue) && u.dn && u.dn.immortal > 0 && dmg >= u.hp) {   // Thanh Y: không thể chết — TRỪ khi người đánh có cờ ignoreImmortal (Tà Đế đang ulti)
@@ -3813,10 +3853,11 @@ function addAccExp(n) {
       u.hp = Math.max(0, u.hp - dmg);
       if (u.hp > 0 && hpBefore >= u.max * STINH_HP && u.hp < u.max * STINH_HP && waveUnits) {
         const team = u.side === 'hero' ? waveUnits.heroes : waveUnits.enemies;
-        if (team.some(s => s !== u && s.alive && s.id === 84621) && !noBuff(u)) {
+        const guardian=team.filter(s=>s!==u&&s.alive&&s.id===84621).sort((a,b)=>cpParam(b,'STINH_BLOCK',STINH_BLOCK)-cpParam(a,'STINH_BLOCK',STINH_BLOCK))[0];
+        if (guardian && !noBuff(u)) {
           const old = (u.mods || []).find(m => m.tag === 'stinh:block');
           if (old) { u.block -= old.d; u.mods.splice(u.mods.indexOf(old),1); }
-          blockMod(u, STINH_BLOCK, STINH_TURNS, 'buff', 'stinh:block');
+          blockMod(u,cpParam(guardian,'STINH_BLOCK',STINH_BLOCK),cpParam(guardian,'STINH_TURNS',STINH_TURNS),'buff','stinh:block');
           floatText(u, '⛰️ HỘ SƠN');
         }
       }
@@ -3989,7 +4030,7 @@ function addAccExp(n) {
       if (sp && hb && hb.img && !hb.body && !sp.querySelector('.hero-body')) { sp.innerHTML = '<img class="hero-body hero-portrait" style="height:80px" src="' + hb.img + '">'; return; }
       if (sp && !sp.querySelector('.hero-img, .bf-emo, .hero-body')) sp.innerHTML = '<span class="bf-emo">' + sp.innerHTML + '</span>';
     }
-    function grantStart(u) { applyRole(u); if (u.id === 1) { (u.dn = u.dn || {}).immortal = IMMORTAL_TURNS; refreshDbf(u); } }
+    function grantStart(u) { if(u.cpTier == null) u.cpTier = u.side === "hero" ? cpLevel(u.id) : 0; applyRole(u); if (u.id === 1) { (u.dn = u.dn || {}).immortal = IMMORTAL_TURNS; refreshDbf(u); } }
     function tickImmortal(units) { units.forEach(u => { if (u.dn && u.dn.immortal > 0) { u.dn.immortal--; refreshDbf(u); } }); }
     const deadAllies = u => alliesOf(u).filter(a => !a.alive && !a.hccExploded);
     // Không ulti được tuyệt kỹ: bị câm lặng, hoặc là Thanh Y mà chưa có đồng đội nào gục để hồi sinh
@@ -4488,6 +4529,9 @@ cfgOnApply(applyFormationCfg);   // chạy ngay 1 lần + chạy lại mỗi khi
    Tham số chỉnh ở admin.html → tab "Chiêu thức & chiến đấu" → Tà Đế. */
 const TADE_T = [1300, 1550, 1800, 2050, 2350];   // mốc từng nhát chém (ms từ lúc bắt đầu tiếng)
 async function taDeUlt(u, tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const TADE_SLOW=cpParam(u,'TADE_SLOW',window.TADE_SLOW), TADE_PIERCE=cpParam(u,'TADE_PIERCE',window.TADE_PIERCE);
+
   const f = document.getElementById('battle-arena'), box = document.getElementById('bf-units');
   const W = f.clientWidth, H = f.clientHeight, base = 'translate(-50%,-50%)';
   const alive = () => foesOf(u).filter(e => e.alive);
@@ -4646,6 +4690,9 @@ async function taDeUlt(u, tok) {
    giải hiệu ứng xấu + khiên MOON_TURNS hiệp (phản MOON_REFLECT, đồng đội nhận MOON_TAKE). */
 
     async function hangNgaUlt(u, tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const MOON_REFLECT=cpParam(u,'MOON_REFLECT',window.MOON_REFLECT);
+
       const f = document.getElementById('battle-arena'), box = document.getElementById('bf-units');
       const W = f.clientWidth, H = f.clientHeight, made = [], timers = [];
       const allies = alliesOf(u).filter(h => h.alive);
@@ -4675,7 +4722,7 @@ async function taDeUlt(u, tok) {
         });
         await sleep(FR * 17); if (tok !== battleToken) return;
         cleanse(allies);                                                                 // giải TẤT CẢ hiệu ứng bất lợi
-        allies.forEach((a, i) => setTimeout(() => { if (!a.alive) return; applyMoon(a); floatText(a, '🌙 KHIÊN PHẢN ' + Math.round(MOON_REFLECT * 100) + '%'); }, i * 120));
+        allies.forEach((a, i) => setTimeout(() => { if (tok !== battleToken || !a.alive) return; applyMoon(a,u); floatText(a, '🌙 KHIÊN PHẢN ' + Math.round(MOON_REFLECT * 100) + '%'); }, i * 120));
         await sleep(FR * (N - 17) + 900); if (tok !== battleToken) return;            // đợi hết chuỗi + giữ dáng ngồi trên trăng
         cast.el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 250, fill: 'forwards' });
         await sleep(260);
@@ -4746,6 +4793,9 @@ function sfxSwordStab() {
 }
 
 async function duCoUlt(u, tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const DUCO_SLOW=cpParam(u,'DUCO_SLOW',window.DUCO_SLOW), DUCO_HASTE=cpParam(u,'DUCO_HASTE',window.DUCO_HASTE);
+
   const f = document.getElementById('battle-arena'), box = document.getElementById('bf-units');
   const W = f.clientWidth, H = f.clientHeight;
   const es0 = foesOf(u).filter(e => e.alive); if (!es0.length) return;
@@ -4866,6 +4916,9 @@ async function duCoUlt(u, tok) {
       } catch (e) {}
     }
     async function taichiUlt(u, tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const TAICHI_BLEED_PCT=cpParam(u,'TAICHI_BLEED_PCT',window.TAICHI_BLEED_PCT), TAICHI_BLEED_TURNS=cpParam(u,'TAICHI_BLEED_TURNS',window.TAICHI_BLEED_TURNS);
+
       const g = nt(u), { f, box, made } = g, targets = g.es().slice();
       if (!targets.length) return;
       const S = SEQ.ttpCast, I = SEQ[SEQ_IDLE[4].sheet];
@@ -4876,7 +4929,8 @@ async function duCoUlt(u, tok) {
       const fx = [], timers = [];
       const at = (ms, fn) => timers.push(setTimeout(() => { if(tok === battleToken) fn(); }, seqT(ms)));
       const n = Math.max(1, Math.floor(TAICHI_HITS)), per = u.atk * (u.sk || 1) / n;
-      const six = (u.side === 'hero' ? getProg(4).star : (u.star || 0)) >= STAR_MAX;
+      const six = cpUnitLevel(u)>0 || (u.side === 'hero' ? getProg(4).star : (u.star || 0)) >= STAR_MAX;
+      const cpStuns=cpParam(u,'CP_TAICHI_COUNT',six?2:1), cpStunTurns=cpParam(u,'TAICHI_BLEED_TURNS',2);
       const direction = targets.reduce((v,e)=>v+e.x,0)/targets.length >= u.x;
       cast.el.style.transform = 'translateX(-50%)' + (direction ? '' : ' scaleX(-1)');
       cast.el.style.bottom = '9px';
@@ -4915,7 +4969,7 @@ async function duCoUlt(u, tok) {
           if(k<n-1){await sleep(260);if(tok!==battleToken)return;}
         }
         dropDeadEffects(targets);
-        shuffled(targets.filter(e=>e.alive)).slice(0,six?2:1).forEach(v=>{stunEnemy(v,Math.max(2,v.stun||0));floatText(v,'CHOÁNG 2 HIỆP');});
+        shuffled(targets.filter(e=>e.alive)).slice(0,Math.max(0,Math.floor(cpStuns))).forEach(v=>{stunEnemy(v,Math.max(cpStunTurns,v.stun||0));floatText(v,'CHOÁNG '+cpStunTurns+' HIỆP');});
         // Đợi sprite chạy hết 16 khung (kể cả khi địch chết sớm).
         await sleep(Math.max(440, 800 + 16*HERO_FRAME_MS - S.n*HERO_FRAME_MS - Math.max(0,n-1)*260));
       } finally {
@@ -4955,10 +5009,12 @@ async function duCoUlt(u, tok) {
 
     // Âu Cơ: hoa sen nở trên đầu (chuỗi hoa-no) + cánh hoa bay đầy trời (chuỗi canh-hoa), rồi búp sen bay tới từng đồng đội và hồi máu = 150% × (công + thủ) của bản thân
     async function lotusUlt(u, tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+
       const f = document.getElementById('battle-arena'), box = document.getElementById('bf-units');
       const W = f.clientWidth, H = f.clientHeight;
       const base = 'translate(-50%,-50%)', made = [], timers = [];
-      const amount = Math.round((u.sk || 1) * (u.atk + u.def));
+      const amount = Math.round((u.sk || 1) * (u.atk + (cpUnitLevel(u) ? 0 : u.def)));
       const ly = Math.max(16, u.y - 16);                       // vị trí hoa sen (nhô lên trên đầu tướng)
       acPreload();
       const LW = Math.round(Math.max(190, Math.min(W * 0.46, 300))), ls = LW / AC_LOTUS.cw;       // LW = bề rộng của bông hoa (ô gốc); ls = tỉ lệ phóng
@@ -5034,6 +5090,9 @@ async function duCoUlt(u, tok) {
     // rớt xuống giữa đội địch, lần lượt từng cây. Mỗi cây chạm đất = 1 lần sát thương lên TOÀN địch (tổng Công × sk chia đều HML_FAN_HITS).
     // THỨ TỰ: (1) TRƯỚC khi quạt rơi: TOÀN ĐỘI ta +HML_FAN_CRIT Bạo (không cộng dồn) -> (2) quạt rơi, cây đầu tiên chạm đất: TOÀN địch -HML_FAN_SLOW Tốc -> (3) 3 lần sát thương.
     async function fanUlt(u, tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const HML_FAN_CRIT=cpParam(u,'HML_FAN_CRIT',window.HML_FAN_CRIT), HML_FAN_SLOW=cpParam(u,'HML_FAN_SLOW',window.HML_FAN_SLOW), HML_FAN_TURNS=cpParam(u,'HML_FAN_TURNS',window.HML_FAN_TURNS);
+
       const f = document.getElementById('battle-arena'), box = document.getElementById('bf-units');
       const W = f.clientWidth, H = f.clientHeight;
       const alive = () => foesOf(u).filter(e => e.alive);
@@ -5193,6 +5252,9 @@ function pdMountIdle(u, sp, h) {
 const pdFrame = (d, i) => { d.style.backgroundPosition = `${(i % 5) / 4 * 100}% ${((i / 5) | 0) / 3 * 100}%`; };
 
 async function phamDaoUlt(u, tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const PD_HP_PCT=cpParam(u,'PD_HP_PCT',window.PD_HP_PCT), PD_ATK_BUFF=cpParam(u,'PD_ATK_BUFF',0.5);
+
   const f = document.getElementById('battle-arena'), box = document.getElementById('bf-units');
   const W = f.clientWidth, H = f.clientHeight;
   const alive = () => foesOf(u).filter(e => e.alive);
@@ -5294,7 +5356,7 @@ async function phamDaoUlt(u, tok) {
     made.filter(d => d !== fx).forEach(d => d.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 260, fill: 'forwards' }));
     await sleep(keep ? 100 : 300); if (tok !== battleToken) return;
     // 6. Tăng công bản thân +50% trong 1 hiệp (addMod của engine tự hết hạn và trả lại đúng số đã cộng)
-    { const old = (u.mods || []).find(m => m.k === 'atk' && m.tag === 'pham-dao'); addMod(u, 'atk', old ? old.d : Math.round(u.atk * PD_ATK_BUFF), PD_BUFF_TURNS, 'buff', 'pham-dao'); floatText(u, 'CÔNG +50%'); }
+    { const old = (u.mods || []).find(m => m.k === 'atk' && m.tag === 'pham-dao'); addMod(u, 'atk', Math.round((u.atk-(old?old.d:0)) * PD_ATK_BUFF), PD_BUFF_TURNS, 'buff', 'pham-dao'); floatText(u, 'CÔNG +'+Math.round(PD_ATK_BUFF*100)+'%'); }
     if (!keep) {
       // 7. Về lại chỗ cũ: tan ở giữa địch, hiện lại ở vị trí đầu
       fx.style.opacity = 1; fx.getAnimations().forEach(a => a.cancel()); fx.style.width = fxW + 'px';
@@ -5337,6 +5399,8 @@ var dragonUlt = phamDaoUlt;   // giữ tên cũ để index.html gọi dragonUlt
     // THỦY LONG (id 8): biến lớn -> mưa TL_BUBBLES bong bóng rơi dồn dập xuống phe địch -> TOÀN địch chịu TL_HITS lần sát thương
     //   (tổng HL × Công) -> cả đội ta +TL_RAGE nộ. (Đã bỏ buff Thủ.) Tên hàm giữ nguyên waterUlt để dữ liệu tướng gọi được.
     async function waterUlt(u, tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+
       const f = document.getElementById('battle-arena'), box = document.getElementById('bf-units');
       const W = f.clientWidth, H = f.clientHeight, made = [];
       const es0 = foesOf(u).filter(e => e.alive); if (!es0.length) return;
@@ -5480,6 +5544,9 @@ var dragonUlt = phamDaoUlt;   // giữ tên cũ để index.html gọi dragonUlt
     // (mỗi địch chịu HTT_FLAT + Công bản thân, chuẩn, bỏ qua giáp, mỗi tia 1 lần) -> HẾT LƯỢT ĐÁNH mới trừ HTT_HP_PCT (50%) HP hiện tại.
     // 50% HP là hiệu ứng CỘNG THÊM, không nằm trong sát thương của tia.
     async function fireWebUlt(u, tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const HTT_DEF_DOWN=cpParam(u,'HTT_DEF_DOWN',window.HTT_DEF_DOWN), HTT_HP_PCT=cpParam(u,'HTT_HP_PCT',window.HTT_HP_PCT);
+
       const f = document.getElementById('battle-arena'), box = document.getElementById('bf-units');
       const W = f.clientWidth, H = f.clientHeight, base = 'translate(-50%,-50%)';
       const es0 = foesOf(u).filter(e => e.alive); if (!es0.length) return;
@@ -5559,6 +5626,9 @@ var dragonUlt = phamDaoUlt;   // giữ tên cũ để index.html gọi dragonUlt
     // (chuỗi SEQ.tyOrb, 20 khung) xoáy tụ rồi phát nổ. Đòn trúng ở khung nổ mạnh nhất: mỗi địch mất 50% HP HIỆN TẠI
     // (bỏ qua giáp, khiên, bất tử – chỉ Né mới tránh được). Địch sau đòn còn ≤ 10% HP tối đa -> TẤT SÁT, chết ngay. Bản thân không mất máu.
     async function tieuYeuUlt(u, tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const SKEL_PCT=cpParam(u,'SKEL_PCT',window.SKEL_PCT), EXEC_PCT=cpParam(u,'EXEC_PCT',window.EXEC_PCT);
+
       const box = document.getElementById('bf-units');
       const foes = foesOf(u).filter(e => e.alive);
       if (!foes.length) return;
@@ -5631,6 +5701,9 @@ var dragonUlt = phamDaoUlt;   // giữ tên cũ để index.html gọi dragonUlt
       floatText(a, 'CÔNG +' + Math.round(pct * 100) + '%');
     }
     async function goUlt(u, tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const VNT_STUN_TOP=cpParam(u,'VNT_STUN_TOP',window.VNT_STUN_TOP), VNT_STUN_OTHERS=cpParam(u,'VNT_STUN_OTHERS',window.VNT_STUN_OTHERS), VNT_STUN_OTHER=cpParam(u,'VNT_STUN_OTHER',window.VNT_STUN_OTHER);
+
       const f = document.getElementById('battle-arena'), box = document.getElementById('bf-units');
       const W = f.clientWidth, H = f.clientHeight, base = 'translate(-50%,-50%)', made = [], oldZ = u.el.style.zIndex;
       const foes = foesOf(u).filter(e => e.alive);
@@ -5703,6 +5776,9 @@ var dragonUlt = phamDaoUlt;   // giữ tên cũ để index.html gọi dragonUlt
       });
     }
     async function lingBaUlt(u, tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const LB_DODGE_MULT=cpParam(u,'LB_DODGE_MULT',window.LB_DODGE_MULT), LB_SPD_MULT=cpParam(u,'LB_SPD_MULT',window.LB_SPD_MULT), LB_HEAL_MULT=cpParam(u,'LB_HEAL_MULT',window.LB_HEAL_MULT);
+
       const f = document.getElementById('battle-arena'), box = document.getElementById('bf-units');
       const W = f.clientWidth, H = f.clientHeight, base = 'translate(-50%,-50%)', made = [], timers = [], oldZ = u.el.style.zIndex;
       const allies = alliesOf(u).filter(h => h.alive), foes = foesOf(u).filter(e => e.alive);
@@ -5794,6 +5870,9 @@ GP.add('heros/bac-cai/bac-cai-bamboo.webp', 2);
       api.show(0); return api;
     }
     async function bacCaiUlt(u, tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const BC_ATK_UP=cpParam(u,'BC_ATK_UP',window.BC_ATK_UP), BC_DEF_DOWN=cpParam(u,'BC_DEF_DOWN',window.BC_DEF_DOWN), BC_TURNS=cpParam(u,'BC_TURNS',window.BC_TURNS);
+
       const g = nt(u), { f, W, H, base, made } = g, es0 = g.es(); if (!es0.length) return;
       const b = g.box0(es0), landX = u.side === 'hero' ? Math.min(94, b.maxX + 9) : Math.max(6, b.minX - 9), landY = b.cy;
       const dx = (landX - u.x) * W / 100, dy = (landY - u.y) * H / 100, oldZ = u.el.style.zIndex;
@@ -5853,6 +5932,9 @@ GP.add('heros/dong-ta/dong-ta-burst.webp', 2);
 
     // ---------- ĐÔNG TÀ: nhảy lên cao thổi sóng âm 4 lần ----------
     async function dongTaUlt(u, tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const DT_CRIT=cpParam(u,'DT_CRIT',window.DT_CRIT);
+
       const g = nt(u), { H, base, made } = g, es0 = g.es(); if (!es0.length) return;
       const b = g.box0(es0), oldZ = u.el.style.zIndex, per = u.atk * (u.sk || 1) / DT_HITS;
       // Chuỗi 12 khung (SEQ.dtCast) phủ lên tướng: khung 0-3 nhảy lên • 4-10 xoáy vàng, thổi sáo • 11 đáp đất bung hào quang
@@ -5898,6 +5980,9 @@ GP.add('heros/tay-doc/tay-doc-toad3d.webp', 2);
 
     // ---------- TÂY ĐỘC: triệu hồi cóc độc phun độc qua đội địch ----------
     async function tayDocUlt(u, tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const TD_DEF_DOWN=cpParam(u,'TD_DEF_DOWN',window.TD_DEF_DOWN), TD_SPD_DOWN=cpParam(u,'TD_SPD_DOWN',window.TD_SPD_DOWN), TD_HP_DOWN=cpParam(u,'TD_HP_DOWN',window.TD_HP_DOWN);
+
       const g = nt(u), { W, H, made } = g, es0 = g.es(); if (!es0.length) return;
       const b = g.box0(es0), dir = u.side === 'hero' ? 1 : -1, tx0 = Math.max(6, Math.min(94, u.x + dir * 14)), ty0 = Math.max(18, Math.min(82, u.y - 4));
       const timers = [];
@@ -5933,6 +6018,9 @@ GP.add('heros/tay-doc/tay-doc-toad3d.webp', 2);
 /* === nam-de (tuyệt kỹ Nam Đế) === */
     // ---------- NAM ĐẾ: 2 chữ Vạn xoáy — 1 từ dưới đất xoáy LÊN, 1 từ trên trời xoáy XUỐNG — cùng đập vào đội địch ----------
     async function namDeUlt(u, tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const ND_ALL_DOWN=cpParam(u,'ND_ALL_DOWN',window.ND_ALL_DOWN);
+
       const g = nt(u), { H, made } = g, es0 = g.es(); if (!es0.length) return;
       const b = g.box0(es0);
       const upPx = Math.round((100 - b.cy) / 100 * H + 170);   // quãng từ tâm đội địch xuống dưới đáy sân (+ chữ Vạn ló khỏi màn hình)
@@ -5950,7 +6038,7 @@ GP.add('heros/tay-doc/tay-doc-toad3d.webp', 2);
                      { transform: 'translate(-50%,-50%) rotate(-540deg) scale(1.5)', opacity: 1, offset: .75 }, { transform: 'translate(-50%,-50%) rotate(-600deg) scale(1.25)', opacity: 1 }], { duration: DUR, easing: 'ease-in', fill: 'forwards' });
         await sleep(900); if (tok !== battleToken) return;   // hai chữ Vạn đập vào nhau giữa đội địch
         g.ring(b.cx, b.cy, '#fde047'); g.shake(); setTimeout(() => g.ring(b.cx, b.cy, '#f59e0b'), 160); setTimeout(() => g.ring(b.cx, b.cy, '#fff7ae'), 320);
-        g.es().forEach(e => { MOD_STATS.forEach(k => pctMod(e, k, -ND_ALL_DOWN, ND_TURNS, 'debuff', 'nd:' + k)); floatText(e, '卍 ẤN PHONG'); sayLater(e, '⬇ TẤT CẢ -' + Math.round(ND_ALL_DOWN * 100) + '%', 280); });
+        g.es().forEach(e => { MOD_STATS.forEach(k => k==='block'&&cpUnitLevel(u) ? blockMod(e,-ND_ALL_DOWN,ND_TURNS,'debuff','nd:block') : pctMod(e, k, -ND_ALL_DOWN, ND_TURNS, 'debuff', 'nd:' + k)); floatText(e, '卍 ẤN PHONG'); sayLater(e, '⬇ TẤT CẢ -' + Math.round(ND_ALL_DOWN * 100) + '%', 280); });
         refreshPanel(); await sleep(900); if (tok !== battleToken) return;
         [top, bot, halo].forEach(d => d.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 500, easing: 'ease-in', fill: 'forwards' })); await sleep(520);
       } finally { made.forEach(d => d.remove()); }
@@ -5962,6 +6050,9 @@ GP.add('heros/vuong-trung-duong/vuong-trung-duong-taiji-vortex.webp', 2);
     // ---------- VƯƠNG TRÙNG DƯƠNG: tung Thái Cực (chuỗi 12 khung), lốc xoáy âm dương mở ra bên ĐỊCH, đội ta tăng 300% mọi thuộc tính ----------
     // Khung tung chiêu phủ lên tướng (hero-seq.js › seqOverlay) • lốc xoáy là chuỗi khung lặp (SEQ.vtdStorm) đặt giữa đội địch • cầu Thái Cực bay từ tướng sang từng đồng đội.
     async function vtdUlt(u, tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const VTD_ALL_UP=cpParam(u,'VTD_ALL_UP',window.VTD_ALL_UP);
+
       const g = nt(u), { W, H, made } = g, as = g.as(); if (!as.length) return;
       const es0 = g.es(), b = g.box0(es0.length ? es0 : as);
       const SW = Math.round(Math.max(160, Math.min(W * 0.4, H * 0.52))), SH = Math.round(SW * SEQ.vtdStorm.ch / SEQ.vtdStorm.cw), hw = SW * 0.5 / W * 100, hh = SH * 0.5 / H * 100;
@@ -5987,7 +6078,7 @@ GP.add('heros/vuong-trung-duong/vuong-trung-duong-taiji-vortex.webp', 2);
             orb.remove(); if (tok !== battleToken || !a.alive) return;
             if (noBuff(a)) { floatText(a, '🚫 KHÓA TĂNG PHÚC'); return; }
             g.ring(a.x, a.y, '#fde047'); setTimeout(() => g.ring(a.x, a.y, '#60a5fa'), 90);
-            MOD_STATS.forEach(k => pctMod(a, k, VTD_ALL_UP, VTD_TURNS, 'buff', 'vtd:' + k));
+            MOD_STATS.forEach(k => k==='block'&&cpUnitLevel(u) ? blockMod(a,VTD_ALL_UP,VTD_TURNS,'buff','vtd:block') : pctMod(a, k, VTD_ALL_UP, VTD_TURNS, 'buff', 'vtd:' + k));
             floatText(a, '☯ TẤT CẢ +' + Math.round(VTD_ALL_UP * 100) + '%'); refreshPanel();
           }, 420);
         }, i * 140));
@@ -6003,6 +6094,9 @@ GP.add('heros/vuong-trung-duong/vuong-trung-duong-taiji-vortex.webp', 2);
     // MT_HANDS chỉ là hiệu ứng hình ảnh; sát thương luôn là MT_HITS lần lên TOÀN địch (tổng HL × Công chia đều), mỗi lần xảy ra khi một bàn tay chạm địch.
     // THỨ TỰ: đội ta +MT_ACC_UP Chuẩn, toàn địch -MT_ACC_DOWN Chuẩn (MT_TURNS hiệp) lúc cổng mở, TRƯỚC khi tay giáng xuống.
     async function maTonUlt(u, tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const MT_ACC_UP=cpParam(u,'MT_ACC_UP',window.MT_ACC_UP), MT_ACC_DOWN=cpParam(u,'MT_ACC_DOWN',window.MT_ACC_DOWN);
+
       const g = nt(u), { W, H, made } = g, es0 = g.es(), as0 = g.as(); if (!es0.length) return;
       const S = SEQ.maHand, P = SEQ.maPortal, timers = [], oldZ = u.el.style.zIndex;
       const at = (ms, fn) => timers.push(setTimeout(() => { if (tok === battleToken) fn(); }, seqT(ms)));
@@ -6068,6 +6162,9 @@ GP.add('heros/vuong-trung-duong/vuong-trung-duong-taiji-vortex.webp', 2);
    Mỗi lần đều trúng TOÀN địch; tổng HL × Công chia đều cho cả QA_HITS_UP + QA_HITS_DOWN lần. Phá giáp 7500 là chỉ số gốc của tướng (cộng thêm mỗi lần trúng).
    Tham số: heros/hero-data.js → skillConfig của Mộc Quế Anh (hoặc admin → tab Chiêu thức). */
     async function mocQueAnhUlt(u, tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const QA_DODGE_UP=cpParam(u,'QA_DODGE_UP',window.QA_DODGE_UP), QA_DODGE_DOWN=cpParam(u,'QA_DODGE_DOWN',window.QA_DODGE_DOWN);
+
       const g = nt(u), { W, H, base, made } = g, es0 = g.es(), as0 = g.as(); if (!es0.length) return;
       const S = SEQ.qaCast, I = SEQ.qaIdle, timers = [], oldZ = u.el.style.zIndex, dir = u.side === 'hero' ? 1 : -1;
       const at = (ms, fn) => timers.push(setTimeout(() => { if (tok === battleToken) fn(); }, seqT(ms)));
@@ -6126,6 +6223,9 @@ GP.add('heros/vuong-trung-duong/vuong-trung-duong-taiji-vortex.webp', 2);
    Mỗi đợt kéo cung lại khung 4→7 rồi nhả; sau đợt cuối thu thế khung 8-19. Tham số: heros/hero-data.js → skillConfig (HR_*), hoặc admin → tab Chiêu thức. */
     const HR_ARROW_IMG = 'heros/than-ho-rung/than-ho-rung-arrow.webp?v=1';
     async function thanHoRungUlt(u, tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const HR_CRIT_UP=cpParam(u,'HR_CRIT_UP',window.HR_CRIT_UP), HR_CDMG_UP=cpParam(u,'HR_CDMG_UP',window.HR_CDMG_UP), HR_ACC_UP=cpParam(u,'HR_ACC_UP',window.HR_ACC_UP);
+
       const g = nt(u), { W, H, made } = g, es0 = g.es(); if (!es0.length) return;
       const S = SEQ.hrCast, I = SEQ.hrIdle, timers = [], oldZ = u.el.style.zIndex, dir = u.side === 'hero' ? 1 : -1;
       const at = (ms, fn) => timers.push(setTimeout(() => { if (tok === battleToken) fn(); }, seqT(ms)));
@@ -6203,6 +6303,9 @@ GP.add('heros/vuong-trung-duong/vuong-trung-duong-taiji-vortex.webp', 2);
    Mỗi địch bị đánh BQ_HITS lần (ở các khung đập 10…14); tổng HL × Công chia đều cho BQ_HITS lần. SAU khi đánh xong: các địch bị đánh bị choáng BQ_STUN hiệp + CẤM HỒI MÁU BQ_TURNS hiệp (u.dn.noheal).
    Tham số: heros/hero-data.js → skillConfig của Bạch Cầm (BQ_*), hoặc admin → tab Chiêu thức. */
     async function bachCamUlt(u, tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const BQ_CLONES=cpParam(u,'BQ_CLONES',window.BQ_CLONES), BQ_CRIT_UP=cpParam(u,'BQ_CRIT_UP',window.BQ_CRIT_UP), BQ_STUN=cpParam(u,'BQ_STUN',window.BQ_STUN);
+
       const g = nt(u), { W, H, made } = g, es0 = g.es(); if (!es0.length) return;
       const S = SEQ.bqCast, I = SEQ.bqIdle, timers = [], oldZ = u.el.style.zIndex, dir = u.side === 'hero' ? 1 : -1;
       const at = (ms, fn) => timers.push(setTimeout(() => { if (tok === battleToken) fn(); }, seqT(ms)));
@@ -6255,7 +6358,7 @@ GP.add('heros/vuong-trung-duong/vuong-trung-duong-taiji-vortex.webp', 2);
         at(ARR + (hitF[hitF.length - 1] - 9) * STEP + 90, () => {
           tgts.filter(e => e.alive).forEach(e => {
             stunEnemy(e, Math.max(BQ_STUN, e.stun || 0)); floatText(e, '💫 CHOÁNG ' + BQ_STUN + ' HIỆP');
-            (e.dn || (e.dn = {})).noheal = BQ_TURNS; refreshDbf(e); sayLater(e, '🚫 CẤM HỒI MÁU ' + BQ_TURNS + ' HIỆP', 350);
+            (e.dn || (e.dn = {})).noheal = cpParam(u,'CP_BQ_NOHEAL',BQ_TURNS); refreshDbf(e); sayLater(e, '🚫 CẤM HỒI MÁU ' + cpParam(u,'CP_BQ_NOHEAL',BQ_TURNS) + ' HIỆP', 350);
           });
           refreshPanel();
         });
@@ -6276,6 +6379,9 @@ GP.add('heros/vuong-trung-duong/vuong-trung-duong-taiji-vortex.webp', 2);
     const TM_SWORD_IMG = 'heros/trieu-man/trieu-man-sword.webp?v=1';
 GP.add(TM_SWORD_IMG, 2);
     async function trieuManUlt(u, tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const TM_BLOCK_DOWN=cpParam(u,'TM_BLOCK_DOWN',window.TM_BLOCK_DOWN), TM_BLOCK_UP=cpParam(u,'TM_BLOCK_UP',window.TM_BLOCK_UP);
+
       const g = nt(u), { W, H, base, made } = g, es0 = g.es(), as0 = g.as(); if (!es0.length) return;
       const S = SEQ.tmCast, I = SEQ.tmIdle, timers = [], oldZ = u.el.style.zIndex, dir = u.side === 'hero' ? 1 : -1;
       const at = (ms, fn) => timers.push(setTimeout(() => { if (tok === battleToken) fn(); }, seqT(ms)));
@@ -6359,6 +6465,9 @@ GP.add(TM_SWORD_IMG, 2);
    Khi lốc xuất hiện: toàn địch giảm TP_SLOW Tốc (TP_SLOW_TURNS hiệp). SAU khi đánh xong: TP_SILENCE_TARGETS địch ngẫu nhiên bị CÂM LẶNG TP_SILENCE_TURNS hiệp.
    Tham số: heros/hero-data.js → skillConfig (TP_*), hoặc admin → tab Chiêu thức. */
     async function thietPhienUlt(u, tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const TP_SLOW=cpParam(u,'TP_SLOW',window.TP_SLOW), TP_SILENCE_TARGETS=cpParam(u,'TP_SILENCE_TARGETS',window.TP_SILENCE_TARGETS), TP_SILENCE_TURNS=cpParam(u,'TP_SILENCE_TURNS',window.TP_SILENCE_TURNS);
+
       const g = nt(u), { W, H, made } = g, es0 = g.es(); if (!es0.length) return;
       const S = SEQ.tpUlt, TN = SEQ.tpTornado, I = SEQ.tpIdle, timers = [], oldZ = u.el.style.zIndex;
       const at = (ms, fn) => timers.push(setTimeout(() => { if (tok === battleToken) fn(); }, seqT(ms)));
@@ -6414,6 +6523,9 @@ GP.add(TM_SWORD_IMG, 2);
    → thu thế chạy về (khung 20-24). Tổng HL × Công chia đều cho DY_HITS lần. Nếu mục tiêu chết giữa chừng thì chuyển sang địch Công cao nhất còn lại.
    Tham số: heros/hero-data.js → skillConfig (DY_*), hoặc admin → tab Chiêu thức. Âm thanh: heros/duong-tien/duong-tien-ult.mp3 */
     async function duongTienUlt(u, tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const DY_PIERCE=cpParam(u,'DY_PIERCE',window.DY_PIERCE), DY_BLOCK_DOWN=cpParam(u,'DY_BLOCK_DOWN',window.DY_BLOCK_DOWN), DY_TURNS=cpParam(u,'DY_TURNS',window.DY_TURNS);
+
       const g = nt(u), { W, H, base, made } = g, es0 = g.es(); if (!es0.length) return;
       const S = SEQ.dyUlt, I = SEQ.dyIdle, timers = [], oldZ = u.el.style.zIndex;
       const at = (ms, fn) => timers.push(setTimeout(() => { if (tok === battleToken) fn(); }, seqT(ms)));
@@ -6465,6 +6577,9 @@ GP.add(TM_SWORD_IMG, 2);
    → toàn địch bị THIÊU ĐỐT: mỗi hiệp mất NT_BURN_PCT (20%) HP hiện tại trong NT_BURN_TURNS (2) hiệp (u.burn / u.burnPct, trừ ở tickBleed).
    Tham số: heros/hero-data.js → skillConfig (NT_*), hoặc admin → tab Chiêu thức. Âm thanh: heros/na-tra/na-tra-ult.mp3 */
     async function naTraUlt(u, tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const NT_ATK_UP=cpParam(u,'NT_ATK_UP',window.NT_ATK_UP), NT_DODGE_DOWN=cpParam(u,'NT_DODGE_DOWN',window.NT_DODGE_DOWN), NT_BURN_PCT=cpParam(u,'NT_BURN_PCT',window.NT_BURN_PCT);
+
       const g = nt(u), { W, H, base, made } = g, es0 = g.es(); if (!es0.length) return;
       const S = SEQ.ntUlt, I = SEQ.ntIdle, SW = SEQ.ntWheel, timers = [], oldZ = u.el.style.zIndex;
       const at = (ms, fn) => timers.push(setTimeout(() => { if (tok === battleToken) fn(); }, seqT(ms)));
@@ -6570,6 +6685,9 @@ function synthSaTang() {      // lúc bắt đầu tung chiêu: chiêng trầm +
 }
 SYNTH_ULT[30] = synthSaTang;
 async function saTangUlt(u, tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const SB_TOUGH_UP=cpParam(u,'SB_TOUGH_UP',window.SB_TOUGH_UP), SB_TOUGH_DOWN=cpParam(u,'SB_TOUGH_DOWN',window.SB_TOUGH_DOWN);
+
   const g = nt(u), { W, H, base, made } = g, es0 = g.es(); if (!es0.length) return;
   const S = SEQ.saUlt, I = SEQ.saIdle, timers = [], oldZ = u.el.style.zIndex;
   const at = (ms, fn) => timers.push(setTimeout(() => { if (tok === battleToken) fn(); }, seqT(ms)));
@@ -6613,6 +6731,9 @@ async function saTangUlt(u, tok) {
    Tham số: skillConfig (BG_*) hoặc admin → tab Chiêu thức. Âm thanh: heros/bat-gioi/bat-gioi-ult.mp3 (khớp nhịp: nện 0,77s • tăng Thủ 0,85s • hồi máu 1,2s). */
 ['bgIdle', 'bgUlt'].forEach(k => { const s = SEQ[k]; if (!s) return; const im = new Image(); im.onload = () => { if (im.naturalWidth && s.n) { s.cw = im.naturalWidth / s.n; s.ch = im.naturalHeight; } }; im.src = s.src; });
 async function batGioiUlt(u, tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const BG_DEF_UP=cpParam(u,'BG_DEF_UP',window.BG_DEF_UP), BG_HEAL=cpParam(u,'BG_HEAL',window.BG_HEAL);
+
   const g = nt(u), { base, made } = g;
   const S = SEQ.bgUlt, I = SEQ.bgIdle, timers = [], oldZ = u.el.style.zIndex;
   const at = (ms, fn) => timers.push(setTimeout(() => { if (tok === battleToken) fn(); }, seqT(ms)));
@@ -6643,6 +6764,9 @@ async function batGioiUlt(u, tok) {
    Tham số: skillConfig (BC_*) hoặc admin → tab Chiêu thức. Âm thanh: heros/bach-cot-tinh/bach-cot-tinh-ult.mp3 (khớp nhịp: hóa thân 0s • đòn 0,6/0,77/1,02s • thôi miên 1,7s) */
 ['bctIdle', 'bctUlt'].forEach(k => { const s = SEQ[k]; if (!s) return; const im = new Image(); im.onload = () => { if (im.naturalWidth && s.n) { s.cw = im.naturalWidth / s.n; s.ch = im.naturalHeight; } }; im.src = s.src; });
 async function bachCotUlt(u, tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const BCT_HITS=cpParam(u,'BCT_HITS',window.BCT_HITS);
+
   const g = nt(u), { W, H, base, made } = g, es0 = g.es(); if (!es0.length) return;
   const S = SEQ.bctUlt, I = SEQ.bctIdle, timers = [], oldZ = u.el.style.zIndex;
   const at = (ms, fn) => timers.push(setTimeout(() => { if (tok === battleToken) fn(); }, seqT(ms)));
@@ -6677,8 +6801,10 @@ async function bachCotUlt(u, tok) {
   const rl = e => { try { return roleOf(e.id); } catch (err) { return 'atk'; } };
   const cand = foesOf(u).filter(e => e.alive && !e.charm && !(e.dn && e.dn.stinhCC > 0) && !(bossB && e === bossB.unit));
   if (!cand.length) return;
-  const pri = cand.filter(e => rl(e) === 'atk' || rl(e) === 'skill'), pool = pri.length ? pri : cand;
-  const v = pool[Math.floor(Math.random() * pool.length)];
+  const pri = cand.filter(e => rl(e) === 'atk' || rl(e) === 'skill');
+  const rest=cand.filter(e=>!pri.includes(e));
+  const chosen=[...shuffled(pri),...shuffled(rest)].slice(0,Math.max(1,Math.floor(cpParam(u,'CP_BCT_CHARM',1))));
+  for (const v of chosen) { if(tok!==battleToken||!u.alive)break; if(!v.alive)continue;
   v.charm = true;
   const mk = document.createElement('div'); mk.className = 'bf-stun'; mk.textContent = '🌀'; v.el.appendChild(mk);
   try {
@@ -6686,6 +6812,7 @@ async function bachCotUlt(u, tok) {
     await sleep(750); if (tok !== battleToken) return;
     if (v.alive && foesOf(v).some(x => x.alive)) { v.rage = v.alwaysUlt ? 100 : 0; await ultimate(v, tok); }   // foesOf(v) lúc này = đồng đội của chính nó
   } finally { v.charm = false; mk.remove(); }
+  }
 }
 /* === thai-thuong-lao-quan (tuyệt kỹ Thái Thượng Lão Quân) === */
 /* THÁI THƯỢNG LÃO QUÂN (id 33, tướng hỗ trợ): TRƯỚC khi ra đòn (luật: cộng thêm → giảm → sát thương):
@@ -6699,6 +6826,9 @@ const LQ_DING_IMG = 'heros/thai-thuong-lao-quan/thai-thuong-lao-quan-dinh.webp?v
 GP.add(LQ_DING_IMG, 2);
 ['lqIdle', 'lqUlt'].forEach(k => { const s = SEQ[k]; if (!s) return; const im = new Image(); im.onload = () => { if (im.naturalWidth && s.n) { s.cw = im.naturalWidth / s.n; s.ch = im.naturalHeight; } }; im.src = s.src; });
 async function thaiThuongUlt(u, tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const LQ_HITS=cpParam(u,'LQ_HITS',window.LQ_HITS), LQ_HEAL_UP=cpParam(u,'LQ_HEAL_UP',window.LQ_HEAL_UP), LQ_HEAL_TURNS=cpParam(u,'LQ_HEAL_TURNS',window.LQ_HEAL_TURNS), LQ_NOHEAL_TURNS=cpParam(u,'LQ_NOHEAL_TURNS',window.LQ_NOHEAL_TURNS);
+
   const g = nt(u), { W, H, base, made } = g, es0 = g.es(); if (!es0.length) return;
   const S = SEQ.lqUlt, I = SEQ.lqIdle, timers = [], oldZ = u.el.style.zIndex;
   const at = (ms, fn) => timers.push(setTimeout(() => { if (tok === battleToken) fn(); }, seqT(ms)));
@@ -6768,6 +6898,9 @@ const DL_TOKEN_IMG = 'heros/diem-la-vuong/diem-la-vuong-lenh-bai.webp?v=1';
 GP.add(DL_TOKEN_IMG, 2);
 ['dlIdle', 'dlUlt', 'dlFx'].forEach(k => { const s = SEQ[k]; if (!s) return; const im = new Image(); im.onload = () => { if (im.naturalWidth && s.n) { s.cw = im.naturalWidth / s.n; s.ch = im.naturalHeight; } }; im.src = s.src; });
 async function luctieuphungUlt(u, tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const LTP_DODGE=cpParam(u,'LTP_DODGE',window.LTP_DODGE), LTP_ATK=cpParam(u,'LTP_ATK',window.LTP_ATK);
+
   const g=nt(u), targets=g.es(); if (!targets.length) return;
   const S=SEQ.LTPCast,F=SEQ.LTPFx, cast=seqOverlay(u,S,120), oldZ=u.el.style.zIndex;
   const wait=ms=>new Promise(r=>setTimeout(r,seqT(ms))), n=Math.max(1,Math.floor(LTP_HITS));
@@ -6786,6 +6919,9 @@ async function luctieuphungUlt(u, tok) {
 }
 
 async function phongThanhDuongUlt(u, tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const PTD_TARGETS=cpParam(u,'PTD_TARGETS',window.PTD_TARGETS), PTD_HITS=cpParam(u,'PTD_HITS',window.PTD_HITS), PTD_CRIT=cpParam(u,'PTD_CRIT',window.PTD_CRIT), PTD_CDMG=cpParam(u,'PTD_CDMG',window.PTD_CDMG);
+
   const g=nt(u), targets=shuffled(g.es()).slice(0,Math.max(1,Math.floor(PTD_TARGETS))); if(!targets.length)return;
   const S=SEQ.PTDCast, cast=seqOverlay(u,S,120), oldZ=u.el.style.zIndex;
   const wait=ms=>new Promise(r=>setTimeout(r,seqT(ms))), n=Math.max(1,Math.floor(PTD_HITS));
@@ -6814,6 +6950,9 @@ async function phongThanhDuongUlt(u, tok) {
 }
 
 async function taymonxuytuyetUlt(u, tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const TMXT_HITS=cpParam(u,'TMXT_HITS',window.TMXT_HITS), TMXT_DODGE=cpParam(u,'TMXT_DODGE',window.TMXT_DODGE);
+
   const g=nt(u), targets=shuffled(g.es()).slice(0, Math.max(1, Math.floor(TMXT_TARGETS))); if (!targets.length) return;
   const S=SEQ.TMXTCast,F=SEQ.TMXTFx, cast=seqOverlay(u,S,120), oldZ=u.el.style.zIndex;
   const wait=ms=>new Promise(r=>setTimeout(r,seqT(ms))), n=Math.max(1,Math.floor(TMXT_HITS));
@@ -6832,6 +6971,9 @@ async function taymonxuytuyetUlt(u, tok) {
 }
 
 async function diemLaVuongUlt(u, tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const DL_CRIT_UP=cpParam(u,'DL_CRIT_UP',window.DL_CRIT_UP), DL_CDMG_UP=cpParam(u,'DL_CDMG_UP',window.DL_CDMG_UP), DL_TURNS=cpParam(u,'DL_TURNS',window.DL_TURNS);
+
   const g = nt(u), { W, H, made } = g, es0 = g.es(); if (!es0.length) return;
   const S = SEQ.dlUlt, F = SEQ.dlFx, I = SEQ.dlIdle, timers = [];
   const at = (ms, fn) => timers.push(setTimeout(() => { if (tok === battleToken) fn(); }, seqT(ms)));
@@ -6900,6 +7042,9 @@ const LD_BRICK_IMG = 'heros/linda/linda-gach.webp?v=1';
 GP.add(LD_BRICK_IMG, 2);
 ['ldIdle', 'ldUlt'].forEach(k => { const s = SEQ[k]; if (!s) return; const im = new Image(); im.onload = () => { if (im.naturalWidth && s.n) { s.cw = im.naturalWidth / s.n; s.ch = im.naturalHeight; } }; im.src = s.src; });
 async function lindaUlt(u, tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const LD_CRIT_UP=cpParam(u,'LD_CRIT_UP',window.LD_CRIT_UP), LD_CDMG_UP=cpParam(u,'LD_CDMG_UP',window.LD_CDMG_UP), LD_TOUGH_DOWN=cpParam(u,'LD_TOUGH_DOWN',window.LD_TOUGH_DOWN);
+
   const g = nt(u), { W, H, made } = g, es0 = g.es(); if (!es0.length) return;
   const S = SEQ.ldUlt, I = SEQ.ldIdle, timers = [];
   const at = (ms, fn) => timers.push(setTimeout(() => { if (tok === battleToken) fn(); }, seqT(ms)));
@@ -6929,7 +7074,7 @@ async function lindaUlt(u, tok) {
       refreshPanel();
     });
     at(4 * FR, () => {
-      es0.forEach(e => { if (!e.alive) return; addMod(e, 'tough', -LD_TOUGH_DOWN, LD_TURNS, 'debuff', 'ld:tough'); sayLater(e, '💔 BỀN -' + LD_TOUGH_DOWN + '%', 250); });
+      es0.forEach(e => { if (!e.alive) return; if(cpUnitLevel(u)) pctMod(e,'tough',-LD_TOUGH_DOWN/100,LD_TURNS,'debuff','ld:tough'); else addMod(e, 'tough', -LD_TOUGH_DOWN, LD_TURNS, 'debuff', 'ld:tough'); sayLater(e, '💔 BỀN -' + LD_TOUGH_DOWN + '%', 250); });
       refreshPanel();
     });
     // 2. Linda ĐỨNG YÊN, giơ gạch rồi chọi (khung 0-19); xong thì trả về dáng đứng yên
@@ -6968,6 +7113,9 @@ async function lindaUlt(u, tok) {
 }
 /* === thuy-tinh (tuyệt kỹ Thủy Tinh) === */
 async function thuyTinhUlt(u, tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const TTINH_HITS=cpParam(u,'TTINH_HITS',window.TTINH_HITS), TTINH_STUN=cpParam(u,'TTINH_STUN',window.TTINH_STUN);
+
   const g = nt(u), es0 = g.es(); if (!es0.length) return;
   const as0 = g.as().filter(a => a !== u), S = SEQ.ttinhWave;
   const nHit = Math.max(1, Math.floor(TTINH_HITS)), per = u.atk * (u.sk || 1) / nHit;
@@ -7014,9 +7162,12 @@ function hccExplode(u) {
     const an=d.animate([{transform:'translate(-50%,-50%) scale(.15)',opacity:1},{transform:'translate(-50%,-50%) scale(1.5)',opacity:0}],{duration:Math.max(1,seqT(700)),fill:'forwards'}); an.onfinish=()=>d.remove(); setTimeout(()=>d.remove(),Math.max(1,seqT(750)));
     if(audioSet.skill){const a=new Audio('heros/hai-cong-chua/hai-cong-chua-explode.mp3');a.play().catch(()=>{});}
   }catch(e){}
-  targets.forEach(e=>{if(e.alive)hit(e,HCC_BLAST,true,u,true,undefined,{hccTrue:true});}); refreshPanelSoon();
+  targets.forEach(e=>{if(e.alive)hit(e,cpParam(u,'HCC_BLAST',HCC_BLAST),true,u,true,undefined,{hccTrue:true});}); refreshPanelSoon();
 }
 async function haiCongChuaUlt(u,tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const HCC_HITS=cpParam(u,'HCC_HITS',window.HCC_HITS), HCC_SILENCE=cpParam(u,'HCC_SILENCE',window.HCC_SILENCE), HCC_NOBUFF=cpParam(u,'HCC_NOBUFF',window.HCC_NOBUFF);
+
   const g=nt(u), es=g.es(), target=es.reduce((a,b)=>!a||b.hp<a.hp?b:a,null); if(!target)return;
   const S=SEQ.hccUlt, timers=[], animations=[];
   const at=(ms,fn)=>timers.push(setTimeout(()=>{if(tok===battleToken&&u.alive)fn();},seqT(ms)));
@@ -7032,6 +7183,9 @@ async function haiCongChuaUlt(u,tok) {
 }
 
 async function hoaDeUlt(u,tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const HDE_HITS=cpParam(u,'HDE_HITS',window.HDE_HITS), HDE_BURN_PCT=cpParam(u,'HDE_BURN_PCT',window.HDE_BURN_PCT), HDE_BURN_TURNS=cpParam(u,'HDE_BURN_TURNS',window.HDE_BURN_TURNS);
+
   const g=nt(u), all=g.es(); if(!all.length)return;
   const dist=e=>Math.abs(e.x-50), front=Math.min(...all.map(dist));
   const es=all.filter(e=>dist(e)<=front+2);
@@ -7054,6 +7208,9 @@ async function hoaDeUlt(u,tok) {
 }
 
 async function tuyetDeUlt(u,tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const TDE_HITS=cpParam(u,'TDE_HITS',window.TDE_HITS), TDE_FREEZE=cpParam(u,'TDE_FREEZE',window.TDE_FREEZE);
+
   const g=nt(u), es=g.es(); if(!es.length)return;
   const S=SEQ.tdeUlt,F=SEQ.tdeFx,timers=[],end=1500;
   const at=(ms,fn)=>timers.push(setTimeout(()=>{if(tok===battleToken)fn();},seqT(ms)));
@@ -7077,6 +7234,9 @@ async function tuyetDeUlt(u,tok) {
 }
 
 async function sonTinhUlt(u,tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const STINH_DEF=cpParam(u,'STINH_DEF',window.STINH_DEF), STINH_ATK=cpParam(u,'STINH_ATK',window.STINH_ATK), STINH_TURNS=cpParam(u,'STINH_TURNS',window.STINH_TURNS);
+
   const g=nt(u), es=g.es(), target=es.reduce((a,b)=>!a||b.atk>a.atk?b:a,null); if(!target)return;
   const S=SEQ.stinhUlt, I=SEQ.stinhIdle, F=SEQ.stinhFx, timers=[], animations=[];
   const at=(ms,fn)=>timers.push(setTimeout(()=>{if(tok===battleToken)fn();},seqT(ms)));
@@ -7121,6 +7281,9 @@ function sfxBoomLdt(big) {
   } catch (e) {}
 }
 async function linhDanhThueUlt(u, tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const LDT_PIERCE_UP=cpParam(u,'LDT_PIERCE_UP',window.LDT_PIERCE_UP), LDT_DEF_DOWN=cpParam(u,'LDT_DEF_DOWN',window.LDT_DEF_DOWN), LDT_BLOCK_DOWN=cpParam(u,'LDT_BLOCK_DOWN',window.LDT_BLOCK_DOWN);
+
   const g = nt(u), { W, H, made } = g, es0 = g.es(); if (!es0.length) return;
   const S = SEQ.ltUlt, I = SEQ.ltIdle, timers = [];
   const at = (ms, fn) => timers.push(setTimeout(() => { if (tok === battleToken) fn(); }, seqT(ms)));
@@ -7227,6 +7390,9 @@ const NK_STAFF_ROT = 0;   // độ xoay thêm cho ảnh gậy (0 = giữ nguyên
 // cw/ch của chuỗi khung = kích thước ảnh thật / số khung (n) → khỏi phải đo tay
 ['nkIdle', 'nkUlt'].forEach(k => { const s = SEQ[k]; if (!s) return; const im = new Image(); im.onload = () => { if (im.naturalWidth && s.n) { s.cw = im.naturalWidth / s.n; s.ch = im.naturalHeight; } }; im.src = s.src; });
     async function ngoKhongUlt(u, tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const NK_ATK_UP=cpParam(u,'NK_ATK_UP',window.NK_ATK_UP);
+
       const g = nt(u), { W, H, base, made } = g, es0 = g.es(); if (!es0.length) return;
       const S = SEQ.nkUlt, I = SEQ.nkIdle, timers = [], oldZ = u.el.style.zIndex;
       const at = (ms, fn) => timers.push(setTimeout(() => { if (tok === battleToken) fn(); }, seqT(ms)));
@@ -7312,13 +7478,16 @@ const NK_STAFF_ROT = 0;   // độ xoay thêm cho ảnh gậy (0 = giữ nguyên
    → HOA SEN XANH NỞ (SEQ.qyLotus) trên từng đồng đội được tăng phúc: TOÀN đội ta +QA_BLOCK_UP Đỡ đòn, hồi máu QA_HEAL × Công Quan Âm mỗi hiệp (QY_TURNS hiệp);
    TOÀN địch -QA_PIERCE_DOWN Phá giáp (QY_TURNS hiệp). Tham số: heros/hero-data.js → skillConfig (QA_*), hoặc admin → tab Chiêu thức. Âm thanh: heros/quan-am/quan-am-ult.mp3 */
     async function quanAmUlt(u, tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const QA_BLOCK_UP=cpParam(u,'QA_BLOCK_UP',window.QA_BLOCK_UP), QA_PIERCE_DOWN=cpParam(u,'QA_PIERCE_DOWN',window.QA_PIERCE_DOWN);
+
       const g = nt(u), { W, H, base, made } = g, as0 = g.as(), es0 = g.es(), f = g.f;
       const S = SEQ.qyUlt, I = SEQ.qyIdle, SL = SEQ.qyLeaf, SLo = SEQ.qyLotus, SP = SEQ.qyPond, timers = [], oldZ = u.el.style.zIndex;
       const at = (ms, fn) => timers.push(setTimeout(() => { if (tok === battleToken) fn(); }, seqT(ms)));
       const idleH = (SEQ_IDLE[u.id] && SEQ_IDLE[u.id].h) || 142, castW = Math.round(S.cw * idleH / I.ch);
       const cast = seqOverlay(u, S, castW);
       const FR = 80, UP = 60, T_LEAF = 300, T_APPLY = 900;                      // ms/khung • bay lên (px) • mưa cánh sen bắt đầu • lúc ban phúc + hoa nở
-      const up = base + ' translateY(-' + UP + 'px)', per = Math.round(u.atk * (u.sk || 1));
+      const up = base + ' translateY(-' + UP + 'px)', per = Math.round(u.atk * cpParam(u,'QA_HEAL',u.sk || 1));
       // Mưa cánh sen: lát 2 cột × N hàng phủ kín màn hình
       const tw = Math.ceil(W / 2), th = Math.max(1, Math.round(tw * SL.ch / SL.cw)), rows = Math.max(1, Math.ceil(H / th));
       const leaf = document.createElement('div'); leaf.style.cssText = 'position:absolute;left:0;top:0;width:100%;height:100%;overflow:hidden;pointer-events:none;z-index:60;opacity:0;transition:opacity .25s;';
@@ -7369,6 +7538,9 @@ const NK_STAFF_ROT = 0;   // độ xoay thêm cho ảnh gậy (0 = giữ nguyên
    hiện 1 cái DƯỚI ĐẤT + 1 cái TRÊN TRỜI úp ngược xuống, bao tròn toàn địch → DTA_HITS lần sát thương lên TOÀN địch (tổng HL × Công)
    + toàn địch -DTA_ACC_DOWN Chuẩn, -DTA_DODGE_DOWN Né (DTA_TURNS hiệp) → thu thế chạy về (15-19). Tham số: skillConfig (DTA_*) hoặc admin → tab Chiêu thức. Âm thanh: heros/duong-tang/duong-tang-ult.mp3 */
     async function duongTangUlt(u, tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const DTA_ACC_DOWN=cpParam(u,'DTA_ACC_DOWN',window.DTA_ACC_DOWN), DTA_DODGE_DOWN=cpParam(u,'DTA_DODGE_DOWN',window.DTA_DODGE_DOWN);
+
       const g = nt(u), { W, H, base, made } = g, es0 = g.es(); if (!es0.length) return;
       const S = SEQ.dtgUlt, I = SEQ.dtgIdle, SF = SEQ.dtgForm, timers = [], oldZ = u.el.style.zIndex;
       const at = (ms, fn) => timers.push(setTimeout(() => { if (tok === battleToken) fn(); }, seqT(ms)));
@@ -7431,6 +7603,9 @@ const NK_STAFF_ROT = 0;   // độ xoay thêm cho ảnh gậy (0 = giữ nguyên
    chiếu cột ánh sáng lung linh + sao lấp lánh xuống địch → LLG_HITS lần sát thương lên TOÀN địch (tổng HL × Công)
    + CẦM CHÂN: Tốc toàn địch về 0 trong LLG_TURNS hiệp. Tham số: skillConfig (LLG_*) hoặc admin → tab Chiêu thức. Âm thanh: heros/linh-lung/linh-lung-ult.mp3 */
     async function linhLungUlt(u, tok) {
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const LLG_HITS=cpParam(u,'LLG_HITS',window.LLG_HITS), LLG_TURNS=cpParam(u,'LLG_TURNS',window.LLG_TURNS);
+
       const g = nt(u), { W, H, base, made } = g, es0 = g.es(); if (!es0.length) return;
       const S = SEQ.llgUlt, I = SEQ.llgIdle, ST = SEQ.llgTower, timers = [], oldZ = u.el.style.zIndex;
       const at = (ms, fn) => timers.push(setTimeout(() => { if (tok === battleToken) fn(); }, seqT(ms)));
@@ -7807,7 +7982,7 @@ cfgOnApply(() => {
       if (x.locked === true) return null;                   // acc bị admin khóa: không hiện / không đấu
       const stats = (Array.isArray(x.team) ? x.team : []).slice(0, 5).map(m => {
         const h = heroById(m && m.id); if (!h || num(m.hp) <= 0) return null;
-        return { h, hp: Math.round(num(m.hp)), atk: Math.round(num(m.atk)), def: Math.round(num(m.def)), spd: num(m.spd) || h.spd, dodge: num(m.dodge), acc: num(m.acc), crit: num(m.crit), critDmg: num(m.critDmg), tough: num(m.tough), pierce: num(m.pierce), tia: Math.max(1, Math.floor(num(m.tia)) || h.tia || 1), block: num(m.block), heal: Math.max(0, Math.round(num(m.heal))), sk: Math.max(1, num(m.sk)), star: Math.max(1, num(m.star)) };
+        return { h, hp: Math.round(num(m.hp)), atk: Math.round(num(m.atk)), def: Math.round(num(m.def)), spd: num(m.spd) || h.spd, dodge: num(m.dodge), acc: num(m.acc), crit: num(m.crit), critDmg: num(m.critDmg), tough: num(m.tough), pierce: num(m.pierce), tia: Math.max(1, Math.floor(num(m.tia)) || h.tia || 1), block: num(m.block), heal: Math.max(0, Math.round(num(m.heal))), sk: Math.max(1, num(m.sk)), star: Math.max(1, num(m.star)), cpTier: cpClamp(m.cpTier) };
       }).filter(Boolean);
       if (!stats.length) return null;
       return { real: true, beast: (TT_SLUG[x.beast] ? x.beast : ''), pt: Array.isArray(x.pt) ? x.pt.slice(0, 20).filter(p => p && TT_PT.includes(p.n)).map(p => ({ n: p.n, v: num(p.v), pts: !!p.pts })) : [], uid: d.id, cap: Number.isInteger(x.cap) ? x.cap : null, rank: pos, steps: 0, heroes: stats.map(s => s.h), stats,
@@ -7853,7 +8028,7 @@ cfgOnApply(() => {
         let s; try { s = Object.assign({}, heroBattleStats(h.id, true, bn)); } catch (e) { s = Object.assign({}, heroStats(h.id, true)); }
         const V = s.hp / 5 + s.atk * 2 + s.def * 3, F = (s.pierce || 0) * 2 + (s.crit || 0) * (s.critDmg || 0);
         const k = Math.max(0.02, (T - F) / Math.max(1, V));
-        return { h, hp: Math.max(1, Math.round(s.hp * k)), atk: Math.max(1, Math.round(s.atk * k)), def: Math.max(0, Math.round(s.def * k)), spd: s.spd || h.spd, dodge: s.dodge || 0, acc: s.acc || 0, crit: s.crit || 0, critDmg: s.critDmg || 0, tough: s.tough || 0, pierce: s.pierce || 0, tia: Math.max(1, Math.floor(s.tia || h.tia || 1)), block: s.block || 0, heal: Math.max(0, Math.round((s.heal || 0) * k)), sk: Math.max(1, (typeof skillMult === 'function' ? skillMult(h.id) : 1) || 1), star: 5 };
+        return { h, hp: Math.max(1, Math.round(s.hp * k)), atk: Math.max(1, Math.round(s.atk * k)), def: Math.max(0, Math.round(s.def * k)), spd: s.spd || h.spd, dodge: s.dodge || 0, acc: s.acc || 0, crit: s.crit || 0, critDmg: s.critDmg || 0, tough: s.tough || 0, pierce: s.pierce || 0, tia: Math.max(1, Math.floor(s.tia || h.tia || 1)), block: s.block || 0, heal: Math.max(0, Math.round((s.heal || 0) * k)), sk: Math.max(1, (typeof skillMult === 'function' ? skillMultOf(getProg(h.id).sk,h.id,undefined,0) : 1) || 1), star: 5 };
       });
       const beasts = Object.keys(TT_SLUG), beast = r() < 0.7 ? beasts[Math.floor(r() * beasts.length)] : '';
       return { real: false, bot: true, beast, pt: [], uid: 'bot_' + i, rank, steps: 0, heroes: stats.map(s => s.h), stats, name: pvpBotName(i), lvl: Math.max(5, Math.round(accLevel * Math.min(1.4, Math.max(0.6, f)) + Math.floor(r() * 5) - 2)), power: stats.reduce((a, s) => a + unitPower(s), 0) };
@@ -8127,9 +8302,10 @@ cfgOnApply(() => {
         click = ` onclick="heroAct(${idx},'normal')"`;
       }
       // PvE / Giang Hồ: dưới ảnh tướng hiện LỰC CHIẾN của tướng (số vàng) thay vì sao; cầu ulti nằm ở hàng riêng bên dưới (xem refreshPanel)
+      const luan = !!(pvp && pvp.luan);
       const info = pve ? `<div class="pv-pw" style="font-size:${pwFs(fmtN(Math.max(0, u.hp)))}px">${fmtN(Math.max(0, u.hp))}</div>` : `<div class="pv-st">${stars}</div>`;
       return `<div class="pv-c ${cls} ${u.alive ? '' : 'dead'}"${click}><div class="pv-cb" style="border-color:${ROLE_COLOR[rl] || '#b45309'}${rl ? ';--rc:' + ROLE_COLOR[rl] : ''}">${rl ? `<div class="bf-cardic">${BF_ROLE_BADGE[rl]}</div>` : ''}<div class="pv-p">${portrait}</div>${info}` +
-        `<div class="pv-b h"><i style="width:${Math.max(0, u.hp / u.max * 100)}%"></i></div><div class="pv-b r"><i style="width:${Math.min(100, u.rage || 0)}%"></i></div></div>${pve ? '' : `<div class="pv-sp">Tốc ${Math.round(u.spd || 0)}</div>`}</div>`;
+        `<div class="pv-b h"><i style="width:${Math.max(0, u.hp / u.max * 100)}%"></i></div><div class="pv-b r"><i style="width:${Math.min(100, u.rage || 0)}%"></i></div></div>${pve ? '' : luan ? `<div class="pv-sp">${window.CP_STAGE_NAMES[cpUnitLevel(u)]}</div>` : `<div class="pv-sp">Tốc ${Math.round(u.spd || 0)}</div>`}</div>`;
     }
     const pwFs = s => String(s).length > 11 ? 13 : String(s).length > 9 ? 16 : 19;   // số lực chiến dài thì thu nhỏ chữ cho khỏi tràn ô
     // Luôn đủ 5 ô mỗi hàng (ô trống là khung chìm) => 1 hay 5 tướng khung thẻ vẫn y hệt nhau.
@@ -8190,14 +8366,14 @@ cfgOnApply(() => {
     }
     function loadPvpWave() {
       const tok = battleToken, o = pvp.opp;
-      document.getElementById('ui-stage-title').innerText = pvp.luan ? `Luận Kiếm • Trận ${pvp.luan}` : pvp.tower ? `Danh Tướng Lầu • Tầng ${pvp.tower} • ${o.name}` : `Tỷ Võ • ${o.name} (Hạng ${fmtN(o.rank)})`;
+      document.getElementById('ui-stage-title').innerText = pvp.luan ? `Luận Kiếm • Trận ${pvp.luan} • Boss: ${luanCpName(pvp.luan)}` : pvp.tower ? `Danh Tướng Lầu • Tầng ${pvp.tower} • ${o.name}` : `Tỷ Võ • ${o.name} (Hạng ${fmtN(o.rank)})`;
       document.getElementById('ui-wave-title').innerText = 'Hiệp 0/' + PVP_MAX_ROUNDS;
       document.getElementById('ui-enemy-name').innerText = o.heroes.map(h => h.name.toUpperCase()).join(' • ');
       waveUnits.enemies.forEach(e => e.el.remove());
       const S = HERO_POS[pvp.luan ? Math.min(5, Math.max(1, o.stats.length)) : 5].map(p => { const q = pvpCompact(p[0], p[1] + HERO_DY, 22); return [100 - q[0], q[1]]; });   // Luận Kiếm: 3–5 Boss đứng theo đội hình đúng số lượng
       waveUnits.enemies = o.stats.map((x, i) => {
         const h = x.h, u = makeUnit('enemy', heroIcon(h), S[i][0], S[i][1], x.hp, x.atk, false, h.name);
-        u.id = h.id; u.isHero = true; u.def = x.def; u.spd = x.spd !== undefined ? x.spd : h.spd; u.dodge = x.dodge !== undefined ? x.dodge : h.dodge; u.acc = x.acc !== undefined ? x.acc : (h.acc || 0); u.crit = x.crit || 0; u.critDmg = x.critDmg || 0; u.tough = x.tough || 0; u.pierce = x.pierce || 0; u.tia = Math.max(1, Math.floor(x.tia || h.tia || 1)); u.block = x.block || 0; u.regen = x.heal || 0; u.sk = x.sk || 1; if (x.star) u.star = x.star;
+        u.id = h.id; u.isHero = true; u.def = x.def; u.spd = x.spd !== undefined ? x.spd : h.spd; u.dodge = x.dodge !== undefined ? x.dodge : h.dodge; u.acc = x.acc !== undefined ? x.acc : (h.acc || 0); u.crit = x.crit || 0; u.critDmg = x.critDmg || 0; u.tough = x.tough || 0; u.pierce = x.pierce || 0; u.tia = Math.max(1, Math.floor(x.tia || h.tia || 1)); u.block = x.block || 0; u.regen = x.heal || 0; u.sk = x.sk || 1; u.cpTier = cpClamp(x.cpTier); if (x.star) u.star = x.star;
         u.alwaysUlt = !!h.alwaysUlt; u.taunt = !!h.taunt; u.prio2 = !!h.prio2; u.rage = h.startRage || 0; grantStart(u);
         return u;
       });
@@ -8214,6 +8390,8 @@ cfgOnApply(() => {
     // Tỷ Võ: mỗi hiệp mọi tướng (cả 2 bên) ra đòn lần lượt từng con theo TỐC ĐỘ giảm dần.
     // Cùng tốc: bên nào tổng lực chiến cao hơn đánh trước (bằng nhau thì bên ta); cùng bên cùng tốc thì theo thứ tự khung.
     function pvpOrder() {
+      // Luận Kiếm: toàn đội ta đi trước theo khung, rồi toàn đội Boss. Không xét Tốc hay lực chiến.
+      if (pvp && pvp.luan) return [...waveUnits.heroes, ...waveUnits.enemies].filter(u => u.alive);
       const myP = pvpMyPower(), opP = pvp.opp.power, heroFirst = myP >= opP;
       const all = [...waveUnits.heroes.map((u, i) => ({ u, side: 0, i })), ...waveUnits.enemies.map((u, i) => ({ u, side: 1, i }))].filter(x => x.u.alive);
       return all.sort((a, b) => (b.u.spd || 0) - (a.u.spd || 0)
@@ -8235,7 +8413,7 @@ cfgOnApply(() => {
         if (tok !== battleToken) return;
         if (bl) { await sleep(500); if (tok !== battleToken) return; }
         if (ended()) return;
-        // Thứ tự ra đòn được TÍNH LẠI sau mỗi lượt: ai chưa ra đòn trong hiệp này mà vừa được cộng/trừ Tốc (vd Đoàn Dự cộng Tốc cả đội) sẽ được xếp lại ngay theo Tốc mới.
+        // Tỷ Võ/Danh Tướng Lầu: xếp lại theo Tốc sau mỗi lượt. Riêng Luận Kiếm: giữ thứ tự đội ta rồi đội Boss, theo khung.
         // roster = những tướng sống lúc bắt đầu hiệp (tướng hồi sinh giữa hiệp không có thêm lượt trong hiệp đó)
         const roster = new Set(pvpOrder()), acted = new Set();
         for (;;) {
@@ -8313,6 +8491,7 @@ cfgOnApply(() => {
    Thắng 1 trận: nhận 3 MẢNH BẢO VẬT ngẫu nhiên (mỗi mảnh 1 loại Bảo Vật bất kỳ, trùng thì cộng dồn), trận sau TẤT CẢ thông số Boss tăng thêm 15% (cộng dồn).
    Độ khó (số trận đã qua) tự làm mới lúc 5:00 sáng hằng ngày.
    Dùng lại bộ máy trận của Tỷ Võ: pvpBegin() trong pvp/pvp-battle.js, kết thúc ở luanFinish() (gọi từ pvpFinish khi pvp.luan > 0).
+   Riêng Luận Kiếm không xếp lượt theo Tốc: phe ta đánh hết lượt trước Boss mỗi hiệp. Boss mở Công Pháp ở tầng 100/200/500/1000.
    Admin chỉnh ở admin.html → tab Luận Kiếm (cấu hình `luan.*`):
      on (1/0) • resetHour (giờ làm mới) • bossMin / bossMax • growth (% tăng mỗi trận) • hp / atk / def (Boss trận 1)
      shardCount (số mảnh Bảo Vật ngẫu nhiên mỗi trận thắng, mặc định 3) • gradeWeights: { bậc A…SSS: trọng số } (trống = mặc định, 0 = không rơi)
@@ -8324,6 +8503,9 @@ cfgOnApply(() => {
     const luanResetHour = () => luanInt(cfgNum('luan.resetHour', 5), 0, 23);
     const luanGrowth = () => Math.max(0, cfgNum('luan.growth', 15)) / 100;           // 0.15 = +15% mỗi trận thắng
     const luanMult = lv => Math.pow(1 + luanGrowth(), Math.max(0, lv - 1));
+    // Boss Luận Kiếm mở Công Pháp theo tầng, không phụ thuộc sao hoặc Công Pháp của người chơi.
+    function luanCpTier(lv) { return lv >= 1000 ? 4 : lv >= 500 ? 3 : lv >= 200 ? 2 : lv >= 100 ? 1 : 0; }
+    const luanCpName = lv => window.CP_STAGE_NAMES[luanCpTier(lv)];
     function luanBossRange() { let a = luanInt(cfgNum('luan.bossMin', 3), 1, 5), b = luanInt(cfgNum('luan.bossMax', 5), 1, 5); if (b < a) [a, b] = [b, a]; return [a, b]; }
     const luanShardCount = () => luanInt(cfgNum('luan.shardCount', 3), 1, 30);   // số mảnh Bảo Vật rơi mỗi trận thắng
     const luanEsc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -8354,12 +8536,13 @@ cfgOnApply(() => {
     }
     // Chỉ số Boss ở trận lv: HP/Công/Thủ gốc (admin) × (1+growth)^(lv-1); mọi thông số khác của tướng cũng nhân cùng hệ số
     function luanStats(lv) {
-      const m = luanMult(lv), r1 = v => Math.round(v * 10) / 10;
+      const m = luanMult(lv), tier = luanCpTier(lv), r1 = v => Math.round(v * 10) / 10;
       const hp = Math.max(1, cfgNum('luan.hp', 100000)), atk = Math.max(1, cfgNum('luan.atk', 8000)), def = Math.max(0, cfgNum('luan.def', 3000));
       return luanState.boss.map(id => {
         const h = heroById(id), b = Object.assign({}, h, HERO_DEFAULTS[id]), sc = v => r1((Number(v) || 0) * m);
         return { h, hp: Math.round(hp * m), atk: Math.round(atk * m), def: Math.round(def * m), spd: sc(b.spd), dodge: sc(b.dodge), acc: sc(b.acc), crit: sc(b.crit), critDmg: sc(b.critDmg),
-                 tough: sc(b.tough), pierce: sc(b.pierce), block: Math.min(100, sc(b.block)), heal: sc(b.heal), tia: Math.max(1, Math.floor(b.tia || 1)), sk: 1, star: 5 };
+                 tough: sc(b.tough), pierce: sc(b.pierce), block: Math.min(100, sc(b.block)), heal: sc(b.heal), tia: Math.max(1, Math.floor(b.tia || 1)),
+                 sk: cpValue(id, tier, 'CP_HL', 1), cpTier: tier, star: 5 };
       });
     }
     function luanOpp(lv) {
@@ -8404,7 +8587,7 @@ cfgOnApply(() => {
           : `<div class="luan-last lose">💀 Thua trận ${st.last.lv} — cứ khiêu chiến lại (không giới hạn lượt).</div>`;
       }
       el.innerHTML =
-        `<div class="luan-top"><div class="luan-lv">Trận <b>${lv}</b></div><div class="luan-sub">${stats.length} Boss • Chỉ số Boss <b>+${pct}%</b>${lv > 1 ? ' (đã thắng ' + (lv - 1) + ' trận)' : ''}</div></div>` +
+        `<div class="luan-top"><div class="luan-lv">Trận <b>${lv}</b></div><div class="luan-sub">${stats.length} Boss • Chỉ số Boss <b>+${pct}%</b>${lv > 1 ? ' (đã thắng ' + (lv - 1) + ' trận)' : ''}</div><div class="luan-sub">Công Pháp Boss: <b>${luanCpName(lv)}</b> • Phe ta đánh trước</div></div>` +
         `<div class="luan-bosses">${cards}</div>` +
         `<div class="luan-bot">${last}<div class="luan-rwt">🧩 Thắng mỗi trận nhận ${luanShardCount()} Mảnh Bảo Vật ngẫu nhiên</div><div class="luan-pool">${pool}</div>` +
         `<button class="luan-go" onclick="luanStart()">⚔️ Khiêu Chiến</button>` +
@@ -9139,12 +9322,14 @@ function closeGiftCode() { document.getElementById('gc-modal').style.display = '
 
 /* ===== SAO LƯU / CHUYỂN DỮ LIỆU GIỮA CÁC MÁY ===== */
 const SV_KEYS = ['pve_progress','team_ids','team_slots','team_cap','hero_stat_ov','hero_role','hero_prog','acc_level','acc_exp',
-                 'player_name','ts_bag','ts_shards','eq_bag','eq_lv','eq_mount','eq_reward_done','auto_battle','pvp_state','audio_set','sta_state',
+                 'player_name','ts_bag','ts_shards','lt_bag','lt_shards','eq_bag','eq_lv','eq_mount','eq_reward_done','auto_battle','pvp_state','audio_set','sta_state',
                  'gold_val','silver_val','rice_val','mail_state','ham_claimed','ham_spent','hero_shards','rec_state','guild_state','quest_state','giftcode_used','blank_start','hero_owned','ky_state'];
 function svMsg(t, ok) { const e = document.getElementById('sv-msg'); e.style.color = ok === false ? '#f87171' : '#4ade80'; e.innerText = t; }
 function svCollect() {
   const d = {};
   SV_KEYS.forEach(k => { try { const v = localStorage.getItem(k); if (v !== null) d[k] = v; } catch (e) {} });
+  if (!Object.prototype.hasOwnProperty.call(d, 'lt_bag')) d.lt_bag = '[]';
+  if (!Object.prototype.hasOwnProperty.call(d, 'lt_shards')) d.lt_shards = '{}';
   return { game: 'pve-heroes', v: 1, t: Date.now(), data: d };
 }
 function svEncode(o) { return btoa(unescape(encodeURIComponent(JSON.stringify(o)))); }
@@ -9347,7 +9532,7 @@ async function clPublishPvp() {
   if (!clUser || !clDb) return;
   const ids = (team || []).filter(id => heroById(id)); if (!ids.length) return;
   const _tt = (typeof ttMine === 'function' && ttMine()) || null, _bn = _tt ? ttBonus(_tt.pt) : {};
-  const tm = ids.map(id => { const s = heroBattleStats(id, true, _bn); return { id, hp: s.hp, atk: s.atk, def: s.def, spd: s.spd, dodge: s.dodge, acc: s.acc, crit: s.crit, critDmg: s.critDmg, tough: s.tough, pierce: s.pierce, tia: s.tia || 1, block: s.block, heal: s.heal || 0, star: getProg(id).star, sk: skillMult(id) }; });
+  const tm = ids.map(id => { const s = heroBattleStats(id, true, _bn); return { id, hp: s.hp, atk: s.atk, def: s.def, spd: s.spd, dodge: s.dodge, acc: s.acc, crit: s.crit, critDmg: s.critDmg, tough: s.tough, pierce: s.pierce, tia: s.tia || 1, block: s.block, heal: s.heal || 0, star: getProg(id).star, cpTier: cpLevel(id), sk: skillMult(id) }; });
   const ref = clDb.collection('pvp_players').doc(clUser.uid);
   const data = { name: pvName(), lvl: accLevel, wins: pvpState.wins, stale: false, locked: false,
     power: tm.reduce((a, s) => a + unitPower(s), 0), t: Date.now(), team: tm, cap: teamCapId(), beast: _tt ? _tt.beast : '', pt: _tt ? _tt.pt : [] };
@@ -9468,9 +9653,15 @@ async function clSnap(data, t) {
 }
 function clApplyCloud(cloud, uid) {
   try {
+    // Chuyển dữ liệu Linh Thú cũ chỉ khi đúng chủ tài khoản và không có reset/khôi phục của Admin.
+    const legacyLT = {}, cloudData = cloud.data || {};
+    if (uid && clOwner() === uid && clLocalEp() === clEp && !Object.prototype.hasOwnProperty.call(cloudData, 'lt_bag') && !Object.prototype.hasOwnProperty.call(cloudData, 'lt_shards')) {
+      ['lt_bag','lt_shards'].forEach(k=>{const v=_lsGet.call(localStorage,k);if(v!==null)legacyLT[k]=v;});
+    }
     SV_KEYS.forEach(k => _lsDel.call(localStorage, k));
-    Object.keys(cloud.data || {}).forEach(k => { if (SV_KEYS.includes(k)) _lsSet.call(localStorage, k, cloud.data[k]); });
-    _lsSet.call(localStorage, 'cloud_local_t', String(cloud.t || 0));
+    Object.keys(cloudData).forEach(k => { if (SV_KEYS.includes(k)) _lsSet.call(localStorage, k, cloudData[k]); });
+    Object.keys(legacyLT).forEach(k=>_lsSet.call(localStorage,k,legacyLT[k]));
+    _lsSet.call(localStorage, 'cloud_local_t', String(Object.keys(legacyLT).length ? Math.max(Date.now(), (Number(cloud.t)||0)+1) : (cloud.t || 0)));
     _lsSet.call(localStorage, 'cloud_ep', String(clEp || 0));
     if (uid) _lsSet.call(localStorage, 'cloud_owner', uid);
   } catch (e) { clMsg('Không ghi được dữ liệu vào máy này.', false); return; }
@@ -10085,7 +10276,7 @@ async function bossAct(e, tok) {
     // Người tung chiêu là 1 "bóng" VÔ HÌNH đứng đúng chỗ boss: chỉ hiện hoạt ảnh/skill của tướng, KHÔNG hiện hình tướng, boss đứng yên (không nhảy/bay theo chiêu)
     const g = makeUnit('enemy', '', e.x, e.y, 1e15, e.atk, false, '');
     g.el.classList.add('bb-cast');
-    Object.assign(g, { id, isHero: true, star: 5, def: e.def || 0, spd: e.spd || 0, acc: 99999, crit: e.crit || 0, critDmg: e.critDmg || 0, pierce: e.pierce || 0, tia: 1, rage: 0, sk: skillMult(id) * (Number(BOSS_CFG.ultMult) || 1) });
+    Object.assign(g, { id, isHero: true, star: 5, def: e.def || 0, spd: e.spd || 0, acc: 99999, crit: e.crit || 0, critDmg: e.critDmg || 0, pierce: e.pierce || 0, tia: 1, rage: 0, sk: skillMultOf(getProg(id).sk,id,undefined,0) * (Number(BOSS_CFG.ultMult) || 1) });
     try { await ultimate(g, tok); } catch (err) { console.warn('boss ult', err); }
     finally { g.alive = false; try { g.el.remove(); } catch (x) {} }
   } else { await attack(e, waveUnits.heroes, 1, e.atk, tok); }
@@ -11313,7 +11504,7 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
     heroSkills = function (id) {
       var list = orig.apply(this, arguments), ov = override(id);
       if (!ov || !Array.isArray(list)) return list;
-      return list.map(function (k, i) { var t = ov[i]; return (typeof t === 'string' && t.trim()) ? Object.assign({}, k, { desc: html(t) }) : k; });
+      return list.map(function (k, i) { var t = ov[i]; return (i===1 && cpLevel(id) && window.CP_SKILL_DATA[id]) ? k : (typeof t === 'string' && t.trim()) ? Object.assign({}, k, { desc: html(t) }) : k; });
     };
     wrapped = true;
   } catch (e) { /* heroSkills khai báo kiểu const hoặc chưa nạp -> dùng cách 2 */ }
@@ -13161,6 +13352,10 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
     { name: 'Kim Đan',   dan: 'Kim Đan',   color: '#fde047', cost: null, bonus: {} },
     { name: 'Đế Đan',    dan: 'Đế Đan',    color: '#f472b6', cost: null, bonus: {} }
   ];
+  window.CP_BOOKS.slice(1).forEach(b => {
+    GD_ICO_FULL[b.name] = 'giao-dien/vat-pham-game/cong-phap/' + b.file;
+    BAG_DESC[b.name] = 'Sách dùng nâng ' + b.name + ' cho tướng (mặc định cần ' + b.n + ' quyển).';
+  });
   const DAN_IMG_PATH = { 'Bảo Đan': 'bao-dan.png', 'Huyền Đan': 'huyen-dan.png', 'Kim Đan': 'kim-dan.png', 'Đế Đan': 'de-dan.png' };
   Object.keys(DAN_IMG_PATH).forEach(k => { GD_ICO_FULL[k] = 'giao-dien/vat-pham-game/trang-bi/' + DAN_IMG_PATH[k]; });   // ảnh đan (hiện trong Túi + màn nâng)
   const STAT_VN = { hp: 'HP', atk: 'Công', def: 'Thủ', spd: 'Tốc', heal: 'Hồi máu', dodge: 'Né', acc: 'Chuẩn', crit: 'Bạo', critDmg: 'Bạo Sát', tough: 'Bền', pierce: 'Phá giáp', block: 'Đỡ đòn' };
@@ -13255,16 +13450,16 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
     const starOk = p.star >= K.min();
     const steps = K.list.map((t, i) => {
       const cls = i < n ? 'done' : (i === n ? 'next' : '');
-      const ic = key === 'lyt' ? gdIco(t.dan, '💊') : K.icon;
+      const ic = key === 'lyt' ? gdIco(t.dan, '💊') : gdIco(window.CP_BOOKS[i+1].name, K.icon);
       return `<div class="cx-st ${cls}" style="${i < n ? 'border-color:' + t.color : ''}"><div class="ic">${ic}</div><span style="color:${i < n ? t.color : ''}">${t.name}</span><small>${i < n ? '✔ Đã đạt' : (i === n ? 'Sắp nâng' : '🔒')}</small></div>`;
     }).join('');
     let block = '', btn = '';
     if (max) {
       block = `<div class="up-max">Đã đạt ${K.list[K.list.length - 1].name} — tối đa</div>`;
     } else {
-      const need = next.cost, cfgd = Array.isArray(need);
+      const need = key==='cph' ? cpCost(n+1) : next.cost, cfgd = Array.isArray(need);
       const ok = starOk && cfgd && need.every(x => qlHave(x.k, id) >= x.n);
-      block = `<div class="cx-sec">Nâng lên <b style="color:${next.color}">${next.name}</b> được:</div><div class="cx-sum">${bonusHTML(next.bonus, true)}</div>`;
+      block = `<div class="cx-sec">Nâng lên <b style="color:${next.color}">${next.name}</b> được:</div><div class="cx-sum">${key==='cph' ? (cpTierText(id,n+1)||'Chưa có cấu hình') : bonusHTML(next.bonus, true)}</div>`;
       if (!starOk) block += `<div class="cx-lock">🔒 Cần tướng đạt ★${K.min()} (hiện ★${p.star})</div>`;
       if (!cfgd) block += `<div class="cx-warn">⏳ Chưa cấu hình nguyên liệu cho ${next.name} — chưa nâng được</div>`;
       else if (need.length) block += `<div class="cx-sec">Nguyên liệu cần:</div><div class="up-cost ql">${need.map(x => `<div class="up-it"><div class="e">${qlIco(x.k, id)}</div><b class="${qlHave(x.k, id) >= x.n ? '' : 'bad'}">${fmtN(qlHave(x.k, id))}/${fmtN(x.n)}</b><small>${qlName(x.k, id)}</small></div>`).join('')}</div>`;
@@ -13275,14 +13470,15 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
       <div class="cx-nm"><button onclick="cxNav('${key}',-1)">◀</button><b>${h.name} · ★${p.star}</b><button onclick="cxNav('${key}',1)">▶</button></div>
       <div class="cx-top"><div class="cx-hero">${heroIcon(h)}</div><img class="cx-ban" src="${K.banner}" alt="${K.title}" onerror="this.style.display='none'"></div>
       <div class="cx-steps">${steps}</div>
-      <div class="cx-sec">Chỉ số ${K.title} hiện có</div><div class="cx-sum">${bonusHTML(sumBonus(K, id), true)}</div>
+      <div class="cx-sec">Chỉ số ${K.title} hiện có</div><div class="cx-sum">${key==='cph' ? (n?window.CP_STAGE_NAMES[n]:'Tuyệt kỹ gốc (chưa nâng Công Pháp)') : bonusHTML(sumBonus(K, id), true)}</div>
+      ${key==='cph' ? `<div class="cx-sec">Tuyệt kỹ theo Công Pháp</div>${K.list.map((t,i)=>`<div style="padding:7px;margin:5px 0;border:1px solid ${i+1===n?t.color:'#64748b'};border-radius:8px;background:#0007;color:#e2e8f0;font-size:12px;line-height:1.5">${i+1===n?'✔ Đang dùng · ':''}${cpTierText(id,i+1)||'Chưa có cấu hình'}</div>`).join('')}` : ''}
       ${block}${btn}`;
   }
 
   window.cxUpgrade = function (key) {
     const K = KINDS[key], id = cur[key], p = getProg(id), n = lvOf(K, id); if (n >= K.list.length) return;
     if (p.star < K.min()) { alert('Tướng cần đạt ★' + K.min() + ' mới nâng được ' + K.title + ' (hiện ★' + p.star + ').'); return; }
-    const t = K.list[n], need = t.cost; if (!Array.isArray(need)) { alert('Chưa cấu hình nguyên liệu cho ' + t.name + '.'); return; }
+    const t = K.list[n], need = key==='cph' ? cpCost(n+1) : t.cost; if (!Array.isArray(need)) { alert('Chưa cấu hình nguyên liệu cho ' + t.name + '.'); return; }
     const miss = need.filter(x => qlHave(x.k, id) < x.n);
     if (miss.length) { alert('Chưa đủ nguyên liệu để nâng lên ' + t.name + ':\n' + miss.map(x => '• ' + qlName(x.k, id) + ': ' + fmtN(qlHave(x.k, id)) + '/' + fmtN(x.n)).join('\n')); return; }
     need.forEach(x => {
@@ -13412,6 +13608,9 @@ function dqAttackFx(u,hits,tok){
  return {end(){timers.forEach(clearTimeout);ov.end();}};
 }
 async function duongQuaUlt(u,tok){
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const DQ_ACC=cpParam(u,'DQ_ACC',window.DQ_ACC), DQ_DODGE=cpParam(u,'DQ_DODGE',window.DQ_DODGE);
+
  const g=nt(u), targets=shuffled(g.es()).slice(0,Math.max(1,Math.floor(DQ_TARGETS))); if(!targets.length)return;
  const s=SEQ.DQCast, cast=seqOverlay(u,s,120), n=Math.max(1,Math.floor(DQ_HITS)), per=u.atk*(u.sk||1)/n;
  const wait=ms=>new Promise(r=>setTimeout(r,seqT(ms)));
@@ -13449,6 +13648,9 @@ async function dpbbAttack(u, foes, hits, dmg, tok, ultHit) {
  await wait(40); } } finally {node.remove();}
 }
 async function dongPhuongUlt(u,tok){
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const DPBB_PIERCE=cpParam(u,'DPBB_PIERCE',window.DPBB_PIERCE), DPBB_DOWN=cpParam(u,'DPBB_DOWN',window.DPBB_DOWN), DPBB_TURNS=cpParam(u,'DPBB_TURNS',window.DPBB_TURNS);
+
  const g=nt(u), targets=shuffled(g.es()).slice(0,Math.max(1,Math.floor(DPBB_TARGETS))); if(!targets.length)return;
  const s=SEQ.DPBBCast, cast=seqOverlay(u,s,Math.round(120*s.cw/s.ch)), n=Math.max(1,Math.floor(DPBB_HITS)), per=u.atk*u.sk/n;
  const wait=ms=>new Promise(r=>setTimeout(r,seqT(ms))), b=g.box0(targets), oldZ=u.el.style.zIndex, animations=[];
@@ -13476,6 +13678,9 @@ async function tlnAttack(u,foes,hits,dmg,tok,ultHit){
  finally{node.remove();}
 }
 async function tieuLongNuUlt(u,tok){
+  // Công Pháp: chụp tham số của người tung chiêu, an toàn qua await/timer.
+  const TLN_HITS=cpParam(u,'TLN_HITS',window.TLN_HITS), TLN_ATK_UP=cpParam(u,'TLN_ATK_UP',window.TLN_ATK_UP), TLN_DODGE=cpParam(u,'TLN_DODGE',window.TLN_DODGE), TLN_ATK_TURNS=cpParam(u,'TLN_ATK_TURNS',window.TLN_ATK_TURNS);
+
  const g=nt(u),t=g.es().sort((a,b)=>b.atk-a.atk)[0];if(!t)return;
  const s=SEQ.TLNCast,cast=seqOverlay(u,s,Math.round(120*s.cw/s.ch)),animations=[],oldZ=u.el.style.zIndex;
  const wait=ms=>new Promise(r=>setTimeout(r,seqT(ms))),dx=(t.x-u.x)*g.W/100-Math.sign(t.x-u.x)*35,dy=(t.y-u.y)*g.H/100,go=`translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px))`;

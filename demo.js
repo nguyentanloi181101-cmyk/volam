@@ -5,7 +5,7 @@
    Sau mỗi lần đánh / ulti cảnh tự dựng lại sạch (xóa buff / debuff) để xem lại nhiều lần.
    Riêng Thanh Y Tiên Tử: trước khi ulti, 2 đồng đội giả tự "gục" để thấy hiệu ứng hồi sinh. */
 (function () {
-  const D = { idx: 0, enemySide: false, hero: null, allies: [], foes: [], busy: false, open: false };
+  const D = { idx: 0, enemySide: false, hero: null, allies: [], foes: [], busy: false, open: false, cpTier: null };
   const $ = id => document.getElementById(id);
 
   /* ================= CSS ================= */
@@ -24,7 +24,7 @@
 /* trận demo: ẩn thanh nút + bảng đội hình + thanh máu của trận thường, dùng bảng điều khiển riêng */
 #battle-overlay.demo-mode .bf-acts,#battle-overlay.demo-mode .bf-fit,#battle-overlay.demo-mode #pv-skip{display:none !important}
 #battle-overlay.demo-mode .bf-unit .bf-hp,#battle-overlay.demo-mode .bf-unit.enemy .bf-hp{display:none !important}
-#dm-ctl{display:none;position:absolute;left:0;right:0;bottom:0;height:25%;z-index:200;box-sizing:border-box;padding:6px 8px 8px;background:linear-gradient(180deg,#1b2a52,#0d1530);border-top:3px solid #7c8fd6;flex-direction:column;gap:5px}
+#dm-ctl{display:none;position:absolute;left:0;right:0;bottom:0;height:30%;z-index:200;box-sizing:border-box;padding:6px 8px 8px;background:linear-gradient(180deg,#1b2a52,#0d1530);border-top:3px solid #7c8fd6;flex-direction:column;gap:5px}
 #battle-overlay.demo-mode #dm-ctl{display:flex}
 #dm-ctl .dm-info{flex:1;min-height:0;overflow-y:auto;line-height:1.3}
 #dm-ctl .dm-info b{color:#fde047;font-size:15px}
@@ -57,11 +57,12 @@
   const ctl = document.createElement('div');
   ctl.id = 'dm-ctl';
   ctl.innerHTML = '<div class="dm-info"><b id="dm-name"></b><em id="dm-idx"></em><span class="u" id="dm-ult"></span><small id="dm-desc"></small></div>' +
-    '<div class="dm-row sm"><button id="dm-prev">◀ Trước</button><button id="dm-next">Sau ▶</button><button id="dm-side"></button><button id="dm-slow"></button></div>' +
+    '<div class="dm-row sm"><button id="dm-prev">◀ Trước</button><button id="dm-next">Sau ▶</button><button id="dm-side"></button><button id="dm-slow"></button></div><div class="dm-row sm"><select id="dm-cp" style="width:100%;background:#162449;color:white"><option value="-1">Công Pháp đang sở hữu</option><option value="0">Gốc</option><option value="1">Hoàng</option><option value="2">Huyền</option><option value="3">Địa</option><option value="4">Thiên</option></select></div>' +
     '<div class="dm-row"><button data-a="idle">Đứng Yên</button><button data-a="atk">Đánh Thường</button><button data-a="ult" class="u">Ulti</button><button data-a="blast" style="display:none">Tự bạo</button><button id="dm-exit" class="x">Thoát</button></div>';
   $('battle-overlay').appendChild(ctl);
 
-  const setBtns = on => ctl.querySelectorAll('button').forEach(b => { if (b.id !== 'dm-exit') b.disabled = !on; });
+  $('dm-cp').onchange=()=>{if(D.busy)return;const v=Number($('dm-cp').value);D.cpTier=v<0?null:cpClamp(v);build();};
+  const setBtns = on => ctl.querySelectorAll('button,select').forEach(b => { if (b.id !== 'dm-exit') b.disabled = !on; });
   const updateSlow = () => { $('dm-slow').textContent = 'Chậm: ' + (battleSlow === 2 ? 'BẬT' : 'TẮT'); };
   const updateSide = () => { $('dm-side').textContent = 'Phe: ' + (D.enemySide ? 'Địch' : 'Ta'); };
 
@@ -74,9 +75,10 @@
     const T = HERO_POS[3].map(p => [mx(p[0]), p[1] + HERO_DY]);            // tướng đứng trước, 2 đồng đội giả phía sau
     const F = HERO_POS[5].map(p => [mx(100 - p[0]), p[1] + HERO_DY]);      // 5 cọc gỗ phía đối diện
 
+    const tier=D.cpTier===null?cpLevel(h.id):D.cpTier;
     const u = makeUnit(hs, heroIcon(h), T[0][0], T[0][1], s.hp, s.atk, false, h.name);
     Object.assign(u, { id: h.id, emoji: heroIcon(h), def: s.def, spd: s.spd, dodge: s.dodge, acc: s.acc, crit: s.crit, critDmg: s.critDmg, tough: s.tough, pierce: s.pierce, tia: s.tia || 1, block: s.block, regen: 0,
-      sk: skillMult(h.id), alwaysUlt: !!h.alwaysUlt, taunt: !!h.taunt, prio2: !!h.prio2, rage: h.startRage || 0, acted: false });
+      sk: skillMultOf(getProg(h.id).sk,h.id,undefined,tier), cpTier:tier, alwaysUlt: !!h.alwaysUlt, taunt: !!h.taunt, prio2: !!h.prio2, rage: h.startRage || 0, acted: false });
     if (es) u.isHero = true;
     grantStart(u);
 
@@ -90,7 +92,7 @@
     $('dm-name').textContent = h.name;
     $('dm-idx').textContent = (D.idx + 1) + '/' + HEROES.length + ' • ' + (ROLE_NAME[roleOf(h.id)] || '');
     $('dm-ult').textContent = '💥 ' + (HERO_ULT_NAME[h.id] || 'Tuyệt kỹ');
-    let d = ''; try { d = heroUltShort(h.id) || ''; } catch (e) {}
+    let d = ''; try { d = heroUltShort(h.id,tier) || ''; } catch (e) {}
     $('dm-desc').textContent = d;
     updateSide();
     try { refreshPanel(); } catch (e) {}
