@@ -1,7 +1,1 @@
-HBN1 PERF v2 — CÀI ĐẶT
-1. Sao lưu game. Giải nén heros-binary-toi-uu.zip vào gốc game; sau đó giải nén cap-nhat-toi-uu-game.zip vào gốc game. Giữ ảnh gốc để dự phòng. Không thay game.css, admin.html, cong-phap-data.js.
-2. Chạy HTTPS hoặc localhost. Mở lại game để Service Worker nhận bản mới. Hosting hỗ trợ HTTP Range (206, Content-Range) mới tải từng vùng byte; nếu không, worker đọc cả BIN hoặc file gốc. Không phải mọi máy đều giảm FPS lag.
-3. Vào Demo kiểm tra từng tướng, cả hai phe. Canvas thử nghiệm: thêm ?canvas=1 vào URL index.html; mặc định CSS cũ. Không thay đổi số frame, kích thước, sát thương. Canvas chỉ dùng cho sprite điều khiển từng frame; loop vẫn CSS.
-4. Nạp trước sprite tướng tham gia trận (2 ảnh đồng thời); ulti chờ tối đa 1 giây nếu ảnh chưa sẵn. Âm ulti không tải đồng loạt khi mở game. Dọn cache BIN dự phòng (24 MiB mục tiêu, không tính tải đang chạy) và âm thanh khi thoát trận. Trình duyệt tự quản lý decoded-image cache.
-5. Gói 56 BIN, 377 tài nguyên, giảm 6.36 MiB nhờ chia sẻ byte giống nhau và nén lossless 10 ảnh đã so khớp RGBA. Không cắt vùng trong suốt sprite vì cần giữ tọa độ gốc. Chưa chuyển toàn bộ engine sang WebGL. Không benchmark điện thoại/hosting.
-6. Khi thay BIN, cần tái tạo bảng offset/hash trong worker để duy trì tải Range; sai hash sẽ quay về đọc BIN đầy đủ. Nếu bổ sung tên mới phải cập nhật cả INDEX.
+Ghi de game.js va index.html. Chi sua vi tri tran phap Truong Tam Phong. Khong sua BIN. Chua test tren trinh duyet.

@@ -27,7 +27,7 @@
 (function(){if(!('serviceWorker' in navigator)||!window.isSecureContext)return;
  const sw=navigator.serviceWorker, first=!sw.controller;let reloaded=false;
  sw.addEventListener('controllerchange',function(){if(first&&!reloaded){reloaded=true;location.reload();}});
- sw.register('./hero-binary-sw.js?v=2',{scope:'./',updateViaCache:'none'}).catch(function(e){console.warn('HBN1 fallback:',e);});
+ sw.register('./hero-binary-sw.js?v=3',{scope:'./',updateViaCache:'none'}).catch(function(e){console.warn('HBN1 fallback:',e);});
 })();</script>
 </head>
 <body>
@@ -439,7 +439,7 @@
   <script src="heros/hero-data.js?v=202611281401"></script>   <!-- dữ liệu 18 tướng -->
   <script src="cong-phap-data.js?v=2"></script>
   <script src="hero-perf.js?v=2"></script>
-  <script src="game.js?v=202611281850"></script>
+  <script src="game.js?v=20261128ttp4"></script>
   <script src="demo.js?v=6"></script>   <!-- DEMO tướng: idle / đánh thường / ulti -->   <!-- TOÀN BỘ JS game gộp 1 file (xem banner === trong file) -->
 </body>
 </html>

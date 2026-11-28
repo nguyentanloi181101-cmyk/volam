@@ -108,17 +108,6 @@
       "bat-gioi.webp"
     ]
   },
-  "chu-nguyen-chuong": {
-    "files": 3,
-    "bytes": 169574,
-    "attack_image_named": false,
-    "ultimate_image_named": false,
-    "names": [
-      "02-chu-nguyen-chuong.mp3",
-      "chu-nguyen-chuong-body.webp",
-      "chu-nguyen-chuong.webp"
-    ]
-  },
   "diem-la-vuong": {
     "files": 7,
     "bytes": 2457385,
@@ -265,12 +254,11 @@
     ]
   },
   "hang-nga": {
-    "files": 5,
-    "bytes": 1322518,
+    "files": 4,
+    "bytes": 1300435,
     "attack_image_named": false,
     "ultimate_image_named": true,
     "names": [
-      "chu-nguyen-chuong.mp3",
       "hang-nga-body.webp",
       "hang-nga-idle.webp",
       "hang-nga-ult.webp",
@@ -303,17 +291,6 @@
       "hoa-man-lau-quat.webp",
       "hoa-man-lau-ult.webp",
       "hoa-man-lau.webp"
-    ]
-  },
-  "lac-long-quan": {
-    "files": 3,
-    "bytes": 188465,
-    "attack_image_named": false,
-    "ultimate_image_named": false,
-    "names": [
-      "08-lac-long-quan.mp3",
-      "lac-long-quan-body.webp",
-      "lac-long-quan.webp"
     ]
   },
   "linda": {
@@ -450,17 +427,6 @@
       "luc-tieu-phung-ult.mp3",
       "luc-tieu-phung-ult.webp",
       "luc-tieu-phung.webp"
-    ]
-  },
-  "ma-dao-thanh-nu": {
-    "files": 3,
-    "bytes": 195327,
-    "attack_image_named": false,
-    "ultimate_image_named": false,
-    "names": [
-      "00-ma-dao-thanh-nu.mp3",
-      "ma-dao-thanh-nu-body.webp",
-      "ma-dao-thanh-nu.webp"
     ]
   },
   "ma-ton": {

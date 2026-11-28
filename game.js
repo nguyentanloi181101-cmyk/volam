@@ -2037,7 +2037,7 @@ const SEQ = HERO_T.seq;
 // Dáng đứng trong trận: id tướng → { sheet, h = chiều cao hiển thị (px), ms = thời gian 1 vòng }
 const SEQ_IDLE = HERO_T.seqIdle;
 
-// THỦY LONG (id 8, trước là Lạc Long Quân): đổi tên + thay toàn bộ hình ảnh bằng bộ mới trong heros/thuy-long/
+// THỦY LONG (id 8): hình ảnh trong heros/thuy-long/
 //   thuy-long-idle.webp   : 25 khung đứng yên     • (đã bỏ hiệu ứng đánh thường thuy-long-attack.webp)
 //   thuy-long-body.webp   : ảnh thân tĩnh          • thuy-long.webp        : ảnh đại diện thẻ tướng
 (function () {
@@ -4253,7 +4253,7 @@ cfgOnApply(applyFormationCfg);   // chạy ngay 1 lần + chạy lại mỗi khi
    (tách từ index.html cũ — script) */
 
     // Chiêu cuối: tướng thường dùng kiểu lao vào đánh 3 đòn, Trương Tam Phong có chiêu riêng
-    // Âm thanh tuyệt kỹ theo tướng (heros/<tên-tướng>/NN-<tên-tướng>.mp3). [ghi chú cũ: id 0 = Tà Đế, id 2 = Hằng Nga, id 5 = Âu Cơ, id 8 = Lạc Long Quân, id 9 = Hỏa Thiên Tướng, id 10 = Tiểu Yêu (Vô Nhai Tử: không có âm lúc bắt đầu chiêu, mỗi viên cờ rơi kêu 1 tiếng – xem playGoStone)
+    // Âm thanh tuyệt kỹ theo tướng (heros/<tên-tướng>/NN-<tên-tướng>.mp3). [ghi chú cũ: id 0 = Tà Đế, id 2 = Hằng Nga, id 5 = Âu Cơ, id 8 = Thủy Long, id 9 = Hỏa Thiên Tướng, id 10 = Tiểu Yêu (Vô Nhai Tử: không có âm lúc bắt đầu chiêu, mỗi viên cờ rơi kêu 1 tiếng – xem playGoStone)
     const HERO_SND_SRC = HERO_T.sound;   // mỗi tướng 1 âm tuyệt kỹ riêng (tạo bằng tổng hợp âm), phát lúc bắt đầu tung chiêu
     const heroSnd = {};
     Object.keys(HERO_SND_SRC).forEach(id => { try { const a = new Audio(); a.preload = 'none'; heroSnd[id] = a; } catch (e) {} });
@@ -4939,26 +4939,53 @@ async function duCoUlt(u, tok) {
       cast.el.style.transform = 'translateX(-50%)' + (direction ? '' : ' scaleX(-1)');
       cast.el.style.bottom = '9px';
       if(idle) cast.el.style.scale = getComputedStyle(idle.parentElement).scale;
-      function place(e, ground) {
-        const rect = box.getBoundingClientRect(), unit = e.el.getBoundingClientRect();
-        const sp = e.el.querySelector('.bf-sprite .hero-seq, .bf-sprite .hero-body, .bf-sprite');
-        const body = sp ? sp.getBoundingClientRect() : unit;
-        const x = (unit.left + unit.width/2 - rect.left) / (rect.width || 1) * 100;
-        const y = ((ground ? body.bottom : body.top - 14) - rect.top) / (rect.height || 1) * 100;
-        const d = g.mk('bf-seq-fx','',x,y), size = ground ? 108 : 82;
-        Object.assign(d.style,{width:size+'px',height:size+'px',zIndex:ground?'0':'105',opacity:'0',transform:'translate(-50%,-50%) scaleY('+(ground?.48:.65)+')'});
-        const sprite = seqEl(ground ? SEQ.ttpStorm : SEQ.ttpBagua, size);
-        Object.assign(sprite.style,{position:'absolute',left:'50%',top:'50%',transform:'translate(-50%,-50%)',pointerEvents:'none'});
-        d.appendChild(sprite); d.style.opacity='1';
-        fx.push({d,sprite});
-        for(let i=0;i<16;i++) at(i*HERO_FRAME_MS,()=>sprite.show(i));
-
+      // Một pháp trận hai tầng: Bát Quái trên trời, Thái Cực dưới chân,
+      // màn linh khí nối hai tầng; không phủ sprite lên thân từng địch.
+      function place(list) {
+        const W=box.clientWidth, H=box.clientHeight;
+        if(!W || !H) return;
+        const rect=box.getBoundingClientRect(), sx=W/(rect.width||W), sy=H/(rect.height||H);
+        const bodies=list.map(e=> (e.el.querySelector('.bf-sprite .hero-seq, .bf-sprite .hero-body, .bf-sprite') || e.el).getBoundingClientRect());
+        const left=(Math.min(...bodies.map(r=>r.left))-rect.left)*sx;
+        const right=(Math.max(...bodies.map(r=>r.right))-rect.left)*sx;
+        const top=(Math.min(...bodies.map(r=>r.top))-rect.top)*sy;
+        const bottom=(Math.max(...bodies.map(r=>r.bottom))-rect.top)*sy;
+        // Canh theo mat san nhin thay, khong theo hang dich gan mep duoi.
+        const ctl=document.getElementById('dm-ctl');
+        const panel=ctl && ctl.getClientRects().length ? ctl.getBoundingClientRect() : null;
+        const visibleH=panel && panel.top>rect.top && panel.top<rect.bottom
+          ? Math.min(H,(panel.top-rect.top)*sy) : H;
+        const width=Math.min(W-24,Math.max(W*.60,right-left+38));
+        const cx=Math.max(width/2+12,Math.min(W-width/2-12,(left+right)/2));
+        const depth=Math.min(visibleH*.18,Math.max(48,width*.36));
+        // Thai Cuc o giua mat san (tam chan doi hinh), khong o chan hang cuoi.
+        const feet=bodies.map(r=>(r.bottom-rect.top)*sy);
+        const groundMid=(Math.min(...feet)+Math.max(...feet))/2;
+        const floor=Math.max(depth/2+12,Math.min(visibleH-depth/2-24,groundMid-visibleH*.025));
+        const ceiling=Math.max(depth/2+12,Math.min(top-22,floor-depth-38));
+        const middle=(ceiling+floor)/2, wallH=Math.max(16,floor-ceiling);
+        const make=(y,z)=>{const d=g.mk('bf-seq-fx','',cx/W*100,y/H*100);Object.assign(d.style,{zIndex:String(z),pointerEvents:'none',transform:'translate(-50%,-50%)'});return d;};
+        const back=make(middle,1);
+        Object.assign(back.style,{width:width+'px',height:wallH+'px',background:'linear-gradient(90deg,rgba(95,199,255,.27),rgba(49,125,255,.06) 20%,rgba(49,125,255,.03) 80%,rgba(95,199,255,.27))',borderLeft:'2px solid #9ce8ff',borderRight:'2px solid #9ce8ff',boxShadow:'0 0 16px #65bfff88',borderRadius:'5%'});
+        const front=make(middle,103);
+        Object.assign(front.style,{width:width+'px',height:wallH+'px',background:'linear-gradient(90deg,rgba(140,224,255,.17),transparent 14%,transparent 86%,rgba(140,224,255,.17))',borderRadius:'5%',boxShadow:'inset 3px 0 10px #a8e7ff55,inset -3px 0 10px #a8e7ff55'});
+        front.animate([{opacity:.55},{opacity:1},{opacity:.55}],{duration:seqT(850),iterations:Infinity});
+        function disk(Sfx,y,z){
+          const d=make(y,z), sprite=seqEl(Sfx,Math.round(width));
+          const rawH=parseFloat(sprite.style.height)||width;
+          Object.assign(d.style,{width:width+'px',height:depth+'px'});
+          Object.assign(sprite.style,{position:'absolute',left:'50%',top:'50%',transform:'translate(-50%,-50%) scaleY('+(depth/rawH)+')',pointerEvents:'none'});
+          d.appendChild(sprite); fx.push({d,sprite});
+          for(let i=0;i<Sfx.n;i++) at(i*HERO_FRAME_MS,()=>sprite.show(i));
+        }
+        disk(SEQ.ttpStorm,floor,8);
+        disk(SEQ.ttpBagua,ceiling,105);
       }
       try {
         u.el.style.zIndex = 99;
         // 16 khung theo đúng thứ tự, chỉ chạy một lần.
         for(let i=0;i<S.n;i++) at(i*HERO_FRAME_MS,()=>cast.show(i));
-        at(800,()=>targets.filter(e=>e.alive).forEach(e=>{place(e,true);place(e,false);}));
+        at(800,()=>{const live=targets.filter(e=>e.alive);if(live.length){place(live);}});
         await sleep(S.n*HERO_FRAME_MS); if(tok!==battleToken)return;
         cast.end();
         if(six) targets.filter(e=>e.alive).forEach(e=>{
@@ -5379,7 +5406,7 @@ async function phamDaoUlt(u, tok) {
 }
 var dragonUlt = phamDaoUlt;   // giữ tên cũ để index.html gọi dragonUlt() vẫn chạy; nên đổi sang phamDaoUlt()
 
-/* === thuy-long (trước là lac-long-quan) === */
+/* === thuy-long === */
 /* THỦY LONG (id 8): tuyệt kỹ mưa bong bóng
    (tách từ index.html cũ — script) */
 
@@ -6937,10 +6964,10 @@ async function phongThanhDuongUlt(u, tok) {
     for(let i=0;i<S.n;i++){cast.show(i);await wait(75);if(tok!==battleToken)return;}
     cast.end();
     const live=targets.filter(e=>e.alive);
-    const swords=live.map(e=>Array.from({length:6},()=>{const d=g.mk('','',e.x,e.y);Object.assign(d.style,{position:'absolute',width:'58px',height:'24px',pointerEvents:'none',zIndex:104,background:'url(heros/phong-thanh-duong/phong-thanh-duong-sword.webp) center/contain no-repeat'});return d;}));
+    const swords=live.map(e=>Array.from({length:6},()=>{const d=g.mk('','',e.x,e.y);Object.assign(d.style,{position:'absolute',width:'120px',height:'48px',pointerEvents:'none',zIndex:104,background:'url(heros/phong-thanh-duong/phong-thanh-duong-sword.webp) center/contain no-repeat'});return d;}));
     let hit=0; const frames=Math.max(18,n*3);
     for(let f=0;f<=frames;f++){
-      const p=f/frames, radius=p<.65?48:48*(1-p)/.35;
+      const p=f/frames, radius=p<.65?76:76*(1-p)/.35;
       swords.forEach(group=>group.forEach((d,i)=>{const angle=i*Math.PI/3+p*Math.PI*3;d.style.transform=`translate(-50%,-50%) translate(${Math.cos(angle)*radius}px,${Math.sin(angle)*radius}px) rotate(${angle*180/Math.PI}deg)`;}));
       while(hit<n && f>=Math.round(frames*(.35+.65*(hit+1)/n))){
         try{if(audioSet.skill && !battleFast){if(sound)sound.pause();sound=new Audio('heros/phong-thanh-duong/phong-thanh-duong-hit.mp3');sound.play().catch(()=>{});}}catch(e){}
@@ -7816,7 +7843,7 @@ cfgOnApply(() => {
 /* TRẬN ĐẤU: chế độ TỰ ĐỘNG
    (tách từ index.html cũ — script) */
 
-   // Lạc Long Quân: +50 nộ & +300% Thủ bản thân cho 2 đồng đội ngẫu nhiên trong 1 hiệp   // Kiều Phong: tổng 350% Công / 3 tầng; chảy máu 3 hiệp, 20% HP hiện tại   // Hoa Mãn Lâu: 7 đòn, mỗi đòn 100% Công
+   // Kiều Phong: tổng 350% Công / 3 tầng; chảy máu 3 hiệp, 20% HP hiện tại   // Hoa Mãn Lâu: 7 đòn, mỗi đòn 100% Công
 
     // ===== TỰ ĐỘNG: tất cả tướng tự đánh thường, đủ nộ (hoặc alwaysUlt) thì tự ulti =====
     let autoMode = (() => { try { return localStorage.getItem('auto_battle') !== '0'; } catch (e) { return true; } })();
@@ -8733,7 +8760,7 @@ cfgOnApply(() => {
       if (pvp && ++pvpRound > PVP_MAX_ROUNDS) { pvpTimeout(); return; }   // hết số hiệp tối đa của Tỷ Võ
       isPlayerTurn = false;
       refreshPanel();
-      clearDefBuff(waveUnits.enemies);                       // buff Thủ của Lạc Long Quân địch chỉ kéo dài 1 hiệp
+      clearDefBuff(waveUnits.enemies);                       // buff Thủ của Thủy Long địch chỉ kéo dài 1 hiệp
       tickMoon(waveUnits.enemies);                           // khiên Trăng Khuyết của địch giảm 1 hiệp
       tickLB(waveUnits.enemies);
       tickDebuffs(waveUnits.heroes);                         // hiệu ứng bướm trên tướng ta giảm 1 hiệp
@@ -8768,7 +8795,7 @@ cfgOnApply(() => {
         if (waveRound > BOSS_CFG.maxRounds) { bossFinish('HẾT GIỜ'); return; }
       }
       tickDebuffs(waveUnits.enemies);                        // hiệu ứng bướm trên địch giảm 1 hiệp (sau khi địch đã ra đòn)
-      // Hết 1 hiệp: gỡ buff Thủ của Lạc Long Quân bên ta
+      // Hết 1 hiệp: gỡ buff Thủ của Thủy Long bên ta
       clearDefBuff(waveUnits.heroes);
       tickMoon(waveUnits.heroes);                            // khiên Trăng Khuyết bên ta giảm 1 hiệp
       tickLB(waveUnits.heroes);                              // buff Lăng Ba Vi Bộ giảm 1 hiệp (+ hồi máu)
@@ -9329,7 +9356,8 @@ function closeGiftCode() { document.getElementById('gc-modal').style.display = '
 /* ===== SAO LƯU / CHUYỂN DỮ LIỆU GIỮA CÁC MÁY ===== */
 const SV_KEYS = ['pve_progress','team_ids','team_slots','team_cap','hero_stat_ov','hero_role','hero_prog','acc_level','acc_exp',
                  'player_name','ts_bag','ts_shards','lt_bag','lt_shards','eq_bag','eq_lv','eq_mount','eq_reward_done','auto_battle','pvp_state','audio_set','sta_state',
-                 'gold_val','silver_val','rice_val','mail_state','ham_claimed','ham_spent','hero_shards','rec_state','guild_state','quest_state','giftcode_used','blank_start','hero_owned','ky_state'];
+                 'gold_val','silver_val','rice_val','mail_state','ham_claimed','ham_spent','hero_shards','rec_state','guild_state','quest_state','giftcode_used','blank_start','hero_owned','ky_state',
+                 'luan_state','td_state','eq_gem','ev_login','support_ids','thandan_val','tiendan_val','battle_slow','hang_state','tower_state','lk_state','bk_state','dt_state','tr_state','hero_exp','km_prog','dp_prog','cp_prog','lut_prog','shop_state'];
 function svMsg(t, ok) { const e = document.getElementById('sv-msg'); e.style.color = ok === false ? '#f87171' : '#4ade80'; e.innerText = t; }
 function svCollect() {
   const d = {};
@@ -9432,10 +9460,12 @@ const clHasLocal = () => SV_KEYS.some(k => _lsGet.call(localStorage, k) !== null
 function clMsg(t, ok) { ['cl-msg', 'lg-msg', 'rg-msg'].forEach(id => { const e = document.getElementById(id); if (!e) return; e.style.color = ok === false ? '#f87171' : '#4ade80'; e.innerText = t || ''; }); }
 
 // Mỗi khi game ghi dữ liệu -> đánh dấu thay đổi và tự đẩy lên đám mây sau 10 giây (không bị dời lại nếu đã hẹn giờ)
+let clSaveRevision = 0, clSaveFlight = null;
 function clTouch() {
-  try { _lsSet.call(localStorage, 'cloud_local_t', String(Date.now())); } catch (e) {}
+  clSaveRevision++;
+  try { _lsSet.call(localStorage, 'cloud_local_t', String(Math.max(Date.now(), clLocalT() + 1))); } catch (e) {}
   clDirty = true;
-  if (clUser && !clTimer) { clTimer = setTimeout(clPush, 10000); }
+  if (clUser && !clTimer) { clTimer = setTimeout(clPush, 1200); }
 }
 Storage.prototype.setItem = function (k, v) { if (clWiping && this === localStorage && SV_KEYS.indexOf(k) >= 0) return; _lsSet.call(this, k, v); if (this === localStorage && SV_KEYS.indexOf(k) >= 0) clTouch(); };
 Storage.prototype.removeItem = function (k) { if (clWiping && this === localStorage && SV_KEYS.indexOf(k) >= 0) return; _lsDel.call(this, k); if (this === localStorage && SV_KEYS.indexOf(k) >= 0) clTouch(); };
@@ -9508,7 +9538,7 @@ async function clLogin(pfx) {
 async function clLogout() {
   if (!clAuth) return;
   let ok = true;
-  try { ok = await clPush(); } catch (e) { ok = false; }
+  try { ok = await clPush(); while (ok && clDirty) ok = await clPush(); } catch (e) { ok = false; }
   if (!ok && !confirm('Không lưu được tiến trình lên đám mây (mất mạng?).\nĐăng xuất bây giờ sẽ MẤT phần chưa lưu của tài khoản này.\n\nVẫn đăng xuất?')) return;
   clWiping = true; clearTimeout(clTimer); clTimer = null; clDirty = false; clSessStop();
   try { await clAuth.signOut(); } catch (e) { clWiping = false; clMsg(clErr(e), false); return; }
@@ -9519,19 +9549,25 @@ async function clLogout() {
 }
 
 async function clPush() {
-  if (!clUser || !clDb) return false;
+  if (!clUser || !clDb || clWiping || clLocked || clReady !== clUser.uid) return false;
+  if (clSaveFlight) { const ok = await clSaveFlight; return clDirty && ok ? clPush() : ok; }
   clearTimeout(clTimer); clTimer = null;
-  if (clReady !== clUser.uid) return false;   // chưa đồng bộ xong / dữ liệu trên máy không thuộc tài khoản này
-  const t = clLocalT() || Date.now();
-  try {
-    const data = svCollect().data;
-    await clDb.collection('saves').doc(clUser.uid).set({ t: t, data: data, ep: clEp });
-    _lsSet.call(localStorage, 'cloud_local_t', String(t)); clDirty = false; clSetOwner(clUser.uid);
-    clPublishPvp().catch(() => {});   // cập nhật đội hình Tỷ Võ cho người chơi khác
-    clSnap(data, t).catch(() => {});  // ảnh chụp theo giờ (để admin khôi phục)
-    clMsg('☁️ Đã lưu lên đám mây ' + new Date().toLocaleTimeString());
-    return true;
-  } catch (e) { if (e && e.code === 'permission-denied') clCheckCtl(); clMsg(clErr(e), false); return false; }
+  const uid = clUser.uid, rev = clSaveRevision, t = clLocalT() || Date.now(), ep = clEp;
+  const data = svCollect().data;
+  clSaveFlight = (async () => {
+    try {
+      await clDb.collection('saves').doc(uid).set({ t, data, ep });
+      if (!clUser || clUser.uid !== uid || clWiping) return false;
+      if (clSaveRevision === rev) { _lsSet.call(localStorage, 'cloud_local_t', String(t)); clDirty = false; }
+      clSetOwner(uid);
+      clPublishPvp().catch(() => {});
+      clSnap(data, t).catch(() => {});
+      clMsg(clDirty ? '☁️ Đang lưu thay đổi mới...' : '☁️ Đã lưu lên đám mây ' + new Date().toLocaleTimeString());
+      return true;
+    } catch (e) { clDirty = true; if (e && e.code === 'permission-denied') clCheckCtl(); clMsg(clErr(e), false); return false; }
+  })();
+  try { return await clSaveFlight; }
+  finally { clSaveFlight = null; if (clDirty && !clTimer && !clWiping && clUser && clReady === clUser.uid) clTimer = setTimeout(clPush, 2500); }
 }
 // Đăng "ảnh chụp" đội hình Tỷ Võ (chỉ số đã tính đủ trang bị / Bảo Vật / cộng dồn Tỷ Võ) để tài khoản khác đấu được với mình
 async function clPublishPvp() {
@@ -9576,6 +9612,7 @@ const clSidSet = v => { try { if (v) _lsSet.call(localStorage, 'cloud_sid', v); 
 function clSessStop() { try { if (clSessUnsub) clSessUnsub(); } catch (e) {} clSessUnsub = null; }
 function clKick() {
   if (clLocked) return; clLocked = true;
+  try { if (clUser && clOwner() === clUser.uid) _lsSet.call(localStorage, 'cloud_recovery_' + clUser.uid, JSON.stringify(svCollect())); } catch (e) {}
   clWiping = true; clearTimeout(clTimer); clTimer = null; clDirty = false; clearInterval(clCtlTimer); clCtlTimer = null; clSessStop();
   const done = () => {
     try { SV_KEYS.forEach(k => _lsDel.call(localStorage, k)); _lsDel.call(localStorage, 'cloud_owner'); _lsDel.call(localStorage, 'cloud_local_t'); _lsDel.call(localStorage, 'cloud_ep'); clSidSet(''); } catch (e) {}
@@ -9664,6 +9701,9 @@ function clApplyCloud(cloud, uid) {
     if (uid && clOwner() === uid && clLocalEp() === clEp && !Object.prototype.hasOwnProperty.call(cloudData, 'lt_bag') && !Object.prototype.hasOwnProperty.call(cloudData, 'lt_shards')) {
       ['lt_bag','lt_shards'].forEach(k=>{const v=_lsGet.call(localStorage,k);if(v!==null)legacyLT[k]=v;});
     }
+    if (uid && clOwner() === uid && clLocalEp() === clEp) {
+      ['luan_state', 'td_state', 'eq_gem', 'ev_login', 'support_ids', 'thandan_val', 'tiendan_val', 'battle_slow'].forEach(k => { if (!Object.prototype.hasOwnProperty.call(cloudData,k)) { const v = _lsGet.call(localStorage,k); if (v !== null) legacyLT[k] = v; } });
+    }
     SV_KEYS.forEach(k => _lsDel.call(localStorage, k));
     Object.keys(cloudData).forEach(k => { if (SV_KEYS.includes(k)) _lsSet.call(localStorage, k, cloudData[k]); });
     Object.keys(legacyLT).forEach(k=>_lsSet.call(localStorage,k,legacyLT[k]));
@@ -9705,7 +9745,7 @@ async function clSync0() {
     }
     else if (!cloud) { if (has) { clReadyOk(uid); await clPush(); } else { clStartFresh(uid); } }   // chưa có dữ liệu ở đâu cả = tài khoản mới -> bắt đầu từ mặc định (tất cả về 1)
     else if (owner !== uid) { clApplyCloud(cloud, uid); }   // máy chưa thuộc ai: ưu tiên dữ liệu đã lưu của tài khoản
-    else if (cloud.t === lt) { clReadyOk(uid); clMsg('☁️ Dữ liệu đã đồng bộ.'); }
+    else if (cloud.t === lt) { clReadyOk(uid); if (SV_KEYS.some(k => !Object.prototype.hasOwnProperty.call(cloud.data || {}, k) && _lsGet.call(localStorage,k) !== null)) { clTouch(); await clPush(); } else clMsg('☁️ Dữ liệu đã đồng bộ.'); }
     else if (!has || cloud.t > lt) { clApplyCloud(cloud, uid); }
     else { clReadyOk(uid); await clPush(); }
   } catch (e) { clMsg(clErr(e), false); }
