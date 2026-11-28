@@ -105,8 +105,14 @@
     const o = $('battle-overlay');
     o.classList.remove('pvp-mode'); o.classList.add('demo-mode'); o.style.display = 'flex';
     $('ui-stage-title').innerText = 'DEMO'; $('ui-wave-title').innerText = ''; $('ui-enemy-name').innerText = '';
-    build(); setBtns(true); updateSlow();
+    build(); prepareDemo(); updateSlow();
   };
+
+  async function prepareDemo() {
+    D.busy = true; setBtns(false); const tok = battleToken;
+    try { if(window.HBNPerf) await HBNPerf.prepareBattle(tok); else await new Promise(r=>setTimeout(r,2000)); }
+    finally { if(D.open && tok===battleToken){D.busy=false;setBtns(true);} }
+  }
 
   function close() {
     D.open = false; D.busy = false; battleToken++; window.HBNPerf?.release(); battleFast = false; ultTimeScale = 1;
@@ -144,9 +150,9 @@
 
   ctl.querySelectorAll('[data-a]').forEach(b => b.addEventListener('click', () => act(b.dataset.a)));
   $('dm-exit').addEventListener('click', close);
-  const nav = d => { if (D.busy) return; D.idx = (D.idx + d + HEROES.length) % HEROES.length; build(); };
+  const nav = d => { if (D.busy) return; D.idx = (D.idx + d + HEROES.length) % HEROES.length; battleToken++; build(); prepareDemo(); };
   $('dm-prev').addEventListener('click', () => nav(-1));
   $('dm-next').addEventListener('click', () => nav(1));
-  $('dm-side').addEventListener('click', () => { if (D.busy) return; D.enemySide = !D.enemySide; build(); });
+  $('dm-side').addEventListener('click', () => { if (D.busy) return; D.enemySide = !D.enemySide; battleToken++; build(); prepareDemo(); });
   $('dm-slow').addEventListener('click', () => { toggleSlow(); updateSlow(); });
 })();

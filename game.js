@@ -956,10 +956,10 @@ function ghLoadWave() {
     h.el.querySelectorAll('.bf-stun, .bf-bleed').forEach(ic => ic.remove());
   });
   clearDefBuff(waveUnits.heroes);
-  busy = false; isPlayerTurn = true;
+  busy = true; isPlayerTurn = false;
   refreshPanel();
   if (td) waveUnits.heroes.forEach(h => setTimeout(() => { if (tok === battleToken && h.el.isConnected) floatText(h, tdIsOwn(h, g.page) ? '🔥 ×' + tdNum('dealMul') + ' SÁT THƯƠNG • -' + Math.round((1 - tdNum('ownTake')) * 100) + '% NHẬN' : '⚠️ NHẬN ×' + tdNum('otherTake')); }, 800));
-  setTimeout(() => { if (tok === battleToken) autoStep(); }, 600);
+  startPreparedWave(tok, false);
 }
 const ghWaves = g => (g.kind === 'lk' || g.kind === 'td') ? 1 : BD_MODES[g.kind] ? Math.max(1, Math.min(3, Math.floor(bdN(g.kind, 'waves')) || 1)) : HANG_WAVES;
 function ghNextWave() { if (ghB.kind === 'lk' || ghB.kind === 'td') return ghFinish(true); if (currentWave < ghWaves(ghB)) { currentWave++; loadWave(); } else ghFinish(true); }
@@ -8416,7 +8416,7 @@ cfgOnApply(() => {
       clearDefBuff(waveUnits.heroes);
       busy = true; isPlayerTurn = false; pvpRound = 0;
       refreshPanel();
-      setTimeout(() => { if (tok === battleToken) pvpBattleLoop(tok); }, 800);
+      startPreparedWave(tok, true);
     }
 
     // Tỷ Võ: mỗi hiệp mọi tướng (cả 2 bên) ra đòn lần lượt từng con theo TỐC ĐỘ giảm dần.
@@ -8718,6 +8718,19 @@ cfgOnApply(() => {
 /* PVE: vòng lặp trận (loadWave, enemyTurn, nextWave, closeBattle)
    (tách từ index.html cũ — script) */
 
+// Wait in real time, independent of combat speed. Cancel on exit or changed roster.
+async function startPreparedWave(tok, versus) {
+  const roster = waveUnits.enemies;
+  const valid = () => tok === battleToken && roster === waveUnits.enemies && document.getElementById('battle-overlay').style.display !== 'none';
+  try {
+    if (window.HBNPerf) await HBNPerf.prepareBattle(tok);
+    else await new Promise(r => setTimeout(r, 2000));
+  } catch (e) { console.warn('Battle warmup', e); }
+  if (!valid()) return;
+  if (versus) { pvpBattleLoop(tok); return; }
+  busy = false; isPlayerTurn = true; refreshPanel(); autoStep();
+}
+
     function loadWave() {
       setBattleBg();
       document.getElementById('battle-overlay').classList.toggle('pvp-mode', !!pvp);
@@ -8748,9 +8761,9 @@ cfgOnApply(() => {
         h.el.querySelectorAll('.bf-stun, .bf-bleed').forEach(ic => ic.remove());
       });
       clearDefBuff(waveUnits.heroes);
-      busy = false; isPlayerTurn = true;
+      busy = true; isPlayerTurn = false;
       refreshPanel();
-      setTimeout(() => { if (tok === battleToken) autoStep(); }, 600);
+      startPreparedWave(tok, false);
     }
 
     function loseBattle() { if (pvp) { pvpFinish(false); return; } if (ghB) { ghFinish(false); return; } if (bossB) { bossFinish('THẤT BẠI'); return; } pvpToast('Thua rồi!\nĐội ngũ đã gục ngã, hãy mạnh hơn rồi quay lại.', false); closeBattle(); }
@@ -10298,8 +10311,8 @@ function loadBossWave() {
     h.el.classList.remove('stunned'); h.el.querySelectorAll('.bf-stun, .bf-bleed').forEach(ic => ic.remove());
   });
   clearDefBuff(waveUnits.heroes);
-  busy = false; isPlayerTurn = true; refreshPanel();
-  setTimeout(() => { if (tok === battleToken) autoStep(); }, 600);
+  busy = true; isPlayerTurn = false; refreshPanel();
+  startPreparedWave(tok, false);
 }
 
 // Boss miễn nhiễm TẤT CẢ hiệu ứng bất lợi: choáng, chảy máu, độc, câm lặng, giảm Công/Thủ/hồi máu/nộ, khóa tăng phúc (đọc luôn ra 0, ghi bị bỏ qua)
