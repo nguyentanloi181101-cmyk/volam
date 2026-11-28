@@ -522,7 +522,13 @@ window.GP = (function () {
   if (!window.HERO_DATA.heroes.some(h => h.id === 90770)) window.HERO_DATA.heroes.push({"id": 90770, "key": "luctieuphung", "slug": "luc-tieu-phung", "name": "Lục Tiểu Phụng", "emoji": "🪭", "role": "skill", "img": "luc-tieu-phung.webp", "body": "luc-tieu-phung-body.webp", "bodyH": 96, "stats": {"hp": 6000, "atk": 700, "spd": 120}, "combat": {"dodge": 60, "acc": 300, "crit": 0, "critDmg": 0, "tough": 0, "pierce": 0, "block": 0, "def": 300}, "tia": 1, "constants": {"lv": 1, "star": 1, "border": "orange", "ultName": "Phụng Vĩ Cữu Thiên"}, "audio": "luc-tieu-phung-ult.mp3", "sprites": {"LTPIdle": {"src": "luc-tieu-phung-idle.webp", "cw": 320, "ch": 320, "n": 16, "face": "R"}, "LTPCast": {"src": "luc-tieu-phung-ult.webp", "cw": 320, "ch": 320, "n": 16, "face": "R"}, "LTPFx": {"src": "luc-tieu-phung-fx.webp", "cw": 320, "ch": 320, "n": 16}}, "idle": {"sheet": "LTPIdle", "h": 120, "ms": 1600}, "ultFn": "luctieuphungUlt", "skillConfig": {"LTP_HITS": 4, "LTP_DODGE": 0.7, "LTP_TURNS": 2, "LTP_ATK": 0.5}});
   if (!window.HERO_DATA.heroes.some(h => h.id === 97950)) window.HERO_DATA.heroes.push({"id": 97950, "key": "taymonxuytuyet", "slug": "tay-mon-xuy-tuyet", "name": "Tây Môn Xuy Tuyết", "emoji": "⚔️", "role": "skill", "img": "tay-mon-xuy-tuyet.webp", "body": "tay-mon-xuy-tuyet-body.webp", "bodyH": 96, "stats": {"hp": 6000, "atk": 700, "spd": 120}, "combat": {"dodge": 60, "acc": 300, "crit": 0, "critDmg": 0, "tough": 0, "pierce": 0, "block": 0, "def": 300}, "tia": 1, "constants": {"lv": 1, "star": 1, "border": "orange", "ultName": "Nhất Kiếm Tây Lai"}, "audio": "tay-mon-xuy-tuyet-ult.mp3", "sprites": {"TMXTIdle": {"src": "tay-mon-xuy-tuyet-idle.webp", "cw": 320, "ch": 320, "n": 16, "face": "R"}, "TMXTCast": {"src": "tay-mon-xuy-tuyet-ult.webp", "cw": 320, "ch": 320, "n": 16, "face": "R"}, "TMXTFx": {"src": "tay-mon-xuy-tuyet-fx.webp", "cw": 320, "ch": 320, "n": 16}}, "idle": {"sheet": "TMXTIdle", "h": 120, "ms": 1600}, "ultFn": "taymonxuytuyetUlt", "skillConfig": {"TMXT_HITS": 4, "TMXT_DODGE": 0.7, "TMXT_TURNS": 2, "TMXT_TARGETS": 3, "TMXT_STUN": 1}});
   if (!window.HERO_DATA.heroes.some(h => h.id === 86427)) window.HERO_DATA.heroes.push({"id": 86427, "key": "phongthanhduong", "slug": "phong-thanh-duong", "name": "Phong Thanh Dương", "emoji": "⚔️", "role": "skill", "img": "phong-thanh-duong.webp", "body": "phong-thanh-duong-body.webp", "bodyH": 96, "stats": {"hp": 6000, "atk": 700, "spd": 120}, "combat": {"dodge": 60, "acc": 1000, "crit": 0, "critDmg": 0, "tough": 0, "pierce": 0, "block": 0, "def": 300}, "tia": 1, "constants": {"lv": 1, "star": 1, "border": "orange", "ultName": "Vạn Kiếm Quy Tông"}, "audio": "phong-thanh-duong-ult.mp3", "sprites": {"PTDIdle": {"src": "phong-thanh-duong-idle.webp", "cw": 320, "ch": 320, "n": 16, "face": "R"}, "PTDCast": {"src": "phong-thanh-duong-ult.webp", "cw": 320, "ch": 320, "n": 16, "face": "R"}}, "idle": {"sheet": "PTDIdle", "h": 120, "ms": 1600}, "ultFn": "phongThanhDuongUlt", "skillConfig": {"PTD_HITS": 3, "PTD_TARGETS": 2, "PTD_CRIT": 300, "PTD_CDMG": 300, "PTD_TURNS": 2}});
+  if (!window.HERO_DATA.heroes.some(h => h.id === 91763)) window.HERO_DATA.heroes.push({"id": 91763, "key": "tieulongnu", "slug": "tieu-long-nu", "name": "Tiểu Long Nữ", "emoji": "❄️", "role": "atk", "img": "tieu-long-nu.webp", "body": "tieu-long-nu-body.webp", "bodyH": 96, "stats": {"hp": 6200, "atk": 830, "spd": 120}, "combat": {"dodge": 60, "acc": 300, "crit": 0, "critDmg": 0, "tough": 0, "pierce": 0, "block": 0, "def": 300}, "tia": 1, "constants": {"lv": 1, "star": 1, "border": "orange", "ultName": "Ngọc Nữ Kiếm Pháp"}, "audio": "tieu-long-nu-ult.mp3", "sprites": {"TLNIdle": {"src": "tieu-long-nu-idle.webp", "cw": 128, "ch": 131, "n": 16, "face": "R"}, "TLNCast": {"src": "tieu-long-nu-ult.webp", "cw": 128, "ch": 131, "n": 16, "face": "R"}, "TLNFx": {"src": "tieu-long-nu-fx.webp", "cw": 128, "ch": 128, "n": 16, "face": "R"}}, "idle": {"sheet": "TLNIdle", "h": 120, "ms": 1600}, "ultFn": "tieuLongNuUlt", "skillConfig": {"TLN_HITS": 3, "TLN_ATK_UP": 5, "TLN_ATK_TURNS": 1, "TLN_DODGE": 500, "TLN_DODGE_TURNS": 2}});
+  if (!window.HERO_DATA.heroes.some(h => h.id === 58372)) window.HERO_DATA.heroes.push({"id": 58372, "key": "dongphuongbatbai", "slug": "dong-phuong-bat-bai", "name": "Đông Phương Bất Bại", "emoji": "🌺", "role": "skill", "img": "dong-phuong-bat-bai.webp", "body": "dong-phuong-bat-bai-body.webp", "bodyH": 96, "stats": {"hp": 6000, "atk": 700, "spd": 120}, "combat": {"dodge": 60, "acc": 1000, "crit": 0, "critDmg": 0, "tough": 0, "pierce": 0, "block": 0, "def": 300}, "tia": 1, "constants": {"lv": 1, "star": 1, "border": "orange", "ultName": "Quỳ Hoa Bảo Điển"}, "audio": "dong-phuong-bat-bai-ult.mp3", "sprites": {"DPBBIdle": {"src": "dong-phuong-bat-bai-idle.webp", "cw": 128, "ch": 125, "n": 16, "face": "R"}, "DPBBCast": {"src": "dong-phuong-bat-bai-ult.webp", "cw": 128, "ch": 125, "n": 16, "face": "R"}, "DPBBFx": {"src": "dong-phuong-bat-bai-fx.webp", "cw": 128, "ch": 125, "n": 16, "face": "R"}}, "idle": {"sheet": "DPBBIdle", "h": 120, "ms": 1600}, "ultFn": "dongPhuongUlt", "skillConfig": {"DPBB_HITS": 5, "DPBB_TARGETS": 3, "DPBB_PIERCE": 15000, "DPBB_DOWN": 0.5, "DPBB_TURNS": 2}});
+  if (!window.HERO_DATA.heroes.some(h => h.id === 73649)) window.HERO_DATA.heroes.push({"id": 73649, "audio": "duong-qua-ult.mp3", "key": "duongqua", "slug": "duong-qua", "name": "Dương Quá", "emoji": "🦅", "role": "atk", "img": "duong-qua.webp", "body": "duong-qua-body.webp", "bodyH": 96, "stats": {"hp": 6200, "atk": 830, "spd": 120}, "combat": {"dodge": 60, "acc": 300, "crit": 0, "critDmg": 0, "tough": 0, "pierce": 0, "block": 0, "def": 300}, "tia": 1, "constants": {"lv": 1, "star": 1, "border": "orange", "ultName": "Ám Nhiên Tiêu Hồn Chưởng"}, "sprites": {"DQIdle": {"src": "duong-qua-idle.webp", "cw": 320, "ch": 320, "n": 16, "face": "R"}, "DQAtk": {"src": "duong-qua-atk.webp", "cw": 320, "ch": 320, "n": 16, "face": "R"}, "DQCast": {"src": "duong-qua-ult.webp", "cw": 128, "ch": 128, "n": 16, "face": "R"}}, "idle": {"sheet": "DQIdle", "h": 120, "ms": 1760}, "ultFn": "duongQuaUlt", "skillConfig": {"DQ_HITS": 5, "DQ_TARGETS": 3, "DQ_ACC": 300, "DQ_DODGE": 300, "DQ_TURNS": 2}});
   const HERO_UID = {
+    91763: [91763, 'tieulongnu'],
+    58372: [58372, 'dongphuongbatbai'],
+    73649: [73649, 'duongqua'],
     86427: [86427, 'phongthanhduong'],
     97950: [97950, 'taymonxuytuyet'],
     90770: [90770, 'luctieuphung'],   // [id cũ]: [ID số, ID chữ]
@@ -2043,6 +2049,8 @@ function heroRigOf(id) {   // cấu hình rig của tướng nếu DÙNG ĐƯỢ
   try { const c = HERO_RIG[id]; return (c && SEQ_IDLE[id] && typeof ttRigLoad === 'function' && ttRigUsable(c.slug)) ? c : null; } catch (e) { return null; }
 }
 const PD_IDLE_H = 112;   // Phạm Dao: chiều cao khung đứng yên (px). Trước dùng bodyH=84 nên nhỏ hơn hẳn các tướng khác (khung 280×264 như Độc Cô/Hoa Mãn Lâu ≈ 120–140)
+const HERO_FRAME_MS = 100; // chuẩn Đông Phương Bất Bại
+Object.values(SEQ_IDLE).forEach(c => { if (c && SEQ[c.sheet]) c.ms = SEQ[c.sheet].n * HERO_FRAME_MS; });
 Object.keys(SEQ_IDLE).forEach(id => { const c = SEQ_IDLE[id]; if (c && !c.sized) { c.h = Math.round(c.h * HERO_SCALE * (HERO_SIZE_ADJ[id] || 1)); c.sized = 1; } });
 
 // Nạp ngầm (không còn nạp hết ~30 MB lúc khởi động): tướng đã sở hữu trước (prio 1), còn lại sau cùng (prio 2)
@@ -2349,27 +2357,28 @@ function seqAvatarSeqHTML(id, w, extraStyle) {
 /* === js/items/linhthu.js === */
 /* LINH THÚ: sưu tầm giống Bảo Vật.
    - Mỗi con có cấp (Lv) và sao (★); có thể sở hữu NHIỀU BẢN cùng loại.
-   - Mỗi con có 3 CHỈ SỐ CỘNG (giống Bảo Vật).
+   - Mỗi con hỗ trợ 12 CHỈ SỐ CỘNG (giống Bảo Vật).
    - Mỗi KHUNG đội hình gắn tối đa LT_PER_FRAME con; tướng đứng ở khung nào nhận chỉ số của con ở khung đó (qua window.linhThuBonus → cột "Linh thú" trong Chi tiết tướng).
    - Mảnh Thú: đủ LT_MERGE_COST mảnh cùng loại ghép thành 1 Linh Thú mới (Lv0 ★0).
    - TĂNG SAO: tiêu 1 Linh Thú GIỐNG NHAU (cùng loại, chưa gắn khung) → +1★, tối đa LT_STAR_MAX (10★).
    - TĂNG CẤP: tiêu Hỏa Thạch. Lên cấp 1 tốn LT_STONE_BASE (10) viên, mỗi cấp sau đắt gấp LT_STONE_GROW (x1.5) lần cấp trước. Tối đa LT_MAX (25) cấp.
    - Cách nhận (quà / Gift Code / mail...): { t: 'linhthu', id: 1, n: 1 } và { t: 'ltshard', id: 1, n: 5 }.
-   - stats = [[loại chỉ số, gốc, điểm cộng mỗi cấp] x3]; CÔNG THỨC: gốc × (1 + 0.5×★) × (1 + điểm×Lv).
+   - stats = [[loại chỉ số, gốc, điểm cộng mỗi cấp] ]; CÔNG THỨC: gốc × (1 + 0.5×★) × (1 + điểm×Lv).
    - Ảnh: LT_IMG[id] = 'giao-dien/linh-thu/ten.webp' (chưa có ảnh thì hiện emoji). */
 const LT_FRAMES = 5, LT_PER_FRAME = 1;
 let LT_MAX = 25, LT_STAR_MAX = 10, LT_STAR_ADD = 0.5, LT_MERGE_COST = 25;
 const LT_STONE = 'Hỏa Thạch', LT_STONE_BASE = 10, LT_STONE_GROW = 1.5;
-const LT_DEFS = {
-  1: { name: 'Bạch Hổ',   emo: '🐯', stats: [['atk', 900, .12],  ['crit', 30, .10],    ['pierce', 3000, .12]] },
-  2: { name: 'Thanh Long', emo: '🐲', stats: [['atk', 700, .12],  ['spd', 15, .03],    ['critDmg', 30, .10]] },
-  3: { name: 'Chu Tước',   emo: '🦜', stats: [['atk', 800, .12],  ['critDmg', 40, .08], ['crit', 25, .10]] },
-  4: { name: 'Huyền Vũ',   emo: '🐢', stats: [['hp', 6000, .15],  ['def', 60, .10],    ['tough', 20, .05]] },
-  5: { name: 'Cửu Vĩ Hồ',  emo: '🦊', stats: [['hp', 4000, .12],  ['dodge', 15, .04],  ['acc', 15, .04]] },
-  6: { name: 'Thiên Lộc',  emo: '🦌', stats: [['hp', 4500, .12],  ['heal', 120, .10],  ['def', 40, .08]] }
-};
+const LT_DEFS = {"1": {"name": "Bạch Hổ", "emo": "🐯", "stats": [["hp", 0, 0], ["atk", 900, 0.12], ["def", 0, 0], ["spd", 0, 0], ["heal", 0, 0], ["dodge", 0, 0], ["acc", 100, 0.04], ["crit", 30, 0.1], ["critDmg", 10, 0.05], ["tough", 0, 0], ["pierce", 3000, 0.12], ["block", 0, 0]]}, "2": {"name": "Thanh Long", "emo": "🐲", "stats": [["hp", 1500, 0.1], ["atk", 700, 0.12], ["def", 0, 0], ["spd", 15, 0.03], ["heal", 0, 0], ["dodge", 0, 0], ["acc", 100, 0.04], ["crit", 0, 0], ["critDmg", 30, 0.1], ["tough", 0, 0], ["pierce", 0, 0], ["block", 0, 0]]}, "3": {"name": "Chu Tước", "emo": "🦜", "stats": [["hp", 0, 0], ["atk", 800, 0.12], ["def", 0, 0], ["spd", 5, 0.03], ["heal", 0, 0], ["dodge", 0, 0], ["acc", 0, 0], ["crit", 25, 0.1], ["critDmg", 40, 0.08], ["tough", 0, 0], ["pierce", 1000, 0.1], ["block", 0, 0]]}, "4": {"name": "Huyền Vũ", "emo": "🐢", "stats": [["hp", 6000, 0.15], ["atk", 0, 0], ["def", 60, 0.1], ["spd", 0, 0], ["heal", 60, 0.08], ["dodge", 0, 0], ["acc", 0, 0], ["crit", 0, 0], ["critDmg", 0, 0], ["tough", 20, 0.05], ["pierce", 0, 0], ["block", 2, 0.03]]}, "5": {"name": "Cửu Vĩ Hồ", "emo": "🦊", "stats": [["hp", 4000, 0.12], ["atk", 0, 0], ["def", 0, 0], ["spd", 5, 0.03], ["heal", 0, 0], ["dodge", 15, 0.04], ["acc", 15, 0.04], ["crit", 0, 0], ["critDmg", 0, 0], ["tough", 10, 0.05], ["pierce", 0, 0], ["block", 0, 0]]}, "6": {"name": "Thiên Lộc", "emo": "🦌", "stats": [["hp", 4500, 0.12], ["atk", 0, 0], ["def", 40, 0.08], ["spd", 0, 0], ["heal", 120, 0.1], ["dodge", 0, 0], ["acc", 0, 0], ["crit", 0, 0], ["critDmg", 0, 0], ["tough", 10, 0.05], ["pierce", 0, 0], ["block", 1, 0.03]]}};
 const LT_KINDS = Object.keys(LT_DEFS).map(Number);
-const LT_LABEL = { hp: 'HP', atk: 'Công', def: 'Thủ', spd: 'Tốc', heal: 'Hồi máu', dodge: 'Né', acc: 'Chuẩn', crit: 'Bạo', critDmg: 'Bạo Sát', tough: 'Bền', pierce: 'Phá giáp' };
+const LT_LABEL = {"hp": "HP", "atk": "Công", "def": "Thủ", "spd": "Tốc", "heal": "Hồi máu", "dodge": "Né", "acc": "Chuẩn", "crit": "Bạo", "critDmg": "Bạo Sát", "tough": "Bền", "pierce": "Phá giáp", "block": "Đỡ đòn"};
+const LT_DEFAULTS = JSON.parse(JSON.stringify(LT_DEFS));
+cfgOnApply(() => {
+  LT_KINDS.forEach(k => {
+    LT_DEFS[k].stats = LT_DEFAULTS[k].stats.map(([key, base, per]) => [key,
+      Math.max(0, cfgNum('linhThu.kinds.' + k + '.' + key + '.base', base)),
+      Math.max(0, cfgNum('linhThu.kinds.' + k + '.' + key + '.perPct', per * 100)) / 100]);
+  });
+});
 const LT_IMG = { 1: 'giao-dien/linh-thu/LT-bach-ho.webp', 2: 'giao-dien/linh-thu/LT-thanh-long.webp', 3: 'giao-dien/linh-thu/LT-chu-tuoc.webp', 4: 'giao-dien/linh-thu/LT-huyen-vu.webp', 5: 'giao-dien/linh-thu/cuu-vi-ho.webp', 6: 'giao-dien/linh-thu/tien-loc.webp' };
 // Hỏa Thạch cần để lên cấp lv → lv+1: 10, 15, 23, 34, ... (mỗi cấp x1.5)
 const ltLvCost = lv => Math.ceil(LT_STONE_BASE * Math.pow(LT_STONE_GROW, Math.max(0, lv | 0)) - 1e-9);
@@ -2417,7 +2426,7 @@ window.linhThuBonus = function (heroId) {
   Object.keys(o).forEach(k => { o[k] = Math.round(o[k] * 10) / 10; });
   return o;
 };
-function ltLines(t) { const d = LT_DEFS[t.id]; return d ? d.stats.map(st => `<div>${LT_LABEL[st[0]] || st[0]} +${ltNum(ltVal(st, t))}</div>`).join('') : ''; }
+function ltLines(t) { const d = LT_DEFS[t.id]; return d ? d.stats.filter(st => st[1] > 0).map(st => `<div>${LT_LABEL[st[0]] || st[0]} +${ltNum(ltVal(st, t))}${st[0] === "block" ? "%" : ""}</div>`).join('') : ''; }
 
 /* ---- Giao diện ---- */
 let ltCtx = -1, ltView = 'list';   // ltView: 'list' = tab Linh Thú • 'merge' = tab Mảnh Thú
@@ -2448,7 +2457,7 @@ function ltRender() {
   const have = skbQty(LT_STONE);
   note.innerHTML = lock
     ? `Chọn Linh Thú gắn vào <b>Khung ${ltCtx + 1}</b> (${ltOfFrame(ltCtx).length}/${LT_PER_FRAME}). Bấm ô khung để gắn / tháo.`
-    : `Mỗi Linh Thú có 3 chỉ số cộng, gắn vào khung nào thì tướng đứng ở khung đó nhận chỉ số. <b>Tăng cấp</b>: tiêu ${LT_STONE} ${ltStoneIco()} (có <b>${fmtN(have)}</b>) — cấp 1 tốn ${LT_STONE_BASE} viên, mỗi cấp sau đắt gấp ${LT_STONE_GROW} lần, tối đa ${LT_MAX} cấp. <b>Tăng sao</b>: tiêu 1 Linh Thú <b>giống nhau</b> (cùng loại, chưa gắn khung) để +1★ (+${Math.round(LT_STAR_ADD * 100)}% chỉ số gốc), tối đa ${LT_STAR_MAX}★. Ghép mảnh ở tab <b>Mảnh Thú</b> (${LT_MERGE_COST} mảnh = 1 Linh Thú).`;
+    : `Mỗi Linh Thú hỗ trợ 12 loại chỉ số, gắn vào khung nào thì tướng đứng ở khung đó nhận chỉ số. <b>Tăng cấp</b>: tiêu ${LT_STONE} ${ltStoneIco()} (có <b>${fmtN(have)}</b>) — cấp 1 tốn ${LT_STONE_BASE} viên, mỗi cấp sau đắt gấp ${LT_STONE_GROW} lần, tối đa ${LT_MAX} cấp. <b>Tăng sao</b>: tiêu 1 Linh Thú <b>giống nhau</b> (cùng loại, chưa gắn khung) để +1★ (+${Math.round(LT_STAR_ADD * 100)}% chỉ số gốc), tối đa ${LT_STAR_MAX}★. Ghép mảnh ở tab <b>Mảnh Thú</b> (${LT_MERGE_COST} mảnh = 1 Linh Thú).`;
   box.innerHTML = ltBag.length ? ltBag.map(t => {
     const act = lock ? `ltToggle(${t.u})` : `ltPick(${t.u})`;
     const maxLv = t.lv >= LT_MAX, need = maxLv ? 0 : ltLvCost(t.lv), canUp = !maxLv && have >= need;
@@ -2924,7 +2933,7 @@ function addAccExp(n) {
     const gemSrc = frame => statSrc(window.gemBonus, frame);
     // Phụ linh cộng RIÊNG (CHƯA có hệ thống phụ linh): định nghĩa window.phuLinhBonus = frame => ({ hp, atk, def, spd }) khi làm xong. Không nhân với trang bị / ngọc.
     const phuLinhSrc = frame => statSrc(window.phuLinhBonus, frame);
-    // Linh thú cộng cho tướng (CHƯA có): window.linhThuBonus = heroId => ({ hp, atk, def, heal, spd, ... }).
+    // Linh thú cộng cho tướng: window.linhThuBonus = heroId => ({ hp, atk, def, heal, spd, ... }).
     const linhThuSrc = id => statSrc(window.linhThuBonus, id);
 
     // Tính đủ từng nguồn + tổng. base = true (Tỷ Võ): chỉ lấy chỉ số cơ bản gốc, không lấy số chỉnh trong Cài đặt
@@ -2976,7 +2985,7 @@ function addAccExp(n) {
     }
     // Bảng "từng nguồn" cho màn Chi Tiết tướng (HP / Công / Thủ / Hồi + dòng vô trận)
     function heroBreakdownHTML(id) {
-      const st = heroStats(id), P = st.parts, bs = heroBattleStats(id), cols = [['hp', '❤️ HP'], ['atk', '⚔️ Công'], ['def', '🛡️ Thủ'], ['heal', '💚 Hồi']];
+      const st = heroStats(id), P = st.parts, bs = heroBattleStats(id), cols = STAT_KEYS.map(k => [k, LT_LABEL[k] || k]);
       const td = 'style="padding:2px 6px;text-align:right"', th = 'style="padding:2px 6px;text-align:right;opacity:.75;font-weight:700"';
       const row = (nm, f, bold) => `<tr style="${bold ? 'font-weight:900;border-top:1px solid #475569' : ''}"><td style="padding:2px 6px;text-align:left">${nm}</td>${cols.map(c => `<td ${td}>${fmtN(f(c[0]))}</td>`).join('')}</tr>`;
       return `<details style="margin-top:8px"><summary style="cursor:pointer;font-weight:800">📊 Chỉ số tính từ đâu?</summary><div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:12px"><tr><td></td>${cols.map(c => `<td ${th}>${c[1]}</td>`).join('')}</tr>`
@@ -3025,6 +3034,9 @@ function addAccExp(n) {
       else if (id === 32) ult = `Cần đầy 100 nộ. HÓA THÂN thành BẠCH CỐT (bộ xương), nhảy vào GIỮA đội địch gây ${BCT_HITS} lần sát thương lên TOÀN địch, tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}, mỗi lần ≈ ${fmtN(st.atk * sk / BCT_HITS)}). Đánh xong, THÔI MIÊN 1 địch (ưu tiên công kích / kỹ năng): địch đó lập tức TỰ ULTI đánh chính đồng đội của mình.`;
       else if (id === 33) ult = `Cần đầy 100 nộ. TRƯỚC khi ra đòn: toàn đội ta tăng ${pct(LQ_HEAL_UP)}% hiệu quả hồi máu (x${1 + LQ_HEAL_UP}) trong ${LQ_HEAL_TURNS} hiệp, toàn địch bị CẤM HỒI MÁU ${LQ_NOHEAL_TURNS} hiệp. Rồi nhảy lên, giơ ĐỈNH khổng lồ quá đầu và ném xuống đội địch: gây ${LQ_HITS} lần sát thương lên TOÀN địch, tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}, mỗi lần ≈ ${fmtN(st.atk * sk / LQ_HITS)}).`;
       else if (id === 90770) ult = `Gây ${LTP_HITS} lần sát thương toàn địch; toàn đội ta tăng ${pct(LTP_DODGE)}% Né ${pct(LTP_ATK)}% Công trong ${LTP_TURNS} hiệp. Tổng ${pct(sk)}% Công.`;
+      else if (id === 91763) ult = `Gây ${TLN_HITS} lần sát thương lên địch có Công cao nhất, bỏ qua Thủ; trước khi đánh tăng ${Math.round(TLN_ATK_UP*100)}% Công bản thân trong ${TLN_ATK_TURNS} hiệp, tăng ${TLN_DODGE} Né trong ${TLN_DODGE_TURNS} hiệp. Tổng ${pct(sk)}% Công sau buff.`;
+      else if (id === 58372) ult = `Gây ${DPBB_HITS} lần sát thương mỗi mục tiêu trong ${DPBB_TARGETS} địch ngẫu nhiên; bản thân tăng ${DPBB_PIERCE} Phá giáp, mục tiêu giảm ${Math.round(DPBB_DOWN*100)}% Phá giáp trong ${DPBB_TURNS} hiệp. Tổng ${pct(sk)}% Công mỗi mục tiêu.`;
+      else if (id === 73649) ult = `Gây ${DQ_HITS} lần sát thương trên mỗi mục tiêu trong ${DQ_TARGETS} địch ngẫu nhiên; giảm ${DQ_ACC} Chuẩn và ${DQ_DODGE} Né của các mục tiêu, tăng ${DQ_ACC} Chuẩn và ${DQ_DODGE} Né toàn đội ta trong ${DQ_TURNS} hiệp. Tổng ${pct(sk)}% Công trên mỗi mục tiêu.`;
       else if (id === 86427) ult = `Gây ${PTD_HITS} lần sát thương lên ${PTD_TARGETS} địch ngẫu nhiên; bản thân tăng ${PTD_CRIT} Bạo và ${PTD_CDMG} Bạo Sát trong ${PTD_TURNS} hiệp. Tổng ${pct(sk)}% Công.`;
       else if (id === 97950) ult = `Gây ${TMXT_HITS} lần sát thương lên ${TMXT_TARGETS} địch ngẫu nhiên, choáng ${TMXT_STUN} hiệp; toàn đội ta tăng ${pct(TMXT_DODGE)}% Né trong ${TMXT_TURNS} hiệp. Tổng ${pct(sk)}% Công.`;
       else if (id === 34) ult = `VÀO TRẬN ĐẦY 100 NỘ – ulti được ngay hiệp đầu. TRƯỚC khi ra đòn: toàn đội ta tăng ${pct(DL_CRIT_UP)}% Bạo và ${pct(DL_CDMG_UP)}% Bạo Sát trong ${DL_TURNS} hiệp. Rồi Diêm La Vương đứng yên chọi Lệnh Bài Sinh Tử xuống: lệnh bài rơi giữa đội địch rồi nổ, gây ${DL_HITS} lần sát thương lên TOÀN địch, tổng ${pct(sk)}% Công (≈ ${fmtN(st.atk * sk)}, mỗi lần ≈ ${fmtN(st.atk * sk / DL_HITS)}).`;
@@ -3091,6 +3103,9 @@ function addAccExp(n) {
           case 32: return `Hóa Bạch Cốt nhảy vào giữa địch, ${BCT_HITS} lần sát thương TOÀN địch. Rồi thôi miên 1 địch (ưu tiên công kích/kỹ năng) tự ulti đánh đồng đội.`;
           case 33: return `Cả đội ta x${1 + LQ_HEAL_UP} hồi máu ${LQ_HEAL_TURNS} hiệp, toàn địch cấm hồi máu ${LQ_NOHEAL_TURNS} hiệp. Ném đỉnh khổng lồ xuống địch, ${LQ_HITS} lần sát thương TOÀN địch.`;
           case 90770: return `Gây ${LTP_HITS} lần sát thương toàn địch; toàn đội ta tăng ${pct(LTP_DODGE)}% Né ${pct(LTP_ATK)}% Công trong ${LTP_TURNS} hiệp.`;
+          case 91763: return `Gây ${TLN_HITS} lần sát thương lên địch có Công cao nhất, bỏ qua Thủ; trước khi đánh tăng ${Math.round(TLN_ATK_UP*100)}% Công bản thân trong ${TLN_ATK_TURNS} hiệp, tăng ${TLN_DODGE} Né trong ${TLN_DODGE_TURNS} hiệp.`;
+          case 58372: return `Gây ${DPBB_HITS} lần sát thương mỗi mục tiêu trong ${DPBB_TARGETS} địch ngẫu nhiên; bản thân tăng ${DPBB_PIERCE} Phá giáp, mục tiêu giảm ${Math.round(DPBB_DOWN*100)}% Phá giáp trong ${DPBB_TURNS} hiệp.`;
+          case 73649: return `Gây ${DQ_HITS} lần sát thương trên mỗi mục tiêu trong ${DQ_TARGETS} địch ngẫu nhiên; giảm ${DQ_ACC} Chuẩn và ${DQ_DODGE} Né của các mục tiêu, tăng ${DQ_ACC} Chuẩn và ${DQ_DODGE} Né toàn đội ta trong ${DQ_TURNS} hiệp.`;
           case 86427: return `Gây ${PTD_HITS} lần sát thương lên ${PTD_TARGETS} địch ngẫu nhiên; bản thân tăng ${PTD_CRIT} Bạo và ${PTD_CDMG} Bạo Sát trong ${PTD_TURNS} hiệp.`;
           case 97950: return `Gây ${TMXT_HITS} lần sát thương lên ${TMXT_TARGETS} địch ngẫu nhiên, choáng ${TMXT_STUN} hiệp; toàn đội ta tăng ${pct(TMXT_DODGE)}% Né trong ${TMXT_TURNS} hiệp.`;
           case 34: return `Vào trận đầy nộ, ulti hiệp đầu. Cả đội +${pct(DL_CRIT_UP)}% Bạo, +${pct(DL_CDMG_UP)}% Bạo Sát ${DL_TURNS} hiệp. Chọi lệnh bài xuống địch, ${DL_HITS} lần sát thương TOÀN địch.`;
@@ -3837,7 +3852,9 @@ function addAccExp(n) {
       } catch (e) { return null; }
     }
     async function attack(u, foes, hits, dmg, tok, ultHit) {
-      const fx = tpAttackFx(u, hits, tok);   // Thủy Long đã bỏ hiệu ứng đánh thường
+      if (u.id === 91763) return tlnAttack(u, foes, hits, dmg, tok, ultHit);
+      if (u.id === 58372) return dpbbAttack(u, foes, hits, dmg, tok, ultHit);
+      const fx = u.id === 73649 ? dqAttackFx(u, hits, tok) : tpAttackFx(u, hits, tok);   // Thủy Long đã bỏ hiệu ứng đánh thường
       try { return await attackBase(u, foes, hits, dmg, tok, ultHit); } finally { if (fx) fx.end(); }
     }
     async function attackBase(u, foes, hits, dmg, tok, ultHit) {
@@ -4219,14 +4236,14 @@ cfgOnApply(applyFormationCfg);   // chạy ngay 1 lần + chạy lại mỗi khi
     }
     // Âm đánh thường: tướng chưa đủ nộ để ulti hoặc đang bị câm lặng thì đánh thường kèm âm này (mỗi đòn 1 Audio mới để chồng được)
     const NORMAL_ATK_SND = 'giao-dien/am-thanh-game/normal-attack.mp3';
-    function playNormalAtk() {
+    function playNormalAtk(u) {
       try {
         if (!audioSet.skill) return;
-        const a = new Audio(NORMAL_ATK_SND); a.volume = 0.9;
+        const a = new Audio(u && u.id === 91763 ? "heros/tieu-long-nu/tieu-long-nu-atk.mp3" : u && u.id === 58372 ? "heros/dong-phuong-bat-bai/dong-phuong-bat-bai-atk.mp3" : u && u.id === 73649 ? "heros/duong-qua/duong-qua-atk.mp3" : NORMAL_ATK_SND); a.volume = 0.9;
         const p = a.play(); if (p && p.catch) p.catch(() => {});
       } catch (e) {}
     }
-    const normalAttack = (u, foes, tok) => { playNormalAtk(); return attack(u, foes, 1, u.atk, tok); };
+    const normalAttack = (u, foes, tok) => { playNormalAtk(u); return attack(u, foes, 1, u.atk, tok); };
     // (Đã bỏ nhạc/âm mở màn khi vào trận.) stopBgm giữ lại làm hàm rỗng cho các nơi còn gọi.
     function stopBgm() {}
     function stopHeroSounds() { try { Object.values(heroSnd).forEach(a => { a.pause(); a.currentTime = 0; }); } catch (e) {} }
@@ -4872,19 +4889,19 @@ async function duCoUlt(u, tok) {
         const y = ((ground ? body.bottom : body.top - 14) - rect.top) / (rect.height || 1) * 100;
         const d = g.mk('bf-seq-fx','',x,y), size = ground ? 108 : 82;
         Object.assign(d.style,{width:size+'px',height:size+'px',zIndex:ground?'0':'105',opacity:'0',transform:'translate(-50%,-50%) scaleY('+(ground?.48:.65)+')'});
-        const im = document.createElement('img');
-        im.src = 'heros/truong-tam-phong/truong-tam-phong-'+(ground?'storm':'bagua')+'-spin.webp?v=31';
-        Object.assign(im.style,{display:'block',width:'100%',height:'100%',pointerEvents:'none'}); d.appendChild(im);
-        const spin = im.animate([{transform:'rotate(0deg)'},{transform:'rotate('+(ground?360:-360)+'deg)'}],{duration:Math.max(1,seqT(1350)),iterations:Infinity,easing:'linear'});
-        const fade = d.animate([{opacity:0},{opacity:1}],{duration:Math.max(1,seqT(220)),fill:'forwards'});
-        fx.push({d,spin,fade});
+        const sprite = seqEl(ground ? SEQ.ttpStorm : SEQ.ttpBagua, size);
+        Object.assign(sprite.style,{position:'absolute',left:'50%',top:'50%',transform:'translate(-50%,-50%)',pointerEvents:'none'});
+        d.appendChild(sprite); d.style.opacity='1';
+        fx.push({d,sprite});
+        for(let i=0;i<16;i++) at(i*HERO_FRAME_MS,()=>sprite.show(i));
+
       }
       try {
         u.el.style.zIndex = 99;
         // 16 khung theo đúng thứ tự, chỉ chạy một lần.
-        for(let i=0;i<S.n;i++) at(i*95,()=>cast.show(i));
-        at(760,()=>targets.filter(e=>e.alive).forEach(e=>{place(e,true);place(e,false);}));
-        await sleep(1520); if(tok!==battleToken)return;
+        for(let i=0;i<S.n;i++) at(i*HERO_FRAME_MS,()=>cast.show(i));
+        at(800,()=>targets.filter(e=>e.alive).forEach(e=>{place(e,true);place(e,false);}));
+        await sleep(S.n*HERO_FRAME_MS); if(tok!==battleToken)return;
         cast.end();
         if(six) targets.filter(e=>e.alive).forEach(e=>{
           e.bleed=Math.max(e.bleed||0,TAICHI_BLEED_TURNS); e.bleedPct=Math.max(e.bleedPct||0,TAICHI_BLEED_PCT);
@@ -4899,10 +4916,10 @@ async function duCoUlt(u, tok) {
         }
         dropDeadEffects(targets);
         shuffled(targets.filter(e=>e.alive)).slice(0,six?2:1).forEach(v=>{stunEnemy(v,Math.max(2,v.stun||0));floatText(v,'CHOÁNG 2 HIỆP');});
-        fx.forEach(({d,fade})=>{fade.cancel();d.style.opacity='1';d.animate([{opacity:1},{opacity:0}],{duration:Math.max(1,seqT(420)),fill:'forwards'});});
-        await sleep(440);
+        // Đợi sprite chạy hết 16 khung (kể cả khi địch chết sớm).
+        await sleep(Math.max(440, 800 + 16*HERO_FRAME_MS - S.n*HERO_FRAME_MS - Math.max(0,n-1)*260));
       } finally {
-        timers.forEach(clearTimeout); fx.forEach(({spin,fade})=>{spin.cancel();fade.cancel();});
+        timers.forEach(clearTimeout);
         cast.end();u.el.style.zIndex=oldZ;f.style.filter=oldFilter;f.style.transition=oldTransition;made.forEach(d=>d.remove());
       }
     }
@@ -6559,7 +6576,7 @@ async function saTangUlt(u, tok) {
   const nHit = Math.max(1, Math.floor(SB_HITS));
   const idleH = (SEQ_IDLE[u.id] && SEQ_IDLE[u.id].h) || 125, castW = Math.round(S.cw * idleH / I.ch);
   const cast = seqOverlay(u, S, castW);
-  const COL = '#60a5fa', FR = 90, T_END = S.n * FR;
+  const COL = '#60a5fa', FR = HERO_FRAME_MS, T_END = S.n * FR;
   const be = g.box0(es0), giant = Math.max(1.6, Math.min(Number(SB_GIANT) || 3.2, (W * 0.95) / castW));
   const dx = (be.cx - u.x) * W / 100, dy = (be.cy - u.y) * H / 100 - H * 0.03;
   const go = `translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px)) scale(${giant})`;
@@ -6601,7 +6618,7 @@ async function batGioiUlt(u, tok) {
   const at = (ms, fn) => timers.push(setTimeout(() => { if (tok === battleToken) fn(); }, seqT(ms)));
   const idleH = (SEQ_IDLE[u.id] && SEQ_IDLE[u.id].h) || 125, castW = Math.round(S.cw * idleH / I.ch);
   const cast = seqOverlay(u, S, castW);
-  const FR = 85, T_END = S.n * FR, GOLD = '#fbbf24', GREEN = '#4ade80';
+  const FR = HERO_FRAME_MS, T_END = S.n * FR, GOLD = '#fbbf24', GREEN = '#4ade80';
   const flash = (c) => { const fl = document.createElement('div'); fl.className = 'bf-bflash'; fl.style.left = u.x + '%'; fl.style.top = u.y + '%'; fl.style.setProperty('--fc', c); g.box.appendChild(fl); made.push(fl); setTimeout(() => fl.remove(), 450); };
   try {
     u.el.style.zIndex = 99;
@@ -6632,7 +6649,7 @@ async function bachCotUlt(u, tok) {
   const nHit = Math.max(1, Math.floor(BCT_HITS));
   const idleH = (SEQ_IDLE[u.id] && SEQ_IDLE[u.id].h) || 125, castW = Math.round(S.cw * idleH / I.ch * (Number(BCT_SCALE) || 1.25));
   const cast = seqOverlay(u, S, castW);
-  const COL = '#a78bfa', FR = 85, T_END = S.n * FR;
+  const COL = '#a78bfa', FR = HERO_FRAME_MS, T_END = S.n * FR;
   const be = g.box0(es0), dx = (be.cx - u.x) * W / 100, dy = (be.cy - u.y) * H / 100;
   const go = `translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px))`, mid = `translate(calc(-50% + ${dx * 0.5}px),calc(-50% + ${dy * 0.5 - H * 0.12}px))`;
   const hitT = Array.from({ length: nHit }, (_, i) => (nHit === 1 ? 9 : 7 + 5 * i / (nHit - 1)) * FR);
@@ -6688,7 +6705,7 @@ async function thaiThuongUlt(u, tok) {
   const nHit = Math.max(1, Math.floor(LQ_HITS));
   const idleH = (SEQ_IDLE[u.id] && SEQ_IDLE[u.id].h) || 130, castW = Math.round(S.cw * idleH / I.ch);
   const cast = seqOverlay(u, S, castW);
-  const COL = '#60a5fa', GOLD = '#fbbf24', FR = 85, T_END = S.n * FR, F_LAND = 11;
+  const COL = '#60a5fa', GOLD = '#fbbf24', FR = HERO_FRAME_MS, T_END = S.n * FR, F_LAND = 11;
   const be = g.box0(es0), dx = (be.cx - u.x) * W / 100, dy = (be.cy - u.y) * H / 100;
   const go = `translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px))`, hop = `translate(calc(-50% + ${dx}px),calc(-50% + ${dy - H * 0.1}px))`, mid = `translate(calc(-50% + ${dx * 0.45}px),calc(-50% + ${dy * 0.45 - H * 0.16}px))`;
   const hitT = Array.from({ length: nHit }, (_, i) => (F_LAND + (nHit === 1 ? 0 : 4 * i / (nHit - 1))) * FR);   // khung 11 → 15
@@ -6779,18 +6796,19 @@ async function phongThanhDuongUlt(u, tok) {
     refreshPanel(); const per=u.atk*(u.sk||1)/n;
     for(let i=0;i<S.n;i++){cast.show(i);await wait(75);if(tok!==battleToken)return;}
     cast.end();
-    for(let hit=0;hit<n;hit++){
-      const live=targets.filter(e=>e.alive);if(!live.length)break;
-      const swords=live.map(e=>Array.from({length:6},()=>{const d=g.mk('','',e.x,e.y);Object.assign(d.style,{position:'absolute',width:'58px',height:'24px',pointerEvents:'none',zIndex:104,background:'url(heros/phong-thanh-duong/phong-thanh-duong-sword.webp) center/contain no-repeat'});return d;}));
-      for(let f=0;f<=12;f++){
-        const radius=f<=8?48:48*(12-f)/4;
-        swords.forEach(group=>group.forEach((d,i)=>{const angle=i*Math.PI/3+Math.min(f,8)*Math.PI/8;d.style.transform=`translate(-50%,-50%) translate(${Math.cos(angle)*radius}px,${Math.sin(angle)*radius}px) rotate(${angle*180/Math.PI}deg)`;}));
-        await wait(40);if(tok!==battleToken)return;
+    const live=targets.filter(e=>e.alive);
+    const swords=live.map(e=>Array.from({length:6},()=>{const d=g.mk('','',e.x,e.y);Object.assign(d.style,{position:'absolute',width:'58px',height:'24px',pointerEvents:'none',zIndex:104,background:'url(heros/phong-thanh-duong/phong-thanh-duong-sword.webp) center/contain no-repeat'});return d;}));
+    let hit=0; const frames=Math.max(18,n*3);
+    for(let f=0;f<=frames;f++){
+      const p=f/frames, radius=p<.65?48:48*(1-p)/.35;
+      swords.forEach(group=>group.forEach((d,i)=>{const angle=i*Math.PI/3+p*Math.PI*3;d.style.transform=`translate(-50%,-50%) translate(${Math.cos(angle)*radius}px,${Math.sin(angle)*radius}px) rotate(${angle*180/Math.PI}deg)`;}));
+      while(hit<n && f>=Math.round(frames*(.35+.65*(hit+1)/n))){
+        try{if(audioSet.skill && !battleFast){if(sound)sound.pause();sound=new Audio('heros/phong-thanh-duong/phong-thanh-duong-hit.mp3');sound.play().catch(()=>{});}}catch(e){}
+        targets.filter(e=>e.alive).forEach(e=>skillHit(e,per,u));hit++;refreshPanel();
       }
-      try{if(audioSet.skill && !battleFast){if(sound)sound.pause();sound=new Audio('heros/phong-thanh-duong/phong-thanh-duong-hit.mp3');sound.play().catch(()=>{});}}catch(e){}
-      live.filter(e=>e.alive).forEach(e=>skillHit(e,per,u));swords.flat().forEach(d=>d.remove());refreshPanel();
-      await wait(140);if(tok!==battleToken)return;
+      await wait(40);if(tok!==battleToken)return;
     }
+    swords.flat().forEach(d=>d.remove());
     dropDeadEffects(targets);refreshPanel();
   } finally {if(sound)sound.pause();cast.end();u.el.style.zIndex=oldZ;g.made.forEach(d=>d.remove());}
 }
@@ -13387,3 +13405,85 @@ cfgOnApply(evBadgeUpdate); document.addEventListener('DOMContentLoaded', evBadge
     const el = $('sh-clk'); if (el) el.textContent = clk((st.h + 1) * HOUR - Date.now());
   }, 1000);
 })();
+
+function dqAttackFx(u,hits,tok){
+ const s=SEQ.DQAtk; if(!s || !u.el)return null; const ov=seqOverlay(u,s,120), timers=[];
+ for(let i=0;i<s.n;i++) timers.push(setTimeout(()=>{if(tok===battleToken)ov.show(i);},seqT((460+150*hits)*i/s.n)));
+ return {end(){timers.forEach(clearTimeout);ov.end();}};
+}
+async function duongQuaUlt(u,tok){
+ const g=nt(u), targets=shuffled(g.es()).slice(0,Math.max(1,Math.floor(DQ_TARGETS))); if(!targets.length)return;
+ const s=SEQ.DQCast, cast=seqOverlay(u,s,120), n=Math.max(1,Math.floor(DQ_HITS)), per=u.atk*(u.sk||1)/n;
+ const wait=ms=>new Promise(r=>setTimeout(r,seqT(ms)));
+ const b=g.box0(targets), oldZ=u.el.style.zIndex, animations=[];
+ const dx=(b.cx-u.x)*g.W/100-Math.sign(b.cx-u.x)*35, dy=(b.cy-u.y)*g.H/100;
+ const go=`translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px))`;
+ try {
+  u.el.style.zIndex='105'; cast.show(0);
+  animations.push(u.el.animate([{transform:g.base},{transform:go}],{duration:Math.max(1,seqT(350)),fill:'forwards',easing:'ease-out'}));
+  await wait(350);if(tok!==battleToken||!u.alive)return;
+  g.as().forEach(a=>{if(!noBuff(a)){addMod(a,'acc',DQ_ACC,DQ_TURNS,'buff','DQ:acc');addMod(a,'dodge',DQ_DODGE,DQ_TURNS,'buff','DQ:dodge');}});
+  targets.forEach(e=>{addMod(e,'acc',-DQ_ACC,DQ_TURNS,'debuff','DQ:acc');addMod(e,'dodge',-DQ_DODGE,DQ_TURNS,'debuff','DQ:dodge');});
+  refreshPanel();
+  const fx=targets.map(e=>{const d=g.mk('bf-seq-fx','',e.x,e.y);const v=document.createElement('div');Object.assign(v.style,{width:'100px',height:'65px',borderRadius:'50%',border:'4px solid #a9eaff',borderLeftColor:'transparent',boxShadow:'0 0 15px #63baff,inset 0 0 12px #a9eaff',opacity:'0'});d.appendChild(v);return v;});
+  let hit=0;
+  for(let i=0;i<s.n;i++){
+   cast.show(i);fx.forEach(v=>{v.style.opacity=i>=4&&i<=13?'.85':'0';v.style.transform=`rotate(${i*55}deg) scale(${.8+.2*Math.sin(i)})`;});
+   while(hit<n && i>=5+Math.floor(hit*7/Math.max(1,n-1))){targets.filter(e=>e.alive).forEach(e=>skillHit(e,per,u));hit++;refreshPanel();}
+   await wait(100);if(tok!==battleToken||!u.alive)return;
+  }
+  dropDeadEffects(targets);refreshPanel();
+  animations.push(u.el.animate([{transform:go},{transform:g.base}],{duration:Math.max(1,seqT(350)),fill:'forwards',easing:'ease-in-out'}));
+  await wait(350);
+ }finally{animations.forEach(a=>a.cancel());u.el.style.zIndex=oldZ;cast.end();g.made.forEach(d=>d.remove());}
+}
+
+// Đông Phương Bất Bại — dùng sprite gốc, không thay đổi engine chung.
+async function dpbbAttack(u, foes, hits, dmg, tok, ultHit) {
+ const t=pickTarget(foes); if(!t)return;
+ const g=nt(u), fx=seqEl(SEQ.DPBBFx,110), node=g.mk('bf-seq-fx','',u.x,u.y);
+ node.appendChild(fx); const wait=ms=>new Promise(r=>setTimeout(r,seqT(ms)));
+ try { for(let i=0;i<16;i++) { if(tok!==battleToken||!u.alive)return;
+ const q=Math.min(1,i/5); node.style.left=(u.x+(t.x-u.x)*q)+'%';node.style.top=(u.y+(t.y-u.y)*q)+'%';fx.show(i);
+ for(let k=0;k<hits;k++)if(i===5+Math.floor(k*9/Math.max(1,hits-1))&&t.alive){if(!strike(u,t,dmg))floatText(t,'NÉ');else if(ultHit)rageOnHit(u);}
+ await wait(40); } } finally {node.remove();}
+}
+async function dongPhuongUlt(u,tok){
+ const g=nt(u), targets=shuffled(g.es()).slice(0,Math.max(1,Math.floor(DPBB_TARGETS))); if(!targets.length)return;
+ const s=SEQ.DPBBCast, cast=seqOverlay(u,s,Math.round(120*s.cw/s.ch)), n=Math.max(1,Math.floor(DPBB_HITS)), per=u.atk*u.sk/n;
+ const wait=ms=>new Promise(r=>setTimeout(r,seqT(ms))), b=g.box0(targets), oldZ=u.el.style.zIndex, animations=[];
+ const dx=(b.cx-u.x)*g.W/100-Math.sign(b.cx-u.x)*35,dy=(b.cy-u.y)*g.H/100,go=`translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px))`;
+ try {u.el.style.zIndex='105';cast.show(0);
+ animations.push(u.el.animate([{transform:g.base},{transform:go}],{duration:Math.max(1,seqT(350)),fill:'forwards'}));
+ await wait(350);if(tok!==battleToken||!u.alive)return;
+ if(!noBuff(u))addMod(u,'pierce',DPBB_PIERCE,DPBB_TURNS,'buff','DPBB:up');
+ targets.filter(e=>e.alive).forEach(e=>{const old=(e.mods||[]).find(m=>m.k==='pierce'&&m.tag==='DPBB:down');const base=Math.max(0,e.pierce-(old?old.d:0));addMod(e,'pierce',-Math.round(base*DPBB_DOWN),DPBB_TURNS,'debuff','DPBB:down');});
+ const fx=targets.map(e=>{const node=g.mk('bf-seq-fx','',e.x,e.y),f=seqEl(SEQ.DPBBFx,125);node.appendChild(f);return f;});
+ let hit=0;for(let i=0;i<s.n;i++){cast.show(i);fx.forEach(f=>f.show(i));while(hit<n&&i>=5+Math.floor(hit*7/Math.max(1,n-1))){targets.filter(e=>e.alive).forEach(e=>skillHit(e,per,u));hit++;refreshPanel();}await wait(100);if(tok!==battleToken||!u.alive)return;}
+ dropDeadEffects(targets);refreshPanel();animations.push(u.el.animate([{transform:go},{transform:g.base}],{duration:Math.max(1,seqT(350)),fill:'forwards'}));await wait(350);
+ }finally{animations.forEach(a=>a.cancel());u.el.style.zIndex=oldZ;cast.end();g.made.forEach(d=>d.remove());}
+}
+
+// Tiểu Long Nữ: kiếm khí đánh thường, tuyệt kỹ khóa mục tiêu Công cao nhất.
+async function tlnAttack(u,foes,hits,dmg,tok,ultHit){
+ const t=pickTarget(foes); if(!t)return;
+ const g=nt(u), f=seqEl(SEQ.TLNFx,100), node=g.mk('bf-seq-fx','',u.x,u.y);
+ node.appendChild(f); if(t.x<u.x)f.style.transform='scaleX(-1)';
+ const wait=ms=>new Promise(r=>setTimeout(r,seqT(ms))); let k=0;
+ try{for(let i=0;i<16;i++){if(tok!==battleToken||!u.alive)return;
+ const q=Math.min(1,i/6);node.style.left=(u.x+(t.x-u.x)*q)+'%';node.style.top=(u.y+(t.y-u.y)*q)+'%';f.show(i);
+ while(k<hits&&i>=6+Math.floor(k*8/Math.max(1,hits-1))){if(t.alive){if(!strike(u,t,dmg))floatText(t,'NÉ');else if(ultHit)rageOnHit(u);}k++;}await wait(40);}}
+ finally{node.remove();}
+}
+async function tieuLongNuUlt(u,tok){
+ const g=nt(u),t=g.es().sort((a,b)=>b.atk-a.atk)[0];if(!t)return;
+ const s=SEQ.TLNCast,cast=seqOverlay(u,s,Math.round(120*s.cw/s.ch)),animations=[],oldZ=u.el.style.zIndex;
+ const wait=ms=>new Promise(r=>setTimeout(r,seqT(ms))),dx=(t.x-u.x)*g.W/100-Math.sign(t.x-u.x)*35,dy=(t.y-u.y)*g.H/100,go=`translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px))`;
+ try{
+ if(!noBuff(u)){const old=(u.mods||[]).find(m=>m.k==='atk'&&m.tag==='TLN:atk');addMod(u,'atk',Math.round((u.atk-(old?old.d:0))*TLN_ATK_UP),TLN_ATK_TURNS,'buff','TLN:atk');addMod(u,'dodge',TLN_DODGE,TLN_DODGE_TURNS,'buff','TLN:dodge');}
+ const n=Math.max(1,Math.floor(TLN_HITS)),per=u.atk*u.sk/n;refreshPanel();u.el.style.zIndex='105';cast.show(0);
+ animations.push(u.el.animate([{transform:g.base},{transform:go}],{duration:Math.max(1,seqT(180)),fill:'forwards'}));await wait(180);if(tok!==battleToken||!u.alive)return;
+ let hit=0;for(let i=0;i<s.n;i++){cast.show(i);while(hit<n&&i>=5+Math.floor(hit*6/Math.max(1,n-1))){if(t.alive)skillHit(t,per+(t.def||0),u);hit++;refreshPanel();}await wait(60);if(tok!==battleToken||!u.alive)return;}
+ dropDeadEffects([t]);refreshPanel();animations.push(u.el.animate([{transform:go},{transform:g.base}],{duration:Math.max(1,seqT(180)),fill:'forwards'}));await wait(180);
+ }finally{animations.forEach(a=>a.cancel());u.el.style.zIndex=oldZ;cast.end();g.made.forEach(d=>d.remove());}
+}

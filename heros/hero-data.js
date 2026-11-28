@@ -186,8 +186,8 @@ window.HERO_DATA = {
     "sprites": {
       "ttpIdle": { "src": "truong-tam-phong-idle.webp?v=29", "cw": 336, "ch": 336, "n": 16, "face": "R" },
       "ttpCast": { "src": "truong-tam-phong-ult.webp?v=29", "cw": 336, "ch": 336, "n": 16, "face": "R" },
-      "ttpStorm": { "src": "truong-tam-phong-storm.webp?v=29", "cw": 336, "ch": 336, "n": 16 },
-      "ttpBagua": { "src": "truong-tam-phong-bagua.webp?v=29", "cw": 336, "ch": 336, "n": 16 }
+      "ttpStorm": { "src": "truong-tam-phong-storm.webp?v=32", "cw": 128, "ch": 128, "n": 16 },
+      "ttpBagua": { "src": "truong-tam-phong-bagua.webp?v=32", "cw": 128, "ch": 126, "n": 16 }
     },
     "idle": { "sheet": "ttpIdle", "h": 120, "ms": 1500 },
     "ultFn": "taichiUlt",
@@ -832,6 +832,146 @@ window.HERO_DATA = {
     "PTD_CDMG": 300,
     "PTD_TURNS": 2
   }
-}
+},
+{
+  "id": 73649,
+  "key": "duongqua",
+  "slug": "duong-qua",
+  "name": "Dương Quá",
+  "emoji": "🦅",
+  "role": "atk",
+  "img": "duong-qua.webp",
+  "body": "duong-qua-body.webp",
+  "bodyH": 96,
+  "stats": {
+    "hp": 6200,
+    "atk": 830,
+    "spd": 120
+  },
+  "combat": {
+    "dodge": 60,
+    "acc": 300,
+    "crit": 0,
+    "critDmg": 0,
+    "tough": 0,
+    "pierce": 0,
+    "block": 0,
+    "def": 300
+  },
+  "tia": 1,
+  "constants": {
+    "lv": 1,
+    "star": 1,
+    "border": "orange",
+    "ultName": "Ám Nhiên Tiêu Hồn Chưởng"
+  },
+  "sprites": {
+    "DQIdle": {
+      "src": "duong-qua-idle.webp",
+      "cw": 320,
+      "ch": 320,
+      "n": 16,
+      "face": "R"
+    },
+    "DQAtk": {
+      "src": "duong-qua-atk.webp",
+      "cw": 320,
+      "ch": 320,
+      "n": 16,
+      "face": "R"
+    },
+    "DQCast": {
+      "src": "duong-qua-ult.webp",
+      "cw": 128,
+      "ch": 128,
+      "n": 16,
+      "face": "R"
+    }
+  },
+  "idle": {
+    "sheet": "DQIdle",
+    "h": 120,
+    "ms": 1760
+  },
+  "ultFn": "duongQuaUlt",
+  "skillConfig": {
+    "DQ_HITS": 5,
+    "DQ_TARGETS": 3,
+    "DQ_ACC": 300,
+    "DQ_DODGE": 300,
+    "DQ_TURNS": 2
+  }
+},
+{
+  "id": 58372,
+  "key": "dongphuongbatbai",
+  "slug": "dong-phuong-bat-bai",
+  "name": "Đông Phương Bất Bại",
+  "emoji": "🌺",
+  "role": "skill",
+  "img": "dong-phuong-bat-bai.webp",
+  "body": "dong-phuong-bat-bai-body.webp",
+  "bodyH": 96,
+  "stats": {
+    "hp": 6000,
+    "atk": 700,
+    "spd": 120
+  },
+  "combat": {
+    "dodge": 60,
+    "acc": 1000,
+    "crit": 0,
+    "critDmg": 0,
+    "tough": 0,
+    "pierce": 0,
+    "block": 0,
+    "def": 300
+  },
+  "tia": 1,
+  "constants": {
+    "lv": 1,
+    "star": 1,
+    "border": "orange",
+    "ultName": "Quỳ Hoa Bảo Điển"
+  },
+  "audio": "dong-phuong-bat-bai-ult.mp3",
+  "sprites": {
+    "DPBBIdle": {
+      "src": "dong-phuong-bat-bai-idle.webp",
+      "cw": 128,
+      "ch": 125,
+      "n": 16,
+      "face": "R"
+    },
+    "DPBBCast": {
+      "src": "dong-phuong-bat-bai-ult.webp",
+      "cw": 128,
+      "ch": 125,
+      "n": 16,
+      "face": "R"
+    },
+    "DPBBFx": {
+      "src": "dong-phuong-bat-bai-fx.webp",
+      "cw": 128,
+      "ch": 125,
+      "n": 16,
+      "face": "R"
+    }
+  },
+  "idle": {
+    "sheet": "DPBBIdle",
+    "h": 120,
+    "ms": 1600
+  },
+  "ultFn": "dongPhuongUlt",
+  "skillConfig": {
+    "DPBB_HITS": 5,
+    "DPBB_TARGETS": 3,
+    "DPBB_PIERCE": 15000,
+    "DPBB_DOWN": 0.5,
+    "DPBB_TURNS": 2
+  }
+},
+{"id": 91763, "key": "tieulongnu", "slug": "tieu-long-nu", "name": "Tiểu Long Nữ", "emoji": "❄️", "role": "atk", "img": "tieu-long-nu.webp", "body": "tieu-long-nu-body.webp", "bodyH": 96, "stats": {"hp": 6200, "atk": 830, "spd": 120}, "combat": {"dodge": 60, "acc": 300, "crit": 0, "critDmg": 0, "tough": 0, "pierce": 0, "block": 0, "def": 300}, "tia": 1, "constants": {"lv": 1, "star": 1, "border": "orange", "ultName": "Ngọc Nữ Kiếm Pháp"}, "audio": "tieu-long-nu-ult.mp3", "sprites": {"TLNIdle": {"src": "tieu-long-nu-idle.webp", "cw": 128, "ch": 131, "n": 16, "face": "R"}, "TLNCast": {"src": "tieu-long-nu-ult.webp", "cw": 128, "ch": 131, "n": 16, "face": "R"}, "TLNFx": {"src": "tieu-long-nu-fx.webp", "cw": 128, "ch": 128, "n": 16, "face": "R"}}, "idle": {"sheet": "TLNIdle", "h": 120, "ms": 1600}, "ultFn": "tieuLongNuUlt", "skillConfig": {"TLN_HITS": 3, "TLN_ATK_UP": 5, "TLN_ATK_TURNS": 1, "TLN_DODGE": 500, "TLN_DODGE_TURNS": 2}}
   ]
 };
