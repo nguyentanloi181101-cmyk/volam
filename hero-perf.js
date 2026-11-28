@@ -1,0 +1,14 @@
+/* Bounded, battle-only image warmup; no gameplay changes. */
+window.HBNPerf=(()=>{
+ const jobs=new Map(), queue=[];let active=0,epoch=0,token=null;
+ const slugById=()=>new Map((window.HERO_META||[]).map(m=>[m.id,m.slug]));
+ function urls(id){const m=(window.HERO_META||[]).find(m=>m.id===id);return [...new Set(Object.keys(m?.sprites||{}).map(k=>SEQ[k]?.src).filter(Boolean))];}
+ function pump(){while(active<2&&queue.length){const j=queue.shift();if(j.epoch!==epoch){j.resolve();continue;}active++;const im=new Image();im.decoding='async';let ended=false;const finish=()=>{if(ended)return;ended=true;clearTimeout(t);im.onload=im.onerror=null;active--;j.resolve();pump();};const t=setTimeout(finish,8000);im.onload=im.onerror=finish;im.src=j.url;}}
+ function enqueue(url){if(jobs.has(url))return jobs.get(url);let resolve;const p=new Promise(r=>resolve=r);jobs.set(url,p);queue.push({url,resolve,epoch});pump();return p;}
+ function release(){epoch++;token=null;while(queue.length)queue.shift().resolve();jobs.clear();navigator.serviceWorker?.controller?.postMessage({type:'HBN_RELEASE'});}
+ function warmRoster(){try{if(document.getElementById('battle-overlay')?.style.display==='none')return;if(token!==battleToken){release();token=battleToken;}const ids=new Set([...waveUnits.heroes,...waveUnits.enemies].map(u=>u.id));for(const id of ids)for(const u of urls(id))enqueue(u);}catch(e){}}
+ async function ready(id,tok){if(tok!==battleToken)return;warmRoster();const wanted=urls(id);const p=wanted.map(enqueue);const priority=new Set(wanted);queue.sort((a,b)=>Number(priority.has(b.url))-Number(priority.has(a.url)));await Promise.race([Promise.all(p),new Promise(r=>setTimeout(r,1000))]);}
+ // Canvas is opt-in until tested on target phones. CSS remains fallback and loop renderer.
+ function canvasSprite(d,s,w,h){try{if(new URLSearchParams(location.search).get('canvas')!=='1' && localStorage.getItem('hbnCanvas')!=='1')return;}catch(e){return;}const show=d.show,loop=d.loop;const im=new Image();let frame=0,looping=false;const c=document.createElement('canvas');c.width=Math.max(1,Math.round(w* Math.min(devicePixelRatio||1,2)));c.height=Math.max(1,Math.round(h*Math.min(devicePixelRatio||1,2)));c.style.cssText='width:100%;height:100%;display:block;pointer-events:none';const ctx=c.getContext('2d');if(!ctx)return;function draw(){if(looping||!im.complete||!im.naturalWidth)return;try{ctx.clearRect(0,0,c.width,c.height);ctx.drawImage(im,frame*s.cw,0,s.cw,s.ch,0,0,c.width,c.height);if(!c.parentNode)d.append(c);d.style.backgroundImage='none';}catch(e){}}im.onload=draw;im.src=s.src;d.show=i=>{looping=false;frame=Math.max(0,Math.min(s.n-1,Math.floor(Number(i)||0)));show(i);draw();};d.loop=ms=>{looping=true;c.remove();d.style.backgroundImage='url('+s.src+')';loop(ms);};}
+ return {warmRoster,ready,release,canvasSprite};
+})();

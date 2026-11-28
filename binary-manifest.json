@@ -1,0 +1,827 @@
+{
+  "au-co": {
+    "files": 48,
+    "bytes": 10683609,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      "05-au-co.mp3",
+      "au-co-body.webp",
+      "au-co-idle.webp",
+      "au-co-ult.webp",
+      "au-co.webp",
+      "bup-sen.webp",
+      "canh-hoa-00.webp",
+      "canh-hoa-01.webp",
+      "canh-hoa-02.webp",
+      "canh-hoa-03.webp",
+      "canh-hoa-04.webp",
+      "canh-hoa-05.webp",
+      "canh-hoa-06.webp",
+      "canh-hoa-07.webp",
+      "canh-hoa-08.webp",
+      "canh-hoa-09.webp",
+      "canh-hoa-10.webp",
+      "canh-hoa-11.webp",
+      "canh-hoa-12.webp",
+      "canh-hoa-13.webp",
+      "canh-hoa-14.webp",
+      "canh-hoa-15.webp",
+      "canh-hoa-16.webp",
+      "canh-hoa-17.webp",
+      "canh-hoa-18.webp",
+      "canh-hoa-19.webp",
+      "canh-hoa-sheet.webp",
+      "hoa-no-00.webp",
+      "hoa-no-01.webp",
+      "hoa-no-02.webp",
+      "hoa-no-03.webp",
+      "hoa-no-04.webp",
+      "hoa-no-05.webp",
+      "hoa-no-06.webp",
+      "hoa-no-07.webp",
+      "hoa-no-08.webp",
+      "hoa-no-09.webp",
+      "hoa-no-10.webp",
+      "hoa-no-11.webp",
+      "hoa-no-12.webp",
+      "hoa-no-13.webp",
+      "hoa-no-14.webp",
+      "hoa-no-15.webp",
+      "hoa-no-16.webp",
+      "hoa-no-17.webp",
+      "hoa-no-18.webp",
+      "hoa-no-19.webp",
+      "hoa-no-sheet.webp"
+    ]
+  },
+  "bac-cai": {
+    "files": 6,
+    "bytes": 1759252,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      "13-bac-cai.mp3",
+      "bac-cai-bamboo.webp",
+      "bac-cai-body.webp",
+      "bac-cai-idle.webp",
+      "bac-cai-ult.webp",
+      "bac-cai.webp"
+    ]
+  },
+  "bach-cam": {
+    "files": 5,
+    "bytes": 1395058,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      "22-bach-cam.mp3",
+      "bach-cam-body.webp",
+      "bach-cam-idle.webp",
+      "bach-cam-ult.webp",
+      "bach-cam.webp"
+    ]
+  },
+  "bach-cot-tinh": {
+    "files": 5,
+    "bytes": 4610528,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      "bach-cot-tinh-body.webp",
+      "bach-cot-tinh-idle.webp",
+      "bach-cot-tinh-ult.mp3",
+      "bach-cot-tinh-ult.webp",
+      "bach-cot-tinh.webp"
+    ]
+  },
+  "bat-gioi": {
+    "files": 5,
+    "bytes": 1775972,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      "bat-gioi-body.webp",
+      "bat-gioi-idle.webp",
+      "bat-gioi-ult.mp3",
+      "bat-gioi-ult.webp",
+      "bat-gioi.webp"
+    ]
+  },
+  "chu-nguyen-chuong": {
+    "files": 3,
+    "bytes": 169574,
+    "attack_image_named": false,
+    "ultimate_image_named": false,
+    "names": [
+      "02-chu-nguyen-chuong.mp3",
+      "chu-nguyen-chuong-body.webp",
+      "chu-nguyen-chuong.webp"
+    ]
+  },
+  "diem-la-vuong": {
+    "files": 7,
+    "bytes": 2457385,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      "diem-la-vuong-body.webp",
+      "diem-la-vuong-fx.webp",
+      "diem-la-vuong-idle.webp",
+      "diem-la-vuong-lenh-bai.webp",
+      "diem-la-vuong-ult.mp3",
+      "diem-la-vuong-ult.webp",
+      "diem-la-vuong.webp"
+    ]
+  },
+  "doan-du": {
+    "files": 6,
+    "bytes": 5534697,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      "12-doan-du.mp3",
+      "doan-du-body.webp",
+      "doan-du-idle.webp",
+      "doan-du-run.webp",
+      "doan-du-ult.webp",
+      "doan-du.webp"
+    ]
+  },
+  "doc-co-cau-bai": {
+    "files": 7,
+    "bytes": 2016713,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      "03-doc-co-cau-bai.mp3",
+      "doc-co-cau-bai-body.webp",
+      "doc-co-cau-bai.webp",
+      "doc-co-circle.webp",
+      "doc-co-idle.webp",
+      "doc-co-ult.webp",
+      "kiem-tim-den.webp"
+    ]
+  },
+  "dong-phuong-bat-bai": {
+    "files": 7,
+    "bytes": 6157024,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      "dong-phuong-bat-bai-atk.mp3",
+      "dong-phuong-bat-bai-body.webp",
+      "dong-phuong-bat-bai-fx.webp",
+      "dong-phuong-bat-bai-idle.webp",
+      "dong-phuong-bat-bai-ult.mp3",
+      "dong-phuong-bat-bai-ult.webp",
+      "dong-phuong-bat-bai.webp"
+    ]
+  },
+  "dong-phuong-co-nuong": {
+    "files": 7,
+    "bytes": 7125294,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      "09-dong-phuong-co-nuong.mp3",
+      "dong-phuong-clone.webp",
+      "dong-phuong-co-nuong-body.webp",
+      "dong-phuong-co-nuong.webp",
+      "dong-phuong-fire.webp",
+      "dong-phuong-idle.webp",
+      "dong-phuong-ult.webp"
+    ]
+  },
+  "dong-ta": {
+    "files": 6,
+    "bytes": 6212859,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      "14-dong-ta.mp3",
+      "dong-ta-body.webp",
+      "dong-ta-burst.webp",
+      "dong-ta-idle.webp",
+      "dong-ta-ult.webp",
+      "dong-ta.webp"
+    ]
+  },
+  "duong-qua": {
+    "files": 7,
+    "bytes": 4077421,
+    "attack_image_named": true,
+    "ultimate_image_named": true,
+    "names": [
+      "duong-qua-atk.mp3",
+      "duong-qua-atk.webp",
+      "duong-qua-body.webp",
+      "duong-qua-idle.webp",
+      "duong-qua-ult.mp3",
+      "duong-qua-ult.webp",
+      "duong-qua.webp"
+    ]
+  },
+  "duong-tang": {
+    "files": 6,
+    "bytes": 2777655,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      "duong-tang-body.webp",
+      "duong-tang-idle.webp",
+      "duong-tang-phaptran.webp",
+      "duong-tang-ult.mp3",
+      "duong-tang-ult.webp",
+      "duong-tang.webp"
+    ]
+  },
+  "duong-tien": {
+    "files": 6,
+    "bytes": 2201952,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      ".gitkeep",
+      "duong-tien-body.webp",
+      "duong-tien-idle.webp",
+      "duong-tien-ult.mp3",
+      "duong-tien-ult.webp",
+      "duong-tien.webp"
+    ]
+  },
+  "hai-cong-chua": {
+    "files": 6,
+    "bytes": 2743253,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      "hai-cong-chua-body.webp",
+      "hai-cong-chua-explode.mp3",
+      "hai-cong-chua-idle.webp",
+      "hai-cong-chua-ult.mp3",
+      "hai-cong-chua-ult.webp",
+      "hai-cong-chua.webp"
+    ]
+  },
+  "hang-nga": {
+    "files": 5,
+    "bytes": 1322518,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      "chu-nguyen-chuong.mp3",
+      "hang-nga-body.webp",
+      "hang-nga-idle.webp",
+      "hang-nga-ult.webp",
+      "hang-nga.webp"
+    ]
+  },
+  "hoa-de": {
+    "files": 6,
+    "bytes": 3074477,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      "hoa-de-body.webp",
+      "hoa-de-fx.webp",
+      "hoa-de-idle.webp",
+      "hoa-de-ult.mp3",
+      "hoa-de-ult.webp",
+      "hoa-de.webp"
+    ]
+  },
+  "hoa-man-lau": {
+    "files": 6,
+    "bytes": 5202896,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      "06-hoa-man-lau.mp3",
+      "hoa-man-lau-body.webp",
+      "hoa-man-lau-idle.webp",
+      "hoa-man-lau-quat.webp",
+      "hoa-man-lau-ult.webp",
+      "hoa-man-lau.webp"
+    ]
+  },
+  "lac-long-quan": {
+    "files": 3,
+    "bytes": 188465,
+    "attack_image_named": false,
+    "ultimate_image_named": false,
+    "names": [
+      "08-lac-long-quan.mp3",
+      "lac-long-quan-body.webp",
+      "lac-long-quan.webp"
+    ]
+  },
+  "linda": {
+    "files": 6,
+    "bytes": 1302686,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      "linda-body.webp",
+      "linda-gach.webp",
+      "linda-idle.webp",
+      "linda-ult.mp3",
+      "linda-ult.webp",
+      "linda.webp"
+    ]
+  },
+  "linh-cam-chuy": {
+    "files": 5,
+    "bytes": 1387609,
+    "attack_image_named": true,
+    "ultimate_image_named": false,
+    "names": [
+      "01-linh-cam-chuy.mp3",
+      "linh-cam-chuy-atk.webp",
+      "linh-cam-chuy-body.webp",
+      "linh-cam-chuy-idle.webp",
+      "linh-cam-chuy.webp"
+    ]
+  },
+  "linh-cam-co": {
+    "files": 5,
+    "bytes": 884135,
+    "attack_image_named": true,
+    "ultimate_image_named": false,
+    "names": [
+      "01-linh-cam-co.mp3",
+      "linh-cam-co-atk.webp",
+      "linh-cam-co-body.webp",
+      "linh-cam-co-idle.webp",
+      "linh-cam-co.webp"
+    ]
+  },
+  "linh-cam-cung": {
+    "files": 5,
+    "bytes": 1179035,
+    "attack_image_named": true,
+    "ultimate_image_named": false,
+    "names": [
+      "01-linh-cam-cung.mp3",
+      "linh-cam-cung-atk.webp",
+      "linh-cam-cung-body.webp",
+      "linh-cam-cung-idle.webp",
+      "linh-cam-cung.webp"
+    ]
+  },
+  "linh-cam-dao": {
+    "files": 5,
+    "bytes": 1371817,
+    "attack_image_named": true,
+    "ultimate_image_named": false,
+    "names": [
+      "01-linh-cam-dao.mp3",
+      "linh-cam-dao-atk.webp",
+      "linh-cam-dao-body.webp",
+      "linh-cam-dao-idle.webp",
+      "linh-cam-dao.webp"
+    ]
+  },
+  "linh-cam-kiem": {
+    "files": 5,
+    "bytes": 656530,
+    "attack_image_named": true,
+    "ultimate_image_named": false,
+    "names": [
+      "01-linh-cam-kiem.mp3",
+      "linh-cam-kiem-atk.webp",
+      "linh-cam-kiem-body.webp",
+      "linh-cam-kiem-idle.webp",
+      "linh-cam-kiem.webp"
+    ]
+  },
+  "linh-cam-thuong": {
+    "files": 5,
+    "bytes": 1350635,
+    "attack_image_named": true,
+    "ultimate_image_named": false,
+    "names": [
+      "01-linh-cam-thuong.mp3",
+      "linh-cam-thuong-atk.webp",
+      "linh-cam-thuong-body.webp",
+      "linh-cam-thuong-idle.webp",
+      "linh-cam-thuong.webp"
+    ]
+  },
+  "linh-danh-thue": {
+    "files": 7,
+    "bytes": 579546,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      "linh-danh-thue-body.webp",
+      "linh-danh-thue-bom.webp",
+      "linh-danh-thue-idle.webp",
+      "linh-danh-thue-may-bay.webp",
+      "linh-danh-thue-ult.mp3",
+      "linh-danh-thue-ult.webp",
+      "linh-danh-thue.webp"
+    ]
+  },
+  "linh-lung": {
+    "files": 6,
+    "bytes": 2930735,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      "linh-lung-body.webp",
+      "linh-lung-idle.webp",
+      "linh-lung-tower.webp",
+      "linh-lung-ult.mp3",
+      "linh-lung-ult.webp",
+      "linh-lung.webp"
+    ]
+  },
+  "luc-tieu-phung": {
+    "files": 7,
+    "bytes": 4253972,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      ".keep",
+      "luc-tieu-phung-body.webp",
+      "luc-tieu-phung-fx.webp",
+      "luc-tieu-phung-idle.webp",
+      "luc-tieu-phung-ult.mp3",
+      "luc-tieu-phung-ult.webp",
+      "luc-tieu-phung.webp"
+    ]
+  },
+  "ma-dao-thanh-nu": {
+    "files": 3,
+    "bytes": 195327,
+    "attack_image_named": false,
+    "ultimate_image_named": false,
+    "names": [
+      "00-ma-dao-thanh-nu.mp3",
+      "ma-dao-thanh-nu-body.webp",
+      "ma-dao-thanh-nu.webp"
+    ]
+  },
+  "ma-ton": {
+    "files": 5,
+    "bytes": 3482477,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      "cong-chieu-mo-idle.webp",
+      "ma-ton-body.webp",
+      "ma-ton-idle.webp",
+      "ma-ton-ult.webp",
+      "ma-ton.webp"
+    ]
+  },
+  "moc-que-anh": {
+    "files": 5,
+    "bytes": 4271110,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      "20-moc-que-anh.mp3",
+      "moc-que-anh-body.webp",
+      "moc-que-anh-idle.webp",
+      "moc-que-anh-ult.webp",
+      "moc-que-anh.webp"
+    ]
+  },
+  "na-tra": {
+    "files": 6,
+    "bytes": 3922618,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      "na-tra-body.webp",
+      "na-tra-idle.webp",
+      "na-tra-ult.mp3",
+      "na-tra-ult.webp",
+      "na-tra-wheel.webp",
+      "na-tra.webp"
+    ]
+  },
+  "nam-de": {
+    "files": 5,
+    "bytes": 3558017,
+    "attack_image_named": false,
+    "ultimate_image_named": false,
+    "names": [
+      "16-nam-de.mp3",
+      "nam-de-body.webp",
+      "nam-de-buddha.webp",
+      "nam-de-idle.webp",
+      "nam-de.webp"
+    ]
+  },
+  "ngo-khong": {
+    "files": 7,
+    "bytes": 2279994,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      "ngo-khong.js",
+      "ngo-khong.json",
+      "ton-ngo-khong-body.webp",
+      "ton-ngo-khong-gay.webp",
+      "ton-ngo-khong-ult.mp3",
+      "ton-ngo-khong-ult.webp",
+      "ton-ngo-khong.webp"
+    ]
+  },
+  "pham-dao": {
+    "files": 6,
+    "bytes": 1056736,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      "07-pham-dao.mp3",
+      "pham-dao-body.webp",
+      "pham-dao-idle.webp",
+      "pham-dao-sword.webp",
+      "pham-dao-ult.webp",
+      "pham-dao.webp"
+    ]
+  },
+  "phong-thanh-duong": {
+    "files": 8,
+    "bytes": 5063416,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      ".keep",
+      "phong-thanh-duong-body.webp",
+      "phong-thanh-duong-hit.mp3",
+      "phong-thanh-duong-idle.webp",
+      "phong-thanh-duong-sword.webp",
+      "phong-thanh-duong-ult.mp3",
+      "phong-thanh-duong-ult.webp",
+      "phong-thanh-duong.webp"
+    ]
+  },
+  "quan-am": {
+    "files": 7,
+    "bytes": 3219516,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      "quan-am-body.webp",
+      "quan-am-idle.webp",
+      "quan-am-leaf.webp",
+      "quan-am-lotus.webp",
+      "quan-am-ult.mp3",
+      "quan-am-ult.webp",
+      "quan-am.webp"
+    ]
+  },
+  "sa-tang": {
+    "files": 5,
+    "bytes": 3773502,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      "sa-tang-body.webp",
+      "sa-tang-idle.webp",
+      "sa-tang-ult.mp3",
+      "sa-tang-ult.webp",
+      "sa-tang.webp"
+    ]
+  },
+  "son-tinh": {
+    "files": 6,
+    "bytes": 6925682,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      "son-tinh-body.webp",
+      "son-tinh-fx.webp",
+      "son-tinh-idle.webp",
+      "son-tinh-ult.mp3",
+      "son-tinh-ult.webp",
+      "son-tinh.webp"
+    ]
+  },
+  "ta-de": {
+    "files": 10,
+    "bytes": 3669212,
+    "attack_image_named": false,
+    "ultimate_image_named": false,
+    "names": [
+      "00-ta-de.mp3",
+      "ta-de-body.webp",
+      "ta-de-idle.webp",
+      "ta-de-slash1.webp",
+      "ta-de-slash2.webp",
+      "ta-de-slash3.webp",
+      "ta-de-slash4.webp",
+      "ta-de-slash5.webp",
+      "ta-de-slash6.webp",
+      "ta-de.webp"
+    ]
+  },
+  "tay-doc": {
+    "files": 6,
+    "bytes": 6039377,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      "15-tay-doc.mp3",
+      "tay-doc-body.webp",
+      "tay-doc-idle.webp",
+      "tay-doc-toad3d.webp",
+      "tay-doc-ult.webp",
+      "tay-doc.webp"
+    ]
+  },
+  "tay-mon-xuy-tuyet": {
+    "files": 7,
+    "bytes": 4530308,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      ".keep",
+      "tay-mon-xuy-tuyet-body.webp",
+      "tay-mon-xuy-tuyet-fx.webp",
+      "tay-mon-xuy-tuyet-idle.webp",
+      "tay-mon-xuy-tuyet-ult.mp3",
+      "tay-mon-xuy-tuyet-ult.webp",
+      "tay-mon-xuy-tuyet.webp"
+    ]
+  },
+  "thai-thuong-lao-quan": {
+    "files": 6,
+    "bytes": 2936629,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      "thai-thuong-lao-quan-body.webp",
+      "thai-thuong-lao-quan-dinh.webp",
+      "thai-thuong-lao-quan-idle.webp",
+      "thai-thuong-lao-quan-ult.mp3",
+      "thai-thuong-lao-quan-ult.webp",
+      "thai-thuong-lao-quan.webp"
+    ]
+  },
+  "than-ho-rung": {
+    "files": 6,
+    "bytes": 1182558,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      "21-than-ho-rung.mp3",
+      "than-ho-rung-arrow.webp",
+      "than-ho-rung-body.webp",
+      "than-ho-rung-idle.webp",
+      "than-ho-rung-ult.webp",
+      "than-ho-rung.webp"
+    ]
+  },
+  "thiet-phien": {
+    "files": 7,
+    "bytes": 4238990,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      "thiet-phien-body.webp",
+      "thiet-phien-tornado.webp",
+      "thiet-phien-ult.mp3",
+      "thiet-phien-ult.webp",
+      "thiet-phien.js",
+      "thiet-phien.json",
+      "thiet-phien.webp"
+    ]
+  },
+  "thuy-long": {
+    "files": 6,
+    "bytes": 12916689,
+    "attack_image_named": true,
+    "ultimate_image_named": true,
+    "names": [
+      "08-thuy-long.mp3",
+      "rong-bay-idle.webp",
+      "thuy-long-attack.webp",
+      "thuy-long-idle.webp",
+      "thuy-long-ult.webp",
+      "thuy-long.webp"
+    ]
+  },
+  "thuy-tinh": {
+    "files": 5,
+    "bytes": 1543458,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      "thuy-tinh-body.webp",
+      "thuy-tinh-idle.webp",
+      "thuy-tinh-ult.mp3",
+      "thuy-tinh-ult.webp",
+      "thuy-tinh.webp"
+    ]
+  },
+  "tieu-long-nu": {
+    "files": 7,
+    "bytes": 5465346,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      "tieu-long-nu-atk.mp3",
+      "tieu-long-nu-body.webp",
+      "tieu-long-nu-fx.webp",
+      "tieu-long-nu-idle.webp",
+      "tieu-long-nu-ult.mp3",
+      "tieu-long-nu-ult.webp",
+      "tieu-long-nu.webp"
+    ]
+  },
+  "tieu-yeu": {
+    "files": 7,
+    "bytes": 10255891,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      "10-tieu-yeu.mp3",
+      "tieu-yeu-body.webp",
+      "tieu-yeu-idle.webp",
+      "tieu-yeu-orb.webp",
+      "tieu-yeu-skull.webp",
+      "tieu-yeu-ult.webp",
+      "tieu-yeu.webp"
+    ]
+  },
+  "trieu-man": {
+    "files": 6,
+    "bytes": 6077307,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      "19-trieu-man.mp3",
+      "trieu-man-body.webp",
+      "trieu-man-idle.webp",
+      "trieu-man-sword.webp",
+      "trieu-man-ult.webp",
+      "trieu-man.webp"
+    ]
+  },
+  "truong-tam-phong": {
+    "files": 9,
+    "bytes": 3218176,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      "04-truong-tam-phong.mp3",
+      "truong-tam-phong-bagua-spin.webp",
+      "truong-tam-phong-bagua.webp",
+      "truong-tam-phong-body.webp",
+      "truong-tam-phong-idle.webp",
+      "truong-tam-phong-storm-spin.webp",
+      "truong-tam-phong-storm.webp",
+      "truong-tam-phong-ult.webp",
+      "truong-tam-phong.webp"
+    ]
+  },
+  "tuyet-de": {
+    "files": 6,
+    "bytes": 3600336,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      "tuyet-de-body.webp",
+      "tuyet-de-fx.webp",
+      "tuyet-de-idle.webp",
+      "tuyet-de-ult.mp3",
+      "tuyet-de-ult.webp",
+      "tuyet-de.webp"
+    ]
+  },
+  "vo-nhai-tu": {
+    "files": 6,
+    "bytes": 1915518,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      "11-vo-nhai-tu.mp3",
+      "vo-nhai-tu-body.webp",
+      "vo-nhai-tu-flag.webp",
+      "vo-nhai-tu-idle.webp",
+      "vo-nhai-tu-ult.webp",
+      "vo-nhai-tu.webp"
+    ]
+  },
+  "vuong-trung-duong": {
+    "files": 7,
+    "bytes": 5474159,
+    "attack_image_named": false,
+    "ultimate_image_named": true,
+    "names": [
+      "17-vuong-trung-duong.mp3",
+      "vuong-trung-duong-body.webp",
+      "vuong-trung-duong-idle.webp",
+      "vuong-trung-duong-storm.webp",
+      "vuong-trung-duong-taiji-vortex.webp",
+      "vuong-trung-duong-ult.webp",
+      "vuong-trung-duong.webp"
+    ]
+  }
+}

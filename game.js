@@ -100,6 +100,7 @@ window.GP = (function () {
     prio = prio == null ? 1 : prio;
     (Array.isArray(urls) ? urls : [urls]).forEach(u => {
       if (!u) return;
+      if (prio >= 1 && /(?:^|\/)heros\//.test(u)) return; // battle warmup handles hero media
       if (prio >= 2 && slow) return;                       // mạng chậm/tiết kiệm dữ liệu: không nạp ngầm phần ít cần
       if (done.has(u)) { if (q.has(u) && q.get(u) > prio) q.set(u, prio); return; }   // đã xếp rồi: chỉ nâng ưu tiên
       done.add(u); q.set(u, prio);
@@ -2131,7 +2132,7 @@ function seqEl(s, w) {
   d.style.backgroundImage = 'url(' + s.src + ')'; d.style.backgroundSize = (w * s.n) + 'px ' + h + 'px';
   d.show = i => { i = Math.max(0, Math.min(s.n - 1, Math.floor(Number(i) || 0))); d.style.animation = 'none'; d.style.backgroundPosition = (-i * w) + 'px 0'; };
   d.loop = ms => { d.style.setProperty('--end', (-w * s.n) + 'px'); d.style.animation = 'seqRun ' + ms + 'ms steps(' + s.n + ') infinite'; };
-  d.show(0); return d;
+  d.show(0); if(window.HBNPerf) HBNPerf.canvasSprite(d,s,w,h); return d;
 }
 // Phủ chuỗi khung lên tướng u (ẩn ảnh thân/dáng đứng trong lúc diễn, căn đáy giữa). end() trả lại như cũ.
 function seqOverlay(u, s, w) {
@@ -4255,13 +4256,14 @@ cfgOnApply(applyFormationCfg);   // chạy ngay 1 lần + chạy lại mỗi khi
     // Âm thanh tuyệt kỹ theo tướng (heros/<tên-tướng>/NN-<tên-tướng>.mp3). [ghi chú cũ: id 0 = Tà Đế, id 2 = Hằng Nga, id 5 = Âu Cơ, id 8 = Lạc Long Quân, id 9 = Hỏa Thiên Tướng, id 10 = Tiểu Yêu (Vô Nhai Tử: không có âm lúc bắt đầu chiêu, mỗi viên cờ rơi kêu 1 tiếng – xem playGoStone)
     const HERO_SND_SRC = HERO_T.sound;   // mỗi tướng 1 âm tuyệt kỹ riêng (tạo bằng tổng hợp âm), phát lúc bắt đầu tung chiêu
     const heroSnd = {};
-    Object.keys(HERO_SND_SRC).forEach(id => { try { const a = new Audio(HERO_SND_SRC[id]); a.preload = 'auto'; heroSnd[id] = a; } catch (e) {} });
+    Object.keys(HERO_SND_SRC).forEach(id => { try { const a = new Audio(); a.preload = 'none'; heroSnd[id] = a; } catch (e) {} });
     function playHeroSound(id) {
       try {
         if (!audioSet.skill) return;
         if (!HERO_SND_SRC[id] && SYNTH_ULT[id]) { SYNTH_ULT[id](); return; }   // Hằng Nga, Ma Tôn: âm tổng hợp (không cần file)
         const src = HERO_SND_SRC[id]; if (!src) return;
         const a = heroSnd[id] || (heroSnd[id] = new Audio(src));
+        if (!a.src) a.src = src;
         a.pause(); a.currentTime = 0;
         const p = a.play(); if (p && p.catch) p.catch(() => {});
       } catch (e) {}
@@ -4287,7 +4289,7 @@ cfgOnApply(applyFormationCfg);   // chạy ngay 1 lần + chạy lại mỗi khi
     const normalAttack = (u, foes, tok) => { playNormalAtk(u); return attack(u, foes, 1, u.atk, tok); };
     // (Đã bỏ nhạc/âm mở màn khi vào trận.) stopBgm giữ lại làm hàm rỗng cho các nơi còn gọi.
     function stopBgm() {}
-    function stopHeroSounds() { try { Object.values(heroSnd).forEach(a => { a.pause(); a.currentTime = 0; }); } catch (e) {} }
+    function stopHeroSounds() { Object.values(heroSnd).forEach(a => { try { a.pause(); a.removeAttribute('src'); a.load(); } catch(e){} }); }
 
     /* ================= ÂM TUYỆT KỸ TỔNG HỢP: Hằng Nga (id 2), Ma Tôn (id 18), Triệu Mẫn (id 19) — không cần file mp3 ================= */
     function synTone(ctx, dest, type, f, t, att, dur, peak, det) {
@@ -4466,6 +4468,8 @@ cfgOnApply(applyFormationCfg);   // chạy ngay 1 lần + chạy lại mỗi khi
 
     // Một lượt tung chiêu = đúng một lần gọi hàm ulti. HITS là số nhịp sát thương bên trong.
     async function ultimate(u, tok) {
+      if (tok !== battleToken || !u.alive) return;
+      if(window.HBNPerf && !battleFast) await HBNPerf.ready(u.id, tok);
       if (tok !== battleToken || !u.alive) return;
       const oldScale = ultTimeScale;
       u.qRepeat = false; u.qKeep = false; ultTimeScale = 1;
@@ -7857,7 +7861,8 @@ cfgOnApply(() => {
       });
     }
     var _rpLast = 0, _rpTm = 0;
-    function refreshPanel() {   // nhiều lệnh gọi dồn dập (ulti đa hit, buff cả đội) chỉ vẽ lại bảng tướng tối đa ~10 lần/giây
+    function refreshPanel() {
+      if(window.HBNPerf) HBNPerf.warmRoster();   // nhiều lệnh gọi dồn dập (ulti đa hit, buff cả đội) chỉ vẽ lại bảng tướng tối đa ~10 lần/giây
       const now = performance.now();
       if (!(now - _rpLast < 100)) { _rpLast = now; clearTimeout(_rpTm); _rpTm = 0; refreshPanelNow(); return; }
       if (!_rpTm) _rpTm = setTimeout(() => { _rpTm = 0; _rpLast = performance.now(); try { refreshPanelNow(); } catch (e) {} }, 100);
@@ -8872,6 +8877,7 @@ cfgOnApply(() => {
     function closeBattle() {
       if (bossB && !bossB.fin) { if (confirm('Thoát trận? Sát thương đã gây vẫn được tính và mất 1 lượt.')) bossFinish('ĐÃ THOÁT'); return; }
       battleToken++;
+      window.HBNPerf?.release();
       stopHeroSounds();
       try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (e) {}
       stopBgm(); battleFast = false;

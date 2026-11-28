@@ -109,7 +109,7 @@
   };
 
   function close() {
-    D.open = false; D.busy = false; battleToken++; battleFast = false; ultTimeScale = 1;
+    D.open = false; D.busy = false; battleToken++; window.HBNPerf?.release(); battleFast = false; ultTimeScale = 1;
     try { stopHeroSounds(); } catch (e) {}
     try { window.speechSynthesis && speechSynthesis.cancel(); } catch (e) {}
     $('bf-units').innerHTML = ''; waveUnits = { heroes: [], enemies: [] };
